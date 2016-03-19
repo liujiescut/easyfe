@@ -1,5 +1,7 @@
 package com.scut.easyfe.app;
 
+import java.util.ArrayList;
+
 /**
  * 全局常量
  * Created by jay on 15/9/11.
@@ -19,6 +21,7 @@ public class Constants {
         public static final String BASE_TAG = "frame_";
         public static final String LOGIN_TAG = BASE_TAG + "login";
         public static final String MAP_TAG = BASE_TAG + "map";
+        public static final String TEACHER_REGISTER_TAG = BASE_TAG + "teacher_register";
     }
 
     public class Key{
@@ -34,4 +37,5 @@ public class Constants {
         public static final int MALE = 1;
         public static final int FEMALE = 0;
     }
+
 }

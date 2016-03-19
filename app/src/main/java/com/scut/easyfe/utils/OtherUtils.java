@@ -2,9 +2,14 @@ package com.scut.easyfe.utils;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
+import android.os.IBinder;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+
+import com.scut.easyfe.app.App;
 
 /**
  * 其他一些常用工具
@@ -21,5 +26,16 @@ public class OtherUtils {
 
     public static <T> T findViewById(@NonNull Dialog dialog, @IdRes int id) {
         return (T) dialog.findViewById(id);
+    }
+
+    /**
+     * 关闭软键盘
+     */
+    public static void hideSoftInputWindow(IBinder windowToken) {
+        InputMethodManager imm = (InputMethodManager) App.get().getApplicationContext().
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm.isActive()) {
+            imm.hideSoftInputFromWindow(windowToken, 0);
+        }
     }
 }

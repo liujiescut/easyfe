@@ -29,10 +29,23 @@
     <string name="child_gender">宝贝性别</string>
     <string name="child_grade">宝贝年级</string>
     <string name="home_address">家庭地址</string>
+    <string name="address">地 址</string>
     <string name="parent_register_submit">提交注册</string>
     <string name="female">女</string>
     <string name="male">男</string>
     <string name="address_info">轻按定位图标即可拖动图标定位</string>
     <string name="current_position">当前位置</string>
     <string name="sure">确定</string>
+    <string name="birthday">出生年月日</string>
+    <string name="birthday_example">1990年4月4日</string>
+    <string name="id_card_number">身份证号</string>
+    <string name="school">学 校</string>
+    <string name="grade">年 级</string>
+    <string name="profession">专 业</string>
+    <string name="school_example">华南理工大学</string>
+    <string name="grade_example">2013级</string>
+    <string name="profession_example">软件工程</string>
+    <string name="had_teach_child_count">已家教过孩子的数量</string>
+    <string name="had_teach_time_count">已家教过的时长</string>
+    <string name="save_and_next_page">保存并进入下一页</string>
 </resources>

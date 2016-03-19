@@ -1,5 +1,6 @@
 package com.scut.easyfe.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -19,8 +20,10 @@ import java.util.ArrayList;
  * 家长注册页面
  */
 public class ParentRegisterActivity extends BaseActivity {
+    public static final int REQUEST_CODE = 0;
+
     private OptionsPickerView<String> mPicker;
-    private static final ArrayList<String> sGenderType = new ArrayList<>();
+    public static final ArrayList<String> sGenderType = new ArrayList<>();
 
     private EditText mParentNameEditText;           //家长姓名
     private EditText mParentPhoneEditText;          //家长手机
@@ -171,7 +174,9 @@ public class ParentRegisterActivity extends BaseActivity {
             bundle.putDouble(Constants.Key.LATITUDE, mLatitude);
             bundle.putDouble(Constants.Key.LONGITUDE, mLongitude);
             bundle.putString(Constants.Key.ADDRESS, mAddress);
-            redirectToActivity(this, AddressActivity.class, bundle);
+            Intent intent = new Intent(this, AddressActivity.class);
+            intent.putExtras(bundle);
+            startActivityForResult(intent, REQUEST_CODE);
         } else {
             MapUtils.getLocation(new MapUtils.LocationCallback() {
                 @Override
@@ -183,7 +188,9 @@ public class ParentRegisterActivity extends BaseActivity {
                     bundle.putDouble(Constants.Key.LATITUDE, mLatitude);
                     bundle.putDouble(Constants.Key.LONGITUDE, mLongitude);
                     bundle.putString(Constants.Key.ADDRESS, mAddress);
-                    redirectToActivity(ParentRegisterActivity.this, AddressActivity.class, bundle);
+                    Intent intent = new Intent(ParentRegisterActivity.this, AddressActivity.class);
+                    intent.putExtras(bundle);
+                    startActivityForResult(intent, REQUEST_CODE);
                 }
 
                 @Override
@@ -200,5 +207,22 @@ public class ParentRegisterActivity extends BaseActivity {
      */
     public void onRegisterClick(View view) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode == REQUEST_CODE && resultCode == AddressActivity.RESULT_OK && null != intent) {
+            mAddress = intent.getStringExtra(Constants.Key.ADDRESS);
+            mLatitude = intent.getDoubleExtra(Constants.Key.LATITUDE, -1);
+            mLongitude = intent.getDoubleExtra(Constants.Key.LONGITUDE, -1);
+
+            if (-1 == mLatitude || -1 == mLongitude) {
+                toast("获取地址失败,请重试");
+            } else {
+                mAddressTextView.setText(mAddress);
+            }
+        }else{
+            toast("获取地址失败,请重试");
+        }
     }
 }

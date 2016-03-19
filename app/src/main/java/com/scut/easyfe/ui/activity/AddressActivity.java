@@ -1,5 +1,6 @@
 package com.scut.easyfe.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -33,6 +34,8 @@ import com.scut.easyfe.utils.OtherUtils;
  * 获取地址信息页面
  */
 public class AddressActivity extends BaseActivity {
+    public static final int RESULT_OK = 0;
+
     private MapView mMapView;
     private TextView mAddressTextView;
     private BaiduMap mBaiduMap;
@@ -178,7 +181,11 @@ public class AddressActivity extends BaseActivity {
     public void onRightClick(View view){
         if(mAddress != null && mLatitude != -1 && mLongitude != -1){
             toast("选择位置成功");
-//Todo 使用startActivityForResult
+            Intent intent = getIntent();
+            intent.putExtra(Constants.Key.ADDRESS, mAddress);
+            intent.putExtra(Constants.Key.LATITUDE, mLatitude);
+            intent.putExtra(Constants.Key.LONGITUDE, mLongitude);
+            this.setResult(RESULT_OK, intent);
         }else {
             toast("选择位置失败,请重试");
         }

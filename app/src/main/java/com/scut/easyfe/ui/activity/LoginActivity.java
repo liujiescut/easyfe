@@ -54,7 +54,7 @@ public class LoginActivity extends BaseActivity {
      * @param view 被点击视图
      */
     public void onTeacherRegisterClick(View view) {
-        toast("点击家教注册");
+        redirectToActivity(mContext, TeacherRegisterOneActivity.class);
     }
 
     /**
