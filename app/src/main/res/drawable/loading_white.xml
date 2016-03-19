@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false" >
+
+    <item android:duration="30">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/white_loading_01"
+            android:gravity="left" />
+    </item>
+    <item android:duration="30">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/white_loading_02"
+            android:gravity="left" />
+    </item>
+    <item android:duration="30">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/white_loading_03"
+            android:gravity="left" />
+    </item>
+    <item android:duration="30">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/white_loading_04"
+            android:gravity="left" />
+    </item>
+    <item android:duration="30">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/white_loading_05"
+            android:gravity="left" />
+    </item>
+    <item android:duration="30">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/white_loading_06"
+            android:gravity="left" />
+    </item>
+    <item android:duration="30">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/white_loading_07"
+            android:gravity="left" />
+    </item>
+    <item android:duration="30">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/white_loading_08"
+            android:gravity="left" />
+    </item>
+    <item android:duration="30">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/white_loading_09"
+            android:gravity="left" />
+    </item>
+    <item android:duration="30">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/white_loading_10"
+            android:gravity="left" />
+    </item>
+    <item android:duration="30">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/white_loading_11"
+            android:gravity="left" />
+    </item>
+    <item android:duration="30">
+        <clip
+            android:clipOrientation="horizontal"
+            android:drawable="@mipmap/white_loading_12"
+            android:gravity="left" />
+    </item>
+
+</animation-list>

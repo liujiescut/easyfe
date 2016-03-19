@@ -1,0 +1,87 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/theme_color</item>
+        <item name="colorPrimaryDark">@color/theme_color_dark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- 首页侧拉栏每个项的样式 -->
+    <style name="main_left_drawer_item">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/selector_main_left_drawer_item</item>
+        <item name="android:textSize">@dimen/text_size_normal</item>
+        <item name="android:textColor">@color/title_text_color</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:layout_marginLeft">@dimen/layout_margin_normal</item>
+    </style>
+
+    <!-- 首页侧拉栏每个分割线的样式 -->
+    <style name="main_left_drawer_divider">
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginLeft">@dimen/layout_margin_small</item>
+        <item name="android:layout_marginRight">@dimen/layout_margin_small</item>
+        <item name="android:background">@color/left_drawer_divider</item>
+    </style>
+
+    <!-- 用于LinerLayout的一些默认设置(用于包含一些信息:如 手机: 12345678912) -->
+    <style name="ll_container_normal_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/text_area_height</item>
+        <item name="android:background">@color/text_area_bg</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/container_stoke_width</item>
+    </style>
+
+    <!-- 适用于TextView的一些默认设置(用于展示信息) -->
+    <style name="text_input_normal_style">
+        <item name="android:layout_width">0dip</item>
+        <!--通过设置weight-->
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/text_size_normal</item>
+        <item name="android:textColor">@color/text_area_text_color</item>
+        <item name="android:background">@drawable/selector_et_bg</item>
+        <item name="android:paddingLeft">@dimen/layout_padding_small</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <!-- 默认对话框样式 -->
+    <style name="base_dialog_theme" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!-- 边框 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 半透明 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowBackground">@color/transparent</item>
+        <!-- 背景透明 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 模糊 -->
+    </style>
+
+    <!-- Dialog -->
+    <style name="SimpleHUD" parent="@android:style/Theme.Dialog">
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <!-- 背景 -->
+        <item name="android:windowBackground">@drawable/simplehud_bg</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+</resources>

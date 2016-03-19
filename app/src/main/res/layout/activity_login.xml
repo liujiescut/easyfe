@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_app_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar" />
+
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        android:layout_marginTop="@dimen/layout_margin_normal">
+
+        <TextView
+            style="@style/text_input_normal_style"
+            android:layout_marginRight="1px"
+            android:layout_weight="1"
+            android:text="@string/phone" />
+
+        <EditText
+            android:id="@+id/login_et_phone"
+            style="@style/text_input_normal_style"
+            android:layout_weight="3"
+            android:textSize="@dimen/text_size_medium"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="@dimen/layout_padding_small"
+            android:maxLength="11"
+            android:inputType="phone" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        android:layout_marginTop="@dimen/layout_margin_small">
+
+        <TextView
+            style="@style/text_input_normal_style"
+            android:layout_marginRight="1px"
+            android:layout_weight="1"
+            android:text="@string/password" />
+
+        <EditText
+            android:id="@+id/login_et_password"
+            style="@style/text_input_normal_style"
+            android:layout_weight="3"
+            android:textSize="@dimen/text_size_medium"
+            android:paddingLeft="@dimen/layout_padding_small"
+            android:gravity="start|center_vertical"
+            android:inputType="textPassword" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_normal"
+        android:gravity="center"
+        android:text="@string/login_forget_password_hint"
+        android:textColor="@color/text_hint_color"
+        android:textSize="@dimen/text_size_small" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/layout_margin_small"
+        android:layout_marginStart="@dimen/layout_margin_small"
+        android:layout_marginTop="@dimen/layout_margin_small"
+        android:background="@drawable/selector_main_left_drawer_item"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="onLoginClick"
+        android:padding="@dimen/layout_padding_small"
+        android:text="@string/login_login"
+        android:textColor="@color/title_text_color"
+        android:textSize="@dimen/text_size_large"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:padding="@dimen/layout_padding_normal"
+            android:text="@string/login_parent_register"
+            android:textColor="@color/theme_color"
+            android:textSize="@dimen/text_size_normal"
+            android:clickable="true"
+            android:onClick="onParentRegisterClick"/>
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical|end"
+            android:padding="@dimen/layout_padding_normal"
+            android:text="@string/login_teacher_register"
+            android:textColor="@color/theme_color"
+            android:textSize="@dimen/text_size_normal"
+            android:clickable="true"
+            android:onClick="onTeacherRegisterClick"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/layout_padding_normal"
+        android:text="@string/login_protocol_hint"
+        android:textColor="@color/text_hint_color"
+        android:textSize="@dimen/text_size_small"
+        android:clickable="true"
+        android:onClick="onProtocolClick"/>
+</LinearLayout>

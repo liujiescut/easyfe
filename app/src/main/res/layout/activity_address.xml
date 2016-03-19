@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_app_bg"
+    android:orientation="vertical"
+    tools:context="com.scut.easyfe.ui.activity.AddressActivity">
+
+    <include
+        android:id="@+id/address_titlebar"
+        layout="@layout/titlebar" />
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/address_map"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_divider_height"
+        android:background="@color/left_drawer_divider" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/layout_padding_small"
+        android:text="@string/address_info"
+        android:textColor="@color/text_hint_color"
+        android:textSize="@dimen/text_size_small"
+        android:clickable="true"
+        android:onClick="onProtocolClick"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_divider_height"
+        android:background="@color/left_drawer_divider" />
+
+
+    <TextView
+        android:id="@+id/address_current"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:padding="@dimen/layout_padding_normal"
+        android:textColor="@color/theme_color_dark"
+        android:textSize="@dimen/text_size_normal"
+        android:text="@string/current_position"
+        tools:text="中国广东省广州市番禺区大学城内环东路" />
+
+</LinearLayout>

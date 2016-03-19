@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/titlebar_height_dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/theme_color"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+        <ImageView
+            android:id="@+id/titlebar_iv_left"
+            android:layout_width="@dimen/titlebar_height_dp"
+            android:layout_height="@dimen/titlebar_height_dp"
+            android:layout_centerVertical="true"
+            android:padding="12dp"
+            android:src="@mipmap/left_arrow"
+            android:onClick="onBackClick"
+            />
+        <TextView
+            android:id="@+id/titlebar_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/titlebar_height_dp"
+            android:layout_centerInParent="true"
+            android:text="@string/main_title"
+            android:gravity="center"
+            android:textColor="@color/title_text_color"
+            android:textSize="20sp"
+            />
+
+    <TextView
+        android:id="@+id/titlebar_tv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="@string/sure"
+        android:textSize="16sp"
+        android:textColor="@color/title_text_color"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/selector_main_left_drawer_item"
+        android:padding="@dimen/layout_padding_normal"
+        android:clickable="true"
+        android:visibility="gone"
+        android:onClick="onRightClick"
+        tools:visibility="visible"/>
+    </RelativeLayout>

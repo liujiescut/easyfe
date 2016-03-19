@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_app_bg"
+    android:orientation="vertical"
+    tools:context="com.scut.easyfe.ui.activity.ParentRegisterActivity">
+    <include
+        layout="@layout/titlebar"/>
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        android:layout_marginTop="@dimen/layout_margin_normal">
+
+        <TextView
+            style="@style/text_input_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="1"
+            android:text="@string/parent_register_name" />
+
+        <EditText
+            android:id="@+id/parent_register_et_name"
+            style="@style/text_input_normal_style"
+            android:layout_weight="3"
+            android:textSize="@dimen/text_size_medium"
+            android:gravity="start|center_vertical"
+            android:maxLength="10"
+            tools:text="黄先生"
+            />
+    </LinearLayout>
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        >
+
+        <TextView
+            style="@style/text_input_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="1"
+            android:text="@string/gender" />
+
+        <TextView
+            android:id="@+id/parent_register_tv_parent_gender"
+            style="@style/text_input_normal_style"
+            android:layout_weight="3"
+            android:textSize="@dimen/text_size_medium"
+            android:gravity="start|center_vertical"
+            android:maxLength="11"
+            android:drawableRight="@mipmap/icon_right_arrow_padding"
+            android:onClick="onParentGenderClick"
+            android:text="@string/female" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_normal"
+        android:gravity="center"
+        android:text="@string/parent_register_info"
+        android:textColor="@color/text_hint_color"
+        android:textSize="@dimen/text_size_small" />
+
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        android:layout_marginTop="@dimen/layout_margin_normal">
+
+        <TextView
+            style="@style/text_input_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="1"
+            android:text="@string/phone" />
+
+        <EditText
+            android:id="@+id/parent_register_et_phone"
+            style="@style/text_input_normal_style"
+            android:layout_weight="3"
+            android:textSize="@dimen/text_size_medium"
+            android:gravity="start|center_vertical"
+            android:maxLength="11"
+            tools:text="18814111111"
+            android:inputType="phone" />
+    </LinearLayout>
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        >
+
+        <TextView
+            style="@style/text_input_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="1"
+            android:text="@string/password" />
+
+        <EditText
+            android:id="@+id/parent_register_et_password"
+            style="@style/text_input_normal_style"
+            android:layout_weight="3"
+            android:textSize="@dimen/text_size_medium"
+            android:gravity="start|center_vertical"
+            android:inputType="textPassword"
+            tools:text="18814111111"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/layout_margin_normal"
+        style="@style/ll_container_normal_style"
+        >
+
+        <TextView
+            style="@style/text_input_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="1"
+            android:text="@string/child_gender" />
+
+        <TextView
+            android:id="@+id/parent_register_tv_child_gender"
+            style="@style/text_input_normal_style"
+            android:layout_weight="3"
+            android:textSize="@dimen/text_size_medium"
+            android:gravity="start|center_vertical"
+            android:maxLength="11"
+            android:drawableRight="@mipmap/icon_right_arrow_padding"
+            android:text="@string/female"
+            android:onClick="onChildGenderClick" />
+    </LinearLayout>
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        >
+
+        <TextView
+            style="@style/text_input_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="1"
+            android:text="@string/child_grade" />
+
+        <TextView
+            android:id="@+id/parent_register_tv_child_grade"
+            style="@style/text_input_normal_style"
+            android:layout_weight="3"
+            android:textSize="@dimen/text_size_medium"
+            android:gravity="start|center_vertical"
+            android:maxLength="11"
+            android:drawableRight="@mipmap/icon_right_arrow_padding"
+            tools:text="小学 一年级"
+            android:onClick="onChildGradeClick" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        >
+
+        <TextView
+            style="@style/text_input_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="1"
+            android:text="@string/home_address" />
+
+        <TextView
+            android:id="@+id/parent_register_tv_address"
+            style="@style/text_input_normal_style"
+            android:layout_weight="3"
+            android:textSize="@dimen/text_size_medium"
+            android:gravity="start|center_vertical"
+            android:drawableRight="@mipmap/icon_map_grey"
+            android:ellipsize="end"
+            android:singleLine="true"
+            tools:text="广东省广州大学城华南理工大学"
+            android:onClick="onAddressClick" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/layout_margin_small"
+        android:layout_marginStart="@dimen/layout_margin_small"
+        android:layout_marginTop="@dimen/layout_margin_small"
+        android:background="@drawable/selector_main_left_drawer_item"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="onRegisterClick"
+        android:padding="@dimen/layout_padding_small"
+        android:text="@string/parent_register_submit"
+        android:textColor="@color/title_text_color"
+        android:textSize="@dimen/text_size_large"
+        android:id="@+id/parent_register_tv_submit" />
+
+
+</LinearLayout>
