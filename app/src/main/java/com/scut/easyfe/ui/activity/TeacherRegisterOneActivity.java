@@ -15,7 +15,6 @@ import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.MapUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -86,7 +85,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
         mGoNextTextView = OtherUtils.findViewById(this, R.id.teacher_register_one_tv_submit);
 
         ((TextView) findViewById(R.id.titlebar_tv_title)).setText("家教注册-基本信息");
-        mBirthdayTextView.setText(getTime(calendar.getTime()));
+        mBirthdayTextView.setText(OtherUtils.getTime(calendar.getTime(), "yyyy 年 MM 月 dd 日"));
     }
 
     @Override
@@ -112,7 +111,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
         mTimePicker.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date) {
-                mBirthdayTextView.setText(getTime(date));
+                mBirthdayTextView.setText(OtherUtils.getTime(date, "yyyy 年 MM 月 dd 日"));
             }
         });
     }
@@ -134,11 +133,6 @@ public class TeacherRegisterOneActivity extends BaseActivity {
         }
     }
 
-    public static String getTime(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy 年 MM 月 dd 日");
-        return format.format(date);
-    }
-
     /**
      * 点击选择性别
      */
@@ -152,7 +146,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
         mPicker.setPicker(sGenderType);
         mPicker.setSelectOptions(0);
         mPicker.setCyclic(false);
-        mPicker.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+        mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 if (options1 == 0) {
@@ -247,6 +241,13 @@ public class TeacherRegisterOneActivity extends BaseActivity {
      */
     public void onTeachTimeClick(View view) {
 
+    }
+
+    /**
+     * 家教注册第一步点击保存并进入下一页
+     */
+    public void onRegisterOneClick(View view){
+        redirectToActivity(this, TeacherRegisterTwoActivity.class);
     }
 
 }

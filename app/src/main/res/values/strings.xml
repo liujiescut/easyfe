@@ -48,4 +48,31 @@
     <string name="had_teach_child_count">已家教过孩子的数量</string>
     <string name="had_teach_time_count">已家教过的时长</string>
     <string name="save_and_next_page">保存并进入下一页</string>
+    <string name="teacher_register_step_two_info_1">请完成下列信息，以方便合适您的家长能联系到您\n（下列信息可根据您的意愿随时更改）</string>
+    <string name="teacher_register_step_two_info_2">以下参照百度地图公共交通时间\n为您进行匹配每一订单交通补贴</string>
+    <string name="teacher_register_step_two_info_3" formatted="false">（建议以家教价格为基础，下调20% ~ 30%）</string>
+    <string name="teach_time">授课时间</string>
+    <string name="set_your_teach_time">请选择您方便授课的时间</string>
+    <string name="min_teach_time">最短课时</string>
+    <string name="min_teach_time_example">2 小时 50 分钟</string>
+    <string name="accept_traffic_time">能接受的交通时间\n（无交通补贴）</string>
+    <string name="traffic_time_example">1 小时 23 分钟</string>
+    <string name="max_traffic_time">能接受的最长交通时间\n（超出部分收取交通补贴）</string>
+    <string name="traffic_tip">交通补贴</string>
+    <string name="teach_course">可教授课程及收费</string>
+    <string name="fill_message">请完善此信息</string>
+    <string name="angel_plan">是否参与陪伴天使计划</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="angel_plan_boy_age">天使授课对象最大年龄(男)</string>
+    <string name="angel_plane_girl_age">天使授课对象最大年龄(女)</string>
+    <string name="angel_plan_price">陪伴天使计划收取价格</string>
+    <string name="price_example">1 元/小时</string>
+    <string name="age_example">5 岁</string>
+    <string name="deny">不接受</string>
+    <string name="hint_input">请输入</string>
+    <string name="course_info_1">每周固定时间</string>
+    <string name="course_info_2">在上述一般时间安排下如需对特殊时间进行调整，请点击以下按钮\n（特殊时间调整适用于单次预约订单）</string>
+    <string name="detail_plan_two_months">近两月时间特别安排</string>
+
 </resources>

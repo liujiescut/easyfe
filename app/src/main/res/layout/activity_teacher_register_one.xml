@@ -34,7 +34,6 @@
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
                     android:maxLength="10"
-                    android:textSize="@dimen/text_size_medium"
                     tools:text="黄先生" />
             </LinearLayout>
 
@@ -54,7 +53,7 @@
                     android:gravity="start|center_vertical"
                     android:onClick="onTeacherGenderClick"
                     android:text="@string/female"
-                    android:textSize="@dimen/text_size_medium" />
+                    />
             </LinearLayout>
 
             <LinearLayout style="@style/ll_container_normal_style">
@@ -73,7 +72,7 @@
                     android:gravity="start|center_vertical"
                     android:onClick="onTeacherBirthdayClick"
                     android:text="@string/birthday_example"
-                    android:textSize="@dimen/text_size_medium" />
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -93,7 +92,6 @@
                     android:gravity="start|center_vertical"
                     android:inputType="phone"
                     android:maxLength="11"
-                    android:textSize="@dimen/text_size_medium"
                     tools:text="18814111111" />
             </LinearLayout>
 
@@ -111,7 +109,6 @@
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
                     android:inputType="textPassword"
-                    android:textSize="@dimen/text_size_medium"
                     tools:text="18814111111" />
             </LinearLayout>
 
@@ -129,7 +126,6 @@
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
                     android:inputType="phone"
-                    android:textSize="@dimen/text_size_medium"
                     tools:text="441481123456789098" />
             </LinearLayout>
 
@@ -150,7 +146,6 @@
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
                     android:onClick="onSchoolClick"
-                    android:textSize="@dimen/text_size_medium"
                     tools:text="@string/school_example" />
             </LinearLayout>
 
@@ -169,7 +164,6 @@
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
                     android:onClick="onGradeClick"
-                    android:textSize="@dimen/text_size_medium"
                     tools:text="@string/grade_example" />
             </LinearLayout>
 
@@ -188,7 +182,6 @@
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
                     android:onClick="onProfessionClick"
-                    android:textSize="@dimen/text_size_medium"
                     tools:text="@string/profession_example" />
             </LinearLayout>
 
@@ -211,7 +204,6 @@
                     android:gravity="start|center_vertical"
                     android:onClick="onAddressClick"
                     android:singleLine="true"
-                    android:textSize="@dimen/text_size_medium"
                     tools:text="广东省广州大学城华南理工大学" />
             </LinearLayout>
 
@@ -232,7 +224,6 @@
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
                     android:onClick="onTeachChildCountClick"
-                    android:textSize="@dimen/text_size_medium"
                     tools:text="1 - 2" />
             </LinearLayout>
 
@@ -251,7 +242,6 @@
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
                     android:onClick="onTeachTimeClick"
-                    android:textSize="@dimen/text_size_medium"
                     tools:text="10h - 50h" />
             </LinearLayout>
 
@@ -270,7 +260,7 @@
                 android:padding="@dimen/layout_padding_small"
                 android:text="@string/save_and_next_page"
                 android:textColor="@color/title_text_color"
-                android:textSize="@dimen/text_size_large" />
+                android:textSize="@dimen/text_size_normal" />
 
         </LinearLayout>
     </ScrollView>

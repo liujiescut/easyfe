@@ -1,8 +1,11 @@
 package com.scut.easyfe.ui.fragments;
 
+import android.content.Intent;
 import android.view.View;
 
 import com.scut.easyfe.R;
+import com.scut.easyfe.ui.activity.TeacherRegisterOneActivity;
+import com.scut.easyfe.ui.activity.TeacherRegisterTwoActivity;
 import com.scut.easyfe.ui.base.BaseFragment;
 
 /**
@@ -108,6 +111,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
      * @param view 被点击视图
      */
     private void onTeacherClick(View view){
-        toast("点击我是家教");
+        if(null != mActivity) {
+            mActivity.redirectToActivity(mActivity, TeacherRegisterTwoActivity.class);
+        }
     }
 }

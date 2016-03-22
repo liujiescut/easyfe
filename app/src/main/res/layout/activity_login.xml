@@ -21,7 +21,6 @@
             android:id="@+id/login_et_phone"
             style="@style/text_input_normal_style"
             android:layout_weight="3"
-            android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
             android:paddingLeft="@dimen/layout_padding_small"
             android:maxLength="11"
@@ -42,7 +41,6 @@
             android:id="@+id/login_et_password"
             style="@style/text_input_normal_style"
             android:layout_weight="3"
-            android:textSize="@dimen/text_size_medium"
             android:paddingLeft="@dimen/layout_padding_small"
             android:gravity="start|center_vertical"
             android:inputType="textPassword" />
@@ -70,7 +68,7 @@
         android:padding="@dimen/layout_padding_small"
         android:text="@string/login_login"
         android:textColor="@color/title_text_color"
-        android:textSize="@dimen/text_size_large"
+        android:textSize="@dimen/text_size_normal"
         />
 
     <LinearLayout

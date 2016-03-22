@@ -112,7 +112,7 @@ public class ParentRegisterActivity extends BaseActivity {
         mPicker.setPicker(sGenderType);
         mPicker.setSelectOptions(0);
         mPicker.setCyclic(false);
-        mPicker.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+        mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 if (options1 == 0) {
@@ -141,7 +141,7 @@ public class ParentRegisterActivity extends BaseActivity {
         mPicker.setPicker(sGenderType);
         mPicker.setSelectOptions(0);
         mPicker.setCyclic(false);
-        mPicker.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+        mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 if (options1 == 0) {

@@ -37,6 +37,7 @@
         <item name="android:orientation">horizontal</item>
         <item name="android:gravity">center</item>
         <item name="android:padding">@dimen/container_stoke_width</item>
+        <item name="android:layout_marginTop">@dimen/negative_container_stoke_width</item>
     </style>
 
     <!-- 适用于TextView的一些默认设置(用于展示信息) -->
@@ -45,10 +46,11 @@
         <!--通过设置weight-->
         <item name="android:layout_height">match_parent</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">@dimen/text_size_normal</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:textColor">@color/text_area_text_color</item>
         <item name="android:background">@drawable/selector_et_bg</item>
         <item name="android:paddingLeft">@dimen/layout_padding_small</item>
+        <item name="android:paddingRight">@dimen/layout_padding_small</item>
         <item name="android:clickable">true</item>
     </style>
 

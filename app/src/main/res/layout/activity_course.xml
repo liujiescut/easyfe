@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_app_bg"
+    tools:context="com.scut.easyfe.ui.activity.CourseActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/titlebar" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left|center_vertical"
+            android:padding="@dimen/layout_padding_small"
+            android:text="@string/course_info_1"
+            android:textColor="@color/text_hint_color"
+            android:textSize="@dimen/text_size_tiny" />
+        <!-- 在这里动态加入一些视图 -->
+
+        <ImageView
+            android:id="@+id/course_add"
+            style="@style/text_input_normal_style"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_area_height"
+            android:layout_marginTop="@dimen/layout_margin_small"
+            android:scaleType="center"
+            android:src="@mipmap/icon_plus" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/layout_padding_small"
+            android:text="@string/course_info_2"
+            android:textColor="@color/text_hint_color"
+            android:textSize="@dimen/text_size_tiny" />
+
+        <RelativeLayout
+            android:id="@+id/course_detail_plan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_main_left_drawer_item"
+            android:layout_marginBottom="@dimen/layout_margin_small"
+            android:layout_marginEnd="@dimen/layout_margin_small"
+            android:layout_marginStart="@dimen/layout_margin_small"
+            android:layout_marginTop="@dimen/layout_margin_small"
+            >
+
+
+            <TextView
+                android:id="@+id/course_detail_plan_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onRegisterTwoClick"
+                android:padding="@dimen/layout_padding_small"
+                android:text="@string/detail_plan_two_months"
+                android:textColor="@color/title_text_color"
+                android:textSize="@dimen/text_size_normal"
+                android:layout_centerInParent="true"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_calendar_padding"
+                android:layout_toLeftOf="@+id/course_detail_plan_text"
+                android:layout_centerVertical="true"
+                />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</ScrollView>

@@ -24,8 +24,9 @@
     <dimen name="main_icon_inner_size">36dp</dimen>
 
     <dimen name="titlebar_height_dp">50dp</dimen>
-    <dimen name="text_area_height">50dp</dimen>
+    <dimen name="text_area_height">40dp</dimen>
 
     <dimen name="container_stoke_width">1dp</dimen>
+    <dimen name="negative_container_stoke_width">-1dp</dimen>
     <!-- 容器边框大小 -->
 </resources>

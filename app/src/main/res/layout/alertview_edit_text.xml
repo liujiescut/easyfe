@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    >
+
+    <EditText
+        android:id="@+id/alertview_et_input"
+        style="@style/text_input_normal_style"
+        android:layout_height="@dimen/text_area_height"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/layout_padding_normal"
+        android:gravity="start|center_vertical"
+        android:hint="@string/hint_input"
+        android:textColorHint="@color/text_hint_color"/>
+
+</RelativeLayout>
