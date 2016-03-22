@@ -58,7 +58,7 @@
         <activity android:name=".ui.activity.AddressActivity" />
         <activity android:name=".ui.activity.TeacherRegisterOneActivity" />
         <activity android:name=".ui.activity.TeacherRegisterTwoActivity" />
-        <activity android:name=".ui.activity.CourseActivity"></activity>
+        <activity android:name=".ui.activity.CourseActivity"/>
     </application>
 
 </manifest>

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 /**
  * 家长注册页面
+ * @author jay
  */
 public class ParentRegisterActivity extends BaseActivity {
     public static final int REQUEST_CODE = 0;

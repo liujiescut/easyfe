@@ -59,40 +59,40 @@ public class LogUtils {
 
     public static void v(String msg) {
         if (Constants.Config.ISLOG) {
-            Log.v(Constants.Config.LOGTAG, msg);
+            Log.v(Constants.Tag.BASE_TAG, msg);
         }
 
     }
 
     public static void d(String msg) {
         if (Constants.Config.ISLOG) {
-            Log.d(Constants.Config.LOGTAG, msg);
+            Log.d(Constants.Tag.BASE_TAG, msg);
         }
 
     }
 
     public static void i(String msg) {
         if (Constants.Config.ISLOG) {
-            Log.i(Constants.Config.LOGTAG, msg);
+            Log.i(Constants.Tag.BASE_TAG, msg);
         }
 
     }
 
     public static void w(String msg) {
         if (Constants.Config.ISLOG) {
-            Log.w(Constants.Config.LOGTAG, msg);
+            Log.w(Constants.Tag.BASE_TAG, msg);
         }
 
     }
 
     public static void e(String msg) {
         if (Constants.Config.ISLOG) {
-            Log.e(Constants.Config.LOGTAG, msg);
+            Log.e(Constants.Tag.BASE_TAG, msg);
         }
     }
 
     public static void forcePrint(String msg) {
-        Log.i(Constants.Config.LOGTAG, msg);
+        Log.i(Constants.Tag.BASE_TAG, msg);
     }
 
     public static void toastError(Context context, String msg) {

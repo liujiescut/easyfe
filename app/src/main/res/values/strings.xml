@@ -74,5 +74,15 @@
     <string name="course_info_1">每周固定时间</string>
     <string name="course_info_2">在上述一般时间安排下如需对特殊时间进行调整，请点击以下按钮\n（特殊时间调整适用于单次预约订单）</string>
     <string name="detail_plan_two_months">近两月时间特别安排</string>
+    <string name="monday">星期一</string>
+    <string name="tuesday">星期二</string>
+    <string name="wednesday">星期三</string>
+    <string name="thursday">星期四</string>
+    <string name="friday">星期五</string>
+    <string name="saturday">星期六</string>
+    <string name="sunday">星期日</string>
+    <string name="morning">上午</string>
+    <string name="afternoon">下午</string>
+    <string name="night">晚上</string>
 
 </resources>

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 /**
  * 家教注册第二部(家教时间)
+ * @author jay
  */
 public class TeacherRegisterTwoActivity extends BaseActivity {
 
@@ -165,8 +166,7 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
      * 点击选择授课时间
      */
     public void onTeachTimeClick(View view) {
-        //Todo 选择授课时间
-        toast("点击选择授课时间");
+        redirectToActivity(this, CourseActivity.class);
     }
 
     /**

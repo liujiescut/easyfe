@@ -17,6 +17,7 @@ import java.util.Map;
 
 /**
  * 程序主界面
+ * @author jay
  */
 public class MainActivity extends BaseActivity {
     private static final int FRAGMENT_HOME = 0;

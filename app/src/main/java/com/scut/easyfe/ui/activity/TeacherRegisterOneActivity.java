@@ -19,6 +19,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * 注册第一步(基本信息)
+ * @author jay
+ */
 public class TeacherRegisterOneActivity extends BaseActivity {
     public static final int REQUEST_CODE = 0;
     private EditText mNameEditText;         //姓名

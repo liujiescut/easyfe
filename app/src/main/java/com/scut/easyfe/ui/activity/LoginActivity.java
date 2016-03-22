@@ -8,6 +8,7 @@ import com.scut.easyfe.ui.base.BaseActivity;
 
 /**
  * 登录注册页面
+ * @author jay
  */
 public class LoginActivity extends BaseActivity {
     @Override

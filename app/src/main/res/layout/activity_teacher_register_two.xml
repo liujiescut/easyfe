@@ -251,7 +251,7 @@
                 android:textColor="@color/text_hint_color"
                 android:textSize="@dimen/text_size_tiny" />
             <TextView
-                android:id="@+id/course_detail_plan_text"
+                android:id="@+id/teacher_register_two_tv_submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/layout_margin_small"

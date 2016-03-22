@@ -21,15 +21,21 @@
             android:text="@string/course_info_1"
             android:textColor="@color/text_hint_color"
             android:textSize="@dimen/text_size_tiny" />
-        <!-- 在这里动态加入一些视图 -->
+
+        <LinearLayout
+            android:id="@+id/course_ll_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
 
         <ImageView
-            android:id="@+id/course_add"
+            android:id="@+id/course_iv_add"
             style="@style/text_input_normal_style"
             android:layout_width="match_parent"
             android:layout_height="@dimen/text_area_height"
             android:layout_marginTop="@dimen/layout_margin_small"
             android:scaleType="center"
+            android:onClick="onAddClick"
             android:src="@mipmap/icon_plus" />
 
         <TextView
@@ -42,7 +48,7 @@
             android:textSize="@dimen/text_size_tiny" />
 
         <RelativeLayout
-            android:id="@+id/course_detail_plan"
+            android:id="@+id/course_ll_detail_plan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/selector_main_left_drawer_item"
@@ -50,6 +56,7 @@
             android:layout_marginEnd="@dimen/layout_margin_small"
             android:layout_marginStart="@dimen/layout_margin_small"
             android:layout_marginTop="@dimen/layout_margin_small"
+            android:onClick="onDetailPlanClick"
             >
 
 

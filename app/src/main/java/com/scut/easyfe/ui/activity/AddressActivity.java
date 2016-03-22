@@ -32,6 +32,7 @@ import com.scut.easyfe.utils.OtherUtils;
 
 /**
  * 获取地址信息页面
+ * @author jay
  */
 public class AddressActivity extends BaseActivity {
     public static final int RESULT_OK = 0;
