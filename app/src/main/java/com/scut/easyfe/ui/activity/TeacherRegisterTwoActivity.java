@@ -166,7 +166,7 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
      * 点击选择授课时间
      */
     public void onTeachTimeClick(View view) {
-        redirectToActivity(this, CourseActivity.class);
+        redirectToActivity(this, TeachTimeActivity.class);
     }
 
     /**

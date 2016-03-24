@@ -47,6 +47,17 @@
             android:process=":remote" />
 
         <activity android:name=".ui.activity.MainActivity">
+        </activity>
+        <activity android:name=".ui.activity.LoginActivity" />
+        <activity android:name=".ui.activity.ParentRegisterActivity" />
+        <activity android:name=".ui.activity.AddressActivity" />
+        <activity android:name=".ui.activity.TeacherRegisterOneActivity" />
+        <activity android:name=".ui.activity.TeacherRegisterTwoActivity" />
+        <activity android:name=".ui.activity.TeachTimeActivity" />
+        <activity
+            android:name=".ui.activity.SpecialTimeActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".ui.activity.TeachCourseActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -54,14 +65,6 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".ui.activity.LoginActivity" />
-        <activity android:name=".ui.activity.ParentRegisterActivity" />
-        <activity android:name=".ui.activity.AddressActivity" />
-        <activity android:name=".ui.activity.TeacherRegisterOneActivity" />
-        <activity android:name=".ui.activity.TeacherRegisterTwoActivity" />
-        <activity android:name=".ui.activity.CourseActivity" />
-        <activity android:name=".ui.activity.SpecialTimeActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
     </application>
 
 </manifest>

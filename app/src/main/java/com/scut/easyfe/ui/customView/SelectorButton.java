@@ -23,14 +23,17 @@ public class SelectorButton extends TextView{
     private int mUnselectedTextColor = R.color.theme_color_dark;                      //未选中文字颜色
     public SelectorButton(Context context) {
         super(context);
+        init();
     }
 
     public SelectorButton(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     public SelectorButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
     }
 
     /**

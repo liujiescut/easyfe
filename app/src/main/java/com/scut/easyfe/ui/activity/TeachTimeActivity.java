@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * 教授时间页面
  * @author jay
  */
-public class CourseActivity extends BaseActivity {
+public class TeachTimeActivity extends BaseActivity {
     private LinearLayout mContainerLinearLayout;
     private ArrayList<String> mWeek = new ArrayList<>();
     private ArrayList<ArrayList<String>> mTime = new ArrayList<>();
@@ -49,13 +49,13 @@ public class CourseActivity extends BaseActivity {
 
     @Override
     protected void setLayoutView() {
-        setContentView(R.layout.activity_course);
+        setContentView(R.layout.activity_teach_time);
     }
 
     @Override
     protected void initView() {
         ((TextView)findViewById(R.id.titlebar_tv_title)).setText("授课时间");
-        mContainerLinearLayout = OtherUtils.findViewById(this, R.id.course_ll_container);
+        mContainerLinearLayout = OtherUtils.findViewById(this, R.id.teach_time_ll_container);
 
         mPicker = new OptionsPickerView<>(this);
         mPicker.setPicker(mWeek, mTime, false);
