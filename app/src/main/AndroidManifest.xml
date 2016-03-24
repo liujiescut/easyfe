@@ -52,13 +52,16 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.ParentRegisterActivity" />
         <activity android:name=".ui.activity.AddressActivity" />
         <activity android:name=".ui.activity.TeacherRegisterOneActivity" />
         <activity android:name=".ui.activity.TeacherRegisterTwoActivity" />
-        <activity android:name=".ui.activity.CourseActivity"/>
+        <activity android:name=".ui.activity.CourseActivity" />
+        <activity android:name=".ui.activity.SpecialTimeActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
     </application>
 
 </manifest>

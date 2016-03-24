@@ -1,10 +1,8 @@
-package com.scut.easyfe.ui.fragments;
+package com.scut.easyfe.ui.fragment;
 
-import android.content.Intent;
 import android.view.View;
 
 import com.scut.easyfe.R;
-import com.scut.easyfe.ui.activity.TeacherRegisterOneActivity;
 import com.scut.easyfe.ui.activity.TeacherRegisterTwoActivity;
 import com.scut.easyfe.ui.base.BaseFragment;
 

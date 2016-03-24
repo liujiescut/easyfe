@@ -1,7 +1,6 @@
 package com.scut.easyfe.ui.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -9,7 +8,7 @@ import android.widget.LinearLayout;
 import com.scut.easyfe.R;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.ui.base.BaseFragment;
-import com.scut.easyfe.ui.fragments.HomeFragment;
+import com.scut.easyfe.ui.fragment.HomeFragment;
 import com.scut.easyfe.utils.OtherUtils;
 
 import java.util.HashMap;

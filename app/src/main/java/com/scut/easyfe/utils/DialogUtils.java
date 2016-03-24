@@ -83,7 +83,6 @@ public class DialogUtils {
                 boolean isOpen = ((InputMethodManager) App.get().getApplicationContext().
                         getSystemService(Context.INPUT_METHOD_SERVICE)).isActive();
                 mAlertView.setMarginBottom(isOpen && focus ? 120 : 0);
-                System.out.println(isOpen);
             }
         });
         mAlertView.addExtView(container);

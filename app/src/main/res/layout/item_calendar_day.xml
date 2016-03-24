@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/text_area_bg_inner"
+    xmlns:tools="http://schemas.android.com/tools">
+    <TextView
+        android:id="@+id/calendar_day_tv_day"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:background="@color/text_area_bg_inner"
+        />
+    <ImageView
+        android:id="@+id/calendar_day_iv_point"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignRight="@+id/calendar_day_tv_day"
+        android:layout_alignTop="@+id/calendar_day_tv_day"
+        android:src="@mipmap/icon_gold_point"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+</RelativeLayout>

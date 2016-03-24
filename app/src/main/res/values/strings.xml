@@ -84,5 +84,11 @@
     <string name="morning">上午</string>
     <string name="afternoon">下午</string>
     <string name="night">晚上</string>
+    <string name="selected_date">选中日期</string>
+    <string name="date_example">2016 年 3 月 25 日 （星期五）</string>
+    <string name="teach_or_not">是否授课</string>
+    <string name="remember_things">备忘录</string>
+    <string name="sure_and_save">确认并保存</string>
+    <string name="special_time_hint">如家长与您后来协商临时更改了家教地址或定位地址不具体（未明确几栋几户），建议您将新的实际具体地址及相关说明填列在此，以便在特殊情形下方便确认您的位置，保障您的安全。</string>
 
 </resources>

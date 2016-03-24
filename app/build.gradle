@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.scut.easyfe"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -22,6 +22,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:support-v4:23.2.1'
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.android.support:design:23.2.1'
     compile 'com.android.support:cardview-v7:23.2.1'
@@ -29,6 +30,7 @@ dependencies {
     compile 'com.android.support:palette-v7:23.2.1'
     compile project(':alertview')
     compile project(':pickerview')
+    compile project(':caldroid')
     compile files('libs/BaiduLBS_Android.jar')
     compile files('libs/locSDK_6.23.jar')
 }

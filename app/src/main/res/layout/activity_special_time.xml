@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/titlebar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_app_bg"
+            android:orientation="vertical"
+            tools:context="com.scut.easyfe.ui.activity.SpecialTimeActivity">
+
+            <FrameLayout
+                android:id="@+id/special_time_calendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="-1dp"
+                android:background="@color/theme_color_dark" />
+
+            <LinearLayout
+                style="@style/ll_container_normal_style"
+                android:layout_marginTop="@dimen/layout_margin_small">
+
+                <TextView
+                    style="@style/text_input_normal_style"
+                    android:layout_marginRight="@dimen/container_stoke_width"
+                    android:layout_weight="1"
+                    android:text="@string/selected_date" />
+
+                <TextView
+                    android:id="@+id/special_time_selected_date"
+                    style="@style/text_input_normal_style"
+                    android:layout_weight="3"
+                    android:gravity="start|center_vertical"
+                    tools:text="@string/date_example" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/ll_container_normal_style">
+
+                <TextView
+                    style="@style/text_input_normal_style"
+                    android:layout_marginRight="@dimen/container_stoke_width"
+                    android:layout_weight="1"
+                    android:text="@string/teach_or_not" />
+
+                <TextView
+                    android:id="@+id/special_time_teachable"
+                    style="@style/text_input_normal_style"
+                    android:layout_weight="3"
+                    android:drawableRight="@mipmap/icon_right_arrow_padding"
+                    android:gravity="start|center_vertical"
+                    android:onClick="onTeachOrNotClick"
+                    android:text="@string/no" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/special_time_ll_time"
+                style="@style/ll_container_normal_style"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    style="@style/text_input_normal_style"
+                    android:layout_marginRight="@dimen/container_stoke_width"
+                    android:layout_weight="1"
+                    android:text="@string/selected_date" />
+
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:background="@color/text_area_bg_inner"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.scut.easyfe.ui.customView.SelectorButton
+                        android:id="@+id/special_time_sb_morning"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginLeft="@dimen/layout_margin_small"
+                        android:layout_marginRight="@dimen/layout_margin_small"
+                        android:layout_marginTop="6dp"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <com.scut.easyfe.ui.customView.SelectorButton
+                        android:id="@+id/special_time_sb_afternoon"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginLeft="@dimen/layout_margin_small"
+                        android:layout_marginRight="@dimen/layout_margin_small"
+                        android:layout_marginTop="6dp"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <com.scut.easyfe.ui.customView.SelectorButton
+                        android:id="@+id/special_time_sb_night"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginLeft="@dimen/layout_margin_small"
+                        android:layout_marginRight="@dimen/layout_margin_small"
+                        android:layout_marginTop="6dp"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:padding="@dimen/layout_padding_small"
+                android:text="@string/remember_things"
+                android:textColor="@color/text_hint_color"
+                android:textSize="@dimen/text_size_small" />
+
+            <EditText
+                android:id="@+id/special_time_et_remember_things"
+                style="@style/text_input_normal_style"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:gravity="start"
+                android:padding="@dimen/layout_padding_small"
+                android:hint="@string/special_time_hint"
+                android:textColorHint="#A7A7A7"
+                android:maxHeight="80dp"
+                android:minHeight="80dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/layout_margin_small"
+                android:layout_marginStart="@dimen/layout_margin_small"
+                android:layout_marginTop="@dimen/layout_margin_small"
+                android:background="@drawable/selector_main_left_drawer_item"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onConfirmClick"
+                android:padding="@dimen/layout_padding_small"
+                android:text="@string/sure_and_save"
+                android:textColor="@color/title_text_color"
+                android:textSize="@dimen/text_size_normal" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

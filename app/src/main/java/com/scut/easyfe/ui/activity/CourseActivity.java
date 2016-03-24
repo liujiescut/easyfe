@@ -130,7 +130,7 @@ public class CourseActivity extends BaseActivity {
      * 点击近两月时间特别安排
      */
     public void onDetailPlanClick(View view){
-
+        redirectToActivity(mContext, SpecialTimeActivity.class);
     }
 
     public void onBackClick(View view){
