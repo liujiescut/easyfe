@@ -148,7 +148,7 @@ public class TeachCourseActivity extends BaseActivity {
      * 点击确认并保存
      */
     public void onConfirmClick(View view) {
-
+        redirectToActivity(mContext, TeacherRegisterTwoActivity.class);
     }
 
     /**

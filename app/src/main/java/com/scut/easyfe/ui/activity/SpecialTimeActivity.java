@@ -136,7 +136,7 @@ public class SpecialTimeActivity extends BaseActivity {
      * 点击确认并保存
      */
     public void onConfirmClick(View view) {
-        //Todo 具体的逻辑处理
+        redirectToActivity(mContext, TeacherRegisterTwoActivity.class);
     }
 
     public void onBackClick(View view) {

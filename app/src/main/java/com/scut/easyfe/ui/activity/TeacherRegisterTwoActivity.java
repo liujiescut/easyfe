@@ -223,8 +223,7 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
      * 点击选择可教授课程
      */
     public void onTeachCourseClick(View view) {
-        //Todo 点击选择可教授课程
-        toast("点击选择可教授课程");
+        redirectToActivity(mContext, TeachCourseActivity.class);
     }
 
     /**
@@ -292,7 +291,7 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
      */
     public void onRegisterTwoClick(View view) {
         //Todo 点击注册
-        toast("点击注册");
+        redirectToActivity(this, ReceivablesChannelActivity.class);
     }
 
     public void onBackClick(View view) {

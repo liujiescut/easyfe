@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.scut.easyfe.ui.activity.ReceivablesChannelActivity">
+    <include
+        layout="@layout/titlebar"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/receivables_chanel_info"
+        android:textColor="@color/text_hint_color"
+        android:textSize="@dimen/text_size_small"
+        android:padding="@dimen/layout_padding_small"/>
+    <LinearLayout
+        style="@style/ll_container_normal_style">
+        <TextView
+            style="@style/text_input_normal_style"
+            android:layout_marginRight="1px"
+            android:layout_weight="1"
+            android:text="@string/alipay_account" />
+
+        <EditText
+            android:id="@+id/receivables_channel_et_alipay"
+            style="@style/text_input_normal_style"
+            android:layout_weight="2"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="@dimen/layout_padding_small"
+             />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/ll_container_normal_style">
+
+        <TextView
+            style="@style/text_input_normal_style"
+            android:layout_marginRight="1px"
+            android:layout_weight="1"
+            android:text="@string/receivables_channel_wechat" />
+
+        <EditText
+            android:id="@+id/receivables_channel_et_wechat"
+            style="@style/text_input_normal_style"
+            android:layout_weight="2"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="@dimen/layout_padding_small"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        android:layout_marginTop="@dimen/layout_margin_normal">
+
+        <TextView
+            style="@style/text_input_normal_style"
+            android:layout_marginRight="1px"
+            android:layout_weight="1"
+            android:text="@string/bank_name" />
+
+        <TextView
+            android:id="@+id/receivables_channel_tv_bank_name"
+            style="@style/text_input_normal_style"
+            android:layout_weight="2"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="@dimen/layout_padding_small"
+            android:drawableRight="@mipmap/icon_right_arrow_padding"
+            android:onClick="onBankNameClick"
+            />
+    </LinearLayout>
+    <LinearLayout
+        style="@style/ll_container_normal_style">
+
+        <TextView
+            style="@style/text_input_normal_style"
+            android:layout_marginRight="1px"
+            android:layout_weight="1"
+            android:text="@string/bank_card_number" />
+
+        <EditText
+            android:id="@+id/receivables_channel_et_bank_number"
+            style="@style/text_input_normal_style"
+            android:layout_weight="2"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="@dimen/layout_padding_small"
+            android:inputType="number"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/receivables_channel_tv_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/layout_margin_small"
+        android:layout_marginEnd="@dimen/layout_margin_small"
+        android:layout_marginStart="@dimen/layout_margin_small"
+        android:layout_marginTop="@dimen/layout_margin_small"
+        android:background="@drawable/selector_main_left_drawer_item"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="onSaveClick"
+        android:padding="@dimen/layout_padding_small"
+        android:text="@string/save_and_next_page"
+        android:textColor="@color/title_text_color"
+        android:textSize="@dimen/text_size_normal" />
+
+</LinearLayout>

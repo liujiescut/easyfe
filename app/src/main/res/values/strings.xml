@@ -92,5 +92,11 @@
     <string name="special_time_hint">如家长与您后来协商临时更改了家教地址或定位地址不具体（未明确几栋几户），建议您将新的实际具体地址及相关说明填列在此，以便在特殊情形下方便确认您的位置，保障您的安全。</string>
     <string name="grade_and_price">授课年级与收费</string>
     <string name="self_introduce_info">请对个人做一个真实准确的描述\n以使家长能更多地了解您，并进行家教预约</string>
+    <string name="title_activity_receivables_channel">ReceivablesChannelActivity</string>
+    <string name="receivables_chanel_info">标 * 项为必填</string>
+    <string name="alipay_account">* 支付宝账户</string>
+    <string name="receivables_channel_wechat">* 微信账户</string>
+    <string name="bank_name">开卡银行</string>
+    <string name="bank_card_number">银行卡号</string>
 
 </resources>

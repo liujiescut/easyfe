@@ -46,7 +46,13 @@
             android:enabled="true"
             android:process=":remote" />
 
-        <activity android:name=".ui.activity.MainActivity"></activity>
+        <activity android:name=".ui.activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.ParentRegisterActivity" />
         <activity android:name=".ui.activity.AddressActivity" />
@@ -56,14 +62,9 @@
         <activity
             android:name=".ui.activity.SpecialTimeActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".ui.activity.TeachCourseActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".ui.activity.SelfIntroduceActivity"></activity>
+        <activity android:name=".ui.activity.TeachCourseActivity"/>
+        <activity android:name=".ui.activity.SelfIntroduceActivity" />
+        <activity android:name=".ui.activity.ReceivablesChannelActivity" />
     </application>
 
 </manifest>
