@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.SelfIntroduceActivity"
+    android:orientation="vertical">
+    <include
+        layout="@layout/titlebar"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/self_introduce_info"
+        android:textColor="@color/text_hint_color"
+        android:textSize="@dimen/text_size_small"
+        android:padding="@dimen/layout_padding_small"/>
+
+    <EditText
+        android:id="@+id/self_introduce_et_content"
+        style="@style/text_input_normal_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:padding="@dimen/layout_padding_small"
+        android:textColorHint="#A7A7A7"
+        android:maxHeight="280dp"
+        android:minHeight="140dp" />
+    <TextView
+        android:id="@+id/self_introduce_tv_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/layout_margin_small"
+        android:layout_marginEnd="@dimen/layout_margin_small"
+        android:layout_marginStart="@dimen/layout_margin_small"
+        android:layout_marginTop="@dimen/layout_margin_small"
+        android:background="@drawable/selector_main_left_drawer_item"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="onSaveClick"
+        android:padding="@dimen/layout_padding_small"
+        android:text="@string/save_and_next_page"
+        android:textColor="@color/title_text_color"
+        android:textSize="@dimen/text_size_normal" />
+
+
+</LinearLayout>
