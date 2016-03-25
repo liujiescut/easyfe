@@ -1,5 +1,8 @@
 package com.scut.easyfe.app;
 
+import android.os.Environment;
+
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -35,6 +38,16 @@ public class Constants {
     public class Identifier {
         public static final int MALE = 1;
         public static final int FEMALE = 0;
+    }
+
+    public static class Path {
+        public static final String SDCardRoot = Environment.getExternalStorageDirectory()
+                .getAbsolutePath() + File.separator;
+        //默认的文件夹名称
+        public static final String DEFAULT_DIR_NAME = "easyfe";
+        public static final String DIR_WITH_SEPARATE = DEFAULT_DIR_NAME + File.separator;
+        public static final String DIR_WITHOUT_SEPARATE = DEFAULT_DIR_NAME;
+        public static final String COMPLETE_PATH = SDCardRoot + DIR_WITH_SEPARATE;
     }
 
 }

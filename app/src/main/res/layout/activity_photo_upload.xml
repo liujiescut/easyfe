@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.scut.easyfe.ui.activity.PhotoUploadActivity">
+    <include
+        layout="@layout/titlebar"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/photo_upload_info"
+                android:textColor="@color/text_hint_color"
+                android:textSize="@dimen/text_size_small"
+                android:padding="@dimen/layout_padding_small"/>
+            <LinearLayout
+                style="@style/ll_container_normal_style">
+
+                <TextView
+                    style="@style/text_input_normal_style"
+                    android:layout_weight="1"
+                    android:text="@string/id_card_name"
+                    android:gravity="center_vertical|left"
+                    android:padding="@dimen/layout_padding_small"/>
+
+                <TextView
+                    android:id="@+id/photo_upload_tv_id_card"
+                    style="@style/text_input_normal_style"
+                    android:layout_width="wrap_content"
+                    android:gravity="right|center_vertical"
+                    android:text="@string/upload"
+                    android:paddingRight="@dimen/layout_padding_small"
+                    android:onClick="uploadIdCard"
+                    android:textColor="@color/theme_color"
+                    />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/photo_upload_iv_id_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layout_margin_small"
+                android:layout_marginBottom="@dimen/layout_margin_small"
+                android:scaleType="fitXY"
+                tools:src="@mipmap/ic_launcher"/>
+            <LinearLayout
+                style="@style/ll_container_normal_style">
+
+                <TextView
+                    style="@style/text_input_normal_style"
+                    android:layout_weight="1"
+                    android:text="@string/student_card"
+                    android:gravity="center_vertical|left"
+                    android:padding="@dimen/layout_padding_small"/>
+
+                <TextView
+                    android:id="@+id/photo_upload_tv_student_card"
+                    style="@style/text_input_normal_style"
+                    android:layout_width="wrap_content"
+                    android:gravity="right|center_vertical"
+                    android:text="@string/upload"
+                    android:onClick="uploadStudentCard"
+                    android:paddingRight="@dimen/layout_padding_small"
+                    android:textColor="@color/theme_color"
+                    />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/photo_upload_iv_student_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layout_margin_small"
+                android:layout_marginBottom="@dimen/layout_margin_small"
+                android:scaleType="fitXY"
+                tools:src="@mipmap/ic_launcher"/>
+
+            <LinearLayout
+                style="@style/ll_container_normal_style">
+
+                <TextView
+                    style="@style/text_input_normal_style"
+                    android:layout_weight="1"
+                    android:text="@string/avatar"
+                    android:gravity="center_vertical|left"
+                    android:padding="@dimen/layout_padding_small"/>
+
+                <TextView
+                    android:id="@+id/photo_upload_tv_avatar"
+                    style="@style/text_input_normal_style"
+                    android:layout_width="wrap_content"
+                    android:gravity="right|center_vertical"
+                    android:text="@string/upload"
+                    android:onClick="uploadAvatar"
+                    android:paddingRight="@dimen/layout_padding_small"
+                    android:textColor="@color/theme_color"
+                    />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/photo_upload_iv_avatar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layout_margin_small"
+                android:layout_marginBottom="@dimen/layout_margin_small"
+                android:scaleType="fitXY"
+                tools:src="@mipmap/ic_launcher"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/layout_margin_small"
+                android:layout_marginStart="@dimen/layout_margin_small"
+                android:layout_marginTop="@dimen/layout_margin_small"
+                android:background="@drawable/selector_main_left_drawer_item"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onSubmitClick"
+                android:padding="@dimen/layout_padding_small"
+                android:text="@string/submit_exam"
+                android:textColor="@color/title_text_color"
+                android:textSize="@dimen/text_size_normal"
+                />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

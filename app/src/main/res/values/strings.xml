@@ -98,5 +98,11 @@
     <string name="receivables_channel_wechat">* 微信账户</string>
     <string name="bank_name">开卡银行</string>
     <string name="bank_card_number">银行卡号</string>
+    <string name="photo_upload_info">请上传以下资料证明个人身份\n（标 * 项为必须上传资料）</string>
+    <string name="id_card_name">* 身份证照片</string>
+    <string name="upload">上 传</string>
+    <string name="student_card">* 学生证或校园卡照片</string>
+    <string name="avatar">* 免冠证件照或正式照片（家长选择时可视）</string>
+    <string name="submit_exam">提交审核</string>
 
 </resources>
