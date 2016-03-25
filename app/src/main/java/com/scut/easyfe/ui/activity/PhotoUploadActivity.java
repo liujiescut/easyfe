@@ -9,7 +9,9 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bigkoo.alertview.AlertView;
@@ -20,9 +22,11 @@ import com.qiniu.android.storage.UpProgressHandler;
 import com.qiniu.android.storage.UploadManager;
 import com.qiniu.android.storage.UploadOptions;
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.BitmapUtils;
+import com.scut.easyfe.utils.DensityUtil;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
@@ -55,6 +59,8 @@ public class PhotoUploadActivity extends BaseActivity {
     private ImageView mAvatarImageView;
     private AlertView mSelectAlertView;
 
+    private boolean mIsUploading = false;
+
     @Override
     protected void setLayoutView() {
         setContentView(R.layout.activity_photo_upload);
@@ -62,10 +68,21 @@ public class PhotoUploadActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        //Todo 设置ImageView高度,参考lvyou
+        ((TextView)findViewById(R.id.titlebar_tv_title)).setText("家教注册 - 个人资料上传");
         mIdCardImageView = OtherUtils.findViewById(this, R.id.photo_upload_iv_id_card);
         mStudentCardImageView = OtherUtils.findViewById(this, R.id.photo_upload_iv_student_card);
         mAvatarImageView = OtherUtils.findViewById(this, R.id.photo_upload_iv_avatar);
+
+        ViewGroup.LayoutParams params = mIdCardImageView.getLayoutParams();
+        params.width = DensityUtil.getScreenWidthPx(mContext);
+        params.height = params.width * IMAGE_HEIGHT_RATE / IMAGE_WIDTH_RATE;
+        mIdCardImageView.setLayoutParams(params);
+        mStudentCardImageView.setLayoutParams(params);
+        ViewGroup.LayoutParams avatarParams = mAvatarImageView.getLayoutParams();
+        avatarParams.width = DensityUtil.getScreenWidthPx(mContext);
+        avatarParams.height = avatarParams.width;
+        mAvatarImageView.setLayoutParams(avatarParams);
+
         mSelectAlertView = new AlertView("上传头像", null, "取消", null,
                 new String[]{"拍照", "从相册中选择"},
                 this, AlertView.Style.ActionSheet, new OnItemClickListener() {
@@ -88,6 +105,10 @@ public class PhotoUploadActivity extends BaseActivity {
      * 上传身份证
      */
     public void uploadIdCard(View view){
+        if(mIsUploading){
+            toast("请等待上一张图片上传完之后");
+            return;
+        }
         mPhotoType = TYPE_ID_CARD;
         mSelectAlertView.show();
     }
@@ -96,6 +117,10 @@ public class PhotoUploadActivity extends BaseActivity {
      * 上传学生证
      */
     public void uploadStudentCard(View view){
+        if(mIsUploading){
+            toast("请等待上一张图片上传完之后");
+            return;
+        }
         mPhotoType = TYPE_STUDENT_CARD;
         mSelectAlertView.show();
     }
@@ -104,6 +129,10 @@ public class PhotoUploadActivity extends BaseActivity {
      * 上传头像
      */
     public void uploadAvatar(View view){
+        if(mIsUploading){
+            toast("请等待上一张图片上传完之后");
+            return;
+        }
         mPhotoType = TYPE_AVATAR;
         mSelectAlertView.show();
     }
@@ -177,22 +206,7 @@ public class PhotoUploadActivity extends BaseActivity {
                         // get the cropped bitmap
                         newAvatar = extras.getParcelable("data");
                         if (null != newAvatar) {
-                            switch (mPhotoType){
-                                case TYPE_ID_CARD:
-                                    mIdCardImageView.setImageBitmap(newAvatar);
-                                    break;
-
-                                case TYPE_STUDENT_CARD:
-                                    mStudentCardImageView.setImageBitmap(newAvatar);
-                                    break;
-
-                                case TYPE_AVATAR:
-                                    mAvatarImageView.setImageBitmap(newAvatar);
-                                    break;
-
-                                default:
-                                    break;
-                            }
+                            setImageViewShow(View.VISIBLE);
 
                             uploadAvatar();
                         } else {
@@ -203,22 +217,7 @@ public class PhotoUploadActivity extends BaseActivity {
                     }
                 } else {
                     newAvatar = BitmapUtils.getBitmapFromUri(mContext, imageCaptureUri);
-                    switch (mPhotoType){
-                        case TYPE_ID_CARD:
-                            mIdCardImageView.setImageBitmap(newAvatar);
-                            break;
-
-                        case TYPE_STUDENT_CARD:
-                            mStudentCardImageView.setImageBitmap(newAvatar);
-                            break;
-
-                        case TYPE_AVATAR:
-                            mAvatarImageView.setImageBitmap(newAvatar);
-                            break;
-
-                        default:
-                            break;
-                    }
+                    setImageViewShow(View.VISIBLE);
 
                     uploadAvatar();
                 }
@@ -228,6 +227,33 @@ public class PhotoUploadActivity extends BaseActivity {
             default:
                 break;
         }
+    }
+
+    /**
+     * 设置ImageView的可见性
+     * @param visibility 传入 VISIBLE 或 GONE
+     */
+    private void setImageViewShow(int visibility){
+        switch (mPhotoType){
+            case TYPE_ID_CARD:
+                mIdCardImageView.setVisibility(visibility);
+                mIdCardImageView.setImageBitmap(newAvatar);
+                break;
+
+            case TYPE_STUDENT_CARD:
+                mStudentCardImageView.setVisibility(visibility);
+                mStudentCardImageView.setImageBitmap(newAvatar);
+                break;
+
+            case TYPE_AVATAR:
+                mAvatarImageView.setVisibility(visibility);
+                mAvatarImageView.setImageBitmap(newAvatar);
+                break;
+
+            default:
+                break;
+        }
+
     }
 
     /**
@@ -243,14 +269,16 @@ public class PhotoUploadActivity extends BaseActivity {
             LogUtils.i("保存裁剪头像后--->path = " + path);
             LogUtils.i("保存裁剪头像后--->file.exists() = " + file.exists());
 
-            //Todo
-//            String token = mSpUtils.getValue(Constant.Config.QN_TOKEN, null);
-//            if (token == null || token.length() == 0) {
-//                showToast("token为空！");
-//            } else {
-//                LogUtils.i("上传头像token = " + token);
-//                upLoadImages(token, file);
-//            }
+            //Todo 从SharePreference中获取
+            String token = "R2Rq9_dBXtrL6wqLwA8_GC6EZNR9JU06xaGegd19:-y53el8pxguVBy87vAXzWuPMuTs=:eyJzY29wZSI6ImVhc3lmZTpudWxsIiwiZGVhZGxpbmUiOjE0NTg4ODA2NTl9";
+            if (token == null || token.length() == 0) {
+                toast("上传失败,请联系客服人员");
+                setImageViewShow(View.GONE);
+                LogUtils.i(Constants.Tag.TEACHER_REGISTER_TAG, "token 为空");
+            } else {
+                LogUtils.i("上传头像token = " + token);
+                upLoadImages(token, file);
+            }
         }
     }
 
@@ -262,16 +290,15 @@ public class PhotoUploadActivity extends BaseActivity {
      */
     private void upLoadImages(String token, File file) {
         if (file != null) {
-            UploadManager mUploadManager = new UploadManager();
+            mIsUploading = true;
+            UploadManager mUploadManager = App.get().getQiniuManager();
             mUploadManager.put(file, System.currentTimeMillis() + "", token, new UpCompletionHandler() {
                 @Override
                 public void complete(String s, ResponseInfo responseInfo, JSONObject jsonObject) {
 
+                    LogUtils.i(Constants.Tag.TEACHER_REGISTER_TAG, responseInfo.toString());
                     if (responseInfo.isOK()) {
                         try {
-                            //Todo
-//                            final String avatarURL = Constant.Config.QINIU_URL + jsonObject.getString("key");
-//                            mUser.setAvatar(avatarURL);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -279,7 +306,10 @@ public class PhotoUploadActivity extends BaseActivity {
                     } else {
                         toast("上传失败" + responseInfo.error);
                         LogUtils.i(mTAG, "上传失败" + responseInfo.error);
+                        setImageViewShow(View.GONE);
                     }
+
+                    mIsUploading = false;
                 }
             }, new UploadOptions(null, null, false, new UpProgressHandler() {
                 @Override

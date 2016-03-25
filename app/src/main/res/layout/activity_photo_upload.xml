@@ -51,6 +51,7 @@
                 android:layout_marginTop="@dimen/layout_margin_small"
                 android:layout_marginBottom="@dimen/layout_margin_small"
                 android:scaleType="fitXY"
+                android:visibility="gone"
                 tools:src="@mipmap/ic_launcher"/>
             <LinearLayout
                 style="@style/ll_container_normal_style">
@@ -81,6 +82,7 @@
                 android:layout_marginTop="@dimen/layout_margin_small"
                 android:layout_marginBottom="@dimen/layout_margin_small"
                 android:scaleType="fitXY"
+                android:visibility="gone"
                 tools:src="@mipmap/ic_launcher"/>
 
             <LinearLayout
@@ -112,14 +114,13 @@
                 android:layout_marginTop="@dimen/layout_margin_small"
                 android:layout_marginBottom="@dimen/layout_margin_small"
                 android:scaleType="fitXY"
+                android:visibility="gone"
                 tools:src="@mipmap/ic_launcher"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/layout_margin_small"
-                android:layout_marginStart="@dimen/layout_margin_small"
-                android:layout_marginTop="@dimen/layout_margin_small"
+                android:layout_margin="@dimen/layout_margin_small"
                 android:background="@drawable/selector_main_left_drawer_item"
                 android:clickable="true"
                 android:gravity="center"
