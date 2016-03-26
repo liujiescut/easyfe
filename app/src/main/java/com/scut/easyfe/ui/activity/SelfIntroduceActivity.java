@@ -38,6 +38,6 @@ public class SelfIntroduceActivity extends BaseActivity {
      * 点击保存并进入下一页
      */
     public void onSaveClick(View view){
-        //Todo 具体保存逻辑
+        redirectToActivity(mContext, PhotoUploadActivity.class);
     }
 }

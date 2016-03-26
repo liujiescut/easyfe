@@ -104,5 +104,10 @@
     <string name="student_card">* 学生证或校园卡照片</string>
     <string name="avatar">* 免冠证件照或正式照片（家长选择时可视）</string>
     <string name="submit_exam">提交审核</string>
+    <string name="order_all">全部</string>
+    <string name="order_ordered">已预订</string>
+    <string name="order_to_do">待执行</string>
+    <string name="order_complete">已完成</string>
+    <string name="order_invalid">已失效</string>
 
 </resources>

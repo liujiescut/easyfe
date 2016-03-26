@@ -16,6 +16,10 @@ public class Constants {
         public static final boolean ISSHOWTOAST = true;  //是否显示使用LogUtil.toast出来的东西
     }
 
+    public class URL{
+        public static final String DEFAULT_QINIU_URL = "http://7xrvd4.com1.z0.glb.clouddn.com/";            //七牛储存图片的地址
+    }
+
     /**
      * 用于在不同的模块显示不同的 Log信息 进行分类
      */

@@ -63,6 +63,7 @@
 
     <TextView
         style="@style/main_left_drawer_item"
+        android:onClick="onMyOrderClick"
         android:text="@string/main_left_drawer_orders" />
 
     <View style="@style/main_left_drawer_divider" />

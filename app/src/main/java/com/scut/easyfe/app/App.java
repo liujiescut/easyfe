@@ -2,8 +2,15 @@ package com.scut.easyfe.app;
 
 import android.app.Activity;
 import android.app.Application;
+import android.graphics.Bitmap;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
 import com.qiniu.android.storage.Zone;
@@ -100,6 +107,28 @@ public class App extends Application{
      */
     private void initBaiduMap(){
         SDKInitializer.initialize(this);
+    }
+
+    private void initImageLoader(){
+        // ImageLoader 的初始化
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+//                .showImageForEmptyUri(R.mipmap.image_fail)
+//                .showImageOnFail(R.mipmap.image_fail)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .imageScaleType(ImageScaleType.IN_SAMPLE_INT)
+                .bitmapConfig(Bitmap.Config.RGB_565)//设置为RGB565比起默认的ARGB_8888要节省大量的内存
+                        //.delayBeforeLoading(100)//载入图片前稍做延时可以提高整体滑动的流畅度
+                .considerExifParams(true)// 考虑旋转角
+                .build();
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
+                this).defaultDisplayImageOptions(options)
+                .threadPriority(Thread.NORM_PRIORITY - 2)
+                .discCacheFileNameGenerator(new Md5FileNameGenerator())
+                .tasksProcessingOrder(QueueProcessingType.LIFO).build();
+
+        ImageLoader.getInstance().init(config);
     }
 
 

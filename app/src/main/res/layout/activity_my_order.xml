@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/shape_app_bg"
+    android:orientation="vertical"
+    tools:context="com.scut.easyfe.ui.activity.MyOrderActivity">
+    <include
+        layout="@layout/titlebar"/>
+    <com.astuetz.PagerSlidingTabStrip
+        android:id="@+id/my_order_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="48dip" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/my_order_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+
+</LinearLayout>

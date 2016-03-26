@@ -270,7 +270,9 @@ public class PhotoUploadActivity extends BaseActivity {
             LogUtils.i("保存裁剪头像后--->file.exists() = " + file.exists());
 
             //Todo 从SharePreference中获取
-            String token = "R2Rq9_dBXtrL6wqLwA8_GC6EZNR9JU06xaGegd19:-y53el8pxguVBy87vAXzWuPMuTs=:eyJzY29wZSI6ImVhc3lmZTpudWxsIiwiZGVhZGxpbmUiOjE0NTg4ODA2NTl9";
+
+            String token =  "R2Rq9_dBXtrL6wqLwA8_GC6EZNR9JU06xaGegd19:mKzKD3gB-mkdQpjt1BVtBAZmNYw=:eyJzY29wZSI6ImVhc3lmZSIsImRlYWRsaW5lIjoxNDg0OTIxMjY4fQ==";
+
             if (token == null || token.length() == 0) {
                 toast("上传失败,请联系客服人员");
                 setImageViewShow(View.GONE);
@@ -299,6 +301,7 @@ public class PhotoUploadActivity extends BaseActivity {
                     LogUtils.i(Constants.Tag.TEACHER_REGISTER_TAG, responseInfo.toString());
                     if (responseInfo.isOK()) {
                         try {
+                            LogUtils.i(Constants.Tag.TEACHER_REGISTER_TAG, Constants.URL.DEFAULT_QINIU_URL + jsonObject.get("key"));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

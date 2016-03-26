@@ -53,6 +53,13 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
+     * 点击我的订单
+     */
+    public void onMyOrderClick(View view){
+        redirectToActivity(mContext, MyOrderActivity.class);
+    }
+
+    /**
      * 点击头像
      * @param view 被点击视图
      */

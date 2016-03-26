@@ -31,6 +31,7 @@ public abstract class BaseFragment extends Fragment {
 
         View v = LayoutInflater.from(getActivity()).inflate(layoutRes, container, false);
 
+        initData();
         initView(v);
         initListener(v);
         fetchData(v);
@@ -42,6 +43,12 @@ public abstract class BaseFragment extends Fragment {
      * 设置Fragment的layout文件(必须实现该文件)
      */
     protected abstract void setLayoutRes();
+
+    /**
+     * 数据的初始化全部写在这里面（比如读取Intent的数据等）
+     * onCreate中第二个被调用
+     */
+    protected void initData(){}
 
     /**
      * 初始化View，设置TextView的text属性等
@@ -79,7 +86,7 @@ public abstract class BaseFragment extends Fragment {
      * @param bundle         要附带的 Bundle
      */
     public void toActivity(@NonNull Class<?> targetActivity, Bundle bundle) {
-        Intent intent = new Intent(getContext(), targetActivity);
+        Intent intent = new Intent(getActivity(), targetActivity);
         if (null != bundle) {
             intent.putExtras(bundle);
         }
@@ -98,13 +105,13 @@ public abstract class BaseFragment extends Fragment {
      * @param requestCode    此次请求的标记
      */
     public void toActivityForResult(@NonNull Class<?> targetActivity, int requestCode) {
-        Intent intent = new Intent(getContext(), targetActivity);
+        Intent intent = new Intent(getActivity(), targetActivity);
         startActivityForResult(intent, requestCode);
     }
 
 
     public void toActivityForResult(@NonNull Class<?> targetActivity, int requestCode, Bundle bundle) {
-        Intent intent = new Intent(getContext(), targetActivity);
+        Intent intent = new Intent(getActivity(), targetActivity);
         if (null != bundle) {
             intent.putExtras(bundle);
         }

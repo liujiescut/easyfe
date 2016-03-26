@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 下拉刷新加载圈的颜色 -->
+    <array name="swipe_refresh_progress_colors">
+        <item>@color/primary</item>
+        <item>@color/primary_dark</item>
+        <item>@color/accent</item>
+    </array>
+
+    <string-array name="bank">
+        <item>中国工商银行</item>
+        <item>中国建设银行</item>
+        <item>中国光大银行</item>
+        <item>中国农业银行</item>
+        <item>交通银行</item>
+        <item>广发银行</item>
+        <item>华夏银行</item>
+        <item>兴业银行</item>
+        <item>中国银行</item>
+        <item>中国邮政</item>
+        <item>招商银行</item>
+        <item>中信银行</item>
+        <item>平安银行</item>
+        <item>上海浦东发展银行</item>
+        <item>中国民生银行</item>
+        <item>其他银行</item>
+    </string-array>
+
+    <string-array name="express_company">
+        <item>顺丰快递</item>
+        <item>全峰快递</item>
+        <item>中通快递</item>
+        <item>汇通快递</item>
+        <item>优速快递</item>
+        <item>邮政小包</item>
+        <item>佳吉</item>
+        <item>中铁快运</item>
+        <item>天天快递</item>
+        <item>韵达快递</item>
+        <item>德邦快递</item>
+        <item>EMS</item>
+        <item>圆通快递</item>
+        <item>宅急送</item>
+        <item>申通快递</item>
+        <item>如风达</item>
+        <item>国通快递</item>
+        <item>中通快递</item>
+    </string-array>
+
+</resources>
