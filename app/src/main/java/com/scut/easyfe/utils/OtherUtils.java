@@ -52,4 +52,15 @@ public class OtherUtils {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
         return simpleDateFormat.format(date);
     }
+
+    /**
+     * 转换分钟数为小时加分钟
+     * @param minutes 被转换分钟数
+     * @return  转换后字符串
+     */
+    public static String getTimeFromMimute(int minutes){
+        int hours = minutes / 60;
+        int minute = minutes % 60;
+        return String.format("%s小时%s分钟", hours, minute);
+    }
 }

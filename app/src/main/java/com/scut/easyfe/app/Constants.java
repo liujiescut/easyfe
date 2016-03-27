@@ -34,6 +34,7 @@ public class Constants {
         public static final String LATITUDE = "latitude";
         public static final String LONGITUDE = "longitude";
         public static final String ADDRESS = "address";
+        public static final String ORDER_TYPE = "order_type";
     }
 
     /**
@@ -42,6 +43,17 @@ public class Constants {
     public class Identifier {
         public static final int MALE = 1;
         public static final int FEMALE = 0;
+
+        /** 订单类型 */
+        public static final int ORDER_ALL = 0;
+        public static final int ORDER_RESERVATION = 1;
+        public static final int ORDER_TO_DO = 2;
+        public static final int ORDER_COMPLETED = 3;
+        public static final int ORDER_INVALID = 4;
+
+        /** 我的订单页面状态 */
+        public static final int STATE_NORMAL = 0;
+        public static final int STATE_EDIT = 1;
     }
 
     public static class Path {

@@ -18,9 +18,8 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.utils.LogUtils;
 
 /**
- * Created by chuxin on 9/25/15.
+ * Base下拉刷新的Fragment
  **/
-
 public abstract class BaseRefreshFragment extends BaseFragment
         implements AdapterView.OnItemClickListener {
 
@@ -106,11 +105,7 @@ public abstract class BaseRefreshFragment extends BaseFragment
                         break;
                     case MotionEvent.ACTION_UP:
                         endY = event.getY();
-                        if (startY - endY > 300) {
-                            isScroll2Bottom = true;
-                        } else {
-                            isScroll2Bottom = false;
-                        }
+                        isScroll2Bottom = startY - endY > 300;
                         break;
                     case MotionEvent.ACTION_MOVE:
 //                        LogUtils.i("startY - event.getY() " + (startY - event.getY()));

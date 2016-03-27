@@ -54,6 +54,10 @@
         <item name="android:clickable">true</item>
     </style>
 
+    <style name="my_order_item_style" parent="text_input_normal_style">
+        <item name="android:textSize">@dimen/text_size_normal</item>
+    </style>
+
     <!-- 默认对话框样式 -->
     <style name="base_dialog_theme" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>

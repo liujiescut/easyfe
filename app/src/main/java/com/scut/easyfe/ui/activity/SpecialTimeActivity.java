@@ -40,7 +40,6 @@ public class SpecialTimeActivity extends BaseActivity {
     private CalendarFragment mCalendarFragment;
     private long mMinDateTimeMills;
     private long mMaxDateTimeMills;
-    private SimpleDateFormat mFormatter = new SimpleDateFormat("yyyy 年 MM 月 dd 日 (EEEE)");
 
     @Override
     protected void setLayoutView() {
@@ -72,8 +71,8 @@ public class SpecialTimeActivity extends BaseActivity {
 
             @Override
             public void onSelectDate(Date date, View view, int position) {
-                LogUtils.i(Constants.Tag.TEACHER_REGISTER_TAG, mFormatter.format(date));
-                mSelectedDateTextView.setText(mFormatter.format(date));
+                LogUtils.i(Constants.Tag.TEACHER_REGISTER_TAG, OtherUtils.getTime(date, "yyyy 年 MM 月 dd 日 (EEEE)"));
+                mSelectedDateTextView.setText(OtherUtils.getTime(date, "yyyy 年 MM 月 dd 日 (EEEE)"));
             }
 
             @Override

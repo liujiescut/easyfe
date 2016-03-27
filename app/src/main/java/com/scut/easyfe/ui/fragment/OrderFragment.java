@@ -16,58 +16,66 @@ package com.scut.easyfe.ui.fragment;
  * limitations under the License.
  */
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.FrameLayout.LayoutParams;
-import android.widget.TextView;
+import android.widget.AdapterView;
 
-public class OrderFragment extends Fragment {
+import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.entity.Order;
+import com.scut.easyfe.ui.adapter.OrderAdapter;
+import com.scut.easyfe.ui.base.BaseRefreshFragment;
+import com.scut.easyfe.utils.DensityUtil;
 
-    private static final String ARG_POSITION = "position";
+public class OrderFragment extends BaseRefreshFragment {
+    private int mOrderType;
+    private int mState = Constants.Identifier.STATE_NORMAL;
 
-    private int position;
+    @Override
+    protected void initView(View view) {
+        super.initView(view);
 
-    public static OrderFragment newInstance(int position) {
-        OrderFragment f = new OrderFragment();
-        Bundle b = new Bundle();
-        b.putInt(ARG_POSITION, position);
-        f.setArguments(b);
-        return f;
+        if(null == getActivity()){
+            return;
+        }
+
+        View headView= new View(getActivity());
+        headView.setMinimumHeight(DensityUtil.dip2px(mActivity, 5));
+        headView.setBackground(null);
+
+        mDataListView.addHeaderView(headView);
+        mDataListView.setDividerHeight(DensityUtil.dip2px(mActivity, 5));
+        mAdapter = new OrderAdapter(getActivity(), Order.getTestOrders());
+        ((OrderAdapter)mAdapter).setState(mState);
+        setBaseAdapter(mAdapter);
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onLoadingData() {
 
-        position = getArguments().getInt(ARG_POSITION);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    protected void onRefreshData() {
 
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-
-        FrameLayout fl = new FrameLayout(getActivity());
-        fl.setLayoutParams(params);
-
-        final int margin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources()
-                .getDisplayMetrics());
-
-        TextView v = new TextView(getActivity());
-        params.setMargins(margin, margin, margin, margin);
-        v.setLayoutParams(params);
-        v.setLayoutParams(params);
-        v.setGravity(Gravity.CENTER);
-        v.setText("CARD " + (position + 1));
-
-        fl.addView(v);
-        return fl;
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    public void setType(int type){
+        mOrderType = type;
+    }
+
+    public void setState(int state){
+        mState = state;
+        if(null != mAdapter){
+            ((OrderAdapter)mAdapter).setState(state);
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    public int getState(){
+        return mState;
+    }
 }

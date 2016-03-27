@@ -34,7 +34,10 @@ public class MainActivity extends BaseActivity {
         mDrawerLayout = OtherUtils.findViewById(this, R.id.drawer_layout);
         mLeftDrawer = OtherUtils.findViewById(this, R.id.drawer);
         mFragments.put(FRAGMENT_HOME, new HomeFragment());
-        getFragmentManager().beginTransaction().replace(R.id.main_container, mFragments.get(FRAGMENT_HOME)).commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.main_container, mFragments.get(FRAGMENT_HOME))
+                .commit();
     }
 
     @Override

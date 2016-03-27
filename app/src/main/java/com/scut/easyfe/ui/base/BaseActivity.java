@@ -4,11 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 
 
@@ -16,7 +14,7 @@ import com.scut.easyfe.app.App;
  * Activity基类
  * Created by jay on 15/9/12.
  */
-public abstract class BaseActivity extends FragmentActivity{
+public abstract class BaseActivity extends AppCompatActivity{
     protected String mTAG;
 
     protected App mApplication;
