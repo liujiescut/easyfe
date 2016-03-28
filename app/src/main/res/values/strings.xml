@@ -118,5 +118,7 @@
     <string name="wechat">微信</string>
     <string name="account_bank">开户银行</string>
     <string name="withdraw">提现</string>
+    <string name="edit">编辑</string>
+    <string name="save">保存</string>
 
 </resources>

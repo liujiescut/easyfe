@@ -55,6 +55,8 @@ public class AlertView {
     private ViewGroup rootView;//AlertView 的 根View
     private ViewGroup loAlertHeader;//窗口headerView
 
+    private AlertViewAdapter adapter;
+
     private Style style = Style.Alert;
 
     private OnDismissListener onDismissListener;
@@ -157,7 +159,7 @@ public class AlertView {
             tvAlert.setOnClickListener(new OnTextClickListener(CANCELPOSITION));
             alertButtonListView.addFooterView(itemView);
         }
-        AlertViewAdapter adapter = new AlertViewAdapter(mDatas,mDestructive);
+        adapter = new AlertViewAdapter(mDatas,mDestructive);
         alertButtonListView.setAdapter(adapter);
         alertButtonListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -370,4 +372,11 @@ public class AlertView {
             return false;
         }
     };
+
+    public AlertView setButtonTextColor(int color){
+        if(null != adapter){
+            adapter.setTextColor(color);
+        }
+        return this;
+    }
 }

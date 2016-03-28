@@ -13,6 +13,7 @@ import java.util.List;
  * Created by Sai on 15/8/9.
  */
 public class AlertViewAdapter extends BaseAdapter{
+    private int mTextColor = -1;
     private List<String> mDatas;
     private List<String> mDestructive;
     public AlertViewAdapter(List<String> datas,List<String> destructive){
@@ -66,8 +67,16 @@ public class AlertViewAdapter extends BaseAdapter{
                 tvAlert.setTextColor(context.getResources().getColor(R.color.textColor_alert_button_destructive));
             }
             else{
-                tvAlert.setTextColor(context.getResources().getColor(R.color.textColor_alert_button_others));
+                if(-1 == mTextColor) {
+                    tvAlert.setTextColor(context.getResources().getColor(R.color.textColor_alert_button_others));
+                }else{
+                    tvAlert.setTextColor(context.getResources().getColor(mTextColor));
+                }
             }
         }
+    }
+
+    public void setTextColor(int mTextColor) {
+        this.mTextColor = mTextColor;
     }
 }

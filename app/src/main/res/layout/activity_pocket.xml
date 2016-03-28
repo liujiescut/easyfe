@@ -110,6 +110,7 @@
             android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
             tools:text="123456789"
+            android:onClick="onAlipayAccountClick"
             />
     </LinearLayout>
 
@@ -130,7 +131,8 @@
             android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
             tools:text="123456789"
-             />
+            android:onClick="onWechatAccountClick"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -150,7 +152,7 @@
             android:layout_weight="3"
             android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
-            android:onClick="onParentGenderClick"
+            android:onClick="onBankNameClick"
             tools:text="中国银行"
              />
     </LinearLayout>
@@ -171,7 +173,7 @@
             android:layout_weight="3"
             android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
-            android:onClick="onParentGenderClick"
+            android:onClick="onCardNumClick"
             tools:text="123456789"
              />
     </LinearLayout>
