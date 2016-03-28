@@ -30,14 +30,14 @@
                 android:layout_marginTop="@dimen/layout_margin_small">
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:text="@string/selected_date" />
 
                 <TextView
                     android:id="@+id/special_time_selected_date"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
                     tools:text="@string/date_example" />
@@ -46,14 +46,14 @@
             <LinearLayout style="@style/ll_container_normal_style">
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:text="@string/teach_or_not" />
 
                 <TextView
                     android:id="@+id/special_time_teachable"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="3"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -68,7 +68,7 @@
                 tools:visibility="visible">
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:text="@string/selected_date" />
@@ -128,7 +128,7 @@
 
             <EditText
                 android:id="@+id/special_time_et_remember_things"
-                style="@style/text_input_normal_style"
+                style="@style/text_normal_style"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:gravity="start"

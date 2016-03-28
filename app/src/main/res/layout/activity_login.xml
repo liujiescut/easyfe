@@ -12,14 +12,14 @@
         android:layout_marginTop="@dimen/layout_margin_normal">
 
         <TextView
-            style="@style/text_input_normal_style"
+            style="@style/text_normal_style"
             android:layout_marginRight="1px"
             android:layout_weight="1"
             android:text="@string/phone" />
 
         <EditText
             android:id="@+id/login_et_phone"
-            style="@style/text_input_normal_style"
+            style="@style/text_editable_style"
             android:layout_weight="3"
             android:gravity="start|center_vertical"
             android:paddingLeft="@dimen/layout_padding_small"
@@ -32,14 +32,14 @@
         android:layout_marginTop="@dimen/layout_margin_small">
 
         <TextView
-            style="@style/text_input_normal_style"
+            style="@style/text_normal_style"
             android:layout_marginRight="1px"
             android:layout_weight="1"
             android:text="@string/password" />
 
         <EditText
             android:id="@+id/login_et_password"
-            style="@style/text_input_normal_style"
+            style="@style/text_editable_style"
             android:layout_weight="3"
             android:paddingLeft="@dimen/layout_padding_small"
             android:gravity="start|center_vertical"

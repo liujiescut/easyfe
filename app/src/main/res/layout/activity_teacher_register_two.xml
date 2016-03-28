@@ -32,14 +32,14 @@
             <LinearLayout style="@style/ll_container_normal_style">
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:text="@string/teach_time" />
 
                 <TextView
                     android:id="@+id/teacher_register_two_tv_teach_time"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="3"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -51,14 +51,14 @@
             <LinearLayout style="@style/ll_container_normal_style">
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:text="@string/min_teach_time" />
 
                 <TextView
                     android:id="@+id/teacher_register_two_tv_min_teach_time"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="3"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -80,14 +80,14 @@
                 android:layout_height="50dp">
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="3"
                     android:text="@string/accept_traffic_time" />
 
                 <TextView
                     android:id="@+id/teacher_register_two_tv_traffic_time"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="4"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -98,14 +98,14 @@
                 style="@style/ll_container_normal_style"
                 android:layout_height="50dp">
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="3"
                     android:text="@string/max_traffic_time" />
 
                 <TextView
                     android:id="@+id/teacher_register_two_tv_max_traffic_time"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="4"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -115,14 +115,14 @@
             <LinearLayout style="@style/ll_container_normal_style">
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:text="@string/traffic_tip" />
 
                 <TextView
                     android:id="@+id/teacher_register_two_tv_tip"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="3"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -135,14 +135,14 @@
                 android:layout_marginBottom="@dimen/layout_margin_small">
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="2"
                     android:text="@string/teach_course" />
 
                 <TextView
                     android:id="@+id/teacher_register_two_tv_course"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="3"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -155,7 +155,7 @@
                 >
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:onClick="onAngleDetailClick"
@@ -164,7 +164,7 @@
 
                 <TextView
                     android:id="@+id/teacher_register_two_tv_angel"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="1"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -180,14 +180,14 @@
                 >
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:text="@string/angel_plan_boy_age" />
 
                 <TextView
                     android:id="@+id/teacher_register_two_tv_angel_boy_age"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="1"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -203,14 +203,14 @@
                 >
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:text="@string/angel_plane_girl_age" />
 
                 <TextView
                     android:id="@+id/teacher_register_two_tv_angel_girl_age"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="1"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -226,14 +226,14 @@
                 >
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:text="@string/angel_plan_price" />
 
                 <TextView
                     android:id="@+id/teacher_register_two_tv_angel_price"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="1"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"

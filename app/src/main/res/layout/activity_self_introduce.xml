@@ -19,7 +19,7 @@
 
     <EditText
         android:id="@+id/self_introduce_et_content"
-        style="@style/text_input_normal_style"
+        style="@style/text_normal_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="start"

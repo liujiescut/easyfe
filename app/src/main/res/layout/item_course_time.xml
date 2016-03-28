@@ -7,13 +7,13 @@
 
         <TextView
             android:id="@+id/item_course_week"
-            style="@style/text_input_normal_style"
+            style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1" />
 
         <TextView
             android:id="@+id/item_course_time"
-            style="@style/text_input_normal_style"
+            style="@style/text_normal_style"
             android:layout_weight="3"
             android:drawableRight="@mipmap/icon_right_arrow_padding"
             android:gravity="start|center_vertical"

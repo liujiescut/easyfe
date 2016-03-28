@@ -23,14 +23,14 @@
                 android:layout_marginTop="@dimen/layout_margin_normal">
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:text="@string/parent_register_name" />
 
                 <EditText
                     android:id="@+id/teacher_register_one_et_name"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
                     android:maxLength="10"
@@ -40,14 +40,14 @@
             <LinearLayout style="@style/ll_container_normal_style">
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:text="@string/gender" />
 
                 <TextView
                     android:id="@+id/teacher_register_one_tv_gender"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="3"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -59,14 +59,14 @@
             <LinearLayout style="@style/ll_container_normal_style">
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:text="@string/birthday" />
 
                 <TextView
                     android:id="@+id/teacher_register_one_tv_birthday"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="3"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -80,14 +80,14 @@
                 android:layout_marginTop="@dimen/layout_margin_normal">
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:text="@string/phone" />
 
                 <EditText
                     android:id="@+id/teacher_register_one_et_phone"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
                     android:inputType="phone"
@@ -98,14 +98,14 @@
             <LinearLayout style="@style/ll_container_normal_style">
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:text="@string/password" />
 
                 <EditText
                     android:id="@+id/teacher_register_one_et_password"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
                     android:inputType="textPassword"
@@ -115,14 +115,14 @@
             <LinearLayout style="@style/ll_container_normal_style">
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:text="@string/id_card_number" />
 
                 <EditText
                     android:id="@+id/teacher_register_one_et_id_card"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
                     android:inputType="phone"
@@ -134,14 +134,14 @@
                 android:layout_marginTop="@dimen/layout_margin_normal">
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:text="@string/school" />
 
                 <TextView
                     android:id="@+id/teacher_register_one_tv_school"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="3"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -152,14 +152,14 @@
             <LinearLayout style="@style/ll_container_normal_style">
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:text="@string/grade" />
 
                 <TextView
                     android:id="@+id/teacher_register_one_tv_grade"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="3"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -170,14 +170,14 @@
             <LinearLayout style="@style/ll_container_normal_style">
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:text="@string/profession" />
 
                 <TextView
                     android:id="@+id/teacher_register_one_tv_profession"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="3"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -190,14 +190,14 @@
                 android:layout_marginTop="@dimen/layout_margin_normal">
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:text="@string/address" />
 
                 <TextView
                     android:id="@+id/teacher_register_one_tv_address"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="3"
                     android:drawableRight="@mipmap/icon_map_grey"
                     android:ellipsize="end"
@@ -212,14 +212,14 @@
                 android:layout_marginTop="@dimen/layout_margin_normal">
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="3"
                     android:text="@string/had_teach_child_count" />
 
                 <TextView
                     android:id="@+id/teacher_register_one_tv_child_count"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="4"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -230,14 +230,14 @@
             <LinearLayout style="@style/ll_container_normal_style">
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="3"
                     android:text="@string/had_teach_time_count" />
 
                 <TextView
                     android:id="@+id/teacher_register_one_tv_time"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="4"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"

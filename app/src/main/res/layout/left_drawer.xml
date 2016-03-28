@@ -70,6 +70,7 @@
 
     <TextView
         style="@style/main_left_drawer_item"
+        android:onClick="onPocketClick"
         android:text="@string/main_left_drawer_pocket" />
 
     <View style="@style/main_left_drawer_divider" />

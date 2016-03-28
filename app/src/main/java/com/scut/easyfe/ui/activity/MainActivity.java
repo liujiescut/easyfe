@@ -70,4 +70,11 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
+
+    /**
+     * 点击我的钱包
+     */
+    public void onPocketClick(View view){
+        redirectToActivity(mContext, PocketActivity.class);
+    }
 }

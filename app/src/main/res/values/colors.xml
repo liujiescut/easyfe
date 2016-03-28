@@ -24,6 +24,7 @@
     <color name="text_area_bg_inner">#F4F4F4</color>
     <color name="text_area_bg_inner_dark">#E4E4E4</color>
     <color name="text_area_text_color">#A7A7A7</color>
+    <color name="text_area_editable_text_color">#666666</color>
     <color name="text_area_text_color_alpha">#33A7A7A7</color>
 
     <color name="text_hint_color">#B2B2B2</color>

@@ -111,5 +111,12 @@
     <string name="order_invalid">已失效</string>
     <string name="modify">修改</string>
     <string name="cancel">取消</string>
+    <string name="account">账户余额</string>
+    <string name="has_withdraw_count">已提现金额</string>
+    <string name="withdrawing_count">正在提现金额</string>
+    <string name="alipay">支付宝账户</string>
+    <string name="wechat">微信</string>
+    <string name="account_bank">开户银行</string>
+    <string name="withdraw">提现</string>
 
 </resources>

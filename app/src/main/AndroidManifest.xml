@@ -65,8 +65,9 @@
         <activity android:name=".ui.activity.TeachCourseActivity" />
         <activity android:name=".ui.activity.SelfIntroduceActivity" />
         <activity android:name=".ui.activity.ReceivablesChannelActivity" />
-        <activity android:name=".ui.activity.PhotoUploadActivity"></activity>
-        <activity android:name=".ui.activity.MyOrderActivity"></activity>
+        <activity android:name=".ui.activity.PhotoUploadActivity" />
+        <activity android:name=".ui.activity.MyOrderActivity" />
+        <activity android:name=".ui.activity.PocketActivity"></activity>
     </application>
 
 </manifest>

@@ -41,7 +41,7 @@
     </style>
 
     <!-- 适用于TextView的一些默认设置(用于展示信息) -->
-    <style name="text_input_normal_style">
+    <style name="text_normal_style">
         <item name="android:layout_width">0dip</item>
         <!--通过设置weight-->
         <item name="android:layout_height">match_parent</item>
@@ -54,7 +54,11 @@
         <item name="android:clickable">true</item>
     </style>
 
-    <style name="my_order_item_style" parent="text_input_normal_style">
+    <style name="text_editable_style" parent="text_normal_style">
+        <item name="android:textColor">@color/text_area_editable_text_color</item>
+    </style>
+
+    <style name="my_order_item_style" parent="text_normal_style">
         <item name="android:textSize">@dimen/text_size_normal</item>
     </style>
 

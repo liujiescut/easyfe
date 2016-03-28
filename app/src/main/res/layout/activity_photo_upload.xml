@@ -26,7 +26,7 @@
                 style="@style/ll_container_normal_style">
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="1"
                     android:text="@string/id_card_name"
                     android:gravity="center_vertical|left"
@@ -34,7 +34,7 @@
 
                 <TextView
                     android:id="@+id/photo_upload_tv_id_card"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_width="wrap_content"
                     android:gravity="right|center_vertical"
                     android:text="@string/upload"
@@ -57,7 +57,7 @@
                 style="@style/ll_container_normal_style">
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="1"
                     android:text="@string/student_card"
                     android:gravity="center_vertical|left"
@@ -65,7 +65,7 @@
 
                 <TextView
                     android:id="@+id/photo_upload_tv_student_card"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_width="wrap_content"
                     android:gravity="right|center_vertical"
                     android:text="@string/upload"
@@ -89,7 +89,7 @@
                 style="@style/ll_container_normal_style">
 
                 <TextView
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_weight="1"
                     android:text="@string/avatar"
                     android:gravity="center_vertical|left"
@@ -97,7 +97,7 @@
 
                 <TextView
                     android:id="@+id/photo_upload_tv_avatar"
-                    style="@style/text_input_normal_style"
+                    style="@style/text_normal_style"
                     android:layout_width="wrap_content"
                     android:gravity="right|center_vertical"
                     android:text="@string/upload"
