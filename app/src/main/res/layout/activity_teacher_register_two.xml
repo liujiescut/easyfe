@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:toogle="http://schemas.android.com/apk/res-auto"
     tools:context="com.scut.easyfe.ui.activity.TeacherRegisterTwoActivity">
 
     <include
@@ -12,13 +13,42 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/shape_app_bg"
-        android:layout_below="@+id/teacher_register_step_two_titlebar">
+        android:layout_below="@+id/teacher_register_step_two_titlebar"
+        android:background="@drawable/shape_app_bg">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/teacher_register_two_ll_tb"
+                style="@style/ll_container_normal_style"
+                android:layout_marginTop="@dimen/layout_margin_small"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    style="@style/text_normal_style"
+                    android:layout_width="wrap_content"
+                    android:gravity="center_vertical|left"
+                    android:text="@string/accept_reservation" />
+
+                <RelativeLayout
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    android:paddingRight="@dimen/layout_padding_small"
+                    android:background="@drawable/selector_et_bg">
+                    <com.zcw.togglebutton.ToggleButton
+                        android:id="@+id/teacher_register_two_tb"
+                        android:layout_width="51dp"
+                        android:layout_height="31dp"
+                        toogle:onColor="@color/theme_color_dark"/>
+                </RelativeLayout>
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -44,8 +74,7 @@
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
                     android:onClick="onTeachTimeClick"
-                    android:text="@string/set_your_teach_time"
-                     />
+                    android:text="@string/set_your_teach_time" />
             </LinearLayout>
 
             <LinearLayout style="@style/ll_container_normal_style">
@@ -63,9 +92,9 @@
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
                     android:onClick="onMinTeachTimeClick"
-                    tools:text="@string/min_teach_time_example"
-                    />
+                    tools:text="@string/min_teach_time_example" />
             </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -94,9 +123,11 @@
                     android:onClick="onTrafficTimeClick"
                     tools:text="@string/traffic_time_example" />
             </LinearLayout>
+
             <LinearLayout
                 style="@style/ll_container_normal_style"
                 android:layout_height="50dp">
+
                 <TextView
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
@@ -112,6 +143,7 @@
                     android:onClick="onMaxTrafficTimeClick"
                     tools:text="@string/traffic_time_example" />
             </LinearLayout>
+
             <LinearLayout style="@style/ll_container_normal_style">
 
                 <TextView
@@ -130,9 +162,10 @@
                     tools:text="5 元" />
             </LinearLayout>
 
-            <LinearLayout style="@style/ll_container_normal_style"
-                android:layout_marginTop="@dimen/layout_margin_small"
-                android:layout_marginBottom="@dimen/layout_margin_small">
+            <LinearLayout
+                style="@style/ll_container_normal_style"
+                android:layout_marginBottom="@dimen/layout_margin_small"
+                android:layout_marginTop="@dimen/layout_margin_small">
 
                 <TextView
                     style="@style/text_normal_style"
@@ -147,19 +180,17 @@
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
                     android:onClick="onTeachCourseClick"
-                    android:text="@string/fill_message"
-                    />
+                    android:text="@string/fill_message" />
             </LinearLayout>
 
-            <LinearLayout style="@style/ll_container_normal_style"
-                >
+            <LinearLayout style="@style/ll_container_normal_style">
 
                 <TextView
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
-                    android:onClick="onAngleDetailClick"
                     android:drawableRight="@mipmap/icon_detail_question_padding"
+                    android:onClick="onAngleDetailClick"
                     android:text="@string/angel_plan" />
 
                 <TextView
@@ -169,15 +200,14 @@
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
                     android:onClick="onAnglePlaneClick"
-                    android:text="@string/no"
-                    />
+                    android:text="@string/no" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/teacher_register_two_ll_angel_boy_age"
                 style="@style/ll_container_normal_style"
                 android:visibility="gone"
-                tools:visibility="visible"
-                >
+                tools:visibility="visible">
 
                 <TextView
                     style="@style/text_normal_style"
@@ -192,15 +222,14 @@
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
                     android:onClick="onMaleAgeClick"
-                    android:text="@string/deny"
-                     />
+                    android:text="@string/deny" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/teacher_register_two_ll_angel_girl_age"
                 style="@style/ll_container_normal_style"
                 android:visibility="gone"
-                tools:visibility="visible"
-                >
+                tools:visibility="visible">
 
                 <TextView
                     style="@style/text_normal_style"
@@ -215,15 +244,14 @@
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
                     android:onClick="onFemaleAgeClick"
-                    android:text="@string/deny"
-                    />
+                    android:text="@string/deny" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/teacher_register_two_ll_angel_price"
                 style="@style/ll_container_normal_style"
                 android:visibility="gone"
-                tools:visibility="visible"
-                >
+                tools:visibility="visible">
 
                 <TextView
                     style="@style/text_normal_style"
@@ -238,8 +266,7 @@
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
                     android:onClick="onAnglePriceClick"
-                    android:text="@string/price_example"
-                    />
+                    android:text="@string/price_example" />
             </LinearLayout>
 
             <TextView
@@ -250,6 +277,7 @@
                 android:text="@string/teacher_register_step_two_info_3"
                 android:textColor="@color/text_hint_color"
                 android:textSize="@dimen/text_size_tiny" />
+
             <TextView
                 android:id="@+id/teacher_register_two_tv_submit"
                 android:layout_width="match_parent"

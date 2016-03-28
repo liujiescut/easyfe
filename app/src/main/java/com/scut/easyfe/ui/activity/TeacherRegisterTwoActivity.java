@@ -1,5 +1,7 @@
 package com.scut.easyfe.ui.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -13,11 +15,12 @@ import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
+import com.zcw.togglebutton.ToggleButton;
 
 import java.util.ArrayList;
 
 /**
- * 家教注册第二部(家教时间)
+ * 家教注册第二部(家教时间) 家教信息维护页
  * @author jay
  */
 public class TeacherRegisterTwoActivity extends BaseActivity {
@@ -37,6 +40,9 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
     private LinearLayout mAngelBoyAgeLinearLayout;
     private LinearLayout mAngelGirlAgeLinearLayout;
     private LinearLayout mAngelPriceLinearLayout;
+    private LinearLayout mWorkOrNotLinearLayout;
+    private ToggleButton mWorkOrNotToggle;
+
 
     private boolean mSelectedTeachTime = false;     //是否选择了授课时间
     private boolean mJoinAngelPlan = false;         //是否加入天使计划
@@ -62,6 +68,8 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
     private static final int PICK_OPTION_ANGEL_GIRL_AGE = 1;
     private int mOptionPickType = -1;
 
+    private boolean mIsRegister = false;   //区分注册第二部跟家教信息维护
+
 
     private static ArrayList<String> mAge = new ArrayList<>();
 
@@ -78,8 +86,19 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
     }
 
     @Override
+    protected void initData() {
+        Intent intent = getIntent();
+        if(null != intent){
+            Bundle bundle = intent.getExtras();
+            if(null != bundle) {
+                mIsRegister = bundle.getBoolean(Constants.Key.IS_REGISTER, false);
+            }
+        }
+    }
+
+    @Override
     protected void initView() {
-        ((TextView) findViewById(R.id.titlebar_tv_title)).setText("家教注册 - 家教时间");
+        ((TextView) findViewById(R.id.titlebar_tv_title)).setText(mIsRegister ? "家教注册 - 家教时间" : "家教信息维护");
         mTeachTimeTextView = OtherUtils.findViewById(this, R.id.teacher_register_two_tv_teach_time);
         mMinTeachTimeTextView = OtherUtils.findViewById(this, R.id.teacher_register_two_tv_min_teach_time);
         mTrafficTextView = OtherUtils.findViewById(this, R.id.teacher_register_two_tv_traffic_time);
@@ -94,9 +113,15 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
         mAngelBoyAgeLinearLayout = OtherUtils.findViewById(this, R.id.teacher_register_two_ll_angel_boy_age);
         mAngelGirlAgeLinearLayout = OtherUtils.findViewById(this, R.id.teacher_register_two_ll_angel_girl_age);
         mAngelPriceLinearLayout = OtherUtils.findViewById(this, R.id.teacher_register_two_ll_angel_price);
+        mWorkOrNotLinearLayout = OtherUtils.findViewById(this, R.id.teacher_register_two_ll_tb);
+        mWorkOrNotToggle = OtherUtils.findViewById(this, R.id.teacher_register_two_tb);
 
         mTimePicker = new MyTimePicker(this);
         mOptionPicker = new OptionsPickerView<>(this);
+
+        if(!mIsRegister){
+            mWorkOrNotLinearLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -131,10 +156,10 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
         mOptionPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
-                switch (mOptionPickType){
+                switch (mOptionPickType) {
                     case PICK_OPTION_ANGEL_BOY_AGE:
                         mMaxBoyAge = options1;
-                        if(options1 == 0){
+                        if (options1 == 0) {
                             mAngleBoyAgeTextView.setText(mAge.get(0));
                             break;
                         }
@@ -143,7 +168,7 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
 
                     case PICK_OPTION_ANGEL_GIRL_AGE:
                         mMaxGirlAge = options1;
-                        if(options1 == 0){
+                        if (options1 == 0) {
                             mAngleBoyAgeTextView.setText(mAge.get(0));
                             break;
                         }

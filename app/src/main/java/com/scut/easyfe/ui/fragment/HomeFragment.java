@@ -3,6 +3,7 @@ package com.scut.easyfe.ui.fragment;
 import android.view.View;
 
 import com.scut.easyfe.R;
+import com.scut.easyfe.ui.activity.TeacherRegisterOneActivity;
 import com.scut.easyfe.ui.activity.TeacherRegisterTwoActivity;
 import com.scut.easyfe.ui.base.BaseFragment;
 
@@ -110,7 +111,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
      */
     private void onTeacherClick(View view){
         if(null != mActivity) {
-            mActivity.redirectToActivity(mActivity, TeacherRegisterTwoActivity.class);
+            mActivity.redirectToActivity(mActivity, TeacherRegisterOneActivity.class);
         }
     }
 }

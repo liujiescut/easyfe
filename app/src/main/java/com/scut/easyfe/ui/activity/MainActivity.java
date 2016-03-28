@@ -1,11 +1,13 @@
 package com.scut.easyfe.ui.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.ui.base.BaseFragment;
 import com.scut.easyfe.ui.fragment.HomeFragment;
@@ -76,5 +78,14 @@ public class MainActivity extends BaseActivity {
      */
     public void onPocketClick(View view){
         redirectToActivity(mContext, PocketActivity.class);
+    }
+
+    /**
+     * 点击家教信息维护
+     */
+    public void onTeacherMsgManageClick(View view){
+        Bundle extras = new Bundle();
+        extras.putBoolean(Constants.Key.IS_REGISTER, false);
+        redirectToActivity(this, TeacherRegisterTwoActivity.class, extras);
     }
 }

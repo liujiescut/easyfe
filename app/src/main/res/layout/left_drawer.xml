@@ -77,7 +77,8 @@
 
     <TextView
         style="@style/main_left_drawer_item"
-        android:text="@string/main_left_drawer_fe_msg" />
+        android:text="@string/main_left_drawer_fe_msg"
+        android:onClick="onTeacherMsgManageClick"/>
 
     <View style="@style/main_left_drawer_divider" />
 

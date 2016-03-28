@@ -251,7 +251,9 @@ public class TeacherRegisterOneActivity extends BaseActivity {
      * 家教注册第一步点击保存并进入下一页
      */
     public void onRegisterOneClick(View view){
-        redirectToActivity(this, TeacherRegisterTwoActivity.class);
+        Bundle extras = new Bundle();
+        extras.putBoolean(Constants.Key.IS_REGISTER, true);
+        redirectToActivity(this, TeacherRegisterTwoActivity.class, extras);
     }
 
 }

@@ -35,6 +35,7 @@ public class Constants {
         public static final String LONGITUDE = "longitude";
         public static final String ADDRESS = "address";
         public static final String ORDER_TYPE = "order_type";
+        public static final String IS_REGISTER =  "is_register";
     }
 
     /**

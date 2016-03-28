@@ -120,5 +120,6 @@
     <string name="withdraw">提现</string>
     <string name="edit">编辑</string>
     <string name="save">保存</string>
+    <string name="accept_reservation">是否接受预定</string>
 
 </resources>
