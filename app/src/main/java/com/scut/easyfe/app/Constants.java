@@ -27,6 +27,7 @@ public class Constants {
         public static final String BASE_TAG = "easyfe_";
         public static final String LOGIN_TAG = BASE_TAG + "login";
         public static final String MAP_TAG = BASE_TAG + "map";
+        public static final String ORDER_TAG = BASE_TAG + "order";
         public static final String TEACHER_REGISTER_TAG = BASE_TAG + "teacher_register";
     }
 

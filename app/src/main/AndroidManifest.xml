@@ -67,7 +67,8 @@
         <activity android:name=".ui.activity.ReceivablesChannelActivity" />
         <activity android:name=".ui.activity.PhotoUploadActivity" />
         <activity android:name=".ui.activity.MyOrderActivity" />
-        <activity android:name=".ui.activity.PocketActivity"></activity>
+        <activity android:name=".ui.activity.PocketActivity" />
+        <activity android:name=".ui.activity.PublishSpreadActivity"></activity>
     </application>
 
 </manifest>

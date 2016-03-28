@@ -96,6 +96,7 @@
 
     <TextView
         style="@style/main_left_drawer_item"
+        android:onClick="onSpreadClick"
         android:text="@string/main_left_drawer_special_order" />
 
     <View style="@style/main_left_drawer_divider" />

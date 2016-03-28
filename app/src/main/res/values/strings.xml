@@ -59,7 +59,10 @@
     <string name="traffic_time_example">1 小时 23 分钟</string>
     <string name="max_traffic_time">能接受的最长交通时间\n（超出部分收取交通补贴）</string>
     <string name="traffic_tip">交通补贴</string>
-    <string name="teach_course">可教授课程及收费</string>
+    <string name="can_teach_course">可教授课程及收费</string>
+    <string name="teach_course">授课课程</string>
+    <string name="teach_time_length">授课时长</string>
+    <string name="teach_price">单位价格</string>
     <string name="fill_message">请完善此信息</string>
     <string name="angel_plan">是否参与陪伴天使计划</string>
     <string name="yes">是</string>
@@ -121,5 +124,7 @@
     <string name="edit">编辑</string>
     <string name="save">保存</string>
     <string name="accept_reservation">是否接受预定</string>
+    <string name="teach_grade">授课年级</string>
+    <string name="confirm_order">确认订单</string>
 
 </resources>

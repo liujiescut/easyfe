@@ -88,4 +88,11 @@ public class MainActivity extends BaseActivity {
         extras.putBoolean(Constants.Key.IS_REGISTER, false);
         redirectToActivity(this, TeacherRegisterTwoActivity.class, extras);
     }
+
+    /**
+     * 点击推广(特价订单)
+     */
+    public void onSpreadClick(View view){
+        redirectToActivity(mContext, PublishSpreadActivity.class);
+    }
 }

@@ -171,7 +171,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="2"
-                    android:text="@string/teach_course" />
+                    android:text="@string/can_teach_course" />
 
                 <TextView
                     android:id="@+id/teacher_register_two_tv_course"
