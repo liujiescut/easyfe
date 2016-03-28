@@ -20,7 +20,7 @@
 
         <EditText
             android:id="@+id/parent_register_et_name"
-            style="@style/text_normal_style"
+            style="@style/text_editable_style"
             android:layout_weight="3"
             android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
@@ -40,7 +40,7 @@
 
         <TextView
             android:id="@+id/parent_register_tv_parent_gender"
-            style="@style/text_normal_style"
+            style="@style/text_editable_style"
             android:layout_weight="3"
             android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
@@ -71,7 +71,7 @@
 
         <EditText
             android:id="@+id/parent_register_et_phone"
-            style="@style/text_normal_style"
+            style="@style/text_editable_style"
             android:layout_weight="3"
             android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
@@ -91,7 +91,7 @@
 
         <EditText
             android:id="@+id/parent_register_et_password"
-            style="@style/text_normal_style"
+            style="@style/text_editable_style"
             android:layout_weight="3"
             android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
@@ -113,7 +113,7 @@
 
         <TextView
             android:id="@+id/parent_register_tv_child_gender"
-            style="@style/text_normal_style"
+            style="@style/text_editable_style"
             android:layout_weight="3"
             android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
@@ -134,7 +134,7 @@
 
         <TextView
             android:id="@+id/parent_register_tv_child_grade"
-            style="@style/text_normal_style"
+            style="@style/text_editable_style"
             android:layout_weight="3"
             android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
@@ -156,7 +156,7 @@
 
         <TextView
             android:id="@+id/parent_register_tv_address"
-            style="@style/text_normal_style"
+            style="@style/text_editable_style"
             android:layout_weight="3"
             android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"

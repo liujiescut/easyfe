@@ -53,7 +53,7 @@
 
                 <TextView
                     android:id="@+id/special_time_teachable"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -128,7 +128,7 @@
 
             <EditText
                 android:id="@+id/special_time_et_remember_things"
-                style="@style/text_normal_style"
+                style="@style/text_editable_style"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:gravity="start"

@@ -25,7 +25,7 @@
 
         <EditText
             android:id="@+id/receivables_channel_et_alipay"
-            style="@style/text_normal_style"
+            style="@style/text_editable_style"
             android:layout_weight="2"
             android:gravity="start|center_vertical"
             android:paddingLeft="@dimen/layout_padding_small"
@@ -43,7 +43,7 @@
 
         <EditText
             android:id="@+id/receivables_channel_et_wechat"
-            style="@style/text_normal_style"
+            style="@style/text_editable_style"
             android:layout_weight="2"
             android:gravity="start|center_vertical"
             android:paddingLeft="@dimen/layout_padding_small"
@@ -62,7 +62,7 @@
 
         <TextView
             android:id="@+id/receivables_channel_tv_bank_name"
-            style="@style/text_normal_style"
+            style="@style/text_editable_style"
             android:layout_weight="2"
             android:gravity="start|center_vertical"
             android:paddingLeft="@dimen/layout_padding_small"
@@ -81,7 +81,7 @@
 
         <EditText
             android:id="@+id/receivables_channel_et_bank_number"
-            style="@style/text_normal_style"
+            style="@style/text_editable_style"
             android:layout_weight="2"
             android:gravity="start|center_vertical"
             android:paddingLeft="@dimen/layout_padding_small"

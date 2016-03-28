@@ -39,7 +39,7 @@
 
                 <TextView
                     android:id="@+id/teacher_register_two_tv_teach_time"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -58,7 +58,7 @@
 
                 <TextView
                     android:id="@+id/teacher_register_two_tv_min_teach_time"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -87,7 +87,7 @@
 
                 <TextView
                     android:id="@+id/teacher_register_two_tv_traffic_time"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="4"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -105,7 +105,7 @@
 
                 <TextView
                     android:id="@+id/teacher_register_two_tv_max_traffic_time"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="4"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -122,7 +122,7 @@
 
                 <TextView
                     android:id="@+id/teacher_register_two_tv_tip"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -142,7 +142,7 @@
 
                 <TextView
                     android:id="@+id/teacher_register_two_tv_course"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -164,7 +164,7 @@
 
                 <TextView
                     android:id="@+id/teacher_register_two_tv_angel"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="1"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -187,7 +187,7 @@
 
                 <TextView
                     android:id="@+id/teacher_register_two_tv_angel_boy_age"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="1"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -210,7 +210,7 @@
 
                 <TextView
                     android:id="@+id/teacher_register_two_tv_angel_girl_age"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="1"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -233,7 +233,7 @@
 
                 <TextView
                     android:id="@+id/teacher_register_two_tv_angel_price"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="1"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"

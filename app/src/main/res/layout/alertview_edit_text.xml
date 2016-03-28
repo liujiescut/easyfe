@@ -7,7 +7,7 @@
 
     <EditText
         android:id="@+id/alertview_et_input"
-        style="@style/text_normal_style"
+        style="@style/text_editable_style"
         android:layout_height="@dimen/text_area_height"
         android:layout_width="match_parent"
         android:layout_margin="@dimen/layout_padding_normal"

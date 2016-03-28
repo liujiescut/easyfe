@@ -72,7 +72,6 @@ public class MyOrderActivity extends BaseActivity {
         }
 
         mViewPager.setCurrentItem(mCurrentOrderType);
-        refreshButtonsState(getButtonTypeFromOrderType(mCurrentOrderType));
     }
 
     @Override
@@ -168,6 +167,8 @@ public class MyOrderActivity extends BaseActivity {
                 refreshButtonsState(BUTTON_TYPE_BOTH);
             }
         };
+
+        refreshButtonsState(getButtonTypeFromOrderType(mCurrentOrderType));
     }
 
     /**

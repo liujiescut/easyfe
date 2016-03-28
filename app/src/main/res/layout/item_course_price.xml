@@ -7,13 +7,13 @@
 
         <TextView
             android:id="@+id/item_course_price_tv_state"
-            style="@style/text_normal_style"
+            style="@style/text_editable_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1" />
 
         <TextView
             android:id="@+id/item_course_price_tv_grade"
-            style="@style/text_normal_style"
+            style="@style/text_editable_style"
             android:layout_weight="1"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:gravity="start|center_vertical"
@@ -21,7 +21,7 @@
 
         <TextView
             android:id="@+id/item_course_price_tv_price"
-            style="@style/text_normal_style"
+            style="@style/text_editable_style"
             android:layout_weight="3"
             android:drawableRight="@mipmap/icon_right_arrow_padding"
             android:gravity="start|center_vertical"

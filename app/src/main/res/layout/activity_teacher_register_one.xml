@@ -30,7 +30,7 @@
 
                 <EditText
                     android:id="@+id/teacher_register_one_et_name"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
                     android:maxLength="10"
@@ -47,7 +47,7 @@
 
                 <TextView
                     android:id="@+id/teacher_register_one_tv_gender"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -66,7 +66,7 @@
 
                 <TextView
                     android:id="@+id/teacher_register_one_tv_birthday"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -87,7 +87,7 @@
 
                 <EditText
                     android:id="@+id/teacher_register_one_et_phone"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
                     android:inputType="phone"
@@ -105,7 +105,7 @@
 
                 <EditText
                     android:id="@+id/teacher_register_one_et_password"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
                     android:inputType="textPassword"
@@ -122,7 +122,7 @@
 
                 <EditText
                     android:id="@+id/teacher_register_one_et_id_card"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
                     android:inputType="phone"
@@ -141,7 +141,7 @@
 
                 <TextView
                     android:id="@+id/teacher_register_one_tv_school"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -159,7 +159,7 @@
 
                 <TextView
                     android:id="@+id/teacher_register_one_tv_grade"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -177,7 +177,7 @@
 
                 <TextView
                     android:id="@+id/teacher_register_one_tv_profession"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -197,7 +197,7 @@
 
                 <TextView
                     android:id="@+id/teacher_register_one_tv_address"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:drawableRight="@mipmap/icon_map_grey"
                     android:ellipsize="end"
@@ -219,7 +219,7 @@
 
                 <TextView
                     android:id="@+id/teacher_register_one_tv_child_count"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="4"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
@@ -237,7 +237,7 @@
 
                 <TextView
                     android:id="@+id/teacher_register_one_tv_time"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="4"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
