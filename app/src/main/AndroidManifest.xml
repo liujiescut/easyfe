@@ -71,7 +71,8 @@
         <activity android:name=".ui.activity.MyOrderActivity" />
         <activity android:name=".ui.activity.PocketActivity" />
         <activity android:name=".ui.activity.PublishSpreadActivity" />
-        <activity android:name=".ui.activity.MessageCenterActivity"></activity>
+        <activity android:name=".ui.activity.MessageCenterActivity" />
+        <activity android:name=".ui.activity.ContactUsActivity"></activity>
     </application>
 
 </manifest>

@@ -126,5 +126,8 @@
     <string name="accept_reservation">是否接受预定</string>
     <string name="teach_grade">授课年级</string>
     <string name="confirm_order">确认订单</string>
+    <string name="QQ">QQ</string>
+    <string name="email">邮箱</string>
+    <string name="contact_way" >联系方式</string>
 
 </resources>

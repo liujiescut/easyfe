@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/shape_app_bg"
+    tools:context="com.scut.easyfe.ui.activity.ContactUsActivity">
+    <include
+        layout="@layout/titlebar"/>
+    <LinearLayout style="@style/ll_container_normal_style"
+        android:layout_marginTop="@dimen/layout_margin_small">
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/layout_padding_small"
+            android:text="@string/QQ"/>
+
+        <TextView
+            android:id="@+id/item_course_time"
+            style="@style/text_normal_style"
+            android:layout_weight="3"
+            android:gravity="end|center_vertical"
+            android:text="123456789"
+            android:paddingRight="@dimen/layout_padding_small"
+            android:textSize="@dimen/text_size_medium" />
+    </LinearLayout>
+    <LinearLayout style="@style/ll_container_normal_style">
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/layout_padding_small"
+            android:text="@string/wechat"/>
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_weight="3"
+            android:gravity="end|center_vertical"
+            android:text="easyFamilyEducation"
+            android:paddingRight="@dimen/layout_padding_small"
+            android:textSize="@dimen/text_size_medium" />
+    </LinearLayout>
+    <LinearLayout style="@style/ll_container_normal_style">
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/layout_padding_small"
+            android:text="@string/email"/>
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_weight="3"
+            android:gravity="end|center_vertical"
+            android:text="123456789@qq.com"
+            android:paddingRight="@dimen/layout_padding_small"
+            android:textSize="@dimen/text_size_medium" />
+    </LinearLayout>
+    <LinearLayout style="@style/ll_container_normal_style">
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/layout_padding_small"
+            android:text="@string/contact_way"/>
+
+        <TextView
+            android:id="@+id/item_course_time"
+            style="@style/text_normal_style"
+            android:layout_weight="3"
+            android:gravity="end|center_vertical"
+            android:text="18813425675"
+            android:paddingRight="@dimen/layout_padding_small"
+            android:textSize="@dimen/text_size_medium" />
+    </LinearLayout>
+
+</LinearLayout>

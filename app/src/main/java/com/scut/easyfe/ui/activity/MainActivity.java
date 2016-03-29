@@ -102,4 +102,11 @@ public class MainActivity extends BaseActivity {
     public void onMessageCenterClick(View view){
         redirectToActivity(mContext, MessageCenterActivity.class);
     }
+
+    /**
+     * 点击联系我们
+     */
+    public void onContactUsClick(View view){
+        redirectToActivity(mContext, ContactUsActivity.class);
+    }
 }

@@ -110,6 +110,7 @@
 
     <TextView
         style="@style/main_left_drawer_item"
+        android:onClick="onContactUsClick"
         android:text="@string/main_left_drawer_contact_us" />
 
     <View style="@style/main_left_drawer_divider" />
