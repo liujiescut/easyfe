@@ -103,6 +103,7 @@
 
     <TextView
         style="@style/main_left_drawer_item"
+        android:onClick="onMessageCenterClick"
         android:text="@string/main_left_drawer_msg_center" />
 
     <View style="@style/main_left_drawer_divider" />

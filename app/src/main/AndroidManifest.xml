@@ -46,7 +46,9 @@
             android:enabled="true"
             android:process=":remote" />
 
-        <activity android:name=".ui.activity.MainActivity">
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -68,7 +70,8 @@
         <activity android:name=".ui.activity.PhotoUploadActivity" />
         <activity android:name=".ui.activity.MyOrderActivity" />
         <activity android:name=".ui.activity.PocketActivity" />
-        <activity android:name=".ui.activity.PublishSpreadActivity"></activity>
+        <activity android:name=".ui.activity.PublishSpreadActivity" />
+        <activity android:name=".ui.activity.MessageCenterActivity"></activity>
     </application>
 
 </manifest>

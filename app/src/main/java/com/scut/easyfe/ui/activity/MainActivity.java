@@ -95,4 +95,11 @@ public class MainActivity extends BaseActivity {
     public void onSpreadClick(View view){
         redirectToActivity(mContext, PublishSpreadActivity.class);
     }
+
+    /**
+     * 点击消息中心
+     */
+    public void onMessageCenterClick(View view){
+        redirectToActivity(mContext, MessageCenterActivity.class);
+    }
 }
