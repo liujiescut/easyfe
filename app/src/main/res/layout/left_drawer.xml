@@ -117,6 +117,7 @@
 
     <TextView
         style="@style/main_left_drawer_item"
+        android:onClick="onMoreClick"
         android:text="@string/main_left_drawer_more" />
 
     <TextView

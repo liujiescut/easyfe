@@ -109,4 +109,11 @@ public class MainActivity extends BaseActivity {
     public void onContactUsClick(View view){
         redirectToActivity(mContext, ContactUsActivity.class);
     }
+
+    /**
+     * 点击更多
+     */
+    public void onMoreClick(View view){
+        redirectToActivity(mContext, MoreActivity.class);
+    }
 }

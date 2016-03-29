@@ -72,7 +72,10 @@
         <activity android:name=".ui.activity.PocketActivity" />
         <activity android:name=".ui.activity.PublishSpreadActivity" />
         <activity android:name=".ui.activity.MessageCenterActivity" />
-        <activity android:name=".ui.activity.ContactUsActivity"></activity>
+        <activity android:name=".ui.activity.ContactUsActivity" />
+        <activity android:name=".ui.activity.MoreActivity" />
+        <activity android:name=".ui.activity.ProblemAndHelpActivity" />
+        <activity android:name=".ui.activity.ShowTextActivity"></activity>
     </application>
 
 </manifest>

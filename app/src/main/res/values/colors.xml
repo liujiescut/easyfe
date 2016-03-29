@@ -9,7 +9,7 @@
     <color name="theme_color">#C6A770</color>
     <color name="theme_color_light">#80FFE4B3</color>
     <color name="theme_color_dark">#F1C67A</color>
-    <color name="app_bg">#D8D8D8</color>
+    <color name="app_bg">#f0f0f0</color>
     <color name="app_bg_dark">#DEDEDE</color>
 
     <!-- 主页相关颜色 -->

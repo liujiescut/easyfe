@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.scut.easyfe.ui.activity.MoreActivity">
+    <include
+        layout="@layout/titlebar"/>
+    <LinearLayout style="@style/ll_container_normal_style"
+        android:layout_marginTop="@dimen/layout_margin_small">
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/layout_padding_small"
+            android:drawableRight="@mipmap/icon_right_arrow_padding"
+            android:onClick="onHelpClick"
+            android:text="@string/problem_and_help"/>
+
+    </LinearLayout>
+    <LinearLayout style="@style/ll_container_normal_style">
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/layout_padding_small"
+            android:drawableRight="@mipmap/icon_right_arrow_padding"
+            android:onClick="onUserProtocolClick"
+            android:text="@string/user_protocol"/>
+
+    </LinearLayout>
+    <LinearLayout style="@style/ll_container_normal_style">
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/layout_padding_small"
+            android:drawableRight="@mipmap/icon_right_arrow_padding"
+            android:onClick="onAboutUsClick"
+            android:text="@string/about_us"/>
+
+    </LinearLayout>
+    <LinearLayout style="@style/ll_container_normal_style">
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/layout_padding_small"
+            android:drawableRight="@mipmap/icon_right_arrow_padding"
+            android:onClick="onCallbackClick"
+            android:text="@string/user_advice"/>
+    </LinearLayout>
+</LinearLayout>

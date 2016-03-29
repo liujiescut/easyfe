@@ -37,6 +37,9 @@ public class Constants {
         public static final String ADDRESS = "address";
         public static final String ORDER_TYPE = "order_type";
         public static final String IS_REGISTER =  "is_register";
+        public static final String SHOW_TEXT_ACTIVITY_TITLE =  "show_text_activity_title";
+        public static final String SHOW_TEXT_ACTIVITY_CONTENT =  "show_text_activity_content";
+
     }
 
     /**
