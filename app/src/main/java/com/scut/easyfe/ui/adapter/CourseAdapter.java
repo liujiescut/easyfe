@@ -51,7 +51,7 @@ public class CourseAdapter extends BaseAdapter{
         return convertView;
     }
 
-    class ViewHolder{
+    private class ViewHolder{
         SelectorButton selectorButton;
         public ViewHolder(View root) {
             this.selectorButton = (SelectorButton) root.findViewById(R.id.item_teach_course);

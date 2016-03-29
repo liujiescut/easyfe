@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/text_area_bg"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/item_special_order_tv_teacher"
+            style="@style/my_order_item_style"
+            android:layout_weight="1"
+            android:gravity="center_vertical|left"
+            android:padding="@dimen/layout_padding_small"
+            tools:text="黄老师" />
+
+        <TextView
+            android:id="@+id/item_special_order_tv_price"
+            style="@style/my_order_item_style"
+            android:layout_weight="1"
+            android:gravity="center_vertical|right"
+            android:padding="@dimen/layout_padding_small"
+            tools:text="60元/小时" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_divider_height"
+        android:background="@color/transparent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/item_special_order_tv_content_up"
+                style="@style/my_order_item_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:padding="@dimen/layout_padding_small"
+                tools:text="性别: 男\n大学专业: 华南理工大学 软件工程专业\n已家教过的孩子数量: 18\n已家教的时长: 250小时\n综合评分: 58分" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/default_divider_height"
+                android:background="@color/transparent" />
+
+
+            <TextView
+                android:id="@+id/item_special_order_tv_content_down"
+                style="@style/my_order_item_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:padding="@dimen/layout_padding_small"
+                tools:text="授课年级: 小学 三年级\n授课课程: 数学\n授课时间: 2015年3月23(星期五) 晚上\n授课时长: 2 小时 0 分钟\n原价: 250元/小时" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/item_special_order_tv_reserve"
+            style="@style/my_order_item_style"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/default_divider_height"
+            android:background="@drawable/selector_main_left_drawer_item"
+            android:text="@string/reservation"
+            android:textColor="@color/title_text_color"
+            android:textSize="@dimen/text_size_normal" />
+
+    </LinearLayout>
+
+</LinearLayout>

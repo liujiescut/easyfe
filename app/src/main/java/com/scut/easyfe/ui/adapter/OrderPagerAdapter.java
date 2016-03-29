@@ -1,11 +1,10 @@
 package com.scut.easyfe.ui.adapter;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.scut.easyfe.app.App;
-import com.scut.easyfe.ui.fragment.OrderFragment;
+import com.scut.easyfe.ui.fragment.MyOrderFragment;
 
 import java.util.ArrayList;
 
@@ -15,7 +14,7 @@ import java.util.ArrayList;
  */
 public class OrderPagerAdapter extends FragmentPagerAdapter {
 
-    ArrayList<OrderFragment> fragments;
+    ArrayList<MyOrderFragment> fragments;
     private  int[] mTitles;
     private  int[] mTypes;
 
@@ -26,9 +25,9 @@ public class OrderPagerAdapter extends FragmentPagerAdapter {
 
         fragments = new ArrayList<>(mTitles.length);
         for (int i = 0; i < mTypes.length; i++) {
-            OrderFragment orderFragment = new OrderFragment();
-            orderFragment.setType(mTypes[i]);
-            fragments.add(orderFragment);
+            MyOrderFragment myOrderFragment = new MyOrderFragment();
+            myOrderFragment.setType(mTypes[i]);
+            fragments.add(myOrderFragment);
         }
     }
 
@@ -43,7 +42,7 @@ public class OrderPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public OrderFragment getItem(int position) {
+    public MyOrderFragment getItem(int position) {
         return fragments.get(position);
     }
 

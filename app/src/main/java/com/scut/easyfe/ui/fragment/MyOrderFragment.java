@@ -1,31 +1,19 @@
 package com.scut.easyfe.ui.fragment;
 
-/*
- * Copyright (C) 2013 Andreas Stuetz <andreas.stuetz@gmail.com>
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 import android.view.View;
 import android.widget.AdapterView;
 
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.Order;
-import com.scut.easyfe.ui.adapter.OrderAdapter;
+import com.scut.easyfe.ui.adapter.MyOrderAdapter;
 import com.scut.easyfe.ui.base.BaseRefreshFragment;
 import com.scut.easyfe.utils.DensityUtil;
 
-public class OrderFragment extends BaseRefreshFragment {
+/**
+ * 我的订单页面使用的Fragment
+ * @author jay
+ */
+public class MyOrderFragment extends BaseRefreshFragment {
     private int mOrderType;
     private int mState = Constants.Identifier.STATE_NORMAL;
 
@@ -43,8 +31,8 @@ public class OrderFragment extends BaseRefreshFragment {
 
         mDataListView.addHeaderView(headView);
         mDataListView.setDividerHeight(DensityUtil.dip2px(mActivity, 5));
-        mAdapter = new OrderAdapter(getActivity(), Order.getTestOrders());
-        ((OrderAdapter)mAdapter).setState(mState);
+        mAdapter = new MyOrderAdapter(getActivity(), Order.getTestOrders());
+        ((MyOrderAdapter)mAdapter).setState(mState);
         setBaseAdapter(mAdapter);
     }
 
@@ -70,7 +58,7 @@ public class OrderFragment extends BaseRefreshFragment {
     public void setState(int state){
         mState = state;
         if(null != mAdapter){
-            ((OrderAdapter)mAdapter).setState(state);
+            ((MyOrderAdapter)mAdapter).setState(state);
             mAdapter.notifyDataSetChanged();
         }
     }

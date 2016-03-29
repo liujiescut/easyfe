@@ -76,7 +76,8 @@
         <activity android:name=".ui.activity.MoreActivity" />
         <activity android:name=".ui.activity.ProblemAndHelpActivity" />
         <activity android:name=".ui.activity.ShowTextActivity" />
-        <activity android:name=".ui.activity.CallbackActivity"></activity>
+        <activity android:name=".ui.activity.CallbackActivity" />
+        <activity android:name=".ui.activity.SpecialOrderActivity"></activity>
     </application>
 
 </manifest>

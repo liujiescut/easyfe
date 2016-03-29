@@ -6,6 +6,7 @@ import android.view.View;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.ui.activity.CallbackActivity;
+import com.scut.easyfe.ui.activity.SpecialOrderActivity;
 import com.scut.easyfe.ui.activity.TeacherRegisterOneActivity;
 import com.scut.easyfe.ui.activity.TeacherRegisterTwoActivity;
 import com.scut.easyfe.ui.base.BaseFragment;
@@ -81,7 +82,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
      * @param view 被点击视图
      */
     private void onSpecialOrderClick(View view){
-        toast("点击特价订单");
+        if(null != mActivity){
+            mActivity.redirectToActivity(mActivity, SpecialOrderActivity.class);
+        }
     }
 
     /**

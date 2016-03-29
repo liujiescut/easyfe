@@ -27,7 +27,7 @@ import java.util.ArrayList;
  * 我的订单页面Adapter
  * Created by jay on 16/3/27.
  */
-public class OrderAdapter extends BaseListViewScrollStateAdapter {
+public class MyOrderAdapter extends BaseListViewScrollStateAdapter {
     private int mState = Constants.Identifier.STATE_NORMAL;
 
     private TranslateAnimation translateIn;
@@ -38,7 +38,7 @@ public class OrderAdapter extends BaseListViewScrollStateAdapter {
     private ArrayList<Order> mOrders = new ArrayList<>();
     private WeakReference<Activity> mActivityReference;
 
-    public OrderAdapter(Activity activity, ArrayList<Order> mOrders) {
+    public MyOrderAdapter(Activity activity, ArrayList<Order> mOrders) {
         mActivityReference = new WeakReference<>(activity);
         this.mOrders = mOrders;
     }
@@ -83,7 +83,7 @@ public class OrderAdapter extends BaseListViewScrollStateAdapter {
         holder.teacherName.setText(order.getTeacherName());
         holder.course.setText(order.getCourseName());
         holder.date.setText(OtherUtils.getTime(order.getDate(), "yyyy 年 MM 月 dd 日 (EEEE)"));
-        holder.period.setText(order.getPeriod());
+        holder.period.setText(order.getTeachPeriod());
         holder.teachTime.setText(OtherUtils.getTimeFromMimute(order.getTeachTime()));
         holder.price.setText(String.format("%.2f 元", order.getPrice()));
 
@@ -123,7 +123,7 @@ public class OrderAdapter extends BaseListViewScrollStateAdapter {
         scaleIn.setInterpolator(new OvershootInterpolator());
     }
 
-    class ViewHolder {
+    private class ViewHolder {
         LinearLayout background;
         CheckBox checkBox;
         TextView orderNum;
