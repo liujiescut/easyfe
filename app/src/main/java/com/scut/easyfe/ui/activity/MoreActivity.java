@@ -48,6 +48,8 @@ public class MoreActivity extends BaseActivity {
     }
 
     public void onCallbackClick(View view){
-
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constants.Key.CALLBACK_TYPE, Constants.Identifier.CALLBACK_APP);
+        redirectToActivity(mContext, CallbackActivity.class, bundle);
     }
 }

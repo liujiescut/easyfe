@@ -1,8 +1,11 @@
 package com.scut.easyfe.ui.fragment;
 
+import android.os.Bundle;
 import android.view.View;
 
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.ui.activity.CallbackActivity;
 import com.scut.easyfe.ui.activity.TeacherRegisterOneActivity;
 import com.scut.easyfe.ui.activity.TeacherRegisterTwoActivity;
 import com.scut.easyfe.ui.base.BaseFragment;
@@ -86,7 +89,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
      * @param view 被点击视图
      */
     private void onNeedReportClick(View view){
-        toast("点击反馈需求");
+        if(null != mActivity) {
+            Bundle bundle = new Bundle();
+            bundle.putInt(Constants.Key.CALLBACK_TYPE, Constants.Identifier.CALLBACK_NEED);
+            mActivity.redirectToActivity(mActivity, CallbackActivity.class, bundle);
+        }
     }
 
     /**

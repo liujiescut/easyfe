@@ -39,6 +39,7 @@ public class Constants {
         public static final String IS_REGISTER =  "is_register";
         public static final String SHOW_TEXT_ACTIVITY_TITLE =  "show_text_activity_title";
         public static final String SHOW_TEXT_ACTIVITY_CONTENT =  "show_text_activity_content";
+        public static final String CALLBACK_TYPE =  "callback_type";
 
     }
 
@@ -59,6 +60,11 @@ public class Constants {
         /** 我的订单页面状态 */
         public static final int STATE_NORMAL = 0;
         public static final int STATE_EDIT = 1;
+
+        /** 反馈页面的标识,表明是哪种反馈(需求反馈,应用反馈,投诉) */
+        public static final int CALLBACK_NEED = 0;           //首页预约不到想要的点这里进行反馈
+        public static final int CALLBACK_APP = 1;            //更多页面应用反馈
+        public static final int CALLBACK_COMPLAINTS = 2;     //完成订单后投诉
     }
 
     public static class Path {

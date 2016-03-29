@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/shape_app_bg"
+    tools:context="com.scut.easyfe.ui.activity.CallbackActivity">
+    <include layout="@layout/titlebar" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/callback_content"
+        android:textColor="@color/text_hint_color"
+        android:padding="@dimen/layout_padding_small"
+        android:textSize="@dimen/text_size_small" />
+    <EditText
+        android:id="@+id/callback_et_content"
+        style="@style/text_editable_style"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:gravity="start"
+        android:padding="@dimen/layout_padding_normal"
+        android:minHeight="180dp"
+         />
+
+</LinearLayout>
