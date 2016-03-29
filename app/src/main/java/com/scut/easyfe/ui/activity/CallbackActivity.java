@@ -37,6 +37,7 @@ public class CallbackActivity extends BaseActivity {
     @Override
     protected void initView() {
         ((TextView)findViewById(R.id.titlebar_tv_title)).setText("反馈");
+        findViewById(R.id.titlebar_tv_right).setVisibility(View.VISIBLE);
         ((TextView)findViewById(R.id.titlebar_tv_right)).setText("提交");
 
         mContentEditText = OtherUtils.findViewById(this, R.id.callback_et_content);

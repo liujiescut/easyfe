@@ -223,4 +223,8 @@ public class MyOrderActivity extends BaseActivity {
         }
     }
 
+    public void onBackClick(View view){
+        finish();
+    }
+
 }

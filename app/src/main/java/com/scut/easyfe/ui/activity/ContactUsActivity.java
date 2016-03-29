@@ -1,5 +1,6 @@
 package com.scut.easyfe.ui.activity;
 
+import android.view.View;
 import android.widget.TextView;
 
 import com.scut.easyfe.R;
@@ -15,4 +16,9 @@ public class ContactUsActivity extends BaseActivity {
     protected void initView() {
         ((TextView)findViewById(R.id.titlebar_tv_title)).setText("联系我们");
     }
+
+    public void onBackClick(View view){
+        finish();
+    }
+
 }

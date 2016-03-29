@@ -15,7 +15,7 @@
             style="@style/text_normal_style"
             android:layout_weight="1"
             android:gravity="left|center_vertical"
-            android:paddingLeft="@dimen/layout_padding_small"
+            android:paddingLeft="@dimen/layout_padding_normal"
             android:text="@string/QQ"/>
 
         <TextView
@@ -23,7 +23,7 @@
             android:layout_weight="3"
             android:gravity="end|center_vertical"
             android:text="123456789"
-            android:paddingRight="@dimen/layout_padding_small"
+            android:paddingRight="@dimen/layout_padding_normal"
             android:textSize="@dimen/text_size_medium" />
     </LinearLayout>
     <LinearLayout style="@style/ll_container_normal_style">
@@ -32,7 +32,7 @@
             style="@style/text_normal_style"
             android:layout_weight="1"
             android:gravity="left|center_vertical"
-            android:paddingLeft="@dimen/layout_padding_small"
+            android:paddingLeft="@dimen/layout_padding_normal"
             android:text="@string/wechat"/>
 
         <TextView
@@ -40,7 +40,7 @@
             android:layout_weight="3"
             android:gravity="end|center_vertical"
             android:text="easyFamilyEducation"
-            android:paddingRight="@dimen/layout_padding_small"
+            android:paddingRight="@dimen/layout_padding_normal"
             android:textSize="@dimen/text_size_medium" />
     </LinearLayout>
     <LinearLayout style="@style/ll_container_normal_style">
@@ -49,7 +49,7 @@
             style="@style/text_normal_style"
             android:layout_weight="1"
             android:gravity="left|center_vertical"
-            android:paddingLeft="@dimen/layout_padding_small"
+            android:paddingLeft="@dimen/layout_padding_normal"
             android:text="@string/email"/>
 
         <TextView
@@ -57,7 +57,7 @@
             android:layout_weight="3"
             android:gravity="end|center_vertical"
             android:text="123456789@qq.com"
-            android:paddingRight="@dimen/layout_padding_small"
+            android:paddingRight="@dimen/layout_padding_normal"
             android:textSize="@dimen/text_size_medium" />
     </LinearLayout>
     <LinearLayout style="@style/ll_container_normal_style">
@@ -66,7 +66,7 @@
             style="@style/text_normal_style"
             android:layout_weight="1"
             android:gravity="left|center_vertical"
-            android:paddingLeft="@dimen/layout_padding_small"
+            android:paddingLeft="@dimen/layout_padding_normal"
             android:text="@string/contact_way"/>
 
         <TextView
@@ -75,7 +75,7 @@
             android:layout_weight="3"
             android:gravity="end|center_vertical"
             android:text="18813425675"
-            android:paddingRight="@dimen/layout_padding_small"
+            android:paddingRight="@dimen/layout_padding_normal"
             android:textSize="@dimen/text_size_medium" />
     </LinearLayout>
 

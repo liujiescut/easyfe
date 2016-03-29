@@ -266,8 +266,10 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
      * 点击查看天使计划详情
      */
     public void onAngleDetailClick(View view) {
-        //Todo 点击查看天使计划详情
-        toast("点击查看天使计划详情");
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "陪伴天使计划");
+        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.about_us_content));
+        redirectToActivity(mContext, ShowTextActivity.class, bundle);
     }
 
     /**
