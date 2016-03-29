@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/item_problem_tv_question"
+            style="@style/text_normal_style"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/layout_padding_small"
+            android:drawableRight="@mipmap/icon_down_arrow_padding"
+            tools:text="我是问题喔"/>
+    </LinearLayout>
+    <TextView
+        style="@style/text_normal_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:padding="@dimen/layout_padding_small"
+        tools:text="@string/answer_example"
+        android:layout_marginBottom="@dimen/layout_margin_small"
+        android:id="@+id/item_problem_tv_answer"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+</LinearLayout>

@@ -137,4 +137,6 @@
     <string name="user_protocol_content">@string/text_example</string>
     <string name="about_us_content">@string/text_example</string>
     <string name="callback_content">反馈内容:</string>
+    <string name="more_problems">更多问题</string>
+    <string name="answer_example">我是问题2的答案哈哈哈\n我是问题2的答案哈哈哈\n我是问题2的答案哈哈哈\n我是问题2的答案哈哈哈\n我是问题2的答案哈哈哈\n我是问题2的答案哈哈哈\n我是问题2的答案哈哈哈</string>
 </resources>
