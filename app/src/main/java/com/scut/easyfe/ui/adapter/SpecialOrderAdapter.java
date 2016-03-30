@@ -4,17 +4,34 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.route.BikingRouteResult;
+import com.baidu.mapapi.search.route.DrivingRouteResult;
+import com.baidu.mapapi.search.route.OnGetRoutePlanResultListener;
+import com.baidu.mapapi.search.route.PlanNode;
+import com.baidu.mapapi.search.route.RoutePlanSearch;
+import com.baidu.mapapi.search.route.TransitRouteLine;
+import com.baidu.mapapi.search.route.TransitRoutePlanOption;
+import com.baidu.mapapi.search.route.TransitRouteResult;
+import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.Order;
 import com.scut.easyfe.ui.base.BaseListViewScrollStateAdapter;
+import com.scut.easyfe.utils.DialogUtils;
+import com.scut.easyfe.utils.LogUtils;
+import com.scut.easyfe.utils.MapUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * 特价订单页面使用的Adapter
@@ -45,7 +62,7 @@ public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (null == convertView) {
             if (mContextReference.get() == null) {
@@ -55,7 +72,7 @@ public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
                     inflate(R.layout.item_special_order, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
-        }else{
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
@@ -66,14 +83,37 @@ public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
         holder.reserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Todo 实现地理位置公交时间获取对比判断
+                MapUtils.getDurationFromPosition(mSpecialOrders.get(position).getTeacherLatitude(), mSpecialOrders.get(position).getTeacherLongitude(),
+                        mSpecialOrders.get(position).getParentLatitude(), mSpecialOrders.get(position).getParentLongitude(),
+                        mSpecialOrders.get(position).getCity(), new MapUtils.GetDurationCallback() {
+                            @Override
+                            public void onSuccess(int durationSeconds) {
+                                if(durationSeconds/60 > mSpecialOrders.get(position).getTeacherMaxAcceptTime()){
+                                    DialogUtils.makeConfirmDialog(mContextReference.get(), "温馨提示", "您与家教老师的距离已超过他（她）设定的最远距离，试试别的老师吧。");
+                                }else {
+                                    if(durationSeconds/60 < mSpecialOrders.get(position).getTeacherAcceptTime()){
+                                        mSpecialOrders.get(position).setTip(0);
+                                    }
+
+                                    Toast.makeText(App.get(),
+                                            "那就约约约喽,时间为 " + durationSeconds / 60 + " 分钟" + " 补贴: " + mSpecialOrders.get(position).getTip(),
+                                            Toast.LENGTH_LONG).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailed(String errorMsg) {
+                                LogUtils.i(Constants.Tag.MAP_TAG, errorMsg);
+                                DialogUtils.makeConfirmDialog(mContextReference.get(), "温馨提示", "您与家教老师的距离已超过他（她）设定的最远距离，试试别的老师吧。");
+                            }
+                        });
             }
         });
 
         return convertView;
     }
 
-    private String getContentUp(int position){
+    private String getContentUp(int position) {
         String contentUp = "";
         contentUp += "性别: ";
         contentUp += mSpecialOrders.get(position).getTeacherGender() == Constants.Identifier.MALE ? "男\n" : "女\n";
@@ -88,7 +128,7 @@ public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
         return contentUp;
     }
 
-    private String getContentDown(int position){
+    private String getContentDown(int position) {
         String contentDown = "";
         contentDown += "授课年级: ";
         contentDown += mSpecialOrders.get(position).getStudentState() + " " + mSpecialOrders.get(position).getStudentGrade() + "\n";
@@ -118,4 +158,6 @@ public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
             reserve = OtherUtils.findViewById(root, R.id.item_special_order_tv_reserve);
         }
     }
+
+
 }

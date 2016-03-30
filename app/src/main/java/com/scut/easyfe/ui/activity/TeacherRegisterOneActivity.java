@@ -42,6 +42,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
     private double mLatitude = -1d;    //定位所在的纬度
     private double mLongitude = -1d;   //定位所在的经度
     private String mAddress;           //定位所在的地址
+    private String mCity;              //定位所在的城市
     private int mGender = Constants.Identifier.FEMALE;   //选择的性别
 
     private OptionsPickerView<String> mPicker;
@@ -96,9 +97,10 @@ public class TeacherRegisterOneActivity extends BaseActivity {
     protected void fetchData() {
         MapUtils.getLocation(new MapUtils.LocationCallback() {
             @Override
-            public void onSuccess(double latitude, double longitude, String address) {
+            public void onSuccess(double latitude, double longitude, String address, String city) {
                 mLatitude = latitude;
                 mLongitude = longitude;
+                mCity = city;
                 mAddress = (null == address ? "" : address);
                 mAddressTextView.setText(mAddress);
             }
@@ -124,6 +126,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == REQUEST_CODE && resultCode == AddressActivity.RESULT_OK && null != intent) {
             mAddress = intent.getStringExtra(Constants.Key.ADDRESS);
+            mCity = intent.getStringExtra(Constants.Key.CITY);
             mLatitude = intent.getDoubleExtra(Constants.Key.LATITUDE, -1);
             mLongitude = intent.getDoubleExtra(Constants.Key.LONGITUDE, -1);
 
@@ -211,14 +214,16 @@ public class TeacherRegisterOneActivity extends BaseActivity {
         } else {
             MapUtils.getLocation(new MapUtils.LocationCallback() {
                 @Override
-                public void onSuccess(double latitude, double longitude, String address) {
+                public void onSuccess(double latitude, double longitude, String address, String city) {
                     mLatitude = latitude;
                     mLongitude = longitude;
                     mAddress = address;
+                    mCity = city;
                     Bundle bundle = new Bundle();
                     bundle.putDouble(Constants.Key.LATITUDE, mLatitude);
                     bundle.putDouble(Constants.Key.LONGITUDE, mLongitude);
                     bundle.putString(Constants.Key.ADDRESS, mAddress);
+                    bundle.putString(Constants.Key.CITY, mCity);
                     Intent intent = new Intent(TeacherRegisterOneActivity.this, AddressActivity.class);
                     intent.putExtras(bundle);
                     startActivityForResult(intent, REQUEST_CODE);

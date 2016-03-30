@@ -20,14 +20,22 @@ public class Order extends BaseEntity {
     private float price = 0f;               //单价
     private float specialPrice = 0f;        //特价订单使用
     private int teachTime = 0;              //授课时长
-    private float tip = 0f;                 //交通补贴
+    private float tip = 10f;                 //交通补贴
+
+    private double parentLatitude = 0d;     //家长地址纬度
+    private double parentLongitude = 0d;    //家长地址经度
+    private double teacherLatitude = 0d;    //家教地址纬度
+    private double teacherLongitude = 0d;   //家教地址经度
+    private String city = "广州";            //家教所在城市
 
     private String teacherName = "";        //教师姓名
     private String teacherPhone = "";       //家教手机
     private String teacherSchool = "";      //家教学校
     private String teacherProfession = "";  //家教专业
-    private int teacherHasTeachCount = 10;     //家教孩子数量
-    private int teacherHasTeachTime = 1000;    //家教时长
+    private int teacherHasTeachCount = 10;  //家教孩子数量
+    private int teacherHasTeachTime = 1000; //家教时长
+    private int teacherAcceptTime = 60;     //家教可接受的路程分钟数
+    private int teacherMaxAcceptTime = 100; //家教可接受的最大路程分钟数
     private float teacherScore;             //家教综合评分
     private int teacherGender =             //家教性别
             Constants.Identifier.FEMALE;
@@ -42,11 +50,28 @@ public class Order extends BaseEntity {
             Constants.Identifier.FEMALE;
 
 
-
-    public static ArrayList<Order> getTestOrders(){
+    public static ArrayList<Order> getTestOrders() {
         ArrayList<Order> orders = new ArrayList<>();
-        for(int i = 0; i < 20; i++){
+        for (int i = 0; i < 20; i++) {
             Order order = new Order();
+
+            if (i == 0) {
+                //不用交通补贴
+                order.setParentLatitude(23.06555387370726);
+                order.setParentLongitude(113.41226534667324);
+            } else if (i == 1) {
+                //需要交通补贴
+                order.setParentLatitude(23.132843978618187);
+                order.setParentLongitude(113.3695868519083);
+            } else {
+                //超出最大家教时间范围
+                order.setParentLatitude(23.215710873792418);
+                order.setParentLongitude(113.28358308241141);
+            }
+
+            order.setTeacherLatitude(23.059061572474914);
+            order.setTeacherLongitude(113.40638144558483);
+            order.setCity("广州");
 
             order.setPrice(250f);
             order.setSpecialPrice(60f);
@@ -71,6 +96,7 @@ public class Order extends BaseEntity {
 
             orders.add(order);
         }
+
         return orders;
     }
 
@@ -276,5 +302,62 @@ public class Order extends BaseEntity {
 
     public void setSpecialPrice(float specialPrice) {
         this.specialPrice = specialPrice;
+    }
+
+    public double getParentLatitude() {
+        return parentLatitude;
+    }
+
+    public void setParentLatitude(double parentLatitude) {
+        this.parentLatitude = parentLatitude;
+    }
+
+    public double getParentLongitude() {
+        return parentLongitude;
+    }
+
+    public void setParentLongitude(double parentLongitude) {
+        this.parentLongitude = parentLongitude;
+    }
+
+    public double getTeacherLatitude() {
+        return teacherLatitude;
+    }
+
+    public void setTeacherLatitude(double teacherLatitude) {
+        this.teacherLatitude = teacherLatitude;
+    }
+
+    public double getTeacherLongitude() {
+        return teacherLongitude;
+    }
+
+    public void setTeacherLongitude(double teacherLongitude) {
+        this.teacherLongitude = teacherLongitude;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+
+    public int getTeacherAcceptTime() {
+        return teacherAcceptTime;
+    }
+
+    public void setTeacherAcceptTime(int teacherAcceptTime) {
+        this.teacherAcceptTime = teacherAcceptTime;
+    }
+
+    public int getTeacherMaxAcceptTime() {
+        return teacherMaxAcceptTime;
+    }
+
+    public void setTeacherMaxAcceptTime(int teacherMaxAcceptTime) {
+        this.teacherMaxAcceptTime = teacherMaxAcceptTime;
     }
 }

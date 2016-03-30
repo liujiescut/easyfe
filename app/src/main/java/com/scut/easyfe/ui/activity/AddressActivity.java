@@ -43,6 +43,7 @@ public class AddressActivity extends BaseActivity {
     private double mLatitude = -1d;    //定位所在的纬度
     private double mLongitude = -1d;   //定位所在的经度
     private String mAddress;           //定位所在地址
+    private String mCity;              //定位所在城市
 
     private GeoCoder mGeoCoder;        //地理编码工具
     private ReverseGeoCodeOption mGeoCoderOptions;
@@ -62,6 +63,7 @@ public class AddressActivity extends BaseActivity {
             mLatitude = bundle.getDouble(Constants.Key.LATITUDE);
             mLongitude = bundle.getDouble(Constants.Key.LONGITUDE);
             mAddress = bundle.getString(Constants.Key.ADDRESS);
+            mCity = bundle.getString(Constants.Key.CITY);
         }
     }
 
@@ -84,9 +86,11 @@ public class AddressActivity extends BaseActivity {
             PairProgressHUD.showLoading(this, "定位中");
             MapUtils.getLocation(new MapUtils.LocationCallback() {
                 @Override
-                public void onSuccess(double latitude, double longitude, String address) {
+                public void onSuccess(double latitude, double longitude, String address, String city) {
                     mLatitude = latitude;
                     mLongitude = longitude;
+                    mAddress = address;
+                    mCity = city;
                     addOverlay(mLatitude, mLongitude);
                     PairProgressHUD.dismiss();
                 }
@@ -119,6 +123,7 @@ public class AddressActivity extends BaseActivity {
                 }
                 mAddressTextView.setText(result.getAddress());
                 mAddress = result.getAddress();
+                mCity = result.getAddressDetail().city;
             }
         });
         mBaiduMap.setOnMarkerDragListener(new BaiduMap.OnMarkerDragListener() {
@@ -186,6 +191,7 @@ public class AddressActivity extends BaseActivity {
             intent.putExtra(Constants.Key.ADDRESS, mAddress);
             intent.putExtra(Constants.Key.LATITUDE, mLatitude);
             intent.putExtra(Constants.Key.LONGITUDE, mLongitude);
+            intent.putExtra(Constants.Key.CITY, mCity);
             this.setResult(RESULT_OK, intent);
         }else {
             toast("选择位置失败,请重试");
