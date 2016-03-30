@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/shape_app_bg"
+    tools:context="com.scut.easyfe.ui.activity.PocketActivity">
+
+    <include layout="@layout/titlebar" />
+    <RelativeLayout
+        android:id="@+id/header_key_word_search"
+        android:layout_toLeftOf="@+id/header_scan_code_search"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:clickable="true"
+        android:background="@drawable/selector_search_bar"
+        >
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/search_header_edit_text_bg"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            android:layout_marginRight="2dp"
+            />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            >
+            <ImageView
+                android:id="@+id/header_search_icon"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_search_888"/>
+
+            <TextView
+                android:layout_toRightOf="@+id/header_search_icon"
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="#888"
+                android:text="@string/search_teacher"
+                android:textSize="14sp"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/reserve_sv_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="@string/required_options"
+                android:padding="@dimen/layout_padding_small"
+                android:textColor="@color/text_hint_color" />
+
+            <LinearLayout
+                style="@style/ll_container_normal_style">
+
+                <TextView
+                    style="@style/text_normal_style"
+                    android:layout_marginRight="@dimen/container_stoke_width"
+                    android:layout_weight="1"
+                    android:text="@string/teach_grade" />
+
+                <TextView
+                    android:id="@+id/reserve_tv_grade"
+                    style="@style/text_normal_style"
+                    android:layout_weight="3"
+                    android:gravity="start|center_vertical"
+                    tools:text="大学 三年级"
+                    android:drawableRight="@mipmap/icon_right_arrow_padding"
+                    android:text="reserve_tv_grade" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/confirm_order_ll_week"
+                style="@style/ll_container_normal_style">
+
+                <TextView
+                    style="@style/text_normal_style"
+                    android:layout_marginRight="@dimen/container_stoke_width"
+                    android:layout_weight="1"
+                    android:text="@string/teach_course" />
+
+                <TextView
+                    android:id="@+id/reserve_tv_course"
+                    style="@style/text_normal_style"
+                    android:layout_weight="3"
+                    android:gravity="start|center_vertical"
+                    tools:text="数学"
+                    android:drawableRight="@mipmap/icon_right_arrow_padding"
+                    android:text="reserve_tv_course" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/ll_container_normal_style"
+                android:layout_marginTop="@dimen/layout_margin_small">
+
+                <TextView
+                    style="@style/text_normal_style"
+                    android:layout_marginRight="@dimen/container_stoke_width"
+                    android:layout_weight="1"
+                    android:text="@string/teach_time"
+                    android:id="@+id/reserve_tv_date_label" />
+
+                <TextView
+                    android:id="@+id/reserve_tv_date"
+                    style="@style/text_normal_style"
+                    android:layout_weight="3"
+                    android:gravity="start|center_vertical"
+                    tools:text="2015年3月15日(星期日) 上午"
+                    android:drawableRight="@mipmap/icon_right_arrow_padding"
+                    android:text="reserve_tv_date" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/ll_container_normal_style">
+
+                <TextView
+                    style="@style/text_normal_style"
+                    android:layout_marginRight="@dimen/container_stoke_width"
+                    android:layout_weight="1"
+                    android:text="@string/min_teach_time_1"
+                    android:id="@+id/reserve_tv_time_label" />
+
+                <TextView
+                    android:id="@+id/reserve_tv_time"
+                    style="@style/text_normal_style"
+                    android:layout_weight="3"
+                    android:gravity="start|center_vertical"
+                    tools:text="2 小时 20 分"
+                    android:drawableRight="@mipmap/icon_right_arrow_padding"
+                    android:text="reserve_tv_time" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/layout_margin_small"
+                style="@style/ll_container_normal_style">
+                <TextView
+                    style="@style/text_normal_style"
+                    android:layout_marginRight="@dimen/container_stoke_width"
+                    android:layout_weight="1"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
+                    android:text="@string/student_age" />
+
+                <TextView
+                    android:id="@+id/reserve_tv_student_age"
+                    style="@style/text_normal_style"
+                    android:layout_weight="3"
+                    android:gravity="start|center_vertical"
+                    android:drawableRight="@mipmap/icon_right_arrow_padding"
+                    tools:text="10 岁" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/ll_container_normal_style">
+
+                <TextView
+                    style="@style/text_normal_style"
+                    android:layout_marginRight="@dimen/container_stoke_width"
+                    android:layout_weight="1"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
+                    android:text="@string/student_gender" />
+
+                <TextView
+                    android:id="@+id/reserve_tv_student_gender"
+                    style="@style/text_normal_style"
+                    android:layout_weight="3"
+                    android:gravity="start|center_vertical"
+                    android:drawableRight="@mipmap/icon_right_arrow_padding"
+                    android:text="女" />
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="@string/optional_options"
+                android:padding="@dimen/layout_padding_small"
+                android:textColor="@color/text_hint_color"
+                 />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    style="@style/ll_container_normal_style"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/reserve_tv_school_label"
+                        style="@style/text_normal_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/text_area_height"
+                        android:background="@mipmap/reserve_selected_bg"
+                        android:text="@string/school" />
+
+                    <TextView
+                        android:id="@+id/reserve_tv_price_label"
+                        style="@style/text_normal_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/text_area_height"
+                        android:background="@mipmap/reserve_unselected_bg"
+                        android:text="@string/teach_price" />
+
+                    <TextView
+                        android:id="@+id/reserve_tv_score_label"
+                        style="@style/text_normal_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/text_area_height"
+                        android:background="@mipmap/reserve_unselected_bg"
+                        android:text="@string/score" />
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:background="@color/text_area_bg_inner"
+                    android:layout_marginLeft="4dp"
+                    android:layout_weight="3">
+
+                    <ListView
+                        android:id="@+id/reserve_lv_school"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <ListView
+                        android:id="@+id/reserve_lv_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+
+                    <ListView
+                        android:id="@+id/reserve_lv_score"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+                </FrameLayout>
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layout_margin_small"
+                android:background="@drawable/selector_main_left_drawer_item"
+                android:clickable="true"
+                android:gravity="center"
+                android:padding="@dimen/layout_padding_small"
+                android:text="@string/select"
+                android:textColor="@color/title_text_color"
+                android:textSize="@dimen/text_size_normal" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

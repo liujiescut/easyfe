@@ -14,17 +14,15 @@ import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.MapUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
-import java.util.ArrayList;
-
 /**
  * 家长注册页面
+ *
  * @author jay
  */
 public class ParentRegisterActivity extends BaseActivity {
     public static final int REQUEST_CODE = 0;
 
     private OptionsPickerView<String> mPicker;
-    public static final ArrayList<String> sGenderType = new ArrayList<>();
 
     private EditText mParentNameEditText;           //家长姓名
     private EditText mParentPhoneEditText;          //家长手机
@@ -41,11 +39,6 @@ public class ParentRegisterActivity extends BaseActivity {
     private double mLongitude = -1d;   //定位所在的经度
     private String mAddress;           //定位所在的地址
     private String mCity;              //定位所在的城市
-
-    static {
-        sGenderType.add("女");
-        sGenderType.add("男");
-    }
 
     @Override
     protected void setLayoutView() {
@@ -107,26 +100,20 @@ public class ParentRegisterActivity extends BaseActivity {
      * @param view 被点击视图
      */
     public void onParentGenderClick(View view) {
+        OtherUtils.hideSoftInputWindow(mParentGenderTextView.getWindowToken());
         if (mPicker.isShowing()) {
             mPicker.dismiss();
             return;
         }
         mPicker.setTitle("选择您的性别");
-        mPicker.setPicker(sGenderType);
+        mPicker.setPicker(Constants.Data.genderList);
         mPicker.setSelectOptions(0);
         mPicker.setCyclic(false);
         mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
-                if (options1 == 0) {
-                    //选择了女
-                    mParentGender = Constants.Identifier.FEMALE;
-                    mParentGenderTextView.setText(R.string.female);
-                } else if (options1 == 1) {
-                    //选择了男
-                    mParentGender = Constants.Identifier.FEMALE;
-                    mParentGenderTextView.setText(R.string.male);
-                }
+                mParentGender = options1 == 0 ? Constants.Identifier.FEMALE : Constants.Identifier.MALE;
+                mParentGenderTextView.setText(Constants.Data.genderList.get(options1));
             }
         });
         mPicker.show();
@@ -136,26 +123,20 @@ public class ParentRegisterActivity extends BaseActivity {
      * @param view 被点击视图
      */
     public void onChildGenderClick(View view) {
+        OtherUtils.hideSoftInputWindow(mChildGenderTextView.getWindowToken());
         if (mPicker.isShowing()) {
             mPicker.dismiss();
             return;
         }
         mPicker.setTitle("选择宝贝性别");
-        mPicker.setPicker(sGenderType);
+        mPicker.setPicker(Constants.Data.genderList);
         mPicker.setSelectOptions(0);
         mPicker.setCyclic(false);
         mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
-                if (options1 == 0) {
-                    //选择了女
-                    mChildGender = Constants.Identifier.FEMALE;
-                    mChildGenderTextView.setText(R.string.female);
-                } else if (options1 == 1) {
-                    //选择了男
-                    mChildGender = Constants.Identifier.FEMALE;
-                    mChildGenderTextView.setText(R.string.male);
-                }
+                    mChildGender = options1 == 0 ? Constants.Identifier.FEMALE : Constants.Identifier.MALE;
+                    mChildGenderTextView.setText(Constants.Data.genderList.get(options1));
             }
         });
         mPicker.show();
@@ -165,7 +146,25 @@ public class ParentRegisterActivity extends BaseActivity {
      * @param view 被点击视图
      */
     public void onChildGradeClick(View view) {
-        //Todo 选择宝贝年级
+        OtherUtils.hideSoftInputWindow(mChildGradeTextView.getWindowToken());
+        if (mPicker.isShowing()) {
+            mPicker.dismiss();
+            return;
+        }
+
+        mPicker.setTitle("选择宝贝年级");
+        mPicker.setPicker(Constants.Data.studentStateList, Constants.Data.studentGradeList, true);
+        mPicker.setSelectOptions(0, 0);
+        mPicker.setCyclic(false);
+        mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                mChildGradeTextView.setText(String.format("%s %s",
+                        Constants.Data.studentStateList.get(options1),
+                        Constants.Data.studentGradeList.get(options1).get(option2)));
+            }
+        });
+        mPicker.show();
     }
 
     /**
@@ -228,7 +227,7 @@ public class ParentRegisterActivity extends BaseActivity {
             } else {
                 mAddressTextView.setText(mAddress);
             }
-        }else{
+        } else {
             toast("获取地址失败,请重试");
         }
     }

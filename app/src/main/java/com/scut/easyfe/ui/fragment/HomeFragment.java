@@ -6,6 +6,7 @@ import android.view.View;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.ui.activity.CallbackActivity;
+import com.scut.easyfe.ui.activity.ReserveActivity;
 import com.scut.easyfe.ui.activity.SpecialOrderActivity;
 import com.scut.easyfe.ui.activity.TeacherRegisterOneActivity;
 import com.scut.easyfe.ui.activity.TeacherRegisterTwoActivity;
@@ -104,7 +105,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
      * @param view 被点击视图
      */
     private void onMultiBookClick(View view){
-        toast("点击多次预约");
+        if(null != mActivity){
+            mActivity.redirectToActivity(mActivity, ReserveActivity.class);
+        }
     }
 
     /**
@@ -112,7 +115,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
      * @param view 被点击视图
      */
     private void onOnceBookClick(View view){
-        toast("点击单次预约");
+        if(null != mActivity){
+            mActivity.redirectToActivity(mActivity, ReserveActivity.class);
+        }
     }
 
     /**

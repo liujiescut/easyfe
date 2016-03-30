@@ -143,4 +143,12 @@
     <string name="course_teacher">授课老师</string>
     <string name="teach_week">授课周数</string>
     <string name="week_price">每周价格</string>
+    <string name="select">筛选</string>
+    <string name="min_teach_time_1">最短授课时长</string>
+    <string name="student_age">被授课对象年龄</string>
+    <string name="student_gender">被授课对象性别</string>
+    <string name="search_teacher">搜索家教</string>
+    <string name="required_options">必选条件</string>
+    <string name="optional_options">可选条件</string>
+    <string name="score">综合评分</string>
 </resources>

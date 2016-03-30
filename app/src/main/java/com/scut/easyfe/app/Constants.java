@@ -44,6 +44,7 @@ public class Constants {
         public static final String CONFIRM_ORDER_TYPE =  "confirm_order_type";
         public static final String ORDER =  "order";
         public static final String TEACH_WEEK =  "teach_week";
+        public static final String RESERVE_WAY = "reserve_way";
 
     }
 
@@ -74,6 +75,10 @@ public class Constants {
         public static final int CONFIRM_ORDER_SPECIAL = 0;       //特价订单
         public static final int CONFIRM_ORDER_SINGLE_BOOK = 1;   //单次预约订单
         public static final int CONFIRM_ORDER_MULTI_BOOK = 2;    //多次预约订单
+
+        /** 预约页面 */
+        public static final int RESERVE_MULTI = 0;
+        public static final int RESERVE_SINGLE = 1;
     }
 
     public static class Path {
@@ -84,6 +89,107 @@ public class Constants {
         public static final String DIR_WITH_SEPARATE = DEFAULT_DIR_NAME + File.separator;
         public static final String DIR_WITHOUT_SEPARATE = DEFAULT_DIR_NAME;
         public static final String COMPLETE_PATH = SDCardRoot + DIR_WITH_SEPARATE;
+    }
+
+    public static class Data {
+        public static final ArrayList<String> genderList = new ArrayList<>();                       //可选性别
+        public static final ArrayList<String> schoolList = new ArrayList<>();                       //可选性别
+        public static final ArrayList<String> professionList = new ArrayList<>();                   //可选的专业
+        public static final ArrayList<String> courseList = new ArrayList<>();                       //可选的课程
+        public static final ArrayList<String> studentStateList = new ArrayList<>();                 //可选的年级一级分类
+        public static final ArrayList<ArrayList<String>> studentGradeList = new ArrayList<>();      //可选的年级二级分类
+        public static final ArrayList<String> teacherGradeList = new ArrayList<>();                 //家教的年级列表
+        static {
+
+            schoolList.add("华南理工大学");
+            schoolList.add("中山大学");
+            schoolList.add("暨南大学");
+            schoolList.add("华南师范大学");
+            schoolList.add("华南农业大学");
+            schoolList.add("南方医科大学");
+            schoolList.add("广东工业大学");
+            schoolList.add("广东外语外贸大学");
+            schoolList.add("广州大学");
+            schoolList.add("广州中医药大学");
+            schoolList.add("广东财经大学");
+
+            genderList.add("女");
+            genderList.add("男");
+
+            professionList.add("数学");
+            professionList.add("英语");
+            professionList.add("国际学院内设专业(英文授课)");
+            professionList.add("物理类");
+            professionList.add("化学类");
+            professionList.add("生物学类");
+            professionList.add("师范专业(包括教育学)");
+            professionList.add("心理学");
+            professionList.add("管理类");
+            professionList.add("经济类");
+            professionList.add("外语系(英语专业以外)");
+            professionList.add("建筑类");
+            professionList.add("法学");
+            professionList.add("新闻");
+            professionList.add("中文");
+            professionList.add("政治");
+            professionList.add("历史");
+            professionList.add("地质地理");
+            professionList.add("医学/药学");
+            professionList.add("社会学类");
+            professionList.add("农林专业");
+            professionList.add("体育");
+            professionList.add("艺术");
+            professionList.add("计算机");
+            professionList.add("电子信息科学");
+            professionList.add("自然类科学");
+            professionList.add("其他");
+
+            courseList.add("数学(非高中)");
+            courseList.add("数学(文科)");
+            courseList.add("数学(理科)");
+            courseList.add("英语");
+            courseList.add("物理");
+            courseList.add("化学");
+            courseList.add("生物");
+            courseList.add("语文");
+            courseList.add("小学全科");
+
+            studentStateList.add("小学");
+            studentStateList.add("初中");
+            studentStateList.add("高中");
+
+            ArrayList<String> primaryStateGrade = new ArrayList<>();
+            ArrayList<String> middleStateGrade = new ArrayList<>();
+            ArrayList<String> highStateGrade = new ArrayList<>();
+
+            primaryStateGrade.add("一年级至三年级");
+            primaryStateGrade.add("四年级");
+            primaryStateGrade.add("五年级");
+            primaryStateGrade.add("六年级");
+
+            middleStateGrade.add("初一");
+            middleStateGrade.add("初二");
+            middleStateGrade.add("初三");
+
+            highStateGrade.add("高一");
+            highStateGrade.add("高二");
+            highStateGrade.add("高三");
+
+            studentGradeList.add(primaryStateGrade);
+            studentGradeList.add(middleStateGrade);
+            studentGradeList.add(highStateGrade);
+
+            teacherGradeList.add("大一");
+            teacherGradeList.add("大二");
+            teacherGradeList.add("大三");
+            teacherGradeList.add("大四");
+            teacherGradeList.add("大五");
+            teacherGradeList.add("研一");
+            teacherGradeList.add("研二");
+            teacherGradeList.add("研三");
+            teacherGradeList.add("博士");
+
+        }
     }
 
 }

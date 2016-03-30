@@ -182,21 +182,66 @@ public class TeacherRegisterOneActivity extends BaseActivity {
      * 点击选择学校
      */
     public void onSchoolClick(View view) {
-
+        OtherUtils.hideSoftInputWindow(mGenderTextView.getWindowToken());
+        if (mPicker.isShowing()) {
+            mPicker.dismiss();
+            return;
+        }
+        mPicker.setTitle("选择您的学校");
+        mPicker.setPicker(Constants.Data.schoolList);
+        mPicker.setSelectOptions(0);
+        mPicker.setCyclic(false);
+        mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                mSchoolTextView.setText(Constants.Data.schoolList.get(options1));
+            }
+        });
+        mPicker.show();
     }
 
     /**
      * 点击选择年级
      */
     public void onGradeClick(View view) {
-
+        OtherUtils.hideSoftInputWindow(mGenderTextView.getWindowToken());
+        if (mPicker.isShowing()) {
+            mPicker.dismiss();
+            return;
+        }
+        mPicker.setTitle("选择您的专业");
+        mPicker.setPicker(Constants.Data.teacherGradeList);
+        mPicker.setSelectOptions(0);
+        mPicker.setCyclic(false);
+        mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                mGradeTextView.setText(Constants.Data.teacherGradeList.get(options1));
+            }
+        });
+        mPicker.show();
     }
 
     /**
      * 点击选择专业
      */
     public void onProfessionClick(View view) {
-
+        OtherUtils.hideSoftInputWindow(mGenderTextView.getWindowToken());
+        if (mPicker.isShowing()) {
+            mPicker.dismiss();
+            return;
+        }
+        mPicker.setTitle("选择您的专业");
+        mPicker.setPicker(Constants.Data.professionList);
+        mPicker.setSelectOptions(0);
+        mPicker.setCyclic(false);
+        mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                mProfessionTextView.setText(Constants.Data.professionList.get(options1));
+            }
+        });
+        mPicker.show();
     }
 
     /**
