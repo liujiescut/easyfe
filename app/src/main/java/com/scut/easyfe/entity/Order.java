@@ -2,6 +2,7 @@ package com.scut.easyfe.entity;
 
 import com.scut.easyfe.app.Constants;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -9,7 +10,7 @@ import java.util.Date;
  * 订单类
  * Created by jay on 16/3/27.
  */
-public class Order extends BaseEntity {
+public class Order extends BaseEntity implements Serializable{
     private String _id = "";                //订单id
     private String orderNumber = "";        //订单号
     private String insuranceNumber = "";    //保险单号

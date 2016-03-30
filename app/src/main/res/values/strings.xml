@@ -140,4 +140,7 @@
     <string name="more_problems">更多问题</string>
     <string name="answer_example">我是问题2的答案哈哈哈\n我是问题2的答案哈哈哈\n我是问题2的答案哈哈哈\n我是问题2的答案哈哈哈\n我是问题2的答案哈哈哈\n我是问题2的答案哈哈哈\n我是问题2的答案哈哈哈</string>
     <string name="reservation">预\n\n\n约</string>
+    <string name="course_teacher">授课老师</string>
+    <string name="teach_week">授课周数</string>
+    <string name="week_price">每周价格</string>
 </resources>

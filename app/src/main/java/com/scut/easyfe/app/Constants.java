@@ -41,6 +41,9 @@ public class Constants {
         public static final String SHOW_TEXT_ACTIVITY_TITLE =  "show_text_activity_title";
         public static final String SHOW_TEXT_ACTIVITY_CONTENT =  "show_text_activity_content";
         public static final String CALLBACK_TYPE =  "callback_type";
+        public static final String CONFIRM_ORDER_TYPE =  "confirm_order_type";
+        public static final String ORDER =  "order";
+        public static final String TEACH_WEEK =  "teach_week";
 
     }
 
@@ -66,6 +69,11 @@ public class Constants {
         public static final int CALLBACK_NEED = 0;           //首页预约不到想要的点这里进行反馈
         public static final int CALLBACK_APP = 1;            //更多页面应用反馈
         public static final int CALLBACK_COMPLAINTS = 2;     //完成订单后投诉
+
+        /** 确认订单页面所需 */
+        public static final int CONFIRM_ORDER_SPECIAL = 0;       //特价订单
+        public static final int CONFIRM_ORDER_SINGLE_BOOK = 1;   //单次预约订单
+        public static final int CONFIRM_ORDER_MULTI_BOOK = 2;    //多次预约订单
     }
 
     public static class Path {
