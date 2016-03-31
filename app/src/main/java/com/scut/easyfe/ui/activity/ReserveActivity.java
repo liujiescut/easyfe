@@ -366,6 +366,9 @@ public class ReserveActivity extends BaseActivity {
         mSinglePicker.show();
     }
 
+    public void onSearchClick(View view){
+        redirectToActivity(mContext, SearchResultActivity.class);
+    }
     public void onBackClick(View view){
         finish();
     }

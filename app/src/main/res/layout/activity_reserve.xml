@@ -283,6 +283,7 @@
                 android:clickable="true"
                 android:gravity="center"
                 android:padding="@dimen/layout_padding_small"
+                android:onClick="onSearchClick"
                 android:text="@string/select"
                 android:textColor="@color/title_text_color"
                 android:textSize="@dimen/text_size_normal" />

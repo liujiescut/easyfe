@@ -84,6 +84,7 @@ public class App extends Application{
     private void init(){
         initQiniu();
         initBaiduMap();
+        initImageLoader();
     }
 
 

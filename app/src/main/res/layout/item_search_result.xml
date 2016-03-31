@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/text_area_bg"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/default_divider_height"
+    android:paddingLeft="@dimen/layout_padding_small">
+
+
+    <LinearLayout
+        android:id="@+id/item_my_order_ll_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/item_search_result_tv_teacher"
+                style="@style/text_normal_style"
+                android:layout_weight="1"
+                android:gravity="center_vertical|left"
+                android:padding="@dimen/layout_padding_small"
+                tools:text="黄老师" />
+
+            <TextView
+                android:id="@+id/item_search_result_tv_price"
+                style="@style/text_normal_style"
+                android:layout_weight="1"
+                android:gravity="center_vertical|right"
+                android:padding="@dimen/layout_padding_small"
+                tools:text="250 元/小时" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_divider_height"
+            android:background="@color/transparent"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_et_bg"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/item_search_result_tv_content"
+                style="@style/my_order_item_style"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical|left"
+                android:textSize="@dimen/text_size_small"
+                android:padding="@dimen/layout_padding_small"
+                tools:text="性别：男\n大学专业：xxxx 大学 xxxx 专业\n已家教过的孩子数量：18\n已家教的时长：250 小时\n综合评分：58分" />
+
+            <com.scut.easyfe.ui.customView.CircleImageView
+                android:id="@+id/item_search_result_civ_avatar"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/layout_margin_normal"
+                android:src="@mipmap/default_avatar" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

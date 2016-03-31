@@ -30,6 +30,8 @@ public class Order extends BaseEntity implements Serializable{
     private String city = "广州";            //家教所在城市
 
     private String teacherName = "";        //教师姓名
+    private int teacherAge = 28;            //教师年龄
+    private String teacherAvatar = "http://imgsrc.baidu.com/forum/w%3D580/sign=09af8227004f78f0800b9afb49310a83/3e7ce6f0f736afc38b732316b019ebc4b745127d.jpg";      //教师头像
     private String teacherPhone = "";       //家教手机
     private String teacherSchool = "";      //家教学校
     private String teacherProfession = "";  //家教专业
@@ -360,5 +362,21 @@ public class Order extends BaseEntity implements Serializable{
 
     public void setTeacherMaxAcceptTime(int teacherMaxAcceptTime) {
         this.teacherMaxAcceptTime = teacherMaxAcceptTime;
+    }
+
+    public int getTeacherAge() {
+        return teacherAge;
+    }
+
+    public void setTeacherAge(int teacherAge) {
+        this.teacherAge = teacherAge;
+    }
+
+    public String getTeacherAvatar() {
+        return teacherAvatar;
+    }
+
+    public void setTeacherAvatar(String teacherAvatar) {
+        this.teacherAvatar = teacherAvatar;
     }
 }

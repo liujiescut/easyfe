@@ -36,4 +36,6 @@
     <color name="primary_light">#FFCCBC</color>
     <color name="accent">#FF5722</color>
 
+    <color name="search_result_tip_bg">#88FFE4B3</color>
+
 </resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/shape_app_bg"
+    tools:context="com.scut.easyfe.ui.activity.SearchResultActivity">
+    <include
+        layout="@layout/titlebar"/>
+    <FrameLayout
+        android:id="@+id/search_result_fl_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
