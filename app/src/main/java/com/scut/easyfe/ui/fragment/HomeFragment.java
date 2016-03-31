@@ -9,7 +9,6 @@ import com.scut.easyfe.ui.activity.CallbackActivity;
 import com.scut.easyfe.ui.activity.ReserveActivity;
 import com.scut.easyfe.ui.activity.SpecialOrderActivity;
 import com.scut.easyfe.ui.activity.TeacherRegisterOneActivity;
-import com.scut.easyfe.ui.activity.TeacherRegisterTwoActivity;
 import com.scut.easyfe.ui.base.BaseFragment;
 
 /**
@@ -60,12 +59,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
             case R.id.home_book_multi:
             case R.id.home_book_multi_text:
-                onMultiBookClick(v);
+                onMultiReserveClick(v);
                 break;
 
             case R.id.home_book_once:
             case R.id.home_book_once_text:
-                onOnceBookClick(v);
+                onOnceReserveClick(v);
                 break;
 
             case R.id.home_teacher:
@@ -104,9 +103,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
      * 点击多次预约
      * @param view 被点击视图
      */
-    private void onMultiBookClick(View view){
+    private void onMultiReserveClick(View view){
         if(null != mActivity){
-            mActivity.redirectToActivity(mActivity, ReserveActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt(Constants.Key.RESERVE_WAY, Constants.Identifier.RESERVE_MULTI);
+            mActivity.redirectToActivity(mActivity, ReserveActivity.class, bundle);
         }
     }
 
@@ -114,9 +115,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
      * 点击单次预约
      * @param view 被点击视图
      */
-    private void onOnceBookClick(View view){
+    private void onOnceReserveClick(View view){
         if(null != mActivity){
-            mActivity.redirectToActivity(mActivity, ReserveActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt(Constants.Key.RESERVE_WAY, Constants.Identifier.RESERVE_SINGLE);
+            mActivity.redirectToActivity(mActivity, ReserveActivity.class, bundle);
         }
     }
 

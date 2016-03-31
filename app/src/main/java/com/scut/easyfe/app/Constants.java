@@ -96,9 +96,13 @@ public class Constants {
         public static final ArrayList<String> schoolList = new ArrayList<>();                       //可选性别
         public static final ArrayList<String> professionList = new ArrayList<>();                   //可选的专业
         public static final ArrayList<String> courseList = new ArrayList<>();                       //可选的课程
+        public static final ArrayList<ArrayList<String>> courseGradeList = new ArrayList<>();
         public static final ArrayList<String> studentStateList = new ArrayList<>();                 //可选的年级一级分类
         public static final ArrayList<ArrayList<String>> studentGradeList = new ArrayList<>();      //可选的年级二级分类
         public static final ArrayList<String> teacherGradeList = new ArrayList<>();                 //家教的年级列表
+        public static final ArrayList<String> weekList = new ArrayList<>();
+        public static final ArrayList<String> ageList = new ArrayList<>();
+
         static {
 
             schoolList.add("华南理工大学");
@@ -154,6 +158,57 @@ public class Constants {
             courseList.add("语文");
             courseList.add("小学全科");
 
+            ArrayList<String> mathCourseGradeOne = new ArrayList<>();
+            ArrayList<String> mathCourseGradeTwo = new ArrayList<>();
+            ArrayList<String> mathCourseGradeThree = new ArrayList<>();
+            ArrayList<String> englishCourseGrade = new ArrayList<>();
+            ArrayList<String> physicalCourseGrade = new ArrayList<>();
+            ArrayList<String> chemistryCourseGrade = new ArrayList<>();
+            ArrayList<String> biologicalCourseGrade = new ArrayList<>();
+            ArrayList<String> chineseCourseGrade = new ArrayList<>();
+            ArrayList<String> primaryGeneralCourseGrade = new ArrayList<>();
+
+
+            chineseCourseGrade.add("一年级至三年级");
+            chineseCourseGrade.add("四年级");
+            chineseCourseGrade.add("五年级");
+            chineseCourseGrade.add("六年级");
+
+            mathCourseGradeOne.addAll(chineseCourseGrade);
+            mathCourseGradeOne.add("初一");
+            mathCourseGradeOne.add("初二");
+            mathCourseGradeOne.add("初三");
+
+            mathCourseGradeTwo.add("高一");
+            mathCourseGradeTwo.add("高二");
+            mathCourseGradeTwo.add("高三");
+
+            mathCourseGradeThree.addAll(mathCourseGradeTwo);
+
+            englishCourseGrade.addAll(mathCourseGradeOne);
+            englishCourseGrade.addAll(mathCourseGradeTwo);
+
+            physicalCourseGrade.add("初一");
+            physicalCourseGrade.add("初二");
+            physicalCourseGrade.add("初三");
+            physicalCourseGrade.addAll(mathCourseGradeTwo);
+
+            chemistryCourseGrade.addAll(physicalCourseGrade);
+
+            biologicalCourseGrade.addAll(physicalCourseGrade);
+
+            primaryGeneralCourseGrade.addAll(chineseCourseGrade);
+
+            courseGradeList.add(mathCourseGradeOne);
+            courseGradeList.add(mathCourseGradeTwo);
+            courseGradeList.add(mathCourseGradeThree);
+            courseGradeList.add(englishCourseGrade);
+            courseGradeList.add(physicalCourseGrade);
+            courseGradeList.add(chemistryCourseGrade);
+            courseGradeList.add(biologicalCourseGrade);
+            courseGradeList.add(chineseCourseGrade);
+            courseGradeList.add(primaryGeneralCourseGrade);
+
             studentStateList.add("小学");
             studentStateList.add("初中");
             studentStateList.add("高中");
@@ -189,6 +244,17 @@ public class Constants {
             teacherGradeList.add("研三");
             teacherGradeList.add("博士");
 
+            weekList.add("星期日");
+            weekList.add("星期一");
+            weekList.add("星期二");
+            weekList.add("星期三");
+            weekList.add("星期四");
+            weekList.add("星期五");
+            weekList.add("星期六");
+
+            for (int i = 0; i < 100; i++) {
+                ageList.add(i + "");
+            }
         }
     }
 

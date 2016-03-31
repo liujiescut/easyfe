@@ -75,9 +75,7 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
 
     static {
         mAge.add("不接受");
-        for (int i = 1; i < 100; i++) {
-            mAge.add(i + "");
-        }
+        mAge.addAll(Constants.Data.ageList);
     }
 
     @Override

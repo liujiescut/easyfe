@@ -78,12 +78,13 @@
 
                 <TextView
                     android:id="@+id/reserve_tv_grade"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
                     tools:text="大学 三年级"
+                    android:onClick="onGradeClick"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
-                    android:text="reserve_tv_grade" />
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -98,12 +99,13 @@
 
                 <TextView
                     android:id="@+id/reserve_tv_course"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
                     tools:text="数学"
+                    android:onClick="onCourseClick"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
-                    android:text="reserve_tv_course" />
+                     />
             </LinearLayout>
 
 
@@ -116,16 +118,19 @@
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:text="@string/teach_time"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
                     android:id="@+id/reserve_tv_date_label" />
 
                 <TextView
                     android:id="@+id/reserve_tv_date"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
                     tools:text="2015年3月15日(星期日) 上午"
+                    android:onClick="onDateClick"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
-                    android:text="reserve_tv_date" />
+                     />
             </LinearLayout>
 
             <LinearLayout style="@style/ll_container_normal_style">
@@ -135,16 +140,20 @@
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:text="@string/min_teach_time_1"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
                     android:id="@+id/reserve_tv_time_label" />
 
                 <TextView
                     android:id="@+id/reserve_tv_time"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
+
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
                     tools:text="2 小时 20 分"
+                    android:onClick="onTimeClick"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
-                    android:text="reserve_tv_time" />
+                     />
             </LinearLayout>
 
 
@@ -161,9 +170,10 @@
 
                 <TextView
                     android:id="@+id/reserve_tv_student_age"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
+                    android:onClick="onStudentAgeClick"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     tools:text="10 岁" />
             </LinearLayout>
@@ -180,9 +190,10 @@
 
                 <TextView
                     android:id="@+id/reserve_tv_student_gender"
-                    style="@style/text_normal_style"
+                    style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
+                    android:onClick="onStudentGenderClick"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:text="女" />
             </LinearLayout>
