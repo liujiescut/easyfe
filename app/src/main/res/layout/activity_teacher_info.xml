@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/shape_app_bg"
+    tools:context="com.scut.easyfe.ui.activity.TeacherInfoActivity">
+    <include
+        layout="@layout/titlebar"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/layout_margin_small"
+        android:background="@color/transparent"/>
+    <include
+        layout="@layout/item_search_result" />
+
+    <TextView
+        style="@style/text_normal_style"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:padding="@dimen/layout_padding_small"
+        android:gravity="left"
+        android:layout_marginTop="@dimen/layout_margin_small"
+        android:text="@string/score_simple" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_divider_height"
+        android:background="@color/transparent"/>
+    <TextView
+        android:id="@+id/teacher_info_tv_score_content"
+        style="@style/text_normal_style"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:padding="@dimen/layout_padding_small"
+        android:gravity="left"
+        tools:text="综合评分：58分\n孩子喜欢程度：4.8\n专业胜任程度：4.8\n准时态度：4.8" />
+
+    <TextView
+        style="@style/text_normal_style"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:padding="@dimen/layout_padding_small"
+        android:gravity="left"
+        android:layout_marginTop="@dimen/layout_margin_small"
+        android:text="@string/self_introduce" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_divider_height"
+        android:background="@color/transparent"/>
+    <TextView
+        android:id="@+id/teacher_info_tv_self_introduce_content"
+        style="@style/text_normal_style"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:padding="@dimen/layout_padding_small"
+        android:gravity="left"
+        tools:text="大家好，我是华蓝理工大学的博士，黄黏蓝。" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_small"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_weight="1"
+            android:gravity="center_vertical|left"
+            android:padding="@dimen/layout_padding_small"
+            android:text="@string/parent_comments" />
+
+        <TextView
+            android:id="@+id/teacher_info_tv_comment_more"
+            style="@style/text_normal_style"
+            android:layout_weight="1"
+            android:gravity="center_vertical|right"
+
+            android:drawableRight="@mipmap/icon_right_arrow_padding"
+            android:text="@string/see_more" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_divider_height"
+        android:background="@color/transparent"/>
+
+    <!--<ListView-->
+        <!--android:id="@+id/teacher_info_lv_comments"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--/>-->
+
+    <TextView
+        android:id="@+id/teacher_info_tv_multi_reserve_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/layout_padding_tiny"
+        android:text="@string/teacher_info_info"
+        android:textColor="@color/text_hint_color"
+        android:textSize="@dimen/text_size_small" />
+
+
+    <LinearLayout style="@style/ll_container_normal_style"
+        android:id="@+id/teacher_info_ll_multi_reserve_times">
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="1"
+            android:text="@string/reserve_times" />
+
+        <TextView
+            android:id="@+id/teacher_info_tv_reserve_times"
+            style="@style/text_editable_style"
+            android:layout_weight="3"
+            android:drawableRight="@mipmap/icon_right_arrow_padding"
+            android:gravity="start|center_vertical"
+            tools:text="8 次"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/teacher_register_one_tv_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/layout_margin_small"
+        android:layout_marginEnd="@dimen/layout_margin_small"
+        android:layout_marginStart="@dimen/layout_margin_small"
+        android:layout_marginTop="@dimen/layout_margin_small"
+        android:background="@drawable/selector_main_left_drawer_item"
+        android:clickable="true"
+        android:gravity="center"
+        android:padding="@dimen/layout_padding_small"
+        android:text="@string/do_reservation"
+        android:textColor="@color/title_text_color"
+        android:textSize="@dimen/text_size_normal" />
+
+
+
+</LinearLayout>

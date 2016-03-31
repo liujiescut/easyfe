@@ -16,6 +16,7 @@
     <dimen name="layout_padding_large">20dp</dimen>
     <dimen name="layout_padding_normal">15dp</dimen>
     <dimen name="layout_padding_small">10dp</dimen>
+    <dimen name="layout_padding_tiny">7dp</dimen>
 
     <dimen name="default_divider_height">1dp</dimen>
     <dimen name="home_fragment_text_padding">46dp</dimen>

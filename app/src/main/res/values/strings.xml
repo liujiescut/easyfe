@@ -151,4 +151,12 @@
     <string name="required_options">必选条件</string>
     <string name="optional_options">可选条件</string>
     <string name="score">综合评分</string>
+    <string name="score_simple">评分</string>
+    <string name="self_introduce">个人介绍</string>
+    <string name="parent_comments">家长评语</string>
+    <string name="see_more">查看更多</string>
+    <string name="teacher_info_info">选择预约次数（预约从下次该时间段算起）</string>
+    <string name="reserve_times">预约次数</string>
+    <string name="do_reservation">进行预约</string>
+    <string name="login_info">如您已有账号，请先登录</string>
 </resources>

@@ -102,6 +102,9 @@ public class Constants {
         public static final ArrayList<String> teacherGradeList = new ArrayList<>();                 //家教的年级列表
         public static final ArrayList<String> weekList = new ArrayList<>();
         public static final ArrayList<String> ageList = new ArrayList<>();
+        public static final ArrayList<String> scoreRangeList = new ArrayList<>();
+        public static final ArrayList<String> hasTeachChildCountRangeList = new ArrayList<>();
+        public static final ArrayList<String> hasTeachChildTimeRangeList = new ArrayList<>();
 
         static {
 
@@ -255,6 +258,23 @@ public class Constants {
             for (int i = 0; i < 100; i++) {
                 ageList.add(i + "");
             }
+
+            scoreRangeList.add("6 分以上");
+            scoreRangeList.add("8 分以上");
+            scoreRangeList.add("10 分以上");
+
+            hasTeachChildCountRangeList.add("0个");
+            hasTeachChildCountRangeList.add("1个");
+            hasTeachChildCountRangeList.add("2个");
+            hasTeachChildCountRangeList.add("3个");
+            hasTeachChildCountRangeList.add("3个以上");
+            hasTeachChildCountRangeList.add("5个以上");
+
+            hasTeachChildTimeRangeList.add("20小时以内");
+            hasTeachChildTimeRangeList.add("20-50小时");
+            hasTeachChildTimeRangeList.add("50-100小时");
+            hasTeachChildTimeRangeList.add("100小时以上");
+
         }
     }
 

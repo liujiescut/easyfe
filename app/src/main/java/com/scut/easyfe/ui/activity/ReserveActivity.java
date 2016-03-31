@@ -82,6 +82,11 @@ public class ReserveActivity extends BaseActivity {
             mSchoolItems.add(new ToSelectItem(school, false));
         }
 
+        for (String score :
+                Constants.Data.scoreRangeList) {
+            mScoreItems.add(new ToSelectItem(score, false));
+        }
+
         mPriceItems.add(new ToSelectItem("50以下", false));
         mPriceItems.add(new ToSelectItem("50 - 80", false));
         mPriceItems.add(new ToSelectItem("80 - 100", false));
@@ -90,14 +95,6 @@ public class ReserveActivity extends BaseActivity {
         mPriceItems.add(new ToSelectItem("140 - 160", false));
         mPriceItems.add(new ToSelectItem("160 - 180", false));
 
-        mScoreItems.add(new ToSelectItem("3分以下", false));
-        mScoreItems.add(new ToSelectItem("3分 - 4分", false));
-        mScoreItems.add(new ToSelectItem("4分 - 5分", false));
-        mScoreItems.add(new ToSelectItem("5分 - 6分", false));
-        mScoreItems.add(new ToSelectItem("6分 - 7分", false));
-        mScoreItems.add(new ToSelectItem("7分 - 8分", false));
-        mScoreItems.add(new ToSelectItem("8分 - 9分", false));
-        mScoreItems.add(new ToSelectItem("10以上", false));
     }
 
     @Override

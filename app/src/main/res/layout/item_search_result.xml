@@ -33,10 +33,12 @@
             <TextView
                 android:id="@+id/item_search_result_tv_price"
                 style="@style/text_normal_style"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center_vertical|right"
                 android:padding="@dimen/layout_padding_small"
-                tools:text="250 元/小时" />
+                tools:drawableRight="@mipmap/icon_detail_question_small"
+                tools:text="250 元/小时(包括交通补贴50元)" />
+
         </LinearLayout>
 
         <View

@@ -91,6 +91,11 @@ public class TeacherRegisterOneActivity extends BaseActivity {
 
         ((TextView) findViewById(R.id.titlebar_tv_title)).setText("家教注册-基本信息");
         mBirthdayTextView.setText(OtherUtils.getTime(calendar.getTime(), "yyyy 年 MM 月 dd 日"));
+        mSchoolTextView.setText(Constants.Data.schoolList.get(0));
+        mGradeTextView.setText(Constants.Data.teacherGradeList.get(0));
+        mProfessionTextView.setText(Constants.Data.professionList.get(0));
+        mHadTeachChildTextView.setText(Constants.Data.hasTeachChildCountRangeList.get(0));
+        mHadTeachTimeTextView.setText(Constants.Data.hasTeachChildTimeRangeList.get(0));
     }
 
     @Override
@@ -287,14 +292,44 @@ public class TeacherRegisterOneActivity extends BaseActivity {
      * 点击选择家教孩子数量
      */
     public void onTeachChildCountClick(View view) {
-
+        OtherUtils.hideSoftInputWindow(mHadTeachChildTextView.getWindowToken());
+        if (mPicker.isShowing()) {
+            mPicker.dismiss();
+            return;
+        }
+        mPicker.setTitle("已家教过孩子数量");
+        mPicker.setPicker(Constants.Data.hasTeachChildCountRangeList);
+        mPicker.setSelectOptions(0);
+        mPicker.setCyclic(false);
+        mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                mHadTeachChildTextView.setText(Constants.Data.hasTeachChildCountRangeList.get(options1));
+            }
+        });
+        mPicker.show();
     }
 
     /**
      * 点击选择家教时长
      */
     public void onTeachTimeClick(View view) {
-
+        OtherUtils.hideSoftInputWindow(mHadTeachTimeTextView.getWindowToken());
+        if (mPicker.isShowing()) {
+            mPicker.dismiss();
+            return;
+        }
+        mPicker.setTitle("已家教过的时长");
+        mPicker.setPicker(Constants.Data.hasTeachChildTimeRangeList);
+        mPicker.setSelectOptions(0);
+        mPicker.setCyclic(false);
+        mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                mHadTeachTimeTextView.setText(Constants.Data.hasTeachChildTimeRangeList.get(options1));
+            }
+        });
+        mPicker.show();
     }
 
     /**

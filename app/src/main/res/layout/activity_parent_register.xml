@@ -183,5 +183,15 @@
         android:textSize="@dimen/text_size_large"
         android:id="@+id/parent_register_tv_submit" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_normal"
+        android:gravity="center"
+        android:text="@string/login_info"
+        android:textColor="@color/text_hint_color"
+        android:textSize="@dimen/text_size_small" />
+
+
 
 </LinearLayout>
