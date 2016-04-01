@@ -4,23 +4,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.TimePickerView;
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.MapUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 /**
- * 注册第一步(基本信息)
+ * 注册第一步(基本信息) 跟 修改信息
  * @author jay
  */
 public class TeacherRegisterOneActivity extends BaseActivity {
@@ -39,19 +40,24 @@ public class TeacherRegisterOneActivity extends BaseActivity {
     private TextView mHadTeachTimeTextView; //已家教时长
     private TextView mGoNextTextView;       //保存进入下一页
 
+    /** 下面几项为修改信息时用到 */
+    private LinearLayout mChildGenderLinearLayout;     //宝贝性别所在LinearLayout
+    private LinearLayout mChildGradeLinearLayout;      //宝贝年级所在LinearLayout
+    private TextView mChildGenderTextView;             //宝贝性别
+    private TextView mChildGradeTextView;              //宝贝年级
+    private TextView mDoModifyTextView;                //确认保存修改
+
     private double mLatitude = -1d;    //定位所在的纬度
     private double mLongitude = -1d;   //定位所在的经度
     private String mAddress;           //定位所在的地址
     private String mCity;              //定位所在的城市
     private int mGender = Constants.Identifier.FEMALE;   //选择的性别
 
-    private OptionsPickerView<String> mPicker;
+    private OptionsPickerView<String> mSinglePicker;
+    private OptionsPickerView<String> mDoublePicker;
     private TimePickerView mTimePicker;
-    public static final ArrayList<String> sGenderType = new ArrayList<>();
-    static {
-        sGenderType.add("女");
-        sGenderType.add("男");
-    }
+
+    private int mFromType = Constants.Identifier.TYPE_REGISTER;   //到此页面的功能(注册还是修改信息)
 
     @Override
     protected void setLayoutView() {
@@ -60,13 +66,21 @@ public class TeacherRegisterOneActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        Intent intent = getIntent();
+        if(null != intent){
+            Bundle extras = intent.getExtras();
+            if(null != extras){
+                mFromType = extras.getInt(Constants.Key.TO_TEACHER_REGISTER_ONE_ACTIVITY_TYPE, Constants.Identifier.TYPE_REGISTER);
+            }
+        }
     }
 
     @Override
     protected void initView() {
-        mPicker = new OptionsPickerView<>(this);
-        mPicker.setCancelable(true);
+        mSinglePicker = new OptionsPickerView<>(this);
+        mSinglePicker.setCancelable(true);
+        mDoublePicker = new OptionsPickerView<>(this);
+        mDoublePicker.setCancelable(true);
 
         Calendar calendar = Calendar.getInstance();
         mTimePicker = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);
@@ -89,13 +103,60 @@ public class TeacherRegisterOneActivity extends BaseActivity {
         mHadTeachTimeTextView = OtherUtils.findViewById(this, R.id.teacher_register_one_tv_time);
         mGoNextTextView = OtherUtils.findViewById(this, R.id.teacher_register_one_tv_submit);
 
-        ((TextView) findViewById(R.id.titlebar_tv_title)).setText("家教注册-基本信息");
+        mChildGenderLinearLayout = OtherUtils.findViewById(this, R.id.base_info_ll_child_gender);
+        mChildGradeLinearLayout = OtherUtils.findViewById(this, R.id.base_info_ll_child_grade);
+        mChildGenderTextView = OtherUtils.findViewById(this, R.id.base_info_tv_child_gender);
+        mChildGradeTextView = OtherUtils.findViewById(this, R.id.base_info_tv_child_grade);
+        mDoModifyTextView = OtherUtils.findViewById(this, R.id.base_info_tv_modify);
+
         mBirthdayTextView.setText(OtherUtils.getTime(calendar.getTime(), "yyyy 年 MM 月 dd 日"));
         mSchoolTextView.setText(Constants.Data.schoolList.get(0));
         mGradeTextView.setText(Constants.Data.teacherGradeList.get(0));
         mProfessionTextView.setText(Constants.Data.professionList.get(0));
         mHadTeachChildTextView.setText(Constants.Data.hasTeachChildCountRangeList.get(0));
         mHadTeachTimeTextView.setText(Constants.Data.hasTeachChildTimeRangeList.get(0));
+
+        updateView();
+    }
+
+    public void updateView(){
+        if(mFromType == Constants.Identifier.TYPE_REGISTER){
+            ((TextView) findViewById(R.id.titlebar_tv_title)).setText("家教注册-基本信息");
+        }else{
+            ((TextView) findViewById(R.id.titlebar_tv_title)).setText("基本信息维护");
+            mGoNextTextView.setVisibility(View.GONE);
+            mDoModifyTextView.setVisibility(View.VISIBLE);
+
+            if(App.getUser().getUserType() == Constants.Identifier.USER_TP){
+                //既是家长又是家教
+                mChildGenderLinearLayout.setVisibility(View.VISIBLE);
+                mChildGradeLinearLayout.setVisibility(View.VISIBLE);
+            }
+
+            mNameEditText.setTextColor(mResources.getColor(R.color.text_area_text_color));
+            mGenderTextView.setTextColor(mResources.getColor(R.color.text_area_text_color));
+            mBirthdayTextView.setTextColor(mResources.getColor(R.color.text_area_text_color));
+            mPhoneEditText.setTextColor(mResources.getColor(R.color.text_area_text_color));
+            mPasswordEditText.setTextColor(mResources.getColor(R.color.text_area_text_color));
+            mIdCardEditText.setTextColor(mResources.getColor(R.color.text_area_text_color));
+            mSchoolTextView.setTextColor(mResources.getColor(R.color.text_area_text_color));
+            mGradeTextView.setTextColor(mResources.getColor(R.color.text_area_text_color));
+            mProfessionTextView.setTextColor(mResources.getColor(R.color.text_area_text_color));
+            mProfessionTextView.setEnabled(false);
+            mGradeTextView.setEnabled(false);
+            mSchoolTextView.setEnabled(false);
+            mIdCardEditText.setEnabled(false);
+            mPasswordEditText.setEnabled(false);
+            mPhoneEditText.setEnabled(false);
+            mBirthdayTextView.setEnabled(false);
+            mGenderTextView.setEnabled(false);
+            mNameEditText.setEnabled(false);
+            mGenderTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+            mBirthdayTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+            mSchoolTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+            mGradeTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+            mProfessionTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,0,0);
+        }
     }
 
     @Override
@@ -149,16 +210,13 @@ public class TeacherRegisterOneActivity extends BaseActivity {
      * 点击选择性别
      */
     public void onTeacherGenderClick(View view) {
-        OtherUtils.hideSoftInputWindow(mGenderTextView.getWindowToken());
-        if (mPicker.isShowing()) {
-            mPicker.dismiss();
-            return;
-        }
-        mPicker.setTitle("选择您的性别");
-        mPicker.setPicker(sGenderType);
-        mPicker.setSelectOptions(0);
-        mPicker.setCyclic(false);
-        mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+        hidePickerIfShowing();
+
+        mSinglePicker.setTitle("选择您的性别");
+        mSinglePicker.setPicker(Constants.Data.genderList);
+        mSinglePicker.setSelectOptions(0);
+        mSinglePicker.setCyclic(false);
+        mSinglePicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 if (options1 == 0) {
@@ -172,7 +230,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
                 }
             }
         });
-        mPicker.show();
+        mSinglePicker.show();
     }
 
     /**
@@ -187,66 +245,57 @@ public class TeacherRegisterOneActivity extends BaseActivity {
      * 点击选择学校
      */
     public void onSchoolClick(View view) {
-        OtherUtils.hideSoftInputWindow(mGenderTextView.getWindowToken());
-        if (mPicker.isShowing()) {
-            mPicker.dismiss();
-            return;
-        }
-        mPicker.setTitle("选择您的学校");
-        mPicker.setPicker(Constants.Data.schoolList);
-        mPicker.setSelectOptions(0);
-        mPicker.setCyclic(false);
-        mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+        hidePickerIfShowing();
+
+        mSinglePicker.setTitle("选择您的学校");
+        mSinglePicker.setPicker(Constants.Data.schoolList);
+        mSinglePicker.setSelectOptions(0);
+        mSinglePicker.setCyclic(false);
+        mSinglePicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 mSchoolTextView.setText(Constants.Data.schoolList.get(options1));
             }
         });
-        mPicker.show();
+        mSinglePicker.show();
     }
 
     /**
      * 点击选择年级
      */
     public void onGradeClick(View view) {
-        OtherUtils.hideSoftInputWindow(mGenderTextView.getWindowToken());
-        if (mPicker.isShowing()) {
-            mPicker.dismiss();
-            return;
-        }
-        mPicker.setTitle("选择您的专业");
-        mPicker.setPicker(Constants.Data.teacherGradeList);
-        mPicker.setSelectOptions(0);
-        mPicker.setCyclic(false);
-        mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+        hidePickerIfShowing();
+
+        mSinglePicker.setTitle("选择您的专业");
+        mSinglePicker.setPicker(Constants.Data.teacherGradeList);
+        mSinglePicker.setSelectOptions(0);
+        mSinglePicker.setCyclic(false);
+        mSinglePicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 mGradeTextView.setText(Constants.Data.teacherGradeList.get(options1));
             }
         });
-        mPicker.show();
+        mSinglePicker.show();
     }
 
     /**
      * 点击选择专业
      */
     public void onProfessionClick(View view) {
-        OtherUtils.hideSoftInputWindow(mGenderTextView.getWindowToken());
-        if (mPicker.isShowing()) {
-            mPicker.dismiss();
-            return;
-        }
-        mPicker.setTitle("选择您的专业");
-        mPicker.setPicker(Constants.Data.professionList);
-        mPicker.setSelectOptions(0);
-        mPicker.setCyclic(false);
-        mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+        hidePickerIfShowing();
+
+        mSinglePicker.setTitle("选择您的专业");
+        mSinglePicker.setPicker(Constants.Data.professionList);
+        mSinglePicker.setSelectOptions(0);
+        mSinglePicker.setCyclic(false);
+        mSinglePicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 mProfessionTextView.setText(Constants.Data.professionList.get(options1));
             }
         });
-        mPicker.show();
+        mSinglePicker.show();
     }
 
     /**
@@ -292,44 +341,38 @@ public class TeacherRegisterOneActivity extends BaseActivity {
      * 点击选择家教孩子数量
      */
     public void onTeachChildCountClick(View view) {
-        OtherUtils.hideSoftInputWindow(mHadTeachChildTextView.getWindowToken());
-        if (mPicker.isShowing()) {
-            mPicker.dismiss();
-            return;
-        }
-        mPicker.setTitle("已家教过孩子数量");
-        mPicker.setPicker(Constants.Data.hasTeachChildCountRangeList);
-        mPicker.setSelectOptions(0);
-        mPicker.setCyclic(false);
-        mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+        hidePickerIfShowing();
+
+        mSinglePicker.setTitle("已家教过孩子数量");
+        mSinglePicker.setPicker(Constants.Data.hasTeachChildCountRangeList);
+        mSinglePicker.setSelectOptions(0);
+        mSinglePicker.setCyclic(false);
+        mSinglePicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 mHadTeachChildTextView.setText(Constants.Data.hasTeachChildCountRangeList.get(options1));
             }
         });
-        mPicker.show();
+        mSinglePicker.show();
     }
 
     /**
      * 点击选择家教时长
      */
     public void onTeachTimeClick(View view) {
-        OtherUtils.hideSoftInputWindow(mHadTeachTimeTextView.getWindowToken());
-        if (mPicker.isShowing()) {
-            mPicker.dismiss();
-            return;
-        }
-        mPicker.setTitle("已家教过的时长");
-        mPicker.setPicker(Constants.Data.hasTeachChildTimeRangeList);
-        mPicker.setSelectOptions(0);
-        mPicker.setCyclic(false);
-        mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+        hidePickerIfShowing();
+
+        mSinglePicker.setTitle("已家教过的时长");
+        mSinglePicker.setPicker(Constants.Data.hasTeachChildTimeRangeList);
+        mSinglePicker.setSelectOptions(0);
+        mSinglePicker.setCyclic(false);
+        mSinglePicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 mHadTeachTimeTextView.setText(Constants.Data.hasTeachChildTimeRangeList.get(options1));
             }
         });
-        mPicker.show();
+        mSinglePicker.show();
     }
 
     /**
@@ -339,6 +382,65 @@ public class TeacherRegisterOneActivity extends BaseActivity {
         Bundle extras = new Bundle();
         extras.putBoolean(Constants.Key.IS_REGISTER, true);
         redirectToActivity(this, TeacherRegisterTwoActivity.class, extras);
+    }
+
+    public void onBackClick(View view){
+        finish();
+    }
+
+
+    public void onModifyClick(View view){
+        toast("就保存喽");
+    }
+
+    public void onChildGenderClick(View view){
+        hidePickerIfShowing();
+
+        mSinglePicker.setTitle("选择宝贝性别");
+        mSinglePicker.setPicker(Constants.Data.genderList);
+        mSinglePicker.setSelectOptions(0);
+        mSinglePicker.setCyclic(false);
+        mSinglePicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                mChildGenderTextView.setText(Constants.Data.genderList.get(options1));
+            }
+        });
+        mSinglePicker.show();
+    }
+
+    public void onChildGradeClick(View view){
+        hidePickerIfShowing();
+
+        mDoublePicker.setTitle("选择宝贝年级");
+        mDoublePicker.setPicker(Constants.Data.studentStateList, Constants.Data.studentGradeList, true);
+        mDoublePicker.setSelectOptions(0, 0);
+        mDoublePicker.setCyclic(false);
+        mDoublePicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                mChildGradeTextView.setText(String.format("%s %s",
+                        Constants.Data.studentStateList.get(options1),
+                        Constants.Data.studentGradeList.get(options1).get(option2)));
+            }
+        });
+        mDoublePicker.show();
+    }
+
+    private boolean hidePickerIfShowing(){
+        OtherUtils.hideSoftInputWindow(mChildGradeTextView.getWindowToken());
+        boolean isShowing = false;
+        if(mSinglePicker.isShowing()){
+            mSinglePicker.dismiss();
+            isShowing = true;
+        }
+
+        if(mDoublePicker.isShowing()){
+            mDoublePicker.dismiss();
+            isShowing = true;
+        }
+
+        return isShowing;
     }
 
 }

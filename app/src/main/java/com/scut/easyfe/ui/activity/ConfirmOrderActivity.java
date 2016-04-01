@@ -121,7 +121,7 @@ public class ConfirmOrderActivity extends BaseActivity {
     public void onTeacherNameClick(View view){
         if(mConfirmOrderType == Constants.Identifier.CONFIRM_ORDER_SPECIAL){
             Bundle bundle = new Bundle();
-            bundle.putInt(Constants.Key.TO_TEACHER_ACTIVITY_TYPE, Constants.Identifier.TYPE_SEE_TEACHER_INFO);
+            bundle.putInt(Constants.Key.TO_TEACHER_INFO_ACTIVITY_TYPE, Constants.Identifier.TYPE_SEE_TEACHER_INFO);
             bundle.putSerializable(Constants.Key.ORDER, mOrder);
             redirectToActivity(mContext, TeacherInfoActivity.class, bundle);
         }

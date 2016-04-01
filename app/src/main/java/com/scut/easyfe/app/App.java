@@ -14,6 +14,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
 import com.qiniu.android.storage.Zone;
+import com.scut.easyfe.entity.User;
 import com.scut.easyfe.utils.ActivityManagerUtils;
 import com.scut.easyfe.utils.SpUtils;
 
@@ -24,6 +25,7 @@ import com.scut.easyfe.utils.SpUtils;
  */
 public class App extends Application{
     private static App mInstance;           // Application单例
+    private static User mUser;
     private static SpUtils mSpUtils;            // 用于管理 SharePreference 的工具类对象
     private ActivityManagerUtils mActivityManagerUtils;             // 用于管理 Activity 的工具类对象
     private UploadManager qiniuManager;             //上传头像工具
@@ -32,7 +34,7 @@ public class App extends Application{
      * 单例获取Application的实例
      * @return application
      */
-    public static App get(){
+    public static synchronized App get(){
         if(null == mInstance){
             mInstance = new App();
         }
@@ -46,6 +48,14 @@ public class App extends Application{
         mInstance = this;
         mActivityManagerUtils = ActivityManagerUtils.getInstance();
         init();
+    }
+
+    public static synchronized User getUser(){
+        if(null == mUser){
+            mUser = new User();
+        }
+
+        return mUser;
     }
 
     /**
@@ -86,6 +96,8 @@ public class App extends Application{
         initBaiduMap();
         initImageLoader();
     }
+
+
 
 
     /**

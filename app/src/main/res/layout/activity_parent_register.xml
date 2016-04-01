@@ -22,7 +22,6 @@
             android:id="@+id/parent_register_et_name"
             style="@style/text_editable_style"
             android:layout_weight="3"
-            android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
             android:maxLength="10"
             tools:text="黄先生"
@@ -42,9 +41,7 @@
             android:id="@+id/parent_register_tv_parent_gender"
             style="@style/text_editable_style"
             android:layout_weight="3"
-            android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
-            android:maxLength="11"
             android:drawableRight="@mipmap/icon_right_arrow_padding"
             android:onClick="onParentGenderClick"
             android:text="@string/female" />
@@ -73,7 +70,6 @@
             android:id="@+id/parent_register_et_phone"
             style="@style/text_editable_style"
             android:layout_weight="3"
-            android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
             android:maxLength="11"
             tools:text="18814111111"
@@ -93,7 +89,6 @@
             android:id="@+id/parent_register_et_password"
             style="@style/text_editable_style"
             android:layout_weight="3"
-            android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
             android:inputType="textPassword"
             tools:text="18814111111"
@@ -115,9 +110,7 @@
             android:id="@+id/parent_register_tv_child_gender"
             style="@style/text_editable_style"
             android:layout_weight="3"
-            android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
-            android:maxLength="11"
             android:drawableRight="@mipmap/icon_right_arrow_padding"
             android:text="@string/female"
             android:onClick="onChildGenderClick" />
@@ -136,9 +129,7 @@
             android:id="@+id/parent_register_tv_child_grade"
             style="@style/text_editable_style"
             android:layout_weight="3"
-            android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
-            android:maxLength="11"
             android:drawableRight="@mipmap/icon_right_arrow_padding"
             tools:text="小学 一年级"
             android:onClick="onChildGradeClick" />
@@ -158,7 +149,6 @@
             android:id="@+id/parent_register_tv_address"
             style="@style/text_editable_style"
             android:layout_weight="3"
-            android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
             android:drawableRight="@mipmap/icon_map_grey"
             android:ellipsize="end"
@@ -180,10 +170,30 @@
         android:padding="@dimen/layout_padding_small"
         android:text="@string/parent_register_submit"
         android:textColor="@color/title_text_color"
-        android:textSize="@dimen/text_size_large"
+        android:textSize="@dimen/text_size_normal"
         android:id="@+id/parent_register_tv_submit" />
 
     <TextView
+        android:id="@+id/base_info_tv_modify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/layout_margin_small"
+        android:layout_marginEnd="@dimen/layout_margin_small"
+        android:layout_marginStart="@dimen/layout_margin_small"
+        android:layout_marginTop="@dimen/layout_margin_small"
+        android:background="@drawable/selector_main_left_drawer_item"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="onModifyClick"
+        android:padding="@dimen/layout_padding_small"
+        android:text="@string/sure_and_save"
+        android:textColor="@color/title_text_color"
+        android:visibility="gone"
+        android:textSize="@dimen/text_size_normal" />
+
+
+    <TextView
+        android:id="@+id/parent_register_tv_has_account_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/layout_margin_normal"

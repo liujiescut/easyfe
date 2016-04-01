@@ -1,9 +1,12 @@
 package com.scut.easyfe.ui.activity;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.App;
+import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.ui.base.BaseActivity;
 
 /**
@@ -39,7 +42,8 @@ public class LoginActivity extends BaseActivity {
      * @param view 被点击视图
      */
     public void onLoginClick(View view){
-        toast("点击登录");
+        App.getUser().setHasLogin(true);
+        toast("登录成功");
     }
 
     /**
@@ -47,7 +51,10 @@ public class LoginActivity extends BaseActivity {
      * @param view 被点击视图
      */
     public void onParentRegisterClick(View view){
-        redirectToActivity(mContext, ParentRegisterActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constants.Key.TO_PARENT_REGISTER_ACTIVITY_TYPE, Constants.Identifier.TYPE_REGISTER);
+                    redirectToActivity(mContext, ParentRegisterActivity.class, bundle);
+        redirectToActivity(mContext, ParentRegisterActivity.class, bundle);
     }
 
     /**

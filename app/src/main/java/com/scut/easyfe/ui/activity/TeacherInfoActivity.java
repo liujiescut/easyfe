@@ -20,8 +20,6 @@ import com.scut.easyfe.utils.ImageUtils;
 import com.scut.easyfe.utils.ListViewUtil;
 import com.scut.easyfe.utils.OtherUtils;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 /**
@@ -57,7 +55,7 @@ public class TeacherInfoActivity extends BaseActivity {
         if(null != intent){
             Bundle extras = intent.getExtras();
             if (null != extras) {
-                mFromType = extras.getInt(Constants.Key.TO_TEACHER_ACTIVITY_TYPE, Constants.Identifier.TYPE_RESERVE);
+                mFromType = extras.getInt(Constants.Key.TO_TEACHER_INFO_ACTIVITY_TYPE, Constants.Identifier.TYPE_RESERVE);
                 if(mFromType == Constants.Identifier.TYPE_RESERVE) {
                     mReserveType = extras.getInt(Constants.Key.RESERVE_WAY, Constants.Identifier.RESERVE_MULTI);
                 }

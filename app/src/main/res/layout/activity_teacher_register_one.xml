@@ -262,6 +262,70 @@
                 android:textColor="@color/title_text_color"
                 android:textSize="@dimen/text_size_normal" />
 
+
+            <!-- 下面几项是信息维护时用到的 -->
+            <LinearLayout
+                android:id="@+id/base_info_ll_child_gender"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/layout_margin_normal"
+                style="@style/ll_container_normal_style"
+                >
+
+                <TextView
+                    style="@style/text_normal_style"
+                    android:layout_marginRight="@dimen/container_stoke_width"
+                    android:layout_weight="1"
+                    android:text="@string/my_baby_gender" />
+
+                <TextView
+                    android:id="@+id/base_info_tv_child_gender"
+                    style="@style/text_editable_style"
+                    android:layout_weight="3"
+                    android:gravity="start|center_vertical"
+                    android:drawableRight="@mipmap/icon_right_arrow_padding"
+                    android:text="@string/female"
+                    android:onClick="onChildGenderClick" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/base_info_ll_child_grade"
+                android:visibility="gone"
+                style="@style/ll_container_normal_style"
+                >
+
+                <TextView
+                    style="@style/text_normal_style"
+                    android:layout_marginRight="@dimen/container_stoke_width"
+                    android:layout_weight="1"
+                    android:text="@string/my_child_grade" />
+
+                <TextView
+                    android:id="@+id/base_info_tv_child_grade"
+                    style="@style/text_editable_style"
+                    android:layout_weight="3"
+                    android:gravity="start|center_vertical"
+                    android:drawableRight="@mipmap/icon_right_arrow_padding"
+                    tools:text="小学 一年级"
+                    android:onClick="onChildGradeClick" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/base_info_tv_modify"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/layout_margin_small"
+                android:layout_marginEnd="@dimen/layout_margin_small"
+                android:layout_marginStart="@dimen/layout_margin_small"
+                android:layout_marginTop="@dimen/layout_margin_small"
+                android:background="@drawable/selector_main_left_drawer_item"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onModifyClick"
+                android:padding="@dimen/layout_padding_small"
+                android:text="@string/sure_and_save"
+                android:textColor="@color/title_text_color"
+                android:visibility="gone"
+                android:textSize="@dimen/text_size_normal" />
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.Order;
-import com.scut.easyfe.ui.activity.ConfirmOrderActivity;
 import com.scut.easyfe.ui.activity.TeacherInfoActivity;
 import com.scut.easyfe.ui.adapter.SearchResultAdapter;
 import com.scut.easyfe.ui.base.BaseRefreshFragment;
@@ -102,7 +101,7 @@ public class SearchResultFragment extends BaseRefreshFragment {
                             Bundle bundle = new Bundle();
                             bundle.putInt(Constants.Key.RESERVE_WAY, getReserveType());
                             bundle.putSerializable(Constants.Key.ORDER, mOrders.get(index));
-                            bundle.putInt(Constants.Key.TO_TEACHER_ACTIVITY_TYPE, Constants.Identifier.TYPE_RESERVE);
+                            bundle.putInt(Constants.Key.TO_TEACHER_INFO_ACTIVITY_TYPE, Constants.Identifier.TYPE_RESERVE);
                             mActivity.redirectToActivity(mActivity, TeacherInfoActivity.class, bundle);
                         }
                     }

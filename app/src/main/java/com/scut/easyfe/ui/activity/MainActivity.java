@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.ui.base.BaseFragment;
@@ -69,8 +70,19 @@ public class MainActivity extends BaseActivity {
      * @param view 被点击视图
      */
     public void onAvatarClick(View view){
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+        if(App.getUser().isHasLogin()) {
+            if (App.getUser().getUserType() == Constants.Identifier.USER_PARENT) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(Constants.Key.TO_PARENT_REGISTER_ACTIVITY_TYPE, Constants.Identifier.TYPE_MODIFY);
+                redirectToActivity(mContext, ParentRegisterActivity.class, bundle);
+            } else {
+                Bundle bundle = new Bundle();
+                bundle.putInt(Constants.Key.TO_TEACHER_REGISTER_ONE_ACTIVITY_TYPE, Constants.Identifier.TYPE_MODIFY);
+                redirectToActivity(mContext, TeacherRegisterOneActivity.class, bundle);
+            }
+        }else{
+            redirectToActivity(mContext, LoginActivity.class);
+        }
     }
 
     /**

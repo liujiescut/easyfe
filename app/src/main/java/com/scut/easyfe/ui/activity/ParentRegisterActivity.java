@@ -15,7 +15,7 @@ import com.scut.easyfe.utils.MapUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
 /**
- * 家长注册页面
+ * 家长注册 跟 修改基本信息
  *
  * @author jay
  */
@@ -31,6 +31,11 @@ public class ParentRegisterActivity extends BaseActivity {
     private TextView mAddressTextView;              //家庭地址
     private TextView mChildGenderTextView;          //宝贝性别
     private TextView mChildGradeTextView;           //宝贝年级
+    private TextView mHasAccountHintTextView;       //已经有账号时的提示信息
+    private TextView mRegisterTextView;       //已经有账号时的提示信息
+
+
+    private TextView mModifyTextView;               //修改信息时用到
 
     private int mParentGender = Constants.Identifier.FEMALE;   //家长选择的性别
     private int mChildGender = Constants.Identifier.FEMALE;    //宝贝的性别
@@ -40,9 +45,22 @@ public class ParentRegisterActivity extends BaseActivity {
     private String mAddress;           //定位所在的地址
     private String mCity;              //定位所在的城市
 
+    private int mFromType = Constants.Identifier.TYPE_REGISTER;   //到此页面的功能(注册还是修改家教信息)
+
     @Override
     protected void setLayoutView() {
         setContentView(R.layout.activity_parent_register);
+    }
+
+    @Override
+    protected void initData() {
+        Intent intent = getIntent();
+        if(null != intent){
+            Bundle extras = intent.getExtras();
+            if(null != extras){
+                mFromType = extras.getInt(Constants.Key.TO_PARENT_REGISTER_ACTIVITY_TYPE, Constants.Identifier.TYPE_REGISTER);
+            }
+        }
     }
 
     @Override
@@ -50,7 +68,6 @@ public class ParentRegisterActivity extends BaseActivity {
         mPicker = new OptionsPickerView<>(this);
         mPicker.setCancelable(true);
 
-        ((TextView) findViewById(R.id.titlebar_tv_title)).setText("家长注册");
         mParentNameEditText = OtherUtils.findViewById(this, R.id.parent_register_et_name);
         mParentPhoneEditText = OtherUtils.findViewById(this, R.id.parent_register_et_phone);
         mParentPasswordEditText = OtherUtils.findViewById(this, R.id.parent_register_et_password);
@@ -59,6 +76,31 @@ public class ParentRegisterActivity extends BaseActivity {
         mChildGenderTextView = OtherUtils.findViewById(this, R.id.parent_register_tv_child_gender);
         mChildGradeTextView = OtherUtils.findViewById(this, R.id.parent_register_tv_child_grade);
         mAddressTextView = OtherUtils.findViewById(this, R.id.parent_register_tv_address);
+        mRegisterTextView = OtherUtils.findViewById(this, R.id.parent_register_tv_submit);
+        mModifyTextView = OtherUtils.findViewById(this, R.id.base_info_tv_modify);
+        mHasAccountHintTextView = OtherUtils.findViewById(this, R.id.parent_register_tv_has_account_hint);
+
+        updateView();
+    }
+
+    private void updateView(){
+        if(mFromType == Constants.Identifier.TYPE_REGISTER){
+            ((TextView) findViewById(R.id.titlebar_tv_title)).setText("家长注册");
+        }else{
+            ((TextView) findViewById(R.id.titlebar_tv_title)).setText("基本信息维护");
+            mHasAccountHintTextView.setVisibility(View.GONE);
+            mRegisterTextView.setVisibility(View.GONE);
+            mModifyTextView.setVisibility(View.VISIBLE);
+            mParentNameEditText.setTextColor(mResources.getColor(R.color.text_area_text_color));
+            mParentNameEditText.setEnabled(false);
+            mParentGenderTextView.setTextColor(mResources.getColor(R.color.text_area_text_color));
+            mParentGenderTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,0,0);
+            mParentGenderTextView.setEnabled(false);
+            mParentPhoneEditText.setTextColor(mResources.getColor(R.color.text_area_text_color));
+            mParentPhoneEditText.setEnabled(false);
+            mParentPasswordEditText.setTextColor(mResources.getColor(R.color.text_area_text_color));
+            mParentPasswordEditText.setEnabled(false);
+        }
     }
 
     @Override
@@ -91,7 +133,7 @@ public class ParentRegisterActivity extends BaseActivity {
      * @param view 被点击视图
      */
     public void onBackClick(View view) {
-
+        finish();
     }
 
     /**
@@ -211,6 +253,13 @@ public class ParentRegisterActivity extends BaseActivity {
      */
     public void onRegisterClick(View view) {
 
+    }
+
+    /**
+     * @param view 被点击视图
+     */
+    public void onModifyClick(View view) {
+        toast("就修改喽");
     }
 
     @Override

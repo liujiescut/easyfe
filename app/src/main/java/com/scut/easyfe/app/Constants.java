@@ -45,7 +45,9 @@ public class Constants {
         public static final String ORDER =  "order";
         public static final String TEACH_WEEK =  "teach_week";
         public static final String RESERVE_WAY = "reserve_way";
-        public static final String TO_TEACHER_ACTIVITY_TYPE = "to_teacher_activity_type";
+        public static final String TO_TEACHER_INFO_ACTIVITY_TYPE = "to_teacher_info_activity_type";
+        public static final String TO_TEACHER_REGISTER_ONE_ACTIVITY_TYPE = "to_teacher_register_one_activity_type";
+        public static final String TO_PARENT_REGISTER_ACTIVITY_TYPE = "to_parent_register_activity_type";
 
     }
 
@@ -53,6 +55,12 @@ public class Constants {
      * 一些标识符
      */
     public class Identifier {
+        /** 用户分类 */
+        public static final int USER_TEACHER = 0;    //家教
+        public static final int USER_PARENT = 1;     //家长
+        public static final int USER_TP = 2;         //即是家长又是家教
+
+        /** 性别 */
         public static final int MALE = 1;
         public static final int FEMALE = 0;
 
@@ -84,6 +92,10 @@ public class Constants {
         /** 到家教信息页面的功能 */
         public static final int TYPE_SEE_TEACHER_INFO = 0;
         public static final int TYPE_RESERVE = 1;
+
+        /** 到家教注册页面(基本信息)的功能 */
+        public static final int TYPE_REGISTER = 0;
+        public static final int TYPE_MODIFY = 1;
     }
 
     public static class Path {

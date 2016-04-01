@@ -62,7 +62,8 @@
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.ParentRegisterActivity" />
         <activity android:name=".ui.activity.AddressActivity" />
-        <activity android:name=".ui.activity.TeacherRegisterOneActivity" />
+        <activity android:name=".ui.activity.TeacherRegisterOneActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".ui.activity.TeacherRegisterTwoActivity" />
         <activity android:name=".ui.activity.TeachTimeActivity" />
         <activity
