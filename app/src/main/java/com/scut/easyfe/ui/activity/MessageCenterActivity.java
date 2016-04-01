@@ -24,7 +24,7 @@ public class MessageCenterActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ((TextView)findViewById(R.id.titlebar_tv_title)).setText("消息中心");
+        ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("消息中心");
         mMessageListView = OtherUtils.findViewById(this, R.id.message_center_lv_content);
 
         mMessages = Message.getTestMessage();

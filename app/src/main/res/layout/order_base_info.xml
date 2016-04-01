@@ -1,35 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context="com.scut.easyfe.ui.activity.PocketActivity">
-    <include
-        layout="@layout/titlebar"/>
 
     <LinearLayout
-        android:layout_marginTop="@dimen/layout_margin_small"
-        style="@style/ll_container_normal_style"
-        >
-
-        <TextView
-            style="@style/text_normal_style"
-            android:layout_marginRight="@dimen/container_stoke_width"
-            android:layout_weight="1"
-            android:text="@string/course_teacher" />
-
-        <TextView
-            android:id="@+id/confirm_order_tv_teacher"
-            style="@style/text_normal_style"
-            android:layout_weight="3"
-            android:gravity="start|center_vertical"
-            android:onClick="onTeacherNameClick"
-            tools:text="林老师"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginTop="@dimen/layout_margin_small"
         style="@style/ll_container_normal_style"
         >
 
@@ -40,7 +16,7 @@
             android:text="@string/teach_grade" />
 
         <TextView
-            android:id="@+id/confirm_order_tv_grade"
+            android:id="@+id/order_base_info_tv_grade"
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:gravity="start|center_vertical"
@@ -59,28 +35,26 @@
             android:text="@string/teach_course" />
 
         <TextView
-            android:id="@+id/confirm_order_tv_course"
+            android:id="@+id/order_base_info_tv_course"
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:gravity="start|center_vertical"
-            tools:text="2333 元"
+            tools:text="软件需求分析"
             />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="@dimen/layout_margin_small"
         style="@style/ll_container_normal_style"
         >
 
         <TextView
-            android:id="@+id/confirm_order_tv_date_label"
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
             android:text="@string/teach_time" />
 
         <TextView
-            android:id="@+id/confirm_order_tv_date"
+            android:id="@+id/order_base_info_tv_date"
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:gravity="start|center_vertical"
@@ -93,44 +67,20 @@
         >
 
         <TextView
-            android:id="@+id/confirm_order_tv_time_label"
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
             android:text="@string/teach_time_length" />
 
         <TextView
-            android:id="@+id/confirm_order_tv_time"
+            android:id="@+id/order_base_info_tv_time"
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:gravity="start|center_vertical"
             tools:text="1 小时 10 分钟"
             />
     </LinearLayout>
-
     <LinearLayout
-        android:id="@+id/confirm_order_ll_week"
-        style="@style/ll_container_normal_style"
-        >
-
-        <TextView
-            style="@style/text_normal_style"
-            android:layout_marginRight="@dimen/container_stoke_width"
-            android:layout_weight="1"
-            android:text="@string/teach_week" />
-
-        <TextView
-            android:id="@+id/confirm_order_tv_week"
-            style="@style/text_normal_style"
-            android:layout_weight="3"
-            android:gravity="start|center_vertical"
-            tools:text="8 周"
-            />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_marginTop="@dimen/layout_margin_small"
         style="@style/ll_container_normal_style"
         >
 
@@ -141,7 +91,7 @@
             android:text="@string/teach_price" />
 
         <TextView
-            android:id="@+id/confirm_order_tv_price"
+            android:id="@+id/order_base_info_tv_price"
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:gravity="start|center_vertical"
@@ -154,14 +104,13 @@
         >
 
         <TextView
-            android:id="@+id/confirm_order_tv_tip_label"
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
             android:text="@string/traffic_tip" />
 
         <TextView
-            android:id="@+id/confirm_order_tv_tip"
+            android:id="@+id/order_base_info_tv_tip"
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:gravity="start|center_vertical"
@@ -170,18 +119,16 @@
     </LinearLayout>
     <LinearLayout
         style="@style/ll_container_normal_style"
-        android:layout_marginTop="@dimen/layout_margin_small"
         >
 
         <TextView
-            android:id="@+id/confirm_order_tv_total_price_label"
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
-            android:text="@string/each_price" />
+            android:text="@string/total_price" />
 
         <TextView
-            android:id="@+id/confirm_order_tv_total_price"
+            android:id="@+id/order_base_info_tv_total_price"
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:gravity="start|center_vertical"
@@ -189,21 +136,5 @@
             tools:text="300 元"
             />
     </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/layout_margin_small"
-        android:layout_marginStart="@dimen/layout_margin_small"
-        android:layout_marginTop="@dimen/layout_margin_small"
-        android:background="@drawable/selector_main_left_drawer_item"
-        android:clickable="true"
-        android:gravity="center"
-        android:onClick="onConfirmClick"
-        android:padding="@dimen/layout_padding_small"
-        android:text="@string/confirm_order"
-        android:textColor="@color/title_text_color"
-        android:textSize="@dimen/text_size_normal"
-        />
 
 </LinearLayout>

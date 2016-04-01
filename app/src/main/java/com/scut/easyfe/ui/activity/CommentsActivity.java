@@ -23,7 +23,7 @@ public class CommentsActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ((TextView)findViewById(R.id.titlebar_tv_title)).setText("家长评语");
+        ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("家长评语");
 
         mCommentListView = OtherUtils.findViewById(this, R.id.comments_lv_container);
         mCommentListView.setDividerHeight(DensityUtil.dip2px(this, 5));

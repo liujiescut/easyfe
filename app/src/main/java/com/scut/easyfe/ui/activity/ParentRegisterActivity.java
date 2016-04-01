@@ -85,9 +85,9 @@ public class ParentRegisterActivity extends BaseActivity {
 
     private void updateView(){
         if(mFromType == Constants.Identifier.TYPE_REGISTER){
-            ((TextView) findViewById(R.id.titlebar_tv_title)).setText("家长注册");
+            ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("家长注册");
         }else{
-            ((TextView) findViewById(R.id.titlebar_tv_title)).setText("基本信息维护");
+            ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("基本信息维护");
             mHasAccountHintTextView.setVisibility(View.GONE);
             mRegisterTextView.setVisibility(View.GONE);
             mModifyTextView.setVisibility(View.VISIBLE);

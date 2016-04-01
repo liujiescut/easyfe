@@ -46,7 +46,7 @@ public class PublishSpreadActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ((TextView) findViewById(R.id.titlebar_tv_title)).setText("发布特价订单");
+        ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("发布特价订单");
 
         mGradeTextView = OtherUtils.findViewById(this, R.id.publish_spread_grade);
         mCourseTextView = OtherUtils.findViewById(this, R.id.publish_spread_course);

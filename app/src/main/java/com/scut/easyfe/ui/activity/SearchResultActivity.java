@@ -9,6 +9,7 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.ui.fragment.SearchResultFragment;
+import com.scut.easyfe.utils.OtherUtils;
 
 public class SearchResultActivity extends BaseActivity {
 
@@ -32,7 +33,7 @@ public class SearchResultActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ((TextView)findViewById(R.id.titlebar_tv_title)).setText("筛选结果");
+        ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("筛选结果");
         SearchResultFragment fragment = new SearchResultFragment();
         fragment.setReserveType(mReserveType);
         getSupportFragmentManager().

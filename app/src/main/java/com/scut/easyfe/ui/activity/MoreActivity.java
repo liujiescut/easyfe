@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.ui.base.BaseActivity;
+import com.scut.easyfe.utils.OtherUtils;
 
 /**
  * 更多页面
@@ -22,7 +23,7 @@ public class MoreActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ((TextView)findViewById(R.id.titlebar_tv_title)).setText("更多");
+        ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("更多");
     }
 
     public void onBackClick(View view){

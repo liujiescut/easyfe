@@ -145,8 +145,8 @@
     <string name="week_price">每周价格</string>
     <string name="select">筛选</string>
     <string name="min_teach_time_1">最短授课时长</string>
-    <string name="student_age">被授课对象年龄</string>
-    <string name="student_gender">被授课对象性别</string>
+    <string name="teach_student_age">被授课对象年龄</string>
+    <string name="teach_student_gender">被授课对象性别</string>
     <string name="search_teacher">搜索家教</string>
     <string name="required_options">必选条件</string>
     <string name="optional_options">可选条件</string>
@@ -162,4 +162,11 @@
     <string name="add_tip_info">您与家教老师的距离已超过他（她）设定的无需路程费的最远距离，老师来找您需要跋山涉水，翻山越岭，需要一点交通补贴来安抚他们身心的疲惫哟。</string>
     <string name="my_child_grade">我的宝贝年级</string>
     <string name="my_baby_gender">我的宝贝性别</string>
+    <string name="each_price">每次价格</string>
+    <string name="total_price">总价</string>
+    <string name="parent_name">家长姓名</string>
+    <string name="parent_gender">家长性别</string>
+    <string name="student_age">学生年龄</string>
+    <string name="student_gender">学生性别</string>
+    <string name="wait_for_teacher_apply">等待家教确认中...</string>
 </resources>

@@ -48,7 +48,7 @@ public class SpecialTimeActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ((TextView) findViewById(R.id.titlebar_tv_title)).setText("近两月时间特别安排");
+        ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("近两月时间特别安排");
         initCalendar();
 
         mSelectedDateTextView =OtherUtils.findViewById(this, R.id.special_time_selected_date);

@@ -50,7 +50,7 @@ public class MyOrderActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ((TextView) findViewById(R.id.titlebar_tv_title)).setText("我的订单");
+        ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("我的订单");
 
         mBtnLinearLayout = OtherUtils.findViewById(this, R.id.my_order_ll_buttons);
         mModifyTextView = OtherUtils.findViewById(this, R.id.my_order_tv_button_1);

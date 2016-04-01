@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="com.scut.easyfe.ui.activity.PocketActivity">
+
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        >
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="1"
+            android:text="@string/parent_name" />
+
+        <TextView
+            android:id="@+id/order_base_parent_info_tv_name"
+            style="@style/text_normal_style"
+            android:layout_weight="3"
+            android:gravity="start|center_vertical"
+            tools:text="张小龙"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        >
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="1"
+            android:text="@string/parent_gender" />
+
+        <TextView
+            android:id="@+id/order_base_parent_info_tv_gender"
+            style="@style/text_normal_style"
+            android:layout_weight="3"
+            android:gravity="start|center_vertical"
+            tools:text="@string/male"
+            />
+    </LinearLayout>
+
+</LinearLayout>

@@ -99,7 +99,7 @@ public class ReserveActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ((TextView)findViewById(R.id.titlebar_tv_title)).setText(
+        ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText(
                 mReserveType == Constants.Identifier.RESERVE_MULTI ? "多次预约" : "单次预约");
 
         mGradeTextView = OtherUtils.findViewById(this, R.id.reserve_tv_grade);

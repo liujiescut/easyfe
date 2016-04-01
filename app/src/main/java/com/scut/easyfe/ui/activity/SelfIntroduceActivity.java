@@ -22,7 +22,7 @@ public class SelfIntroduceActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ((TextView)findViewById(R.id.titlebar_tv_title)).setText("家教注册 - 个人介绍");
+        ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("家教注册 - 个人介绍");
 
         mIntroduceEditText = OtherUtils.findViewById(this, R.id.self_introduce_et_content);
     }

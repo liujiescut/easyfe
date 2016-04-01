@@ -115,7 +115,7 @@ public class ConfirmOrderActivity extends BaseActivity {
                 break;
         }
 
-        ((TextView)findViewById(R.id.titlebar_tv_title)).setText(title);
+        ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText(title);
     }
 
     public void onTeacherNameClick(View view){

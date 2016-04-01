@@ -166,7 +166,7 @@
                     android:layout_weight="1"
                     android:paddingLeft="0dp"
                     android:paddingRight="0dp"
-                    android:text="@string/student_age" />
+                    android:text="@string/teach_student_age" />
 
                 <TextView
                     android:id="@+id/reserve_tv_student_age"
@@ -186,7 +186,7 @@
                     android:layout_weight="1"
                     android:paddingLeft="0dp"
                     android:paddingRight="0dp"
-                    android:text="@string/student_gender" />
+                    android:text="@string/teach_student_gender" />
 
                 <TextView
                     android:id="@+id/reserve_tv_student_gender"

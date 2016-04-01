@@ -8,6 +8,7 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.ui.base.BaseActivity;
+import com.scut.easyfe.utils.OtherUtils;
 
 /**
  * 登录注册页面
@@ -21,7 +22,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ((TextView)findViewById(R.id.titlebar_tv_title)).setText("登录注册");
+        ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("登录注册");
     }
 
     @Override

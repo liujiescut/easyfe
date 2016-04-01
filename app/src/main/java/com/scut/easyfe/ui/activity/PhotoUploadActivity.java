@@ -68,7 +68,7 @@ public class PhotoUploadActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ((TextView)findViewById(R.id.titlebar_tv_title)).setText("家教注册 - 个人资料上传");
+        ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("家教注册 - 个人资料上传");
         mIdCardImageView = OtherUtils.findViewById(this, R.id.photo_upload_iv_id_card);
         mStudentCardImageView = OtherUtils.findViewById(this, R.id.photo_upload_iv_student_card);
         mAvatarImageView = OtherUtils.findViewById(this, R.id.photo_upload_iv_avatar);

@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.scut.easyfe.R;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.ui.fragment.SpecialOrderFragment;
+import com.scut.easyfe.utils.OtherUtils;
 
 public class SpecialOrderActivity extends BaseActivity {
 
@@ -16,7 +17,7 @@ public class SpecialOrderActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ((TextView)findViewById(R.id.titlebar_tv_title)).setText("特价订单");
+        ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("特价订单");
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.special_order_fl_container, new SpecialOrderFragment())

@@ -121,9 +121,9 @@ public class TeacherRegisterOneActivity extends BaseActivity {
 
     public void updateView(){
         if(mFromType == Constants.Identifier.TYPE_REGISTER){
-            ((TextView) findViewById(R.id.titlebar_tv_title)).setText("家教注册-基本信息");
+            ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("家教注册-基本信息");
         }else{
-            ((TextView) findViewById(R.id.titlebar_tv_title)).setText("基本信息维护");
+            ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("基本信息维护");
             mGoNextTextView.setVisibility(View.GONE);
             mDoModifyTextView.setVisibility(View.VISIBLE);
 

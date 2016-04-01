@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.ui.base.BaseActivity;
+import com.scut.easyfe.utils.OtherUtils;
 
 /**
  * 显示文本的页面
@@ -39,8 +40,8 @@ public class ShowTextActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ((TextView)findViewById(R.id.titlebar_tv_title)).setText(mTitle);
-        ((TextView)findViewById(R.id.show_text_content)).setText(mContent);
+        ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText(mTitle);
+        ((TextView)OtherUtils.findViewById(this, R.id.show_text_content)).setText(mContent);
     }
 
     public void onBackClick(View view){

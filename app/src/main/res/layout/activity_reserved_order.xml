@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="com.scut.easyfe.ui.activity.ReservedOrderActivity">
+
+    <include
+        layout="@layout/titlebar"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape_app_bg">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_margin_small"
+                android:background="@color/transparent" />
+
+            <include layout="@layout/order_base_info" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_margin_small"
+                android:background="@color/transparent" />
+
+            <include
+                android:id="@+id/reserved_order_layout_parent_info"
+                layout="@layout/order_base_parent_info" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_margin_small"
+                android:background="@color/transparent" />
+
+            <include
+                android:id="@+id/reserved_order_layout_student_info"
+                layout="@layout/order_base_student_info" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_margin_small"
+                android:background="@color/transparent" />
+
+            <include
+                android:id="@+id/reserved_order_layout_teacher_info"
+                layout="@layout/item_search_result"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/reserved_order_ll_operation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/reserved_order_tv_modify"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/layout_margin_small"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_main_left_drawer_item"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:padding="6dp"
+                    android:text="@string/modify"
+                    android:textColor="@color/title_text_color"
+                    android:textSize="@dimen/text_size_normal" />
+
+                <TextView
+                    android:id="@+id/reserved_order_tv_cancel"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_my_order_cancel"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:padding="6dp"
+                    android:text="@string/cancel"
+                    android:textColor="@color/theme_color"
+                    android:textSize="@dimen/text_size_normal" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/reserved_order_tv_waiting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layout_margin_small"
+                android:background="@drawable/selector_main_left_drawer_item"
+                android:gravity="center"
+                android:padding="@dimen/layout_padding_small"
+                android:text="@string/wait_for_teacher_apply"
+                android:textColor="@color/title_text_color"
+                android:textSize="@dimen/text_size_normal"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

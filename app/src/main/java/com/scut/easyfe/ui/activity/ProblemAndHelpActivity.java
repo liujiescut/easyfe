@@ -27,7 +27,7 @@ public class ProblemAndHelpActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ((TextView)findViewById(R.id.titlebar_tv_title)).setText("常见问题帮助");
+        ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("常见问题帮助");
 
         mProblemListView = OtherUtils.findViewById(this, R.id.problems_and_help_lv_problems);
         mOtherTextView = OtherUtils.findViewById(this, R.id.problems_and_help_tv_other);

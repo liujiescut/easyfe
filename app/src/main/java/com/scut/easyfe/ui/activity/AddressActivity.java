@@ -69,8 +69,8 @@ public class AddressActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ((TextView) findViewById(R.id.titlebar_tv_title)).setText("选择家庭地址");
-        findViewById(R.id.titlebar_tv_right).setVisibility(View.VISIBLE);
+        ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("选择家庭地址");
+        ((View)OtherUtils.findViewById(this, R.id.titlebar_tv_right)).setVisibility(View.VISIBLE);
 
         mMapView = OtherUtils.findViewById(this, R.id.address_map);
         mMapView.removeViewAt(1);    // 删除百度地图logo

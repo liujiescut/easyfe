@@ -54,7 +54,7 @@ public class TeachTimeActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ((TextView)findViewById(R.id.titlebar_tv_title)).setText("授课时间");
+        ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("授课时间");
         mContainerLinearLayout = OtherUtils.findViewById(this, R.id.teach_time_ll_container);
 
         mPicker = new OptionsPickerView<>(this);

@@ -70,7 +70,7 @@ public class TeacherInfoActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ((TextView)findViewById(R.id.titlebar_tv_title)).setText(String.format("%s 老师", mOrder.getTeacherName() ));
+        ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText(String.format("%s 老师", mOrder.getTeacherName() ));
 
         mNameTextView = OtherUtils.findViewById(this, R.id.item_search_result_tv_teacher);
         mPriceTextView = OtherUtils.findViewById(this, R.id.item_search_result_tv_price);

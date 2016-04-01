@@ -42,8 +42,12 @@
             android:value="rIugtSvYwq830m0aeXlGyBQ7" />
 
         <!-- 友盟 -->
-        <meta-data android:value="56fdeca667e58e4054000cc0" android:name="UMENG_APPKEY"></meta-data>
-        <meta-data android:value="Channel ID" android:name="UMENG_CHANNEL"/>
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="56fdeca667e58e4054000cc0" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Channel ID" />
 
         <service
             android:name="com.baidu.location.f"
@@ -62,8 +66,9 @@
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.ParentRegisterActivity" />
         <activity android:name=".ui.activity.AddressActivity" />
-        <activity android:name=".ui.activity.TeacherRegisterOneActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity
+            android:name=".ui.activity.TeacherRegisterOneActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".ui.activity.TeacherRegisterTwoActivity" />
         <activity android:name=".ui.activity.TeachTimeActivity" />
         <activity
@@ -87,7 +92,8 @@
         <activity android:name=".ui.activity.ReserveActivity" />
         <activity android:name=".ui.activity.SearchResultActivity" />
         <activity android:name=".ui.activity.TeacherInfoActivity" />
-        <activity android:name=".ui.activity.CommentsActivity"></activity>
+        <activity android:name=".ui.activity.CommentsActivity" />
+        <activity android:name=".ui.activity.ReservedOrderActivity"></activity>
     </application>
 
 </manifest>
