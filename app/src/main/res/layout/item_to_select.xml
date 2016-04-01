@@ -8,7 +8,8 @@
             android:id="@+id/to_select_tv_item"
             style="@style/text_editable_style"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/text_area_height"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/layout_padding_small"
             tools:drawableRight="@mipmap/icon_yes_grey_padding"
             android:gravity="start|center_vertical"
             android:textSize="@dimen/text_size_medium" />
