@@ -41,6 +41,10 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="rIugtSvYwq830m0aeXlGyBQ7" />
 
+        <!-- 友盟 -->
+        <meta-data android:value="56fdeca667e58e4054000cc0" android:name="UMENG_APPKEY"></meta-data>
+        <meta-data android:value="Channel ID" android:name="UMENG_CHANNEL"/>
+
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"

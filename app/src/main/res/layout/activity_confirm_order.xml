@@ -23,6 +23,7 @@
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:gravity="start|center_vertical"
+            android:onClick="onTeacherNameClick"
             tools:text="林老师"
             />
     </LinearLayout>

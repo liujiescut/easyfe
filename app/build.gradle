@@ -38,4 +38,7 @@ dependencies {
     compile files('libs/android-async-http-1.4.6.jar')
     compile files('libs/universal-image-loader-1.9.4.jar')
     compile project(':ToggleButtonLib')
+
+    compile 'com.umeng.analytics:analytics:latest.integration'
+
 }

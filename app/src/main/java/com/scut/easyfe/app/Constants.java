@@ -45,6 +45,7 @@ public class Constants {
         public static final String ORDER =  "order";
         public static final String TEACH_WEEK =  "teach_week";
         public static final String RESERVE_WAY = "reserve_way";
+        public static final String TO_TEACHER_ACTIVITY_TYPE = "to_teacher_activity_type";
 
     }
 
@@ -73,12 +74,16 @@ public class Constants {
 
         /** 确认订单页面所需 */
         public static final int CONFIRM_ORDER_SPECIAL = 0;       //特价订单
-        public static final int CONFIRM_ORDER_SINGLE_BOOK = 1;   //单次预约订单
-        public static final int CONFIRM_ORDER_MULTI_BOOK = 2;    //多次预约订单
+        public static final int CONFIRM_ORDER_SINGLE_RESERVE = 1;   //单次预约订单
+        public static final int CONFIRM_ORDER_MULTI_RESERVE = 2;    //多次预约订单
 
         /** 预约页面 */
         public static final int RESERVE_MULTI = 0;
         public static final int RESERVE_SINGLE = 1;
+
+        /** 到家教信息页面的功能 */
+        public static final int TYPE_SEE_TEACHER_INFO = 0;
+        public static final int TYPE_RESERVE = 1;
     }
 
     public static class Path {

@@ -102,6 +102,7 @@ public class SearchResultFragment extends BaseRefreshFragment {
                             Bundle bundle = new Bundle();
                             bundle.putInt(Constants.Key.RESERVE_WAY, getReserveType());
                             bundle.putSerializable(Constants.Key.ORDER, mOrders.get(index));
+                            bundle.putInt(Constants.Key.TO_TEACHER_ACTIVITY_TYPE, Constants.Identifier.TYPE_RESERVE);
                             mActivity.redirectToActivity(mActivity, TeacherInfoActivity.class, bundle);
                         }
                     }

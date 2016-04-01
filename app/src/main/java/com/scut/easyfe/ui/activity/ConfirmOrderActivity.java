@@ -6,10 +6,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bigkoo.alertview.OnDismissListener;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.Order;
 import com.scut.easyfe.ui.base.BaseActivity;
+import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
 /**
@@ -49,7 +51,7 @@ public class ConfirmOrderActivity extends BaseActivity {
             if(null != extra){
                 mConfirmOrderType = extra.getInt(Constants.Key.CONFIRM_ORDER_TYPE);
                 mOrder = (Order) extra.getSerializable(Constants.Key.ORDER);
-                if(mConfirmOrderType == Constants.Identifier.CONFIRM_ORDER_MULTI_BOOK){
+                if(mConfirmOrderType == Constants.Identifier.CONFIRM_ORDER_MULTI_RESERVE){
                     mTeachWeek = extra.getInt(Constants.Key.TEACH_WEEK);
                 }
             }
@@ -91,19 +93,20 @@ public class ConfirmOrderActivity extends BaseActivity {
         switch (mConfirmOrderType){
             case Constants.Identifier.CONFIRM_ORDER_SPECIAL:
                 mWeekLinearLayout.setVisibility(View.GONE);
+                mTeacherTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.mipmap.icon_right_arrow_padding, 0);
                 title = "特价订单详情";
                 break;
 
-            case Constants.Identifier.CONFIRM_ORDER_MULTI_BOOK:
+            case Constants.Identifier.CONFIRM_ORDER_MULTI_RESERVE:
                 mTeachWeekTextView.setText(mTeachWeek + "");
                 mTeachTipLabelTextView.setText("每次交通补贴");
                 mTeachDateLabelTextView.setText("每周授课时间");
                 mTeachTimeLabelTextView.setText("每次授课时长");
-                mTeachTotalPriceLabelTextView.setText("每周价格");
+                mTeachTotalPriceLabelTextView.setText("每次价格");
                 title = "多次预约订单信息";
                 break;
 
-            case Constants.Identifier.CONFIRM_ORDER_SINGLE_BOOK:
+            case Constants.Identifier.CONFIRM_ORDER_SINGLE_RESERVE:
                 mWeekLinearLayout.setVisibility(View.GONE);
                 title = "单次预约订单信息";
                 break;
@@ -115,11 +118,28 @@ public class ConfirmOrderActivity extends BaseActivity {
         ((TextView)findViewById(R.id.titlebar_tv_title)).setText(title);
     }
 
+    public void onTeacherNameClick(View view){
+        if(mConfirmOrderType == Constants.Identifier.CONFIRM_ORDER_SPECIAL){
+            Bundle bundle = new Bundle();
+            bundle.putInt(Constants.Key.TO_TEACHER_ACTIVITY_TYPE, Constants.Identifier.TYPE_SEE_TEACHER_INFO);
+            bundle.putSerializable(Constants.Key.ORDER, mOrder);
+            redirectToActivity(mContext, TeacherInfoActivity.class, bundle);
+        }
+    }
+
+    public void onConfirmClick(View view){
+        DialogUtils.makeConfirmDialog(mContext, "生成订单成功!",
+                String.format("%s确认后将于第一时间与您联系，在老师联系您前可以修改或取消订单。", mOrder.getTeacherName())).
+                setOnDismissListener(new OnDismissListener() {
+                    @Override
+                    public void onDismiss(Object o) {
+                        redirectToActivity(mContext, MyOrderActivity.class);
+                    }
+                });
+    }
+
     public void onBackClick(View view){
         finish();
     }
 
-    public void onConfirmClick(View view){
-        toast("确认订单");
-    }
 }

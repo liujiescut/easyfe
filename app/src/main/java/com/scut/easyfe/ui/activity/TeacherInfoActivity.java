@@ -20,8 +20,13 @@ import com.scut.easyfe.utils.ImageUtils;
 import com.scut.easyfe.utils.ListViewUtil;
 import com.scut.easyfe.utils.OtherUtils;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
+/**
+ * 确认家教信息页面
+ */
 public class TeacherInfoActivity extends BaseActivity {
     private TextView mNameTextView;
     private TextView mPriceTextView;
@@ -34,9 +39,12 @@ public class TeacherInfoActivity extends BaseActivity {
     private CircleImageView mAvatarImageView;
     private LinearLayout mMultiReserveTimesLinearLayout;
     private ListView mCommentListView;
+    private TextView mDoReserveTextView;
 
     private Order mOrder;
     private int mReserveType = Constants.Identifier.RESERVE_MULTI;
+    private int mReserveTimes = 1;
+    private int mFromType = Constants.Identifier.TYPE_RESERVE;
 
     @Override
     protected void setLayoutView() {
@@ -49,7 +57,10 @@ public class TeacherInfoActivity extends BaseActivity {
         if(null != intent){
             Bundle extras = intent.getExtras();
             if (null != extras) {
-                mReserveType = extras.getInt(Constants.Key.RESERVE_WAY, Constants.Identifier.RESERVE_MULTI);
+                mFromType = extras.getInt(Constants.Key.TO_TEACHER_ACTIVITY_TYPE, Constants.Identifier.TYPE_RESERVE);
+                if(mFromType == Constants.Identifier.TYPE_RESERVE) {
+                    mReserveType = extras.getInt(Constants.Key.RESERVE_WAY, Constants.Identifier.RESERVE_MULTI);
+                }
                 mOrder = (Order) extras.getSerializable(Constants.Key.ORDER);
             }else{
                 mOrder = new Order();
@@ -74,18 +85,29 @@ public class TeacherInfoActivity extends BaseActivity {
         mMultiReserveTimesTextView = OtherUtils.findViewById(this, R.id.teacher_info_tv_reserve_times);
         mMultiReserveTimesLinearLayout = OtherUtils.findViewById(this, R.id.teacher_info_ll_multi_reserve_times);
         mCommentListView = OtherUtils.findViewById(this, R.id.teacher_info_lv_comments);
+        mDoReserveTextView = OtherUtils.findViewById(this, R.id.teacher_info_tv_do_reserve);
 
-        if(mReserveType == Constants.Identifier.RESERVE_SINGLE){
+        if(mFromType == Constants.Identifier.TYPE_SEE_TEACHER_INFO){
+            mDoReserveTextView.setVisibility(View.GONE);
             mMultiReserveHintTextView.setVisibility(View.GONE);
             mMultiReserveTimesLinearLayout.setVisibility(View.GONE);
             mMultiReserveTimesTextView.setVisibility(View.GONE);
+        }else {
+            if (mReserveType == Constants.Identifier.RESERVE_SINGLE) {
+                mMultiReserveHintTextView.setVisibility(View.GONE);
+                mMultiReserveTimesLinearLayout.setVisibility(View.GONE);
+                mMultiReserveTimesTextView.setVisibility(View.GONE);
+            } else {
+                mMultiReserveTimesTextView.setText(mReserveTimes + "");
+            }
+
+            if(mOrder.getTip() != 0){
+                DialogUtils.makeConfirmDialog(mContext, null, getString(R.string.add_tip_info));
+            }
         }
 
         showTeacherInfo();
 
-        if(mOrder.getTip() != 0){
-            DialogUtils.makeConfirmDialog(mContext, null, getString(R.string.add_tip_info));
-        }
     }
 
     private void showTeacherInfo(){
@@ -121,7 +143,12 @@ public class TeacherInfoActivity extends BaseActivity {
         DialogUtils.makeInputDialog(mContext, "预约次数", InputType.TYPE_CLASS_NUMBER, new DialogUtils.OnInputListener() {
             @Override
             public void onFinish(String msg) {
-                mMultiReserveTimesTextView.setText(String.format("%s 次", msg));
+                try {
+                    mReserveTimes = Integer.parseInt(msg);
+                    mMultiReserveTimesTextView.setText(String.format("%s 次", msg));
+                }catch (NumberFormatException e){
+                    toast("请输入数字");
+                }
             }
         }).show();
     }
@@ -131,7 +158,15 @@ public class TeacherInfoActivity extends BaseActivity {
     }
 
     public void onDoReservationClick(View view){
-
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.Key.ORDER, mOrder);
+        if(mReserveType == Constants.Identifier.RESERVE_MULTI){
+            bundle.putInt(Constants.Key.CONFIRM_ORDER_TYPE, Constants.Identifier.CONFIRM_ORDER_MULTI_RESERVE);
+            bundle.putInt(Constants.Key.TEACH_WEEK, mReserveTimes);
+        }else{
+            bundle.putInt(Constants.Key.CONFIRM_ORDER_TYPE, Constants.Identifier.CONFIRM_ORDER_SINGLE_RESERVE);
+        }
+        redirectToActivity(mContext, ConfirmOrderActivity.class, bundle);
     }
 
     public void onBackClick(View view){
