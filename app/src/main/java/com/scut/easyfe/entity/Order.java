@@ -52,6 +52,8 @@ public class Order extends BaseEntity implements Serializable{
     private int studentGender =             //学生性别
             Constants.Identifier.FEMALE;
 
+    public Order() {
+    }
 
     public static ArrayList<Order> getTestOrders() {
         ArrayList<Order> orders = new ArrayList<>();
@@ -103,7 +105,19 @@ public class Order extends BaseEntity implements Serializable{
         return orders;
     }
 
-    public Order() {
+    public static String getBaseInfo(Order order){
+        String content = "";
+        content += String.format("性别: %s\n", order.getTeacherGender() == Constants.Identifier.MALE ? "男" : "女");
+        content += String.format("年龄: %d\n", order.getTeacherAge());
+        content += String.format("大学专业: %s %s\n", order.getTeacherSchool(), order.getTeacherProfession());
+        content += String.format("已家教过的孩子数量：%d\n", order.getTeacherHasTeachCount());
+        content += String.format("已家教的时长：%d 小时\n", order.getTeacherHasTeachTime());
+        content += String.format("综合评分：%.2f", order.getTeacherScore());
+        return content;
+    }
+
+    public static String getScoreInfo(Order order){
+        return "";
     }
 
     public String get_id() {

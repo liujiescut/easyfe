@@ -1,4 +1,4 @@
-package com.scut.easyfe.ui.fragment;
+package com.scut.easyfe.ui.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,8 +11,11 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.Order;
+import com.scut.easyfe.ui.activity.TeacherInfoActivity;
+import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.ui.base.BaseListViewScrollStateAdapter;
 import com.scut.easyfe.ui.customView.CircleImageView;
+import com.scut.easyfe.utils.ImageUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
 import java.lang.ref.WeakReference;
@@ -65,21 +68,10 @@ public class SearchResultAdapter extends BaseListViewScrollStateAdapter {
 
         holder.teacherName.setText(mOrders.get(position).getTeacherName());
         holder.price.setText(String.format("%.2f 元/小时", mOrders.get(position).getPrice()));
-        holder.content.setText(getContent(mOrders.get(position)));
-        ImageLoader.getInstance().displayImage(mOrders.get(position).getTeacherAvatar(), holder.avatar);
+        holder.content.setText(Order.getBaseInfo(mOrders.get(position)));
+        ImageUtils.displayImage(mOrders.get(position).getTeacherAvatar(), holder.avatar);
 
         return convertView;
-    }
-
-    private String getContent(Order order){
-        String content = "";
-        content += String.format("性别: %s\n", order.getTeacherGender() == Constants.Identifier.MALE ? "男" : "女");
-        content += String.format("年龄: %d\n", order.getTeacherAge());
-        content += String.format("大学专业: %s %s\n", order.getTeacherSchool(), order.getTeacherProfession());
-        content += String.format("已家教过的孩子数量：%d\n", order.getTeacherHasTeachCount());
-        content += String.format("已家教的时长：%d 小时\n", order.getTeacherHasTeachTime());
-        content += String.format("综合评分：%.2f", order.getTeacherScore());
-        return content;
     }
 
 

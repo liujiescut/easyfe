@@ -27,6 +27,7 @@
                 style="@style/text_normal_style"
                 android:layout_weight="1"
                 android:gravity="center_vertical|left"
+                android:clickable="false"
                 android:padding="@dimen/layout_padding_small"
                 tools:text="黄老师" />
 
@@ -35,6 +36,7 @@
                 style="@style/text_normal_style"
                 android:layout_weight="2"
                 android:gravity="center_vertical|right"
+                android:clickable="false"
                 android:padding="@dimen/layout_padding_small"
                 tools:drawableRight="@mipmap/icon_detail_question_small"
                 tools:text="250 元/小时(包括交通补贴50元)" />
@@ -61,6 +63,7 @@
                 android:gravity="center_vertical|left"
                 android:textSize="@dimen/text_size_small"
                 android:padding="@dimen/layout_padding_small"
+                android:clickable="false"
                 tools:text="性别：男\n大学专业：xxxx 大学 xxxx 专业\n已家教过的孩子数量：18\n已家教的时长：250 小时\n综合评分：58分" />
 
             <com.scut.easyfe.ui.customView.CircleImageView
@@ -69,6 +72,7 @@
                 android:layout_height="64dp"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/layout_margin_normal"
+                android:clickable="false"
                 android:src="@mipmap/default_avatar" />
 
         </LinearLayout>

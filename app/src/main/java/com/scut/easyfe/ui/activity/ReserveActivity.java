@@ -364,7 +364,9 @@ public class ReserveActivity extends BaseActivity {
     }
 
     public void onSearchClick(View view){
-        redirectToActivity(mContext, SearchResultActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constants.Key.RESERVE_WAY, mReserveType);
+        redirectToActivity(mContext, SearchResultActivity.class, bundle);
     }
     public void onBackClick(View view){
         finish();

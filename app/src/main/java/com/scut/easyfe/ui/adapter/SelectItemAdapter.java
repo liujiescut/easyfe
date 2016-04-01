@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.App;
 import com.scut.easyfe.entity.ToSelectItem;
 import com.scut.easyfe.utils.OtherUtils;
 
@@ -22,6 +23,7 @@ import java.util.List;
 public class SelectItemAdapter extends BaseAdapter{
     private WeakReference<Context> mContextReference;
     private List<ToSelectItem> mToSelectItems;
+    private boolean mSelectable = true;
 
     public SelectItemAdapter(Context context, List<ToSelectItem> toSelectItems) {
         this.mContextReference = new WeakReference<>(context);
@@ -60,16 +62,22 @@ public class SelectItemAdapter extends BaseAdapter{
         }
 
         holder.item.setText(mToSelectItems.get(position).getText());
-        holder.item.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0,
-                mToSelectItems.get(position).isSelected() ? R.mipmap.icon_yes_grey_padding : 0, 0);
-        holder.item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mToSelectItems.get(position).setSelected(!mToSelectItems.get(position).isSelected());
-                holder.item.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0,
-                        mToSelectItems.get(position).isSelected() ? R.mipmap.icon_yes_grey_padding : 0, 0);
-            }
-        });
+        if(mSelectable) {
+            holder.item.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0,
+                    mToSelectItems.get(position).isSelected() ? R.mipmap.icon_yes_grey_padding : 0, 0);
+            holder.item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mToSelectItems.get(position).setSelected(!mToSelectItems.get(position).isSelected());
+                    holder.item.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0,
+                            mToSelectItems.get(position).isSelected() ? R.mipmap.icon_yes_grey_padding : 0, 0);
+                }
+            });
+        }else{
+            holder.item.setClickable(false);
+            holder.item.setTextColor(App.get().getResources().getColor(R.color.text_area_text_color));
+            holder.item.setTextSize(12);
+        }
         return convertView;
     }
 
@@ -79,5 +87,9 @@ public class SelectItemAdapter extends BaseAdapter{
         public ViewHolder(View root) {
             item = OtherUtils.findViewById(root, R.id.to_select_tv_item);
         }
+    }
+
+    public void setSelectable(boolean mSelectable) {
+        this.mSelectable = mSelectable;
     }
 }

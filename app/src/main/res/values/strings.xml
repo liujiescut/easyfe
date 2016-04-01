@@ -159,4 +159,5 @@
     <string name="reserve_times">预约次数</string>
     <string name="do_reservation">进行预约</string>
     <string name="login_info">如您已有账号，请先登录</string>
+    <string name="add_tip_info">您与家教老师的距离已超过他（她）设定的无需路程费的最远距离，老师来找您需要跋山涉水，翻山越岭，需要一点交通补贴来安抚他们身心的疲惫哟。</string>
 </resources>

@@ -1,14 +1,16 @@
 package com.scut.easyfe.ui.fragment;
 
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.Order;
+import com.scut.easyfe.ui.activity.TeacherInfoActivity;
+import com.scut.easyfe.ui.adapter.SearchResultAdapter;
 import com.scut.easyfe.ui.base.BaseRefreshFragment;
 import com.scut.easyfe.utils.DensityUtil;
 
@@ -17,6 +19,7 @@ import com.scut.easyfe.utils.DensityUtil;
  * Created by jay on 16/3/31.
  */
 public class SearchResultFragment extends BaseRefreshFragment{
+    private int mReserveType = Constants.Identifier.RESERVE_MULTI;
 
     @Override
     protected void initView(View view) {
@@ -58,6 +61,26 @@ public class SearchResultFragment extends BaseRefreshFragment{
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if(null == mActivity){
+            return;
+        }
 
+        //点击HeadView
+        if(position == 0){
+            return;
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constants.Key.RESERVE_WAY, getReserveType());
+        bundle.putSerializable(Constants.Key.ORDER, Order.getTestOrders().get(position - 1));
+        mActivity.redirectToActivity(mActivity, TeacherInfoActivity.class, bundle);
+    }
+
+    public int getReserveType() {
+        return mReserveType;
+    }
+
+    public void setReserveType(int mReserveType) {
+        this.mReserveType = mReserveType;
     }
 }
