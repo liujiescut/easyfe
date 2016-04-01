@@ -61,7 +61,7 @@
 
 
             <TextView
-                android:id="@+id/teach_time_detail_plan_text"
+                android:id="@+id/evaluation_tv_money_ticket"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -74,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/icon_calendar_padding"
-                android:layout_toLeftOf="@+id/teach_time_detail_plan_text"
+                android:layout_toLeftOf="@+id/evaluation_tv_money_ticket"
                 android:layout_centerVertical="true"
                 />
 

@@ -6,6 +6,7 @@ import android.widget.AdapterView;
 
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.Order;
+import com.scut.easyfe.ui.activity.EvaluationActivity;
 import com.scut.easyfe.ui.activity.ReservedOrCompletedOrderActivity;
 import com.scut.easyfe.ui.activity.ToDoOrderActivity;
 import com.scut.easyfe.ui.adapter.MyOrderAdapter;
@@ -69,7 +70,8 @@ public class MyOrderFragment extends BaseRefreshFragment {
             case Constants.Identifier.ORDER_COMPLETED:
                 bundle.putInt(Constants.Key.ORDER_TYPE, Constants.Identifier.ORDER_COMPLETED);
                 bundle.putSerializable(Constants.Key.ORDER, mOrders.get(position));
-                mActivity.redirectToActivity(mActivity, ReservedOrCompletedOrderActivity.class, bundle);
+//                mActivity.redirectToActivity(mActivity, ReservedOrCompletedOrderActivity.class, bundle);
+                mActivity.redirectToActivity(mActivity, EvaluationActivity.class, bundle);
                 break;
 
             case Constants.Identifier.ORDER_TO_DO:

@@ -176,4 +176,14 @@
     <string name="doing">执行中</string>
     <string name="pay_and_finish_course">完成课程并付款</string>
     <string name="parent_address">家长地址</string>
+    <string name="evaluation_info_1">已完成付款！下面开始评价老师</string>
+    <string name="evaluation_info_2">您的每一句真诚的评价对我们来说都是莫大的鼓励！</string>
+    <string name="evaluation">评分</string>
+    <string name="child_like_score">孩子喜欢程度: </string>
+    <string name="profession_score">专业胜任程度: </string>
+    <string name="on_time_score">准时态度: </string>
+    <string name="comments_for_teacher">对老师的评价</string>
+    <string name="money_ticket">代金券</string>
+    <string name="complaint">投诉</string>
+    <string name="evaluation_info_3">请在这里输入您对老师的评价哦！~</string>
 </resources>

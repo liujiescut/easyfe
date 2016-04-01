@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_app_bg"
+    android:orientation="vertical"
+    tools:context="com.scut.easyfe.ui.activity.EvaluationActivity">
+
+    <include layout="@layout/titlebar" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="@dimen/layout_padding_small"
+        android:text="@string/evaluation_info_1"
+        android:textColor="@color/text_hint_color"
+        android:textSize="@dimen/text_size_small" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="@dimen/layout_padding_small"
+        android:text="@string/evaluation_info_2"
+        android:textColor="@color/text_hint_color"
+        android:textSize="@dimen/text_size_tiny" />
+
+    <TextView
+        style="@style/text_normal_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:paddingBottom="@dimen/layout_padding_tiny"
+        android:paddingLeft="@dimen/layout_padding_small"
+        android:paddingTop="@dimen/layout_padding_tiny"
+        android:text="@string/evaluation"
+        android:textSize="@dimen/text_size_normal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_divider_height"
+        android:background="@color/text_area_bg_inner"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:gravity="left|center_vertical"
+            android:paddingBottom="@dimen/layout_padding_tiny"
+            android:paddingLeft="@dimen/layout_padding_small"
+            android:paddingTop="@dimen/layout_padding_tiny"
+            android:text="@string/child_like_score"
+            android:textSize="@dimen/text_size_normal" />
+
+        <io.techery.properratingbar.ProperRatingBar
+            android:id="@+id/evaluation_prb_child_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            app:prb_clickable="true"
+            app:prb_defaultRating="5"
+            app:prb_tickNormalDrawable="@mipmap/ic_star_normal"
+            app:prb_tickSelectedDrawable="@mipmap/ic_star_selected"
+            app:prb_tickSpacing="0dp"
+            app:prb_totalTicks="5" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/text_area_bg_inner"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:gravity="left|center_vertical"
+            android:paddingBottom="@dimen/layout_padding_tiny"
+            android:paddingLeft="@dimen/layout_padding_small"
+            android:paddingTop="@dimen/layout_padding_tiny"
+            android:text="@string/profession_score"
+            android:textSize="@dimen/text_size_normal" />
+
+        <io.techery.properratingbar.ProperRatingBar
+            android:id="@+id/evaluation_prb_profession"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            app:prb_clickable="true"
+            app:prb_defaultRating="5"
+            app:prb_tickNormalDrawable="@mipmap/ic_star_normal"
+            app:prb_tickSelectedDrawable="@mipmap/ic_star_selected"
+            app:prb_tickSpacing="0dp"
+            app:prb_totalTicks="5" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/text_area_bg_inner"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:gravity="left|center_vertical"
+            android:paddingBottom="@dimen/layout_padding_tiny"
+            android:paddingLeft="@dimen/layout_padding_small"
+            android:paddingTop="@dimen/layout_padding_tiny"
+            android:text="@string/on_time_score"
+            android:textSize="@dimen/text_size_normal" />
+
+        <io.techery.properratingbar.ProperRatingBar
+            android:id="@+id/evaluation_prb_child_on_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            app:prb_clickable="true"
+            app:prb_defaultRating="5"
+            app:prb_tickNormalDrawable="@mipmap/ic_star_normal"
+            app:prb_tickSelectedDrawable="@mipmap/ic_star_selected"
+            app:prb_tickSpacing="0dp"
+            app:prb_totalTicks="5" />
+    </LinearLayout>
+
+    <TextView
+        style="@style/text_normal_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_small"
+        android:gravity="left"
+        android:paddingBottom="@dimen/layout_padding_tiny"
+        android:paddingLeft="@dimen/layout_padding_small"
+        android:paddingTop="@dimen/layout_padding_tiny"
+        android:text="@string/comments_for_teacher"
+        android:textSize="@dimen/text_size_normal" />
+
+    <EditText
+        android:id="@+id/to_do_order_tv_comments"
+        style="@style/text_normal_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="120dp"
+        android:maxHeight="120dp"
+        android:layout_marginTop="@dimen/default_divider_height"
+        android:textSize="@dimen/text_size_normal"
+        android:hint="@string/evaluation_info_3"
+        android:gravity="start"
+        android:textColor="@color/text_area_editable_text_color"
+        android:textColorHint="@color/text_hint_color"
+        android:padding="@dimen/layout_padding_small" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@drawable/selector_main_left_drawer_item"
+            android:layout_marginBottom="@dimen/layout_margin_small"
+            android:layout_marginEnd="@dimen/layout_margin_small"
+            android:layout_marginStart="@dimen/layout_margin_small"
+            android:layout_marginTop="@dimen/layout_margin_small"
+            >
+
+
+            <TextView
+                android:id="@+id/evaluation_tv_money_ticket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/money_ticket"
+                android:padding="4dp"
+                android:textColor="@color/title_text_color"
+                android:textSize="@dimen/text_size_normal"
+                android:layout_centerInParent="true"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_ticket"
+                android:layout_toLeftOf="@+id/evaluation_tv_money_ticket"
+                android:layout_centerVertical="true"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@drawable/selector_my_order_cancel"
+            android:layout_marginBottom="@dimen/layout_margin_small"
+            android:layout_marginEnd="@dimen/layout_margin_small"
+            android:layout_marginStart="@dimen/layout_margin_small"
+            android:layout_marginTop="@dimen/layout_margin_small"
+            >
+
+
+            <TextView
+                android:id="@+id/evaluation_tv_complaint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="@string/complaint"
+                android:textColor="@color/theme_color"
+                android:textSize="@dimen/text_size_normal"
+                android:layout_centerInParent="true"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_complain"
+                android:layout_toLeftOf="@+id/evaluation_tv_complaint"
+                android:layout_centerVertical="true"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

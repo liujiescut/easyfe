@@ -39,6 +39,12 @@ dependencies {
     compile files('libs/universal-image-loader-1.9.4.jar')
     compile project(':ToggleButtonLib')
 
+    compile 'com.github.techery:ProperRatingBar:v0.0.3'
     compile 'com.umeng.analytics:analytics:latest.integration'
 
+}
+
+repositories {
+    // ...
+    maven { url "https://jitpack.io" }
 }
