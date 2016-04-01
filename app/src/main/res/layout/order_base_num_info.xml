@@ -14,14 +14,14 @@
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
-            android:text="@string/student_age" />
+            android:text="@string/order_num" />
 
         <TextView
-            android:id="@+id/order_base_student_info_tv_age"
+            android:id="@+id/order_base_num_tv_order"
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:gravity="start|center_vertical"
-            tools:text="张小龙"
+            tools:text="XXXX XXXX XXXX"
             />
     </LinearLayout>
 
@@ -33,14 +33,15 @@
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
-            android:text="@string/student_gender" />
+            android:text="@string/insurance_num" />
 
         <TextView
-            android:id="@+id/order_base_student_info_tv_gender"
+            android:id="@+id/order_base_num_tv_insurance"
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:gravity="start|center_vertical"
-            tools:text="@string/male"
+            android:drawableRight="@mipmap/icon_detail_question_padding"
+            tools:text="XXXX XXXX XXXX"
             />
     </LinearLayout>
 

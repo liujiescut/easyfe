@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include
+        layout="@layout/titlebar"/>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape_app_bg"
+        tools:context="com.scut.easyfe.ui.activity.ToDoOrderActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layout_margin_small"
+                android:orientation="vertical">
+
+                <LinearLayout style="@style/ll_container_normal_style">
+
+                    <TextView
+                        android:id="@+id/to_do_order_tv_name_label"
+                        style="@style/text_normal_style"
+                        android:layout_marginRight="@dimen/container_stoke_width"
+                        android:layout_weight="1"
+                        android:text="@string/parent_name" />
+
+                    <TextView
+                        android:id="@+id/to_do_order_tv_name"
+                        style="@style/text_normal_style"
+                        android:layout_weight="3"
+                        android:gravity="start|center_vertical"
+                        tools:text="张小龙" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/ll_container_normal_style">
+
+                    <TextView
+                        style="@style/text_normal_style"
+                        android:layout_marginRight="@dimen/container_stoke_width"
+                        android:layout_weight="1"
+                        android:text="@string/phone" />
+
+                    <TextView
+                        android:id="@+id/to_do_order_tv_phone"
+                        style="@style/text_normal_style"
+                        android:layout_weight="3"
+                        android:gravity="start|center_vertical"
+                        android:textColor="@color/theme_color"
+                        android:autoLink="phone"
+                        tools:text="18831415926" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/to_do_order_ll_parent_address"
+                    style="@style/ll_container_normal_style">
+
+                    <TextView
+                        style="@style/text_normal_style"
+                        android:layout_marginRight="@dimen/container_stoke_width"
+                        android:layout_weight="1"
+                        android:text="@string/parent_address" />
+
+                    <TextView
+                        android:id="@+id/to_do_order_tv_parent_address"
+                        style="@style/text_normal_style"
+                        android:layout_weight="3"
+                        android:gravity="start|center_vertical"
+                        tools:text="广东省广州市番禺区大学城内环东路..." />
+                </LinearLayout>
+            </LinearLayout>
+
+            <include
+                android:id="@+id/to_do_order_layout_student_info"
+                layout="@layout/order_base_student_info" />
+
+            <include layout="@layout/order_base_num_info" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_margin_small"
+                android:background="@color/transparent" />
+
+            <include layout="@layout/order_base_info" />
+
+            <TextView
+                style="@style/text_normal_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layout_margin_small"
+                android:gravity="left"
+                android:paddingBottom="@dimen/layout_padding_tiny"
+                android:paddingLeft="@dimen/layout_padding_small"
+                android:paddingTop="@dimen/layout_padding_tiny"
+                android:text="@string/warning_info" />
+
+            <TextView
+                android:id="@+id/to_do_order_tv_warning"
+                style="@style/text_normal_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_divider_height"
+                android:gravity="left"
+                android:padding="@dimen/layout_padding_small"
+                tools:text="1. 你好我是提示\n1. 你好我是提示1\n2. 你好你好我是提示1\n2. 你好你好我是提示1\n2. 你好" />
+
+            <TextView
+                android:id="@+id/to_do_order_tv_doing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layout_margin_small"
+                android:background="@drawable/selector_main_left_drawer_item"
+                android:gravity="center"
+                android:padding="@dimen/layout_padding_tiny"
+                android:text="@string/doing"
+                android:textColor="@color/title_text_color" />
+
+            <TextView
+                android:id="@+id/to_do_order_tv_pay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layout_margin_small"
+                android:background="@drawable/selector_main_left_drawer_item"
+                android:gravity="center"
+                android:padding="@dimen/layout_padding_tiny"
+                android:text="@string/pay_and_finish_course"
+                android:textColor="@color/title_text_color"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

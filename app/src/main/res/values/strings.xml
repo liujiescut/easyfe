@@ -169,4 +169,11 @@
     <string name="student_age">学生年龄</string>
     <string name="student_gender">学生性别</string>
     <string name="wait_for_teacher_apply">等待家教确认中...</string>
+    <string name="cancel_order">取消订单</string>
+    <string name="order_num">订单号</string>
+    <string name="insurance_num">保险单号</string>
+    <string name="warning_info">温馨提示</string>
+    <string name="doing">执行中</string>
+    <string name="pay_and_finish_course">完成课程并付款</string>
+    <string name="parent_address">家长地址</string>
 </resources>

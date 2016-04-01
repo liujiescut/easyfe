@@ -93,7 +93,8 @@
         <activity android:name=".ui.activity.SearchResultActivity" />
         <activity android:name=".ui.activity.TeacherInfoActivity" />
         <activity android:name=".ui.activity.CommentsActivity" />
-        <activity android:name=".ui.activity.ReservedOrderActivity"></activity>
+        <activity android:name=".ui.activity.ReservedOrCompletedOrderActivity" />
+        <activity android:name=".ui.activity.ToDoOrderActivity"></activity>
     </application>
 
 </manifest>

@@ -45,6 +45,7 @@
             android:layout_marginBottom="@dimen/default_divider_height"
             android:layout_weight="1"
             android:gravity="center_vertical|left"
+            android:clickable="false"
             tools:text="订单 : 123456789" />
 
         <LinearLayout
@@ -70,12 +71,14 @@
                         style="@style/my_order_item_style"
                         android:layout_weight="1"
                         android:gravity="center_vertical|left"
+                        android:clickable="false"
                         tools:text="黄老师" />
 
                     <TextView
                         android:id="@+id/item_my_order_tv_course"
                         style="@style/my_order_item_style"
                         android:layout_weight="1"
+                        android:clickable="false"
                         android:gravity="center_vertical|right"
                         tools:text="人生哲理" />
                 </LinearLayout>
@@ -93,6 +96,7 @@
                         android:layout_width="wrap_content"
                         android:gravity="center_vertical|left"
                         android:textSize="@dimen/text_size_small"
+                        android:clickable="false"
                         tools:text="2016年12月12日(星期六)" />
 
                     <TextView
@@ -104,6 +108,7 @@
                         android:paddingLeft="2dp"
                         android:paddingRight="2dp"
                         android:textSize="@dimen/text_size_small"
+                        android:clickable="false"
                         tools:text="上午" />
 
                     <TextView
@@ -113,6 +118,7 @@
                         android:gravity="center"
                         android:paddingLeft="0dp"
                         android:textSize="@dimen/text_size_small"
+                        android:clickable="false"
                         tools:text="2小时0分钟" />
                 </LinearLayout>
             </LinearLayout>
@@ -124,6 +130,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/default_divider_height"
                 android:layout_weight="1"
+                android:clickable="false"
                 android:textColor="@color/theme_color_dark"
                 android:textSize="@dimen/text_size_normal"
                 tools:text="341.67 元" />
