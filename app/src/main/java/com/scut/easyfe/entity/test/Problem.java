@@ -1,7 +1,8 @@
-package com.scut.easyfe.entity;
+package com.scut.easyfe.entity.test;
 
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
+import com.scut.easyfe.entity.BaseEntity;
 
 import java.util.ArrayList;
 

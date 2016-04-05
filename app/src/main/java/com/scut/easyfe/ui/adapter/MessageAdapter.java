@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.scut.easyfe.R;
-import com.scut.easyfe.entity.Message;
+import com.scut.easyfe.entity.test.Message;
 import com.scut.easyfe.utils.OtherUtils;
 
 import java.lang.ref.WeakReference;

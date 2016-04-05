@@ -5,7 +5,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.scut.easyfe.R;
-import com.scut.easyfe.entity.ToSelectItem;
+import com.scut.easyfe.entity.test.ToSelectItem;
 import com.scut.easyfe.ui.adapter.SelectItemAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.DensityUtil;

@@ -1,7 +1,6 @@
 package com.scut.easyfe.ui.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,7 @@ import android.widget.TextView;
 
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
-import com.scut.easyfe.entity.ToSelectItem;
+import com.scut.easyfe.entity.test.ToSelectItem;
 import com.scut.easyfe.utils.OtherUtils;
 
 import java.lang.ref.WeakReference;
@@ -64,13 +63,13 @@ public class SelectItemAdapter extends BaseAdapter{
         holder.item.setText(mToSelectItems.get(position).getText());
         if(mSelectable) {
             holder.item.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0,
-                    mToSelectItems.get(position).isSelected() ? R.mipmap.icon_yes_grey_padding : 0, 0);
+                    mToSelectItems.get(position).isSelected() ? R.mipmap.icon_yes_grey : 0, 0);
             holder.item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mToSelectItems.get(position).setSelected(!mToSelectItems.get(position).isSelected());
                     holder.item.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0,
-                            mToSelectItems.get(position).isSelected() ? R.mipmap.icon_yes_grey_padding : 0, 0);
+                            mToSelectItems.get(position).isSelected() ? R.mipmap.icon_yes_grey : 0, 0);
                 }
             });
         }else{

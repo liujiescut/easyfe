@@ -14,7 +14,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
 import com.qiniu.android.storage.Zone;
-import com.scut.easyfe.entity.User;
+import com.scut.easyfe.entity.test.User;
 import com.scut.easyfe.utils.ActivityManagerUtils;
 import com.scut.easyfe.utils.SpUtils;
 

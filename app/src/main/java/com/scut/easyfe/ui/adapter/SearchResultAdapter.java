@@ -4,15 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.scut.easyfe.R;
-import com.scut.easyfe.app.Constants;
-import com.scut.easyfe.entity.Order;
-import com.scut.easyfe.ui.activity.TeacherInfoActivity;
-import com.scut.easyfe.ui.base.BaseActivity;
+import com.scut.easyfe.entity.test.Order;
 import com.scut.easyfe.ui.base.BaseListViewScrollStateAdapter;
 import com.scut.easyfe.ui.customView.CircleImageView;
 import com.scut.easyfe.utils.ImageUtils;

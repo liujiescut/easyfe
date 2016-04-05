@@ -6,7 +6,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * 全局常量
+ * 全局常量 {@link }
  * Created by jay on 15/9/11.
  */
 public class Constants {
@@ -18,6 +18,9 @@ public class Constants {
 
     public class URL{
         public static final String DEFAULT_QINIU_URL = "http://7xrvd4.com1.z0.glb.clouddn.com/";            //七牛储存图片的地址
+
+        public static final String URL_BASE = "http://121.42.37.233/";
+        public static final String URL_PARENT_REGISTER = URL_BASE + "Authentication/SignUp/Parent";
     }
 
     /**
@@ -56,9 +59,10 @@ public class Constants {
      */
     public class Identifier {
         /** 用户分类 */
-        public static final int USER_TEACHER = 0;    //家教
-        public static final int USER_PARENT = 1;     //家长
-        public static final int USER_TP = 2;         //即是家长又是家教
+        public static final int USER_WEB_REGISTED = 0;    //被邀请未注册
+        public static final int USER_TEACHER = 1;         //家教
+        public static final int USER_PARENT = 2;          //家长
+        public static final int USER_TP = 3;              //即是家长又是家教
 
         /** 性别 */
         public static final int MALE = 1;

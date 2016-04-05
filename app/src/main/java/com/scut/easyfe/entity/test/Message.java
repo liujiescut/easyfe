@@ -1,4 +1,6 @@
-package com.scut.easyfe.entity;
+package com.scut.easyfe.entity.test;
+
+import com.scut.easyfe.entity.BaseEntity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,7 +9,7 @@ import java.util.Date;
  * 系统消息
  * Created by jay on 16/3/29.
  */
-public class Message extends BaseEntity{
+public class Message extends BaseEntity {
     private String senderName;
     private Date date;
     private String content;

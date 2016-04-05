@@ -1,10 +1,12 @@
-package com.scut.easyfe.entity;
+package com.scut.easyfe.entity.test;
+
+import com.scut.easyfe.entity.BaseEntity;
 
 /**
  * 供选择的选项实体类
  * Created by jay on 16/3/30.
  */
-public class ToSelectItem extends BaseEntity{
+public class ToSelectItem extends BaseEntity {
     private String text;              //被选择内容
     private boolean selected = false; //是否被选中
 

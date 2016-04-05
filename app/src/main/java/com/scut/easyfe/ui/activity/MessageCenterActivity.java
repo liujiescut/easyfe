@@ -1,13 +1,11 @@
 package com.scut.easyfe.ui.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.scut.easyfe.R;
-import com.scut.easyfe.entity.Message;
+import com.scut.easyfe.entity.test.Message;
 import com.scut.easyfe.ui.adapter.MessageAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.OtherUtils;

@@ -6,7 +6,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.scut.easyfe.R;
-import com.scut.easyfe.entity.Problem;
+import com.scut.easyfe.entity.test.Problem;
 import com.scut.easyfe.ui.adapter.ProblemAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.ListViewUtil;

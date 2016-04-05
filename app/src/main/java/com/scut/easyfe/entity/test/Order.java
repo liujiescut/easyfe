@@ -1,6 +1,7 @@
-package com.scut.easyfe.entity;
+package com.scut.easyfe.entity.test;
 
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.entity.BaseEntity;
 
 import java.io.Serializable;
 import java.util.ArrayList;

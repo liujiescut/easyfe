@@ -3,9 +3,7 @@ package com.scut.easyfe.ui.fragment;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.scut.easyfe.app.Constants;
-import com.scut.easyfe.entity.Order;
-import com.scut.easyfe.ui.adapter.MyOrderAdapter;
+import com.scut.easyfe.entity.test.Order;
 import com.scut.easyfe.ui.adapter.SpecialOrderAdapter;
 import com.scut.easyfe.ui.base.BaseRefreshFragment;
 import com.scut.easyfe.utils.DensityUtil;

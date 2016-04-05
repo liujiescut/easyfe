@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.scut.easyfe.app.Constants;
-import com.scut.easyfe.entity.Order;
+import com.scut.easyfe.entity.test.Order;
 import com.scut.easyfe.ui.activity.EvaluationActivity;
 import com.scut.easyfe.ui.activity.ReservedOrCompletedOrderActivity;
 import com.scut.easyfe.ui.activity.ToDoOrderActivity;
