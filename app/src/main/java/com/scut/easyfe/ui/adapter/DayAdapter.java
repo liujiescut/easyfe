@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.roomorama.caldroid.CaldroidGridAdapter;
 import com.scut.easyfe.R;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import hirondelle.date4j.DateTime;
@@ -20,6 +22,8 @@ import hirondelle.date4j.DateTime;
  * Created by jay on 16/3/24.
  */
 public class DayAdapter extends CaldroidGridAdapter {
+    private List<DateTime> mWorkDays = new ArrayList<>();
+
     /**
      * 构造函数
      *
@@ -71,9 +75,19 @@ public class DayAdapter extends CaldroidGridAdapter {
         // 处理选中的日期
         if (selectedDates != null && selectedDates.indexOf(currentDateTime) != -1) {
             dayTextView.setTextColor(resources.getColor(R.color.title_text_color));
-            dayTextView.setBackgroundColor(resources.getColor(R.color.theme_color_dark));
+            dayTextView.setBackgroundColor(resources.getColor(R.color.theme_color));
         }
+
+        pointImageView.setVisibility(mWorkDays.contains(currentDateTime) && !isDisableDate && currentDateTime.getMonth() == month
+                ? View.VISIBLE : View.GONE);
         return cellView;
     }
 
+    public List<DateTime> getWorkDays() {
+        return mWorkDays;
+    }
+
+    public void setWorkDays(List<DateTime> mWorkDays) {
+        this.mWorkDays = mWorkDays;
+    }
 }

@@ -14,7 +14,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
 import com.qiniu.android.storage.Zone;
-import com.scut.easyfe.entity.test.User;
+import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.utils.ActivityManagerUtils;
 import com.scut.easyfe.utils.SpUtils;
 
@@ -58,6 +58,11 @@ public class App extends Application{
         return mUser;
     }
 
+    public static void setUser(User user){
+        mUser = user;
+        mUser.save2Cache();
+    }
+
     /**
      * 获取 SpUtils 实例(整个应用没有特殊要求统一使用这个实例)
      * @return SpUtils 实例
@@ -95,6 +100,9 @@ public class App extends Application{
         initQiniu();
         initBaiduMap();
         initImageLoader();
+
+        /** 用户登陆*/
+        User.doLogin();
     }
 
 

@@ -6,14 +6,19 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.App;
+import com.scut.easyfe.entity.booktime.MultiBookTime;
+import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 教授时间页面
+ *
  * @author jay
  */
 public class TeachTimeActivity extends BaseActivity {
@@ -23,10 +28,19 @@ public class TeachTimeActivity extends BaseActivity {
 
     private OptionsPickerView<String> mPicker;
 
-    /** 第一个纬度表示星期几,第二个纬度表示上午下午晚上是否有空(跟后台约定)
+    /**
+     * 第一个纬度表示星期几,第二个纬度表示上午下午晚上是否有空(跟后台约定)
      * 比如mCourseTime[1][0]为1表示周一有空,CourseTime[1][1]为1表示周一上午有空(为0表示没空)
      */
-    private int[][] mCourseTime = new int [7][4];
+    private int[][] mCourseTime = new int[7][4];
+
+    private User mUser;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mUser = App.getUser();
+    }
 
     @Override
     protected void initData() {
@@ -45,6 +59,18 @@ public class TeachTimeActivity extends BaseActivity {
             times.add(getResources().getString(R.string.night));
             mTime.add(times);
         }
+
+        mUser = App.getUser();
+
+        for (MultiBookTime time :
+                mUser.getTeacherMessage().getMultiBookTime()) {
+            if(time.isOk()) {
+                mCourseTime[time.getWeekDay()][0] = 1;
+                mCourseTime[time.getWeekDay()][1] = time.isMorning() ? 1 : 0;
+                mCourseTime[time.getWeekDay()][2] = time.isAfternoon() ? 1 : 0;
+                mCourseTime[time.getWeekDay()][3] = time.isEvening() ? 1 : 0;
+            }
+        }
     }
 
     @Override
@@ -54,12 +80,22 @@ public class TeachTimeActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("授课时间");
+        ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("授课时间");
         mContainerLinearLayout = OtherUtils.findViewById(this, R.id.teach_time_ll_container);
 
         mPicker = new OptionsPickerView<>(this);
         mPicker.setPicker(mWeek, mTime, false);
         mPicker.setCyclic(false);
+
+        for(int i = 0; i < 7; i++){
+            if(mCourseTime[i][0] == 1){
+                for(int j  = 1; j <= 3; j++){
+                    if(mCourseTime[i][j] == 1) {
+                        addCourseTimeItem(i, j - 1);
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -77,21 +113,22 @@ public class TeachTimeActivity extends BaseActivity {
     /**
      * 点击加号添加授课时间
      */
-    public void onAddClick(View view){
+    public void onAddClick(View view) {
         mPicker.show();
     }
 
     /**
      * 添加一个授课时间
-     * @param option1      授课星期对应索引
-     * @param option2      具体时间(上午\中午\晚上)对应索引
+     *
+     * @param option1 授课星期对应索引
+     * @param option2 具体时间(上午\中午\晚上)对应索引
      */
-    private void addCourseTimeItem(int option1, int option2){
+    private void addCourseTimeItem(final int option1, int option2) {
         String week = mWeek.get(option1);
         String time = mTime.get(option1).get(option2);
 
         View itemView = mContainerLinearLayout.findViewById(option1);
-        if(null == itemView) {
+        if (null == itemView) {
             itemView = getLayoutInflater().inflate(R.layout.item_course_time, null);
             itemView.setId(option1);
             final View finalItemView = itemView;
@@ -101,23 +138,26 @@ public class TeachTimeActivity extends BaseActivity {
                     DialogUtils.makeChooseDialog(mContext, "确认删除?", "删除之后这天数据将被删除,需要重新设置", new DialogUtils.OnChooseListener() {
                         @Override
                         public void onChoose(boolean sure) {
-                            if(sure) {
+                            if (sure) {
                                 mContainerLinearLayout.removeView(finalItemView);
+                                for(int i = 0; i < 4; i++){
+                                    mCourseTime[option1][i] = 0;
+                                }
                             }
                         }
                     });
                 }
             });
             mContainerLinearLayout.addView(itemView);
-        }else{
+        } else {
             time = "";
-            if(mCourseTime[option1][1] == 1){
+            if (mCourseTime[option1][1] == 1) {
                 time += "上午  ";
             }
-            if(mCourseTime[option1][2] == 1){
+            if (mCourseTime[option1][2] == 1) {
                 time += "下午  ";
             }
-            if(mCourseTime[option1][3] == 1){
+            if (mCourseTime[option1][3] == 1) {
                 time += "晚上";
             }
         }
@@ -129,11 +169,42 @@ public class TeachTimeActivity extends BaseActivity {
     /**
      * 点击近两月时间特别安排
      */
-    public void onDetailPlanClick(View view){
+    public void onDetailPlanClick(View view) {
+        if (!saveAndValidate()) {
+            return;
+        }
+
         redirectToActivity(mContext, SpecialTimeActivity.class);
     }
 
-    public void onBackClick(View view){
+    public void onBackClick(View view) {
+        saveAndValidate();
         finish();
+    }
+
+    private boolean saveAndValidate() {
+        List<MultiBookTime> times = mUser.getTeacherMessage().getMultiBookTime();
+        times.clear();
+        for (int i = 0; i < 7; i++) {
+            if (mCourseTime[i][0] == 1) {
+                MultiBookTime time = new MultiBookTime();
+                time.setWeekDay(i);
+                time.setIsOk(true);
+                time.setMorning(mCourseTime[i][1] == 1);
+                time.setAfternoon(mCourseTime[i][2] == 1);
+                time.setEvening(mCourseTime[i][3] == 1);
+                times.add(time);
+            }
+        }
+        mUser.getTeacherMessage().setMultiBookTime(times);
+
+        if (times.size() == 0) {
+            toast("请先选择授课时间");
+            return false;
+        }
+
+        App.setUser(mUser);
+
+        return true;
     }
 }

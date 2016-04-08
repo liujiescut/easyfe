@@ -6,8 +6,9 @@ package com.scut.easyfe.entity;
  */
 public class Address extends BaseEntity{
     private String address = "";
-    private float latitude = 0f;
-    private float longitude = 0f;
+    private String city = "";
+    private double latitude = -1d;
+    private double longitude = -1d;
 
     public String getAddress() {
         return address;
@@ -17,19 +18,27 @@ public class Address extends BaseEntity{
         this.address = address;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

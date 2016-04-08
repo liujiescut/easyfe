@@ -16,7 +16,7 @@
 package com.scut.easyfe.network.kjFrame;
 
 
-import com.scut.easyfe.network.CXRM;
+import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.kjFrame.http.*;
 import com.scut.easyfe.network.kjFrame.utils.KJLoger;
 import com.scut.easyfe.utils.LogUtils;
@@ -160,7 +160,7 @@ public class KJHttp {
      * @param request
      */
     public void doRequest(Request<?> request) {
-        LogUtils.i(CXRM.TAG, "request start ->" + request.getUrl());
+        LogUtils.i(RequestManager.TAG, "request start ->" + request.getUrl());
         request.setConfig(mConfig);
         add(request);
     }

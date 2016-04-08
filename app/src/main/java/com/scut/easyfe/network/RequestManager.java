@@ -12,14 +12,14 @@ import com.scut.easyfe.utils.LogUtils;
  * <p>
  * Created by janbean on 15/11/17.
  */
-public class CXRM {
+public class RequestManager {
     public static final String TAG = "cxtag";
 
     private static class SingletonHolder {
-        private static final CXRM sRequestManager = new CXRM();
+        private static final RequestManager sRequestManager = new RequestManager();
     }
 
-    public static CXRM get() {
+    public static RequestManager get() {
         return SingletonHolder.sRequestManager;
     }
 
@@ -29,7 +29,7 @@ public class CXRM {
         return get().mKJHttp;
     }
 
-    public <T> void execute(CXRequestBase<T> cxRequest, CXRequestListener<T> listener) {
+    public <T> void execute(RequestBase<T> cxRequest, RequestListener<T> listener) {
         LogUtils.i(cxRequest.getClass().getSimpleName() + ": cxRequest start");
 
         if (TextUtils.isEmpty(cxRequest.getUrl())) {
@@ -42,16 +42,16 @@ public class CXRM {
             LogUtils.i(TAG, "CXRequest.getJsonParams  ->" + httpParams.getJsonParams());
             // 如果httpParams设置了jsonParams，就使用json
             if (cxRequest.getMethod() == Request.HttpMethod.GET) {
-                getKJHttp().json(cxRequest.getMethod(), cxRequest.getUrl(), httpParams, new CXHttpRequestCallBack<>(cxRequest, listener));
+                getKJHttp().json(cxRequest.getMethod(), cxRequest.getUrl(), httpParams, new HttpRequestCallBack<>(cxRequest, listener));
             } else {
-                getKJHttp().json(cxRequest.getMethod(), cxRequest.getUrl() + httpParams.getUrlParams(), httpParams, new CXHttpRequestCallBack<>(cxRequest, listener));
+                getKJHttp().json(cxRequest.getMethod(), cxRequest.getUrl() + httpParams.getUrlParams(), httpParams, new HttpRequestCallBack<>(cxRequest, listener));
             }
         } else {
             String url = cxRequest.getUrl();
             if (httpParams != null) {
                 url += httpParams.getUrlParams();
             }
-            getKJHttp().form(cxRequest.getMethod(), url, httpParams, new CXHttpRequestCallBack<T>(cxRequest, listener));
+            getKJHttp().form(cxRequest.getMethod(), url, httpParams, new HttpRequestCallBack<T>(cxRequest, listener));
         }
 
 

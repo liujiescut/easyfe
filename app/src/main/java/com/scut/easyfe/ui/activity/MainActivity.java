@@ -4,14 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.ui.base.BaseFragment;
+import com.scut.easyfe.ui.customView.CircleImageView;
 import com.scut.easyfe.ui.fragment.HomeFragment;
+import com.scut.easyfe.utils.ImageUtils;
+import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
 import java.util.HashMap;
@@ -25,7 +30,24 @@ public class MainActivity extends BaseActivity {
     private static final int FRAGMENT_HOME = 0;
     private DrawerLayout mDrawerLayout;
     private LinearLayout mLeftDrawer;
+    private CircleImageView mAvatarImageView;
+    private TextView mNameTextView;
     private Map<Integer, BaseFragment> mFragments = new HashMap<>();
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(null != mNameTextView && null != mAvatarImageView) {
+            if (App.getUser().hasLogin()) {
+                mNameTextView.setText(App.getUser().getName());
+                ImageUtils.displayImage(App.getUser().getAvatar(), mAvatarImageView);
+            } else {
+                mNameTextView.setText("登录/注册");
+                mAvatarImageView.setImageResource(R.mipmap.default_avatar);
+            }
+        }
+    }
 
     @Override
     protected void setLayoutView() {
@@ -36,6 +58,8 @@ public class MainActivity extends BaseActivity {
     protected void initView() {
         mDrawerLayout = OtherUtils.findViewById(this, R.id.drawer_layout);
         mLeftDrawer = OtherUtils.findViewById(this, R.id.drawer);
+        mAvatarImageView = OtherUtils.findViewById(this, R.id.left_drawer_civ_avatar);
+        mNameTextView = OtherUtils.findViewById(this, R.id.left_drawer_tv_name);
         mFragments.put(FRAGMENT_HOME, new HomeFragment());
         getSupportFragmentManager()
                 .beginTransaction()
@@ -70,8 +94,8 @@ public class MainActivity extends BaseActivity {
      * @param view 被点击视图
      */
     public void onAvatarClick(View view){
-        if(App.getUser().isHasLogin()) {
-            if (App.getUser().getUserType() == Constants.Identifier.USER_PARENT) {
+        if(App.getUser().hasLogin()) {
+            if (App.getUser().getType() == Constants.Identifier.USER_PARENT) {
                 Bundle bundle = new Bundle();
                 bundle.putInt(Constants.Key.TO_PARENT_REGISTER_ACTIVITY_TYPE, Constants.Identifier.TYPE_MODIFY);
                 redirectToActivity(mContext, ParentRegisterActivity.class, bundle);

@@ -6,13 +6,23 @@ package com.scut.easyfe.entity.booktime;
  */
 public class SingleBookTime extends BookTime{
     //具体日期的格林威治时间
-    private String date = "0";
+    private long date = 0;
 
-    public String getDate() {
+    private String memo = "";
+
+    public long getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(long date) {
         this.date = date;
+    }
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 }

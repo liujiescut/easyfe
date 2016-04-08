@@ -5,6 +5,7 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.scut.easyfe.R;
@@ -14,6 +15,7 @@ import com.scut.easyfe.R;
  * Created by jay on 16/3/24.
  */
 public class SelectorButton extends TextView{
+
     private boolean mIsSelected = false;              //是否选中
     private String mSelectedText = "";                //选中文字
     private String mUnselectedText = "";                //未选中文字
@@ -21,6 +23,13 @@ public class SelectorButton extends TextView{
     private int mUnselectedDrawable = R.drawable.shape_selector_btn_unselect;               //未选中背景
     private int mSelectedTextColor = R.color.title_text_color;                      //选中文字颜色
     private int mUnselectedTextColor = R.color.theme_color_dark;                      //未选中文字颜色
+
+    private OnSelectChangeListener mOnSelectChangeListener = new OnSelectChangeListener() {
+        @Override
+        public void onSelectChange(boolean checked) {
+
+        }
+    };
     public SelectorButton(Context context) {
         super(context);
         init();
@@ -55,6 +64,7 @@ public class SelectorButton extends TextView{
         setBackground(getResources().getDrawable(mIsSelected ?  mSelectedDrawable : mUnselectedDrawable));
         setTextColor(getResources().getColor(mIsSelected ? mSelectedTextColor : mUnselectedTextColor));
         setBothText(mIsSelected ? mSelectedText : mUnselectedText);
+        mOnSelectChangeListener.onSelectChange(mIsSelected);
     }
 
     /**
@@ -70,6 +80,10 @@ public class SelectorButton extends TextView{
     public void setIsSelected(boolean mIsSelected) {
         this.mIsSelected = mIsSelected;
         init();
+    }
+
+    public boolean isSelected() {
+        return mIsSelected;
     }
 
     /**
@@ -114,5 +128,13 @@ public class SelectorButton extends TextView{
      */
     public void setUnselectTextColor(@ColorRes int mUnselectedTextColor) {
         this.mUnselectedTextColor = mUnselectedTextColor;
+    }
+
+    public void setOnSelectChangeListener(OnSelectChangeListener mOnSelectChangeListener) {
+        this.mOnSelectChangeListener = mOnSelectChangeListener;
+    }
+
+    public interface OnSelectChangeListener{
+        void onSelectChange(boolean isSelected);
     }
 }

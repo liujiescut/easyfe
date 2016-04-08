@@ -6,6 +6,7 @@ import com.scut.easyfe.entity.booktime.SingleBookTime;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,72 +14,75 @@ import java.util.List;
  * 家教属性类
  * Created by jay on 16/4/5.
  */
-public class Teacher {
+public class Teacher extends BaseEntity{
     //家教身份证号码
-    String idCard = "";
+    private String idCard = "";
 
     //家教个人简介
-    String profile = "";
+    private String profile = "";
 
     //家教上传的图片(身份证正反面跟免冠照片)
-    JSONObject images = new JSONObject();
+    private CheckImage images = new CheckImage();
 
     //家教等级
-    int level = 0;
+    private int level = 0;
 
     //已家教时长(家教手动输入)
-    String hadTeach = "0";
+    private String hadTeach = "";
 
     //已家教孩子数量(家教手动输入)
-    String teachCount = "0";
+    private String teachCount = "";
 
     //平台上家教时长(平台记录)
-    int teachTime = 0;
+    private int teachTime = 0;
 
     //综合评分
-    float score = 0f;
+    private float score = 0f;
 
     //孩子喜欢程度
-    float childAccept = 0f;
+    private float childAccept = 0f;
 
     //专业胜任程度
     float ability = 0f;
 
     //被评论次数
-    int commentTime = 0;
+    private int commentTime = 0;
 
     //是否可以被查找到
-    boolean isLock = false;
+    private boolean isLock = false;
 
     //家教所在学校
-    String school = "";
+    private String school = "";
+
+    //家教所在年级
+    private String grade = "";
 
     //家教所在专业
-    String profession = "";
+    private String profession = "";
 
     //多次预约时间
-    List<MultiBookTime> multiBookTime = new ArrayList<>();
+    private List<MultiBookTime> multiBookTime = new ArrayList<>();
 
     //单词预约时间
-    List<SingleBookTime> singleBookTime = new ArrayList<>();
+    private List<SingleBookTime> singleBookTime = new ArrayList<>();
 
     //可教授课程
-    List<String> course = new ArrayList<>();
+    private List<String> course = new ArrayList<>();
 
     //最短授课时间
-    int minCourseTime = 120;
+    private int minCourseTime = 120;
 
     //不收交通补贴的最长交通时间
-    int freeTrafficTime = 120;
+    private int freeTrafficTime = 120;
 
     //交通时间超过此时间不接单
-    int maxTrafficTime = 180;
+    private int maxTrafficTime = 180;
 
     //超过交通时间，收的交通补贴
-    float subsidy = 5f;
+    private int subsidy = 5;
 
     //天使计划
-    JSONObject angelPlan = new JSONObject();
+    private AngelPlan angelPlan = new AngelPlan();
 
     //Todo 家教奖励相关字段
 
@@ -99,11 +103,11 @@ public class Teacher {
         this.profile = profile;
     }
 
-    public JSONObject getImages() {
+    public CheckImage getImages() {
         return images;
     }
 
-    public void setImages(JSONObject images) {
+    public void setImages(CheckImage images) {
         this.images = images;
     }
 
@@ -243,19 +247,99 @@ public class Teacher {
         this.maxTrafficTime = maxTrafficTime;
     }
 
-    public float getSubsidy() {
+    public int getSubsidy() {
         return subsidy;
     }
 
-    public void setSubsidy(float subsidy) {
+    public void setSubsidy(int subsidy) {
         this.subsidy = subsidy;
     }
 
-    public JSONObject getAngelPlan() {
+    public AngelPlan getAngelPlan() {
         return angelPlan;
     }
 
-    public void setAngelPlan(JSONObject angelPlan) {
+    public void setAngelPlan(AngelPlan angelPlan) {
         this.angelPlan = angelPlan;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    /**
+     * 用于审核的图片
+     */
+    public class CheckImage implements Serializable{
+        private String idCard = "";
+        private String studentCard = "";
+        private String official = "";
+
+        public String getIdCard() {
+            return idCard;
+        }
+
+        public void setIdCard(String idCard) {
+            this.idCard = idCard;
+        }
+
+        public String getStudentCard() {
+            return studentCard;
+        }
+
+        public void setStudentCard(String studentCard) {
+            this.studentCard = studentCard;
+        }
+
+        public String getOfficial() {
+            return official;
+        }
+
+        public void setOfficial(String official) {
+            this.official = official;
+        }
+    }
+
+    public class AngelPlan implements Serializable{
+        private boolean join = false;
+        private int boy = -1;
+        private int girl = -1;
+        private int price = 5;
+
+        public boolean isJoin() {
+            return join;
+        }
+
+        public void setJoin(boolean join) {
+            this.join = join;
+        }
+
+        public int getBoy() {
+            return boy;
+        }
+
+        public void setBoy(int boy) {
+            this.boy = boy;
+        }
+
+        public int getGirl() {
+            return girl;
+        }
+
+        public void setGirl(int girl) {
+            this.girl = girl;
+        }
+
+        public int getPrice() {
+            return price;
+        }
+
+        public void setPrice(int price) {
+            this.price = price;
+        }
     }
 }

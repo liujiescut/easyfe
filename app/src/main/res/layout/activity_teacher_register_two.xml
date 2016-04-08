@@ -266,7 +266,7 @@
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical"
                     android:onClick="onAnglePriceClick"
-                    android:text="@string/price_example" />
+                    tools:text="@string/price_example" />
             </LinearLayout>
 
             <TextView

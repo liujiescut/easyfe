@@ -2,12 +2,19 @@ package com.scut.easyfe.ui.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.entity.user.User;
+import com.scut.easyfe.network.RequestBase;
+import com.scut.easyfe.network.RequestListener;
+import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.authentication.RLogin;
 import com.scut.easyfe.ui.base.BaseActivity;
+import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
 /**
@@ -15,6 +22,9 @@ import com.scut.easyfe.utils.OtherUtils;
  * @author jay
  */
 public class LoginActivity extends BaseActivity {
+    private EditText mPhoneEditText;
+    private EditText mPasswordEditText;
+
     @Override
     protected void setLayoutView() {
         setContentView(R.layout.activity_login);
@@ -23,6 +33,8 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void initView() {
         ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("登录注册");
+        mPhoneEditText = OtherUtils.findViewById(this, R.id.login_et_phone);
+        mPasswordEditText = OtherUtils.findViewById(this, R.id.login_et_password);
     }
 
     @Override
@@ -43,8 +55,42 @@ public class LoginActivity extends BaseActivity {
      * @param view 被点击视图
      */
     public void onLoginClick(View view){
-        App.getUser().setHasLogin(true);
-        toast("登录成功");
+        String phone = mPhoneEditText.getText().toString();
+        String password = mPasswordEditText.getText().toString();
+
+//        if(!validate(phone, password)){
+//            return;
+//        }
+
+        phone = "18814111130";
+        password = "123456";
+
+        RequestManager.get().execute(new RLogin(phone, password), new RequestListener<User>() {
+            @Override
+            public void onSuccess(RequestBase request, User user) {
+                App.setUser(user);
+                LogUtils.i(Constants.Tag.LOGIN_TAG, user.getToken());
+            }
+
+            @Override
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                toast(errorMsg);
+            }
+        });
+    }
+
+    private boolean validate(String phone, String password){
+        if(phone == null || phone.length() != 11){
+            toast("请输入有效手机号");
+            return false;
+        }
+
+        if(password == null || password.length() == 0){
+            toast("密码不能为空");
+            return false;
+        }
+
+        return true;
     }
 
     /**

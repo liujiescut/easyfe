@@ -19,7 +19,7 @@ package com.scut.easyfe.network.kjFrame.http;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.scut.easyfe.network.CXRM;
+import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.kjFrame.utils.FileUtils;
 import com.scut.easyfe.utils.LogUtils;
 
@@ -139,7 +139,7 @@ public class HttpParams implements HttpEntity {
         try {
             encodeValue = URLEncoder.encode(value, "utf-8");
         }catch (UnsupportedEncodingException e){
-            LogUtils.i(CXRM.TAG, "UnsupportedEncodingException key -> " + key + "  value ->" + value);
+            LogUtils.i(RequestManager.TAG, "UnsupportedEncodingException key -> " + key + "  value ->" + value);
             e.printStackTrace();
         }
         urlParams.put(key, encodeValue);

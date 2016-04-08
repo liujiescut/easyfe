@@ -12,6 +12,9 @@ import com.bigkoo.pickerview.TimePickerView;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.entity.Address;
+import com.scut.easyfe.entity.user.Teacher;
+import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.MapUtils;
@@ -22,6 +25,7 @@ import java.util.Date;
 
 /**
  * 注册第一步(基本信息) 跟 修改信息
+ *
  * @author jay
  */
 public class TeacherRegisterOneActivity extends BaseActivity {
@@ -40,7 +44,9 @@ public class TeacherRegisterOneActivity extends BaseActivity {
     private TextView mHadTeachTimeTextView; //已家教时长
     private TextView mGoNextTextView;       //保存进入下一页
 
-    /** 下面几项为修改信息时用到 */
+    /**
+     * 下面几项为修改信息时用到
+     */
     private LinearLayout mChildGenderLinearLayout;     //宝贝性别所在LinearLayout
     private LinearLayout mChildGradeLinearLayout;      //宝贝年级所在LinearLayout
     private TextView mChildGenderTextView;             //宝贝性别
@@ -59,6 +65,16 @@ public class TeacherRegisterOneActivity extends BaseActivity {
 
     private int mFromType = Constants.Identifier.TYPE_REGISTER;   //到此页面的功能(注册还是修改信息)
 
+    private User mUser;
+    private Date mBirthday = new Date();
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        /** 让User保持最新 */
+        mUser = App.getUser();
+    }
+
     @Override
     protected void setLayoutView() {
         setContentView(R.layout.activity_teacher_register_one);
@@ -67,12 +83,14 @@ public class TeacherRegisterOneActivity extends BaseActivity {
     @Override
     protected void initData() {
         Intent intent = getIntent();
-        if(null != intent){
+        if (null != intent) {
             Bundle extras = intent.getExtras();
-            if(null != extras){
+            if (null != extras) {
                 mFromType = extras.getInt(Constants.Key.TO_TEACHER_REGISTER_ONE_ACTIVITY_TYPE, Constants.Identifier.TYPE_REGISTER);
             }
         }
+
+        mUser = App.getUser();
     }
 
     @Override
@@ -119,15 +137,15 @@ public class TeacherRegisterOneActivity extends BaseActivity {
         updateView();
     }
 
-    public void updateView(){
-        if(mFromType == Constants.Identifier.TYPE_REGISTER){
-            ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("家教注册-基本信息");
-        }else{
-            ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("基本信息维护");
+    public void updateView() {
+        if (mFromType == Constants.Identifier.TYPE_REGISTER) {
+            ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("家教注册-基本信息");
+        } else {
+            ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("基本信息维护");
             mGoNextTextView.setVisibility(View.GONE);
             mDoModifyTextView.setVisibility(View.VISIBLE);
 
-            if(App.getUser().getUserType() == Constants.Identifier.USER_TP){
+            if (App.getUser().getType() == Constants.Identifier.USER_TP) {
                 //既是家长又是家教
                 mChildGenderLinearLayout.setVisibility(View.VISIBLE);
                 mChildGradeLinearLayout.setVisibility(View.VISIBLE);
@@ -155,27 +173,63 @@ public class TeacherRegisterOneActivity extends BaseActivity {
             mBirthdayTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
             mSchoolTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
             mGradeTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
-            mProfessionTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,0,0);
+            mProfessionTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
         }
+
+        mNameEditText.setText(mUser.getName());
+        mGenderTextView.setText(mUser.getGender() == Constants.Identifier.MALE ? R.string.male : R.string.female);
+        mBirthdayTextView.setText(OtherUtils.getTime(new Date(mUser.getBirthday()), "yyyy 年 MM 月 dd 日"));
+        mPhoneEditText.setText(mUser.getPhone());
+        mPasswordEditText.setText(mUser.getPassword());
+        mIdCardEditText.setText(mUser.getTeacherMessage().getIdCard());
+        if (mUser.getTeacherMessage().getSchool().length() != 0) {
+            mSchoolTextView.setText(mUser.getTeacherMessage().getSchool());
+        }
+        if (mUser.getTeacherMessage().getGrade().length() != 0) {
+            mGradeTextView.setText(mUser.getTeacherMessage().getGrade());
+        }
+        if (mUser.getTeacherMessage().getProfession().length() != 0) {
+            mProfessionTextView.setText(mUser.getTeacherMessage().getProfession());
+        }
+        if (mUser.getTeacherMessage().getTeachCount().length() != 0) {
+            mHadTeachChildTextView.setText(mUser.getTeacherMessage().getTeachCount());
+        }
+        if (mUser.getTeacherMessage().getHadTeach().length() != 0) {
+            mHadTeachTimeTextView.setText(mUser.getTeacherMessage().getHadTeach());
+        }
+
+        if (mUser.getParentMessage().getChildGrade().length() != 0) {
+            mChildGradeTextView.setText(mUser.getParentMessage().getChildGrade());
+        }
+        mChildGenderTextView.setText(mUser.getParentMessage().getChildGender() == Constants.Identifier.MALE ? R.string.male : R.string.female);
     }
 
     @Override
     protected void fetchData() {
-        MapUtils.getLocation(new MapUtils.LocationCallback() {
-            @Override
-            public void onSuccess(double latitude, double longitude, String address, String city) {
-                mLatitude = latitude;
-                mLongitude = longitude;
-                mCity = city;
-                mAddress = (null == address ? "" : address);
-                mAddressTextView.setText(mAddress);
-            }
+        if(null == mUser.getPosition().getAddress() || mUser.getPosition().getAddress().length() == 0) {
 
-            @Override
-            public void onFailed() {
-                LogUtils.i(Constants.Tag.MAP_TAG, "定位失败");
-            }
-        });
+            MapUtils.getLocation(new MapUtils.LocationCallback() {
+                @Override
+                public void onSuccess(double latitude, double longitude, String address, String city) {
+                    mLatitude = latitude;
+                    mLongitude = longitude;
+                    mCity = city;
+                    mAddress = (null == address ? "" : address);
+                    mAddressTextView.setText(mAddress);
+                }
+
+                @Override
+                public void onFailed() {
+                    LogUtils.i(Constants.Tag.MAP_TAG, "定位失败");
+                }
+            });
+        }else {
+            mLatitude = mUser.getPosition().getLatitude();
+            mLongitude = mUser.getPosition().getLongitude();
+            mAddress = mUser.getPosition().getAddress();
+            mCity = mUser.getPosition().getCity();
+            mAddressTextView.setText(mAddress);
+        }
     }
 
     @Override
@@ -184,6 +238,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
             @Override
             public void onTimeSelect(Date date) {
                 mBirthdayTextView.setText(OtherUtils.getTime(date, "yyyy 年 MM 月 dd 日"));
+                mBirthday = date;
             }
         });
     }
@@ -201,7 +256,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
             } else {
                 mAddressTextView.setText(mAddress);
             }
-        }else{
+        } else {
             toast("获取地址失败,请重试");
         }
     }
@@ -378,22 +433,83 @@ public class TeacherRegisterOneActivity extends BaseActivity {
     /**
      * 家教注册第一步点击保存并进入下一页
      */
-    public void onRegisterOneClick(View view){
+    public void onRegisterOneClick(View view) {
+        if (null == mUser) {
+            mUser = new User();
+        }
+
+        mUser.setName(mNameEditText.getText().toString());
+        mUser.setGender(mUser.getGender() == Constants.Identifier.MALE ? R.string.male : R.string.female);
+        mUser.setBirthday(mBirthday.getTime());
+        mUser.setPhone(mPhoneEditText.getText().toString());
+        mUser.setPassword(mPasswordEditText.getText().toString());
+
+        Teacher teacher = mUser.getTeacherMessage();
+        teacher.setIdCard(mIdCardEditText.getText().toString());
+        teacher.setSchool(mSchoolTextView.getText().toString());
+        teacher.setGrade(mGradeTextView.getText().toString());
+        teacher.setProfession(mProfessionTextView.getText().toString());
+        teacher.setTeachCount(mHadTeachChildTextView.getText().toString());
+        teacher.setHadTeach(mHadTeachTimeTextView.getText().toString());
+        mUser.setTeacherMessage(teacher);
+
+        Address address = mUser.getPosition();
+        address.setAddress(mAddress);
+        address.setLatitude(mLatitude);
+        address.setLongitude(mLongitude);
+        address.setCity(mCity);
+        mUser.setPosition(address);
+
+        if (!validate(mUser)) {
+            return;
+        }
+
+        toast("保存成功");
+        App.setUser(mUser);
+
         Bundle extras = new Bundle();
         extras.putBoolean(Constants.Key.IS_REGISTER, true);
         redirectToActivity(this, TeacherRegisterTwoActivity.class, extras);
     }
 
-    public void onBackClick(View view){
+    private boolean validate(User user) {
+        if (null == user.getName() || user.getName().length() == 0) {
+            toast("请输入用户名");
+            return false;
+        }
+
+        if (null == user.getPhone() || user.getPhone().length() != 11) {
+            toast("请输入有效手机号");
+            return false;
+        }
+
+        if (null == user.getPassword() || user.getPassword().length() == 0) {
+            toast("请输入密码");
+            return false;
+        }
+
+        //Todo 恢复定位功能
+//        if (null == user.getPosition() ||
+//                user.getPosition().getAddress() == null || user.getPosition().getAddress().length() == 0 ||
+//                user.getPosition().getLatitude() == -1 ||
+//                user.getPosition().getLongitude() == -1) {
+//            toast("选择地址无效,请重新选择");
+//            return false;
+//        }
+
+        return true;
+    }
+
+    public void onBackClick(View view) {
         finish();
     }
 
 
-    public void onModifyClick(View view){
+    public void onModifyClick(View view) {
         toast("就保存喽");
     }
 
-    public void onChildGenderClick(View view){
+    public void onChildGenderClick(View view) {
         hidePickerIfShowing();
 
         mSinglePicker.setTitle("选择宝贝性别");
@@ -409,7 +525,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
         mSinglePicker.show();
     }
 
-    public void onChildGradeClick(View view){
+    public void onChildGradeClick(View view) {
         hidePickerIfShowing();
 
         mDoublePicker.setTitle("选择宝贝年级");
@@ -427,15 +543,15 @@ public class TeacherRegisterOneActivity extends BaseActivity {
         mDoublePicker.show();
     }
 
-    private boolean hidePickerIfShowing(){
+    private boolean hidePickerIfShowing() {
         OtherUtils.hideSoftInputWindow(mChildGradeTextView.getWindowToken());
         boolean isShowing = false;
-        if(mSinglePicker.isShowing()){
+        if (mSinglePicker.isShowing()) {
             mSinglePicker.dismiss();
             isShowing = true;
         }
 
-        if(mDoublePicker.isShowing()){
+        if (mDoublePicker.isShowing()) {
             mDoublePicker.dismiss();
             isShowing = true;
         }

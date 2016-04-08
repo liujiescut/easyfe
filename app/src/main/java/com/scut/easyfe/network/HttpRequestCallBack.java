@@ -1,7 +1,9 @@
 package com.scut.easyfe.network;
 
 
-import com.scut.easyfe.app.App;
+import android.widget.Toast;
+
+import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.network.kjFrame.http.HttpCallBack;
 import com.scut.easyfe.utils.LogUtils;
 
@@ -10,24 +12,24 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class  CXHttpRequestCallBack<T> extends HttpCallBack {
+public class HttpRequestCallBack<T> extends HttpCallBack {
 
-    CXRequestListener<T> listener;
-    CXRequestBase<T> requestBase;
+    RequestListener<T> listener;
+    RequestBase<T> requestBase;
 
-    public CXHttpRequestCallBack(CXRequestBase<T> requestBase, CXRequestListener<T> listener) {
+    public HttpRequestCallBack(RequestBase<T> requestBase, RequestListener<T> listener) {
         this.listener = listener;
         this.requestBase = requestBase;
     }
 
     @Override
     public void onSuccess(String responseString) {
-        LogUtils.i(CXRM.TAG, requestBase.getClass().getSimpleName() + ": requestBase onSuccess, result:" + responseString);
+        LogUtils.i(RequestManager.TAG, requestBase.getClass().getSimpleName() + ": requestBase onSuccess, result:" + responseString);
         JSONObject json;
         try {
             json = new JSONObject(responseString);
         } catch (JSONException e) {
-            listener.onFailed(requestBase,CXRequestListener.ERR_JSON_ONSUCCESS, CXRequestListener.MSG_JSON_ONSUCCESS_BODY);
+            listener.onFailed(requestBase, RequestListener.ERR_JSON_ONSUCCESS, RequestListener.MSG_JSON_ONSUCCESS_BODY);
             return;
         }
         String result = json.optString("result");
@@ -38,12 +40,12 @@ public class  CXHttpRequestCallBack<T> extends HttpCallBack {
                     try {
                         listener.onSuccess(requestBase, requestBase.parseResultAsObject(json.optJSONObject("data")));
                     } catch (JSONException jsonE) {
-                        listener.onFailed(requestBase, CXRequestListener.ERR_JSON_ONSUCCESS, jsonE.getMessage());
+                        listener.onFailed(requestBase, RequestListener.ERR_JSON_ONSUCCESS, jsonE.getMessage());
                     } catch (IOException ioE) {
-                        listener.onFailed(requestBase, CXRequestListener.ERR_JSON_ONSUCCESS, ioE.getMessage());
+                        listener.onFailed(requestBase, RequestListener.ERR_JSON_ONSUCCESS, ioE.getMessage());
                     }
                 } else {
-                    listener.onFailed(requestBase, CXRequestListener.ERR_JSON_ONSUCCESS, CXRequestListener.MSG_JSON_ONSUCCESS_DATA);
+                    listener.onFailed(requestBase, RequestListener.ERR_JSON_ONSUCCESS, RequestListener.MSG_JSON_ONSUCCESS_DATA);
                 }
             }
         } else {
@@ -55,15 +57,15 @@ public class  CXHttpRequestCallBack<T> extends HttpCallBack {
 
     @Override
     public void onFailure(int errorNo, String strMsg , String responseString) {
-        LogUtils.i(CXRM.TAG , requestBase.getClass().getSimpleName() + ": requestBase onFailure code -> " + errorNo + ",body ->  " + responseString);
+        LogUtils.i(RequestManager.TAG , requestBase.getClass().getSimpleName() + ": requestBase onFailure code -> " + errorNo + ",body ->  " + responseString);
         JSONObject json;
         String errMsg;
         try {
             json = new JSONObject(responseString);
             errMsg = json.optString("message");
         } catch (JSONException e) {
-            errorNo = CXRequestListener.ERR_JSON_ONFAIL;
-            errMsg = CXRequestListener.MSG_JSON_ONFAIL;
+            errorNo = RequestListener.ERR_JSON_ONFAIL;
+            errMsg = RequestListener.MSG_JSON_ONFAIL;
         }
 
         //统一捕捉的处理
@@ -77,6 +79,7 @@ public class  CXHttpRequestCallBack<T> extends HttpCallBack {
         if (listener != null) {
             listener.onFailed(requestBase, errorNo, errMsg);
         }
+
     }
 
     @Override

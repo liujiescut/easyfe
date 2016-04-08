@@ -140,11 +140,13 @@ public class AddressActivity extends BaseActivity {
                 mLongitude = marker.getPosition().longitude;
                 mGeoCoderOptions.location(new LatLng(mLatitude, mLongitude));
                 mGeoCoder.reverseGeoCode(mGeoCoderOptions);
+
+                PairProgressHUD.dismiss();
             }
 
             @Override
             public void onMarkerDragStart(Marker marker) {
-
+                PairProgressHUD.showLoading(mContext, "定位中");
             }
         });
     }

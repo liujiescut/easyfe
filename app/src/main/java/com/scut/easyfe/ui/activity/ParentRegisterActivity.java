@@ -8,7 +8,15 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.entity.Address;
+import com.scut.easyfe.entity.user.Parent;
+import com.scut.easyfe.entity.user.User;
+import com.scut.easyfe.network.RequestBase;
+import com.scut.easyfe.network.RequestListener;
+import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.authentication.RParentRegister;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.MapUtils;
@@ -32,7 +40,7 @@ public class ParentRegisterActivity extends BaseActivity {
     private TextView mChildGenderTextView;          //宝贝性别
     private TextView mChildGradeTextView;           //宝贝年级
     private TextView mHasAccountHintTextView;       //已经有账号时的提示信息
-    private TextView mRegisterTextView;       //已经有账号时的提示信息
+    private TextView mRegisterTextView;             //已经有账号时的提示信息
 
 
     private TextView mModifyTextView;               //修改信息时用到
@@ -47,6 +55,8 @@ public class ParentRegisterActivity extends BaseActivity {
 
     private int mFromType = Constants.Identifier.TYPE_REGISTER;   //到此页面的功能(注册还是修改家教信息)
 
+    private User mUser = new User();
+
     @Override
     protected void setLayoutView() {
         setContentView(R.layout.activity_parent_register);
@@ -55,9 +65,9 @@ public class ParentRegisterActivity extends BaseActivity {
     @Override
     protected void initData() {
         Intent intent = getIntent();
-        if(null != intent){
+        if (null != intent) {
             Bundle extras = intent.getExtras();
-            if(null != extras){
+            if (null != extras) {
                 mFromType = extras.getInt(Constants.Key.TO_PARENT_REGISTER_ACTIVITY_TYPE, Constants.Identifier.TYPE_REGISTER);
             }
         }
@@ -83,23 +93,33 @@ public class ParentRegisterActivity extends BaseActivity {
         updateView();
     }
 
-    private void updateView(){
-        if(mFromType == Constants.Identifier.TYPE_REGISTER){
-            ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("家长注册");
-        }else{
-            ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("基本信息维护");
+    private void updateView() {
+        if (mFromType == Constants.Identifier.TYPE_REGISTER) {
+            ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("家长注册");
+
+        } else {
+            ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("基本信息维护");
             mHasAccountHintTextView.setVisibility(View.GONE);
             mRegisterTextView.setVisibility(View.GONE);
             mModifyTextView.setVisibility(View.VISIBLE);
             mParentNameEditText.setTextColor(mResources.getColor(R.color.text_area_text_color));
             mParentNameEditText.setEnabled(false);
             mParentGenderTextView.setTextColor(mResources.getColor(R.color.text_area_text_color));
-            mParentGenderTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,0,0);
+            mParentGenderTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
             mParentGenderTextView.setEnabled(false);
             mParentPhoneEditText.setTextColor(mResources.getColor(R.color.text_area_text_color));
             mParentPhoneEditText.setEnabled(false);
             mParentPasswordEditText.setTextColor(mResources.getColor(R.color.text_area_text_color));
             mParentPasswordEditText.setEnabled(false);
+
+            mUser = App.getUser();
+            mParentNameEditText.setText(mUser.getName());
+            mParentGenderTextView.setText(mUser.getGender() == Constants.Identifier.MALE ? R.string.male : R.string.female);
+            mParentPhoneEditText.setText(mUser.getPhone());
+            mParentPasswordEditText.setText(mUser.getPassword());
+            mChildGenderTextView.setText(mUser.getParentMessage().getChildGender() == Constants.Identifier.MALE ? R.string.male : R.string.female);
+            mChildGradeTextView.setText(mUser.getParentMessage().getChildGrade());
+            mAddressTextView.setText(mUser.getPosition().getAddress());
         }
     }
 
@@ -116,8 +136,11 @@ public class ParentRegisterActivity extends BaseActivity {
                 mLatitude = latitude;
                 mLongitude = longitude;
                 mAddress = (null == address ? "" : address);
-                mAddressTextView.setText(mAddress);
                 mCity = city;
+
+                if(mFromType == Constants.Identifier.TYPE_REGISTER) {
+                    mAddressTextView.setText(mAddress);
+                }
             }
 
             @Override
@@ -177,8 +200,8 @@ public class ParentRegisterActivity extends BaseActivity {
         mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
-                    mChildGender = options1 == 0 ? Constants.Identifier.FEMALE : Constants.Identifier.MALE;
-                    mChildGenderTextView.setText(Constants.Data.genderList.get(options1));
+                mChildGender = options1 == 0 ? Constants.Identifier.FEMALE : Constants.Identifier.MALE;
+                mChildGenderTextView.setText(Constants.Data.genderList.get(options1));
             }
         });
         mPicker.show();
@@ -252,7 +275,80 @@ public class ParentRegisterActivity extends BaseActivity {
      * @param view 被点击视图
      */
     public void onRegisterClick(View view) {
+        final User user = new User();
+        user.setName(mParentNameEditText.getText().toString());
+        user.setGender(mParentGender);
+        user.setPhone(mParentPhoneEditText.getText().toString());
+        user.setPassword(mParentPasswordEditText.getText().toString());
 
+        Parent parentMsg = new Parent();
+        parentMsg.setChildGender(mChildGender);
+        parentMsg.setChildGrade(mChildGradeTextView.getText().toString());
+        user.setParentMessage(parentMsg);
+
+        Address address = new Address();
+        address.setAddress(mAddress);
+        address.setLatitude(mLatitude);
+        address.setLongitude(mLongitude);
+        user.setPosition(address);
+
+        if (!validate(user)) {
+            return;
+        }
+
+        //Todo 删除这里代码
+        user.getParentMessage().setChildGrade("56fd4787618da04c17b1d167");
+
+        RequestManager.get().execute(new RParentRegister(user), new RequestListener<User>() {
+            @Override
+            public void onSuccess(RequestBase request, User result) {
+                toast("注册成功");
+                user.set_id(result.get_id());
+                user.setToken(result.getToken());
+                user.setAvatar(result.getAvatar());
+                user.setType(result.getType());
+                App.setUser(user);
+                redirectToActivity(mContext, MainActivity.class);
+            }
+
+            @Override
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                toast(errorMsg);
+            }
+        });
+
+    }
+
+    private boolean validate(User user) {
+        if (null == user.getName() || user.getName().length() == 0) {
+            toast("请输入用户名");
+            return false;
+        }
+
+        if (null == user.getPhone() || user.getPhone().length() != 11) {
+            toast("请输入有效手机号");
+            return false;
+        }
+
+        if (null == user.getPassword() || user.getPassword().length() == 0) {
+            toast("请输入密码");
+            return false;
+        }
+
+        if (null == user.getParentMessage().getChildGrade() || user.getParentMessage().getChildGrade().length() == 0) {
+            toast("请选择宝贝年级");
+            return false;
+        }
+
+        if (null == user.getPosition() ||
+                user.getPosition().getAddress() == null || user.getPosition().getAddress().length() == 0 ||
+                user.getPosition().getLatitude() == -1 ||
+                user.getPosition().getLongitude() == -1) {
+            toast("选择地址无效,请重新选择");
+            return false;
+        }
+
+        return true;
     }
 
     /**

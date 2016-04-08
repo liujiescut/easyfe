@@ -15,7 +15,7 @@ import java.io.IOException;
  * @param <T>
  */
 
-public abstract class CXRequestBase<T> {
+public abstract class RequestBase<T> {
 
 
     /**

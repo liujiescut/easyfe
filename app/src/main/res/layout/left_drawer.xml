@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="250dp"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_gravity="left"
     android:background="@color/theme_color"
     android:orientation="vertical">
@@ -15,17 +16,17 @@
         android:paddingTop="38dp">
 
         <com.scut.easyfe.ui.customView.CircleImageView
-            android:id="@+id/civ_avatar"
+            android:id="@+id/left_drawer_civ_avatar"
             android:layout_width="46dp"
             android:layout_height="46dp"
             android:layout_centerHorizontal="true"
-            android:src="@mipmap/default_avatar" />
+            tools:src="@mipmap/default_avatar" />
 
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/left_drawer_tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/civ_avatar"
+            android:layout_below="@id/left_drawer_civ_avatar"
             android:layout_centerHorizontal="true"
             android:padding="@dimen/layout_padding_small"
             android:text="@string/main_left_drawer_login"

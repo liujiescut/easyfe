@@ -14,6 +14,7 @@ import com.scut.easyfe.ui.customView.SelectorButton;
  */
 public class CourseAdapter extends BaseAdapter{
     private String[] mCourses;
+    private boolean mItemClickable = true;
 
     public CourseAdapter(String [] mCourses) {
         this.mCourses = mCourses;
@@ -51,10 +52,15 @@ public class CourseAdapter extends BaseAdapter{
         return convertView;
     }
 
+    public void setItemClickable(boolean itemClickable) {
+        this.mItemClickable = itemClickable;
+    }
+
     private class ViewHolder{
         SelectorButton selectorButton;
         public ViewHolder(View root) {
             this.selectorButton = (SelectorButton) root.findViewById(R.id.item_teach_course);
+            this.selectorButton.setClickable(mItemClickable);
         }
     }
 }

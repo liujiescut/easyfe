@@ -34,10 +34,14 @@ public class PairProgressHUD {
 	}
 
     public static void showLoading(Context context,String text){
-		dismiss();
-		setDialog(context, text, true, 0, false);
-		if(dialog!=null) dialog.show();
+		showLoading(context, text, false);
     }
+
+	public static void showLoading(Context context, String text, boolean cancelable){
+		dismiss();
+		setDialog(context, text, true, 0, cancelable);
+		if(dialog!=null) dialog.show();
+	}
 
     public static void showInfo(Context context, String msg) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();

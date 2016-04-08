@@ -11,17 +11,24 @@ import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 import com.roomorama.caldroid.CalendarHelper;
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.entity.booktime.MultiBookTime;
+import com.scut.easyfe.entity.booktime.SingleBookTime;
+import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.ui.customView.SelectorButton;
 import com.scut.easyfe.ui.fragment.CalendarFragment;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import hirondelle.date4j.DateTime;
 
@@ -33,13 +40,22 @@ import hirondelle.date4j.DateTime;
 public class SpecialTimeActivity extends BaseActivity {
     private SelectorButton mMorningSelectorButton;
     private SelectorButton mAfternoonSelectorButton;
-    private SelectorButton mNightSelectorButton;
-    private EditText mRememberThingsEditText;
+    private SelectorButton mEveningSelectorButton;
+    private EditText mMemoEditText;
     private TextView mSelectedDateTextView;
+    private TextView mTeachOrNotTextView;
     private LinearLayout mTimeLinearLayout;
     private CalendarFragment mCalendarFragment;
-    private long mMinDateTimeMills;
-    private long mMaxDateTimeMills;
+
+    private User mUser;
+    private Date mSelectedDate = null;
+    private DateTime mSelectedDateTime = null;
+    private Map<Long, SingleBookTime> mSingleBookTimes = new HashMap<>();
+    List<DateTime> mWorkDays = new ArrayList<>();
+
+    private boolean mTeachOrNot = false;
+
+    private SelectorButton.OnSelectChangeListener mOnSelectChangeListener;
 
     @Override
     protected void setLayoutView() {
@@ -47,22 +63,35 @@ public class SpecialTimeActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mUser = App.getUser();
+    }
+
+    @Override
+    protected void initData() {
+        mUser = App.getUser();
+    }
+
+    @Override
     protected void initView() {
-        ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("近两月时间特别安排");
+        ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("近两月时间特别安排");
         initCalendar();
 
-        mSelectedDateTextView =OtherUtils.findViewById(this, R.id.special_time_selected_date);
+        mSelectedDateTextView = OtherUtils.findViewById(this, R.id.special_time_tv_selected_date);
+        mTeachOrNotTextView = OtherUtils.findViewById(this, R.id.special_time_tv_teachable);
         mTimeLinearLayout = OtherUtils.findViewById(this, R.id.special_time_ll_time);
-        mRememberThingsEditText = OtherUtils.findViewById(this, R.id.special_time_et_remember_things);
+        mMemoEditText = OtherUtils.findViewById(this, R.id.special_time_et_remember_things);
         mMorningSelectorButton = OtherUtils.findViewById(this, R.id.special_time_sb_morning);
         mAfternoonSelectorButton = OtherUtils.findViewById(this, R.id.special_time_sb_afternoon);
-        mNightSelectorButton = OtherUtils.findViewById(this, R.id.special_time_sb_night);
+        mEveningSelectorButton = OtherUtils.findViewById(this, R.id.special_time_sb_evening);
         mMorningSelectorButton.setBothText(getResources().getString(R.string.morning));
         mAfternoonSelectorButton.setBothText(getResources().getString(R.string.afternoon));
-        mNightSelectorButton.setBothText(getResources().getString(R.string.night));
+        mEveningSelectorButton.setBothText(getResources().getString(R.string.night));
         mMorningSelectorButton.setIsSelected(false);
         mAfternoonSelectorButton.setIsSelected(false);
-        mNightSelectorButton.setIsSelected(false);
+        mEveningSelectorButton.setIsSelected(false);
+
     }
 
     @Override
@@ -72,7 +101,8 @@ public class SpecialTimeActivity extends BaseActivity {
             @Override
             public void onSelectDate(Date date, View view, int position) {
                 LogUtils.i(Constants.Tag.TEACHER_REGISTER_TAG, OtherUtils.getTime(date, "yyyy 年 MM 月 dd 日 (EEEE)"));
-                mSelectedDateTextView.setText(OtherUtils.getTime(date, "yyyy 年 MM 月 dd 日 (EEEE)"));
+                saveDateInfo();
+                refreshDateInfo(date);
             }
 
             @Override
@@ -92,6 +122,76 @@ public class SpecialTimeActivity extends BaseActivity {
             }
 
         });
+
+        mOnSelectChangeListener = new SelectorButton.OnSelectChangeListener() {
+            @Override
+            public void onSelectChange(boolean isSelected) {
+                if (!mMorningSelectorButton.isSelected() &&
+                        !mAfternoonSelectorButton.isSelected() &&
+                        !mEveningSelectorButton.isSelected()) {
+                    mTeachOrNot = false;
+                    mTeachOrNotTextView.setText(R.string.no);
+                    mTimeLinearLayout.setVisibility(View.GONE);
+                    mWorkDays.remove(mSelectedDateTime);
+                    mSingleBookTimes.remove(mSelectedDate.getTime());
+
+                } else {
+                    mTeachOrNot = true;
+                }
+            }
+        };
+        mMorningSelectorButton.setOnSelectChangeListener(mOnSelectChangeListener);
+        mAfternoonSelectorButton.setOnSelectChangeListener(mOnSelectChangeListener);
+        mEveningSelectorButton.setOnSelectChangeListener(mOnSelectChangeListener);
+    }
+
+    /**
+     * 保存每天的信息
+     */
+    private void saveDateInfo() {
+        if (mSelectedDate == null) {
+            return;
+        }
+
+        if (mTeachOrNot) {
+            SingleBookTime singleBookTime = mSingleBookTimes.get(mSelectedDate.getTime());
+            if (null == singleBookTime) {
+                singleBookTime = new SingleBookTime();
+                mSingleBookTimes.put(mSelectedDate.getTime(), singleBookTime);
+            }
+
+            singleBookTime.setIsOk(true);
+            singleBookTime.setDate(mSelectedDate.getTime());
+            singleBookTime.setMorning(mMorningSelectorButton.isSelected());
+            singleBookTime.setAfternoon(mAfternoonSelectorButton.isSelected());
+            singleBookTime.setEvening(mEveningSelectorButton.isSelected());
+            singleBookTime.setMemo(mMemoEditText.getText().toString());
+
+            if(!mWorkDays.contains(mSelectedDateTime)) {
+                mWorkDays.add(mSelectedDateTime);
+            }
+        }
+    }
+
+    private void refreshDateInfo(Date date) {
+        mSelectedDate = date;
+        mSelectedDateTime = CalendarHelper.convertDateToDateTime(mSelectedDate);
+        SingleBookTime singleBookTime = mSingleBookTimes.get(mSelectedDate.getTime());
+        mSelectedDateTextView.setText(OtherUtils.getTime(mSelectedDate, "yyyy 年 MM 月 dd 日 (EEEE)"));
+        if (null != singleBookTime) {
+            mTeachOrNot = true;
+            mTeachOrNotTextView.setText(R.string.yes);
+            mTimeLinearLayout.setVisibility(View.VISIBLE);
+            mMorningSelectorButton.setIsSelected(singleBookTime.isMorning());
+            mAfternoonSelectorButton.setIsSelected(singleBookTime.isAfternoon());
+            mEveningSelectorButton.setIsSelected(singleBookTime.isEvening());
+            mMemoEditText.setText(singleBookTime.getMemo());
+        } else {
+            mTeachOrNot = false;
+            mTeachOrNotTextView.setText(R.string.no);
+            mTimeLinearLayout.setVisibility(View.GONE);
+            mMemoEditText.setText("");
+        }
     }
 
     /**
@@ -116,8 +216,56 @@ public class SpecialTimeActivity extends BaseActivity {
         Date maxDate = calendar.getTime();
         mCalendarFragment.setMinDate(minDate);
         mCalendarFragment.setMaxDate(maxDate);
-        mMinDateTimeMills = minDate.getTime();
-        mMaxDateTimeMills = maxDate.getTime();
+
+        if (App.getSpUtils().getValue(Constants.Key.IS_FIRST_IN_SPECIAL_TIME_ACTIVITY, true)) {
+            //这里表示第一次进入到特别时间安排页面,帮他默认选中
+
+            List<Integer> workWeekDays = new ArrayList<>();   //工作的星期
+            Map<Integer, MultiBookTime> workWeekMap = new HashMap<>();
+            for (MultiBookTime multiBookTime :
+                    mUser.getTeacherMessage().getMultiBookTime()) {
+                workWeekDays.add(multiBookTime.getWeekDay() + 1);//加1是为了跟DateTime返回的相同
+                workWeekMap.put(multiBookTime.getWeekDay() + 1, multiBookTime);
+            }
+            DateTime minDateTime = CalendarHelper.convertDateToDateTime(minDate);
+            DateTime maxDateTime = CalendarHelper.convertDateToDateTime(maxDate);
+
+            mSingleBookTimes = new HashMap<>();
+
+            mUser.getTeacherMessage().getSingleBookTime().clear();
+            MultiBookTime tempMultiBookTime;
+            while (minDateTime.lteq(maxDateTime)) {
+                if (workWeekDays.contains(minDateTime.getWeekDay())) {
+                    mWorkDays.add(minDateTime);
+
+                    tempMultiBookTime = workWeekMap.get(minDateTime.getWeekDay());
+
+                    SingleBookTime singleBookTime = new SingleBookTime();
+                    singleBookTime.setIsOk(true);
+                    singleBookTime.setMorning(tempMultiBookTime.isMorning());
+                    singleBookTime.setAfternoon(tempMultiBookTime.isAfternoon());
+                    singleBookTime.setEvening(tempMultiBookTime.isEvening());
+                    singleBookTime.setDate(CalendarHelper.convertDateTimeToDate(minDateTime).getTime());
+
+                    mSingleBookTimes.put(singleBookTime.getDate(), singleBookTime);
+                    mUser.getTeacherMessage().getSingleBookTime().add(singleBookTime);
+                    App.setUser(mUser);
+                }
+                minDateTime = minDateTime.plusDays(1);
+            }
+
+            App.getSpUtils().setValue(Constants.Key.IS_FIRST_IN_SPECIAL_TIME_ACTIVITY, false);
+        } else {
+
+            /** 重新进来特别时间安排 */
+            for (SingleBookTime singleBookTime :
+                    mUser.getTeacherMessage().getSingleBookTime()) {
+                mSingleBookTimes.put(singleBookTime.getDate(), singleBookTime);
+                mWorkDays.add(CalendarHelper.convertDateToDateTime(new Date(singleBookTime.getDate())));
+            }
+        }
+
+        mCalendarFragment.setWorkDays(mWorkDays);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.special_time_calendar, mCalendarFragment);
@@ -128,14 +276,61 @@ public class SpecialTimeActivity extends BaseActivity {
      * 点击是否授课
      */
     public void onTeachOrNotClick(View view) {
-        mTimeLinearLayout.setVisibility(mTimeLinearLayout.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+        if (null == mSelectedDate) {
+            toast("请先选择日期");
+            return;
+        }
+
+        mTeachOrNot = !mTeachOrNot;
+        mTeachOrNotTextView.setText(mTeachOrNot ? R.string.yes : R.string.no);
+        mTimeLinearLayout.setVisibility(mTeachOrNot ? View.VISIBLE : View.GONE);
+        if (mTeachOrNot) {
+            SingleBookTime singleBookTime = mSingleBookTimes.get(mSelectedDate.getTime());
+            if (null == singleBookTime) {
+                mMorningSelectorButton.setIsSelected(true);
+                mAfternoonSelectorButton.setIsSelected(true);
+                mEveningSelectorButton.setIsSelected(true);
+                singleBookTime = new SingleBookTime();
+                singleBookTime.setDate(mSelectedDate.getTime());
+                singleBookTime.setIsOk(true);
+                singleBookTime.setMorning(true);
+                singleBookTime.setAfternoon(true);
+                singleBookTime.setEvening(true);
+                mSingleBookTimes.put(mSelectedDate.getTime(), singleBookTime);
+                mWorkDays.add(mSelectedDateTime);
+
+            } else {
+                mMorningSelectorButton.setIsSelected(singleBookTime.isMorning());
+                mAfternoonSelectorButton.setIsSelected(singleBookTime.isAfternoon());
+                mEveningSelectorButton.setIsSelected(singleBookTime.isEvening());
+            }
+        }else{
+            mWorkDays.remove(mSelectedDateTime);
+            mSingleBookTimes.remove(mSelectedDate.getTime());
+        }
     }
 
     /**
      * 点击确认并保存
      */
     public void onConfirmClick(View view) {
-        redirectToActivity(mContext, TeacherRegisterTwoActivity.class);
+        saveDateInfo();
+
+        List<SingleBookTime> singleBookTimes = mUser.getTeacherMessage().getSingleBookTime();
+        singleBookTimes.clear();
+        Set<Long> keys = mSingleBookTimes.keySet();
+        for (Long key :
+                keys) {
+            singleBookTimes.add(mSingleBookTimes.get(key));
+        }
+        mUser.getTeacherMessage().setSingleBookTime(singleBookTimes);
+
+        App.setUser(mUser);
+        toast("保存成功");
+
+        Bundle extras = new Bundle();
+        extras.putBoolean(Constants.Key.IS_REGISTER, true);
+        redirectToActivity(mContext, TeacherRegisterTwoActivity.class, extras);
     }
 
     public void onBackClick(View view) {

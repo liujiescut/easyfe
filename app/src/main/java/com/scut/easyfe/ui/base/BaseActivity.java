@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.scut.easyfe.app.App;
+import com.scut.easyfe.ui.customView.SimpleHUD.PairProgressHUD;
 import com.umeng.analytics.MobclickAgent;
 
 
@@ -130,6 +131,14 @@ public abstract class BaseActivity extends AppCompatActivity{
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+    }
+
+    protected void startLoading(String message){
+        PairProgressHUD.showLoading(mContext, message, true);
+    }
+
+    protected void stopLoading(){
+        PairProgressHUD.dismiss();
     }
 
 }

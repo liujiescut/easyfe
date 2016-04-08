@@ -2,6 +2,7 @@ package com.scut.easyfe.ui.activity;
 
 import android.text.InputType;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -77,11 +78,20 @@ public class TeachCourseActivity extends BaseActivity {
         mPicker.setCyclic(false);
         mCourseGridView = OtherUtils.findViewById(this, R.id.teach_course_gv_course);
         mGradeLinearLayout = OtherUtils.findViewById(this, R.id.teach_course_ll_container);
-        mCourseGridView.setAdapter(new CourseAdapter(mCourses));
+        CourseAdapter adapter = new CourseAdapter(mCourses);
+        adapter.setItemClickable(false);
+        mCourseGridView.setAdapter(adapter);
     }
 
     @Override
     protected void initListener() {
+        mCourseGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                LogUtils.i("liujie", position + "");
+            }
+        });
+
         mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {

@@ -21,6 +21,8 @@ public class Constants {
 
         public static final String URL_BASE = "http://121.42.37.233/";
         public static final String URL_PARENT_REGISTER = URL_BASE + "Authentication/SignUp/Parent";
+        public static final String URL_LOGIN = URL_BASE + "Authentication/Login";
+        public static final String URL_GET_MESSAGES = URL_BASE + "Share/Message";
     }
 
     /**
@@ -35,6 +37,7 @@ public class Constants {
     }
 
     public class Key{
+        public static final String USER_CACHE = "user_cache";
         public static final String LATITUDE = "latitude";
         public static final String LONGITUDE = "longitude";
         public static final String ADDRESS = "address";
@@ -51,7 +54,7 @@ public class Constants {
         public static final String TO_TEACHER_INFO_ACTIVITY_TYPE = "to_teacher_info_activity_type";
         public static final String TO_TEACHER_REGISTER_ONE_ACTIVITY_TYPE = "to_teacher_register_one_activity_type";
         public static final String TO_PARENT_REGISTER_ACTIVITY_TYPE = "to_parent_register_activity_type";
-
+        public static final String IS_FIRST_IN_SPECIAL_TIME_ACTIVITY  = "is_fist_time_in_special_activity";
     }
 
     /**
@@ -276,7 +279,7 @@ public class Constants {
             weekList.add("星期五");
             weekList.add("星期六");
 
-            for (int i = 0; i < 100; i++) {
+            for (int i = 1; i < 100; i++) {
                 ageList.add(i + "");
             }
 
