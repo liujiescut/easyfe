@@ -8,26 +8,29 @@ import android.widget.BaseAdapter;
 import com.scut.easyfe.R;
 import com.scut.easyfe.ui.customView.SelectorButton;
 
+import java.util.List;
+
 /**
  * 可教授课程课程的Adapter
  * Created by jay on 16/3/25.
  */
-public class CourseAdapter extends BaseAdapter{
-    private String[] mCourses;
+public class CourseAdapter extends BaseAdapter {
+    private List<String> mCourses;
     private boolean mItemClickable = true;
+    private int mSelectedPosition = -1;
 
-    public CourseAdapter(String [] mCourses) {
+    public CourseAdapter(List<String> mCourses) {
         this.mCourses = mCourses;
     }
 
     @Override
     public int getCount() {
-        return mCourses.length;
+        return mCourses.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mCourses[position];
+        return mCourses.get(position);
     }
 
     @Override
@@ -38,16 +41,18 @@ public class CourseAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-        if(null == convertView){
+        if (null == convertView) {
             convertView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_teach_course, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
-        }else{
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.selectorButton.setBothText(mCourses[position]);
+        holder.selectorButton.setBothText(mCourses.get(position));
+
+        holder.selectorButton.setIsSelected(position == mSelectedPosition);
 
         return convertView;
     }
@@ -56,11 +61,18 @@ public class CourseAdapter extends BaseAdapter{
         this.mItemClickable = itemClickable;
     }
 
-    private class ViewHolder{
+    public void setSelectedPosition(int selectedPosition) {
+        this.mSelectedPosition = selectedPosition;
+    }
+
+    private class ViewHolder {
         SelectorButton selectorButton;
+
         public ViewHolder(View root) {
             this.selectorButton = (SelectorButton) root.findViewById(R.id.item_teach_course);
+            this.selectorButton.setTextSize(11);
             this.selectorButton.setClickable(mItemClickable);
         }
     }
+
 }

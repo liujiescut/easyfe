@@ -23,6 +23,11 @@ public class Constants {
         public static final String URL_PARENT_REGISTER = URL_BASE + "Authentication/SignUp/Parent";
         public static final String URL_LOGIN = URL_BASE + "Authentication/Login";
         public static final String URL_GET_MESSAGES = URL_BASE + "Share/Message";
+        public static final String URL_GET_CHILD_GRADE = URL_BASE + "Share/Grade";
+        public static final String URL_GET_COURSE = URL_BASE + "Share/Course";
+        public static final String URL_GET_SCHOOL = URL_BASE + "Share/Education";
+        public static final String URL_CALLBACK = URL_BASE + "Share/Feedback";
+        public static final String URL_ONLINE_PARAMS = URL_BASE + "Share/OnlineParams";
     }
 
     /**
@@ -55,6 +60,7 @@ public class Constants {
         public static final String TO_TEACHER_REGISTER_ONE_ACTIVITY_TYPE = "to_teacher_register_one_activity_type";
         public static final String TO_PARENT_REGISTER_ACTIVITY_TYPE = "to_parent_register_activity_type";
         public static final String IS_FIRST_IN_SPECIAL_TIME_ACTIVITY  = "is_fist_time_in_special_activity";
+        public static final String QN_TOKEN = "qn_token";
     }
 
     /**
@@ -83,9 +89,9 @@ public class Constants {
         public static final int STATE_EDIT = 1;
 
         /** 反馈页面的标识,表明是哪种反馈(需求反馈,应用反馈,投诉) */
-        public static final int CALLBACK_NEED = 0;           //首页预约不到想要的点这里进行反馈
-        public static final int CALLBACK_APP = 1;            //更多页面应用反馈
-        public static final int CALLBACK_COMPLAINTS = 2;     //完成订单后投诉
+        public static final int CALLBACK_NEED = 1;           //首页预约不到想要的点这里进行反馈
+        public static final int CALLBACK_APP = 2;            //更多页面应用反馈
+        public static final int CALLBACK_COMPLAINTS = 3;     //完成订单后投诉
 
         /** 确认订单页面所需 */
         public static final int CONFIRM_ORDER_SPECIAL = 0;       //特价订单
@@ -116,6 +122,9 @@ public class Constants {
     }
 
     public static class Data {
+        public static final String DEFAULT_QN_TOKEN = "R2Rq9_dBXtrL6wqLwA8_GC6EZNR9JU06xaGegd19:mKzKD3gB-mkdQpjt1BVtBAZmNYw=:eyJzY29wZSI6ImVhc3lmZSIsImRlYWRsaW5lIjoxNDg0OTIxMjY4fQ==";
+
+
         public static final ArrayList<String> genderList = new ArrayList<>();                       //可选性别
         public static final ArrayList<String> schoolList = new ArrayList<>();                       //可选性别
         public static final ArrayList<String> professionList = new ArrayList<>();                   //可选的专业

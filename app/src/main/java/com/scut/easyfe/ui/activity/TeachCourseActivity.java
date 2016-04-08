@@ -10,14 +10,20 @@ import android.widget.TextView;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.entity.Course;
+import com.scut.easyfe.network.RequestBase;
+import com.scut.easyfe.network.RequestListener;
+import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.info.RGetChildGrade;
+import com.scut.easyfe.network.request.info.RGetCourse;
 import com.scut.easyfe.ui.adapter.CourseAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
-import com.scut.easyfe.ui.customView.SelectorButton;
 import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 可教授课程页面
@@ -28,16 +34,19 @@ public class TeachCourseActivity extends BaseActivity {
     private GridView mCourseGridView;
     private LinearLayout mGradeLinearLayout;
     private OptionsPickerView<String> mPicker;
+
+    CourseAdapter mCourseAdapter;
+
     private ArrayList<String> mState = new ArrayList<>();
     private ArrayList<ArrayList<String>> mGrade = new ArrayList<>();
     private ArrayList<GradePriceItem> mPrices = new ArrayList<>();
-    private static final String[] mCourses = new String[16];
+    private static List<Course> mCourses = new ArrayList<>();
+    private static List<String> mCourseNames = new ArrayList<>();
+    private int mCurrentPosition = -1;
 
-    static {
-        for (int i = 0; i < mCourses.length; i++) {
-            mCourses[i] = "计算机";
-        }
-    }
+
+    private boolean mGetGradeSuccess = false;
+    private boolean mGetCourseSuccess = false;
 
     @Override
     protected void setLayoutView() {
@@ -46,41 +55,18 @@ public class TeachCourseActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        mState.add("小学");
-        mState.add("初中");
-        mState.add("高中");
-
-        ArrayList<String> primarySchool = new ArrayList<>();
-        ArrayList<String> middleSchool = new ArrayList<>();
-        ArrayList<String> highSchool = new ArrayList<>();
-        primarySchool.add("一年级");
-        primarySchool.add("二年级");
-        primarySchool.add("三年级");
-        primarySchool.add("四年级");
-        primarySchool.add("五年级");
-        primarySchool.add("六年级");
-        middleSchool.add("初一");
-        middleSchool.add("初二");
-        middleSchool.add("初三");
-        highSchool.add("高一");
-        highSchool.add("高二");
-        highSchool.add("高三");
-        mGrade.add(primarySchool);
-        mGrade.add(middleSchool);
-        mGrade.add(highSchool);
     }
 
     @Override
     protected void initView() {
-        ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("家教注册 - 可教授课程及收费");
-        mPicker = new OptionsPickerView<>(mContext);
-        mPicker.setPicker(mState, mGrade, true);
-        mPicker.setCyclic(false);
+        ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("家教注册 - 可教授课程及收费");
         mCourseGridView = OtherUtils.findViewById(this, R.id.teach_course_gv_course);
         mGradeLinearLayout = OtherUtils.findViewById(this, R.id.teach_course_ll_container);
-        CourseAdapter adapter = new CourseAdapter(mCourses);
-        adapter.setItemClickable(false);
-        mCourseGridView.setAdapter(adapter);
+        mCourseAdapter = new CourseAdapter(mCourseNames);
+        mCourseAdapter.setItemClickable(false);
+        mCourseGridView.setAdapter(mCourseAdapter);
+
+        mPicker = new OptionsPickerView<>(mContext);
     }
 
     @Override
@@ -88,7 +74,8 @@ public class TeachCourseActivity extends BaseActivity {
         mCourseGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                LogUtils.i("liujie", position + "");
+                mCourseAdapter.setSelectedPosition(position);
+                mCourseAdapter.notifyDataSetChanged();
             }
         });
 
@@ -147,11 +134,63 @@ public class TeachCourseActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void fetchData() {
+        startLoading("加载数据中");
+        RequestManager.get().execute(new RGetChildGrade(), new RequestListener<List<List>>() {
+
+            @Override
+            public void onSuccess(RequestBase request, List<List> result) {
+                mState = (ArrayList<String>) result.get(0);
+                mGrade = (ArrayList<ArrayList<String>>) result.get(1);
+                mPicker.setPicker(mState, mGrade, true);
+                mPicker.setCyclic(false);
+
+                mGetGradeSuccess = true;
+                if (mGetCourseSuccess) {
+                    stopLoading();
+                }
+            }
+
+            @Override
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                toast(errorMsg);
+            }
+        });
+
+        RequestManager.get().execute(new RGetCourse(), new RequestListener<List<Course>>() {
+            @Override
+            public void onSuccess(RequestBase request, List<Course> result) {
+                mCourses.clear();
+                mCourses.addAll(result);
+                mCourseNames.clear();
+                for (Course course :
+                        mCourses) {
+                    mCourseNames.add(course.getCourse());
+                }
+                mCourseAdapter.notifyDataSetChanged();
+
+                mGetCourseSuccess = true;
+                if (mGetGradeSuccess) {
+                    stopLoading();
+                }
+            }
+
+            @Override
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+
+            }
+        });
+
+    }
+
     /**
      * 点击增加可教授课程
      */
     public void onAddClick(View view) {
-        mPicker.show();
+        if (null != mPicker) {
+            mPicker.show();
+        }
     }
 
     /**

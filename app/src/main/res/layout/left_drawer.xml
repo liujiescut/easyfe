@@ -122,6 +122,7 @@
         android:text="@string/main_left_drawer_more" />
 
     <TextView
+        android:id="@+id/left_drawer_tv_bottom_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/layout_margin_small"

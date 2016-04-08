@@ -11,6 +11,10 @@ import android.widget.TextView;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.network.RequestBase;
+import com.scut.easyfe.network.RequestListener;
+import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.RGetOnlineParams;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.ui.base.BaseFragment;
 import com.scut.easyfe.ui.customView.CircleImageView;
@@ -18,6 +22,8 @@ import com.scut.easyfe.ui.fragment.HomeFragment;
 import com.scut.easyfe.utils.ImageUtils;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
+
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +39,7 @@ public class MainActivity extends BaseActivity {
     private CircleImageView mAvatarImageView;
     private TextView mNameTextView;
     private Map<Integer, BaseFragment> mFragments = new HashMap<>();
+    private HomeFragment mHomeFragment;
 
     @Override
     protected void onResume() {
@@ -60,7 +67,8 @@ public class MainActivity extends BaseActivity {
         mLeftDrawer = OtherUtils.findViewById(this, R.id.drawer);
         mAvatarImageView = OtherUtils.findViewById(this, R.id.left_drawer_civ_avatar);
         mNameTextView = OtherUtils.findViewById(this, R.id.left_drawer_tv_name);
-        mFragments.put(FRAGMENT_HOME, new HomeFragment());
+        mHomeFragment = new HomeFragment();
+        mFragments.put(FRAGMENT_HOME, mHomeFragment);
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.main_container, mFragments.get(FRAGMENT_HOME))
@@ -69,6 +77,31 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
+    }
+
+    @Override
+    protected void fetchData() {
+        startLoading("加载数据中");
+        RequestManager.get().execute(new RGetOnlineParams(), new RequestListener<JSONObject>() {
+            @Override
+            public void onSuccess(RequestBase request, JSONObject result) {
+                mHomeFragment.setText(result.optJSONObject("specialText").optString("line1"),
+                        result.optJSONObject("specialText").optString("line2"),
+                        result.optJSONObject("specialText").optString("line3"),
+                        result.optJSONObject("specialText").optString("bottomText"));
+
+                ((TextView)OtherUtils.findViewById(mLeftDrawer, R.id.left_drawer_tv_bottom_hint)).setText(result.optString("sidebarBottomText"));
+
+                App.setQNToken(result.optString("qnToken"));
+                App.setServicePhone(result.optString("phone"));
+                stopLoading();
+            }
+
+            @Override
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                stopLoading();
+            }
+        });
     }
 
     /**

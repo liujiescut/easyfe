@@ -2,6 +2,7 @@ package com.scut.easyfe.ui.fragment;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.Constants;
@@ -10,13 +11,17 @@ import com.scut.easyfe.ui.activity.ReserveActivity;
 import com.scut.easyfe.ui.activity.SpecialOrderActivity;
 import com.scut.easyfe.ui.activity.TeacherRegisterOneActivity;
 import com.scut.easyfe.ui.base.BaseFragment;
+import com.scut.easyfe.utils.OtherUtils;
 
 /**
  * 主页Fragment
  * Created by jay on 16/3/15.
  */
 public class HomeFragment extends BaseFragment implements View.OnClickListener{
-
+    private TextView mLineOneTextView;
+    private TextView mLineTwoTextView;
+    private TextView mLineThreeTextView;
+    private TextView mHintTextView;
     @Override
     protected void setLayoutRes() {
         layoutRes = R.layout.fragment_home;
@@ -24,7 +29,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
     @Override
     protected void initView(View v) {
-        super.initView(v);
+        mLineOneTextView = OtherUtils.findViewById(v, R.id.home_main_text);
+        mLineTwoTextView = OtherUtils.findViewById(v, R.id.home_second_text);
+        mLineThreeTextView = OtherUtils.findViewById(v, R.id.home_third_text);
+        mHintTextView = OtherUtils.findViewById(v, R.id.home_need_report);
     }
 
     @Override
@@ -133,5 +141,19 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
             bundle.putInt(Constants.Key.TO_TEACHER_REGISTER_ONE_ACTIVITY_TYPE, Constants.Identifier.TYPE_REGISTER);
             mActivity.redirectToActivity(mActivity, TeacherRegisterOneActivity.class);
         }
+    }
+
+    /**
+     * 设置首页的文字
+     * @param line1     第一行文字(类似特价推广)
+     * @param line2     第二行文字(类似低至1元/小时)
+     * @param line3     第三行文字
+     * @param hint      提示需求反馈文字
+     */
+    public void setText(String line1, String line2, String line3, String hint){
+        mLineOneTextView.setText(line1);
+        mLineTwoTextView.setText(line2);
+        mLineThreeTextView.setText(line3);
+        mHintTextView.setText(hint);
     }
 }

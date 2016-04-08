@@ -2,6 +2,7 @@ package com.scut.easyfe.ui.customView.SimpleHUD;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
@@ -37,9 +38,12 @@ public class PairProgressHUD {
 		showLoading(context, text, false);
     }
 
-	public static void showLoading(Context context, String text, boolean cancelable){
+	public static void showLoading(Context context, String text, boolean cancelable) {
+		showLoading(context, text, cancelable, null);
+	}
+	public static void showLoading(Context context, String text, boolean cancelable, DialogInterface.OnDismissListener listener){
 		dismiss();
-		setDialog(context, text, true, 0, cancelable);
+		setDialog(context, text, true, 0, cancelable, listener);
 		if(dialog!=null) dialog.show();
 	}
 
@@ -68,7 +72,11 @@ public class PairProgressHUD {
         }
     }
 
-    private static void setDialog(Context ctx, String msg, boolean showProgressBar,  int resId, boolean cancelable) {
+	private static void setDialog(Context ctx, String msg, boolean showProgressBar,  int resId, boolean cancelable) {
+		setDialog(ctx, msg, showProgressBar, resId, cancelable, null);
+	}
+
+    private static void setDialog(Context ctx, String msg, boolean showProgressBar,  int resId, boolean cancelable, DialogInterface.OnDismissListener onDismissListener) {
 		context = ctx;
 
 		if(!isContextValid())
@@ -80,6 +88,10 @@ public class PairProgressHUD {
 		dialog.setImage(resId);
 		dialog.setCanceledOnTouchOutside(cancelable);
 		dialog.setCancelable(cancelable);		// back键是否可dimiss对话框
+
+		if(onDismissListener != null){
+			dialog.setOnDismissListener(onDismissListener);
+		}
 	}
 
 	public static void dismiss() {

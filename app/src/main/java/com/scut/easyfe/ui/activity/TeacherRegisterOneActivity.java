@@ -1,5 +1,6 @@
 package com.scut.easyfe.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,15 +14,22 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.Address;
+import com.scut.easyfe.entity.School;
 import com.scut.easyfe.entity.user.Teacher;
 import com.scut.easyfe.entity.user.User;
+import com.scut.easyfe.network.RequestBase;
+import com.scut.easyfe.network.RequestListener;
+import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.info.RGetSchool;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.MapUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 注册第一步(基本信息) 跟 修改信息
@@ -67,6 +75,11 @@ public class TeacherRegisterOneActivity extends BaseActivity {
 
     private User mUser;
     private Date mBirthday = new Date();
+
+    private List<School> mSchools = new ArrayList<>();
+    private ArrayList<String> mSchoolNames = new ArrayList<>();
+    private ArrayList<String> mProfessionNames = new ArrayList<>();
+    private boolean isLoadingDialogDismissByUser = true;
 
     @Override
     protected void onResume() {
@@ -206,6 +219,41 @@ public class TeacherRegisterOneActivity extends BaseActivity {
 
     @Override
     protected void fetchData() {
+        startLoading("加载数据中", new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if(isLoadingDialogDismissByUser) {
+                    toast("加载数据失败");
+                    finish();
+                }
+            }
+        });
+
+        RequestManager.get().execute(new RGetSchool(), new RequestListener<List<School>>() {
+            @Override
+            public void onSuccess(RequestBase request, List<School> result) {
+                mSchools.clear();
+                mSchools.addAll(result);
+                isLoadingDialogDismissByUser = false;
+
+                mSchoolNames.clear();
+                for (School school :
+                        mSchools) {
+                    mSchoolNames.add(school.getSchool());
+                }
+
+                mProfessionNames.addAll(mSchools.get(0).getProfession());
+                mSchoolTextView.setText(mSchoolNames.get(0));
+                mProfessionTextView.setText(mProfessionNames.get(0));
+                stopLoading();
+            }
+
+            @Override
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                toast(errorMsg);
+                stopLoading();
+            }
+        });
         if(null == mUser.getPosition().getAddress() || mUser.getPosition().getAddress().length() == 0) {
 
             MapUtils.getLocation(new MapUtils.LocationCallback() {
@@ -303,13 +351,16 @@ public class TeacherRegisterOneActivity extends BaseActivity {
         hidePickerIfShowing();
 
         mSinglePicker.setTitle("选择您的学校");
-        mSinglePicker.setPicker(Constants.Data.schoolList);
+        mSinglePicker.setPicker(mSchoolNames);
         mSinglePicker.setSelectOptions(0);
         mSinglePicker.setCyclic(false);
         mSinglePicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
-                mSchoolTextView.setText(Constants.Data.schoolList.get(options1));
+                mSchoolTextView.setText(mSchoolNames.get(options1));
+                mProfessionNames.clear();
+                mProfessionNames.addAll(mSchools.get(options1).getProfession());
+                mProfessionTextView.setText(mProfessionNames.get(0));
             }
         });
         mSinglePicker.show();
@@ -341,13 +392,13 @@ public class TeacherRegisterOneActivity extends BaseActivity {
         hidePickerIfShowing();
 
         mSinglePicker.setTitle("选择您的专业");
-        mSinglePicker.setPicker(Constants.Data.professionList);
+        mSinglePicker.setPicker(mProfessionNames);
         mSinglePicker.setSelectOptions(0);
         mSinglePicker.setCyclic(false);
         mSinglePicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
-                mProfessionTextView.setText(Constants.Data.professionList.get(options1));
+                mProfessionTextView.setText(mProfessionNames.get(options1));
             }
         });
         mSinglePicker.show();
@@ -488,14 +539,13 @@ public class TeacherRegisterOneActivity extends BaseActivity {
             return false;
         }
 
-        //Todo 恢复定位功能
-//        if (null == user.getPosition() ||
-//                user.getPosition().getAddress() == null || user.getPosition().getAddress().length() == 0 ||
-//                user.getPosition().getLatitude() == -1 ||
-//                user.getPosition().getLongitude() == -1) {
-//            toast("选择地址无效,请重新选择");
-//            return false;
-//        }
+        if (null == user.getPosition() ||
+                user.getPosition().getAddress() == null || user.getPosition().getAddress().length() == 0 ||
+                user.getPosition().getLatitude() == -1 ||
+                user.getPosition().getLongitude() == -1) {
+            toast("选择地址无效,请重新选择");
+            return false;
+        }
 
         return true;
     }

@@ -1,8 +1,8 @@
-package com.scut.easyfe.network.request;
+package com.scut.easyfe.network.request.info;
 
 import com.fasterxml.jackson.databind.JavaType;
-import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.entity.Course;
 import com.scut.easyfe.entity.Message;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.kjFrame.http.HttpParams;
@@ -18,13 +18,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 获取消息中心列表
- * Created by jay on 16/4/7.
+ * 获取可教授课程
+ * Created by jay on 16/4/8.
  */
-public class RGetMessages extends RequestBase<List<Message>>{
+public class RGetCourse extends RequestBase<List<Course>>{
     @Override
     public String getUrl() {
-        return Constants.URL.URL_GET_MESSAGES;
+        return Constants.URL.URL_GET_COURSE;
     }
 
     @Override
@@ -34,23 +34,21 @@ public class RGetMessages extends RequestBase<List<Message>>{
 
     @Override
     public HttpParams getQueryParams() {
-        HttpParams params = new HttpParams();
-        params.putQueryParams("token", App.getUser().getToken());
-        return params;
+        return null;
     }
 
     @Override
-    public List<Message> parseResultAsObject(JSONObject jsonObject) throws IOException, JSONException {
-        List<Message> result = new ArrayList<>();
-        JavaType javaType = mObjectMapper.getTypeFactory().constructParametricType(List.class, Message.class);
+    public List<Course> parseResultAsObject(JSONObject jsonObject) throws IOException, JSONException {
+        List<Course> result = new ArrayList<>();
+        JavaType javaType = mObjectMapper.getTypeFactory().constructParametricType(List.class, Course.class);
         try {
-            JSONArray messages = jsonObject.optJSONArray("messages");
+            JSONArray messages = jsonObject.optJSONArray("courses");
             if(null != messages){
-            /** 将返回的地址JsonArray转化为List<Message> */
-            result = mObjectMapper.readValue(messages.toString(), javaType);
+                /** 将返回的地址JsonArray转化为List<Course> */
+                result = mObjectMapper.readValue(messages.toString(), javaType);
             }
         } catch (IOException e) {
-            LogUtils.i("Json转换为List<Message>失败!");
+            LogUtils.i("Json转换为List<Course>失败!");
             e.printStackTrace();
         }
 

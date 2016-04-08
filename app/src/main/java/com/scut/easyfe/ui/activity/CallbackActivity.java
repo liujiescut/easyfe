@@ -8,8 +8,14 @@ import android.widget.TextView;
 
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.network.RequestBase;
+import com.scut.easyfe.network.RequestListener;
+import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.RCallBackRequest;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.OtherUtils;
+
+import org.json.JSONObject;
 
 /**
  * 反馈页面
@@ -51,6 +57,22 @@ public class CallbackActivity extends BaseActivity {
      * 点击提交
      */
     public void onRightClick(View view){
-        toast("我提交了喔");
+        if(mContentEditText.getText().toString().length() == 0){
+            toast("请输入内容");
+            return;
+        }
+
+        RequestManager.get().execute(new RCallBackRequest(mCallbackType, mContentEditText.getText().toString()), new RequestListener<JSONObject>() {
+            @Override
+            public void onSuccess(RequestBase request, JSONObject result) {
+                toast("提交成功");
+                finish();
+            }
+
+            @Override
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                toast(errorMsg);
+            }
+        });
     }
 }

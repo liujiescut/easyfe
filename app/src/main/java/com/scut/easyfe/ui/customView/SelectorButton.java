@@ -79,7 +79,7 @@ public class SelectorButton extends TextView{
      */
     public void setIsSelected(boolean mIsSelected) {
         this.mIsSelected = mIsSelected;
-        init();
+        refresh();
     }
 
     public boolean isSelected() {

@@ -1,6 +1,7 @@
 package com.scut.easyfe.ui.base;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -134,7 +135,10 @@ public abstract class BaseActivity extends AppCompatActivity{
     }
 
     protected void startLoading(String message){
-        PairProgressHUD.showLoading(mContext, message, true);
+        startLoading(message, null);
+    }
+    protected void startLoading(String message, DialogInterface.OnDismissListener listener){
+        PairProgressHUD.showLoading(mContext, message, true, listener);
     }
 
     protected void stopLoading(){

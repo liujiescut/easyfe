@@ -30,6 +30,9 @@ public class App extends Application{
     private ActivityManagerUtils mActivityManagerUtils;             // 用于管理 Activity 的工具类对象
     private UploadManager qiniuManager;             //上传头像工具
 
+    private static String mQNToken = "";
+    private static String mServicePhone = "";
+
     /**
      * 单例获取Application的实例
      * @return application
@@ -121,6 +124,8 @@ public class App extends Application{
                 .build();
         // 重用 uploadManager。
         qiniuManager = new UploadManager(config);
+
+        mQNToken = getSpUtils().getValue(Constants.Key.QN_TOKEN, Constants.Data.DEFAULT_QN_TOKEN);
     }
 
     /**
@@ -152,7 +157,22 @@ public class App extends Application{
         ImageLoader.getInstance().init(config);
     }
 
+    public static String getServicePhone() {
+        return mServicePhone;
+    }
 
+    public static void setServicePhone(String servicePhone) {
+        mServicePhone = servicePhone;
+    }
+
+    public static String getQNToken() {
+        return mQNToken;
+    }
+
+    public static  void setQNToken(String token) {
+        mQNToken = token;
+        mSpUtils.setValue(Constants.Key.QN_TOKEN, mQNToken);
+    }
 
     /**
      * 向 activity栈 中添加一个 activity

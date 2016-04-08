@@ -269,9 +269,7 @@ public class PhotoUploadActivity extends BaseActivity {
             LogUtils.i("保存裁剪头像后--->path = " + path);
             LogUtils.i("保存裁剪头像后--->file.exists() = " + file.exists());
 
-            //Todo 从SharePreference中获取
-
-            String token =  "R2Rq9_dBXtrL6wqLwA8_GC6EZNR9JU06xaGegd19:mKzKD3gB-mkdQpjt1BVtBAZmNYw=:eyJzY29wZSI6ImVhc3lmZSIsImRlYWRsaW5lIjoxNDg0OTIxMjY4fQ==";
+            String token =  App.getQNToken();
 
             if (token == null || token.length() == 0) {
                 toast("上传失败,请联系客服人员");
