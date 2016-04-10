@@ -7,7 +7,7 @@ import java.util.List;
  * 家教学校
  * Created by jay on 16/4/8.
  */
-public class School {
+public class School extends BaseEntity{
     private String _id = "";
     private String school = "";
     private List<String> profession = new ArrayList<>();

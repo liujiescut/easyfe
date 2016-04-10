@@ -28,6 +28,7 @@ public class Constants {
         public static final String URL_GET_SCHOOL = URL_BASE + "Share/Education";
         public static final String URL_CALLBACK = URL_BASE + "Share/Feedback";
         public static final String URL_ONLINE_PARAMS = URL_BASE + "Share/OnlineParams";
+        public static final String URL_TEACHER_REGISTER = URL_BASE + "Authentication/SignUp/Teacher";
     }
 
     /**
@@ -68,6 +69,7 @@ public class Constants {
      */
     public class Identifier {
         /** 用户分类 */
+        public static final int USER_UNDEFINED = -1;      //未注册
         public static final int USER_WEB_REGISTED = 0;    //被邀请未注册
         public static final int USER_TEACHER = 1;         //家教
         public static final int USER_PARENT = 2;          //家长

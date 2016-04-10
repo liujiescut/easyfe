@@ -29,7 +29,11 @@ public class DialogUtils {
      * @param content  显示内容
      */
     public static AlertView makeConfirmDialog(Context activity, String title, String content) {
-        AlertView alertView =  new AlertView(title, content, null, null, new String[]{"好"}, activity, AlertView.Style.Alert, null);
+        return makeConfirmDialog(activity, title, content, null);
+    }
+
+    public static AlertView makeConfirmDialog(Context activity, String title, String content, OnItemClickListener listener) {
+        AlertView alertView =  new AlertView(title, content, null, null, new String[]{"好"}, activity, AlertView.Style.Alert, listener);
         alertView.show();
         return alertView;
     }

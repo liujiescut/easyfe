@@ -1,6 +1,8 @@
 package com.scut.easyfe.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.Serializable;
 
@@ -10,4 +12,15 @@ import java.io.Serializable;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BaseEntity implements Serializable{
+    @Override
+    public String toString() {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+            return objectMapper.writeValueAsString(this);
+        }catch (Exception e){
+            e.printStackTrace();
+            return "格式出错！";
+        }
+    }
 }

@@ -1,5 +1,8 @@
 package com.scut.easyfe.entity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * 地址类
  * Created by jay on 16/4/5.
@@ -40,5 +43,19 @@ public class Address extends BaseEntity{
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public JSONObject getAddressJson(){
+        JSONObject addressJson = new JSONObject();
+        try {
+            addressJson.put("address", address);
+            addressJson.put("city", city);
+            addressJson.put("latitude", latitude);
+            addressJson.put("longitude", longitude);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return addressJson;
     }
 }

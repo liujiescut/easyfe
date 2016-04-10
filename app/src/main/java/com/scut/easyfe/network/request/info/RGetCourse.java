@@ -42,10 +42,10 @@ public class RGetCourse extends RequestBase<List<Course>>{
         List<Course> result = new ArrayList<>();
         JavaType javaType = mObjectMapper.getTypeFactory().constructParametricType(List.class, Course.class);
         try {
-            JSONArray messages = jsonObject.optJSONArray("courses");
-            if(null != messages){
+            JSONArray courses = jsonObject.optJSONArray("courses");
+            if(null != courses){
                 /** 将返回的地址JsonArray转化为List<Course> */
-                result = mObjectMapper.readValue(messages.toString(), javaType);
+                result = mObjectMapper.readValue(courses.toString(), javaType);
             }
         } catch (IOException e) {
             LogUtils.i("Json转换为List<Course>失败!");

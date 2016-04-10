@@ -186,4 +186,5 @@
     <string name="money_ticket">代金券</string>
     <string name="complaint">投诉</string>
     <string name="evaluation_info_3">请在这里输入您对老师的评价哦！~</string>
+    <string name="profile_hint">简介最多200字</string>
 </resources>

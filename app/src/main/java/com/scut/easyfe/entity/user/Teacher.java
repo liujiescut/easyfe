@@ -1,9 +1,12 @@
 package com.scut.easyfe.entity.user;
 
 import com.scut.easyfe.entity.BaseEntity;
+import com.scut.easyfe.entity.TeachableCourse;
 import com.scut.easyfe.entity.booktime.MultiBookTime;
 import com.scut.easyfe.entity.booktime.SingleBookTime;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
@@ -14,7 +17,7 @@ import java.util.List;
  * 家教属性类
  * Created by jay on 16/4/5.
  */
-public class Teacher extends BaseEntity{
+public class Teacher extends BaseEntity {
     //家教身份证号码
     private String idCard = "";
 
@@ -67,7 +70,7 @@ public class Teacher extends BaseEntity{
     private List<SingleBookTime> singleBookTime = new ArrayList<>();
 
     //可教授课程
-    private List<String> course = new ArrayList<>();
+    private List<TeachableCourse> teacherPrice = new ArrayList<>();
 
     //最短授课时间
     private int minCourseTime = 120;
@@ -215,12 +218,12 @@ public class Teacher extends BaseEntity{
         this.singleBookTime = singleBookTime;
     }
 
-    public List<String> getCourse() {
-        return course;
+    public List<TeachableCourse> getTeacherPrice() {
+        return teacherPrice;
     }
 
-    public void setCourse(List<String> course) {
-        this.course = course;
+    public void setTeacherPrice(List<TeachableCourse> teacherPrice) {
+        this.teacherPrice = teacherPrice;
     }
 
     public int getMinCourseTime() {
@@ -274,7 +277,7 @@ public class Teacher extends BaseEntity{
     /**
      * 用于审核的图片
      */
-    public class CheckImage implements Serializable{
+    public class CheckImage implements Serializable {
         private String idCard = "";
         private String studentCard = "";
         private String official = "";
@@ -302,13 +305,25 @@ public class Teacher extends BaseEntity{
         public void setOfficial(String official) {
             this.official = official;
         }
+
+        public JSONObject getImageJson(){
+            JSONObject imageJson = new JSONObject();
+            try {
+                imageJson.put("idCard", idCard);
+                imageJson.put("studentCard", studentCard);
+                imageJson.put("official", official);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return imageJson;
+        }
     }
 
-    public class AngelPlan implements Serializable{
+    public class AngelPlan implements Serializable {
         private boolean join = false;
-        private int boy = -1;
-        private int girl = -1;
-        private int price = 5;
+        private int boy = 0;
+        private int girl = 0;
+        private int price = 0;
 
         public boolean isJoin() {
             return join;
@@ -341,5 +356,79 @@ public class Teacher extends BaseEntity{
         public void setPrice(int price) {
             this.price = price;
         }
+
+        public JSONObject getAngelPlanJson(){
+            JSONObject json = new JSONObject();
+            try {
+                json.put("join", join);
+                json.put("boy", boy);
+                json.put("girl", girl);
+                json.put("price", price);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return json;
+        }
+    }
+
+    public JSONArray getTeachCourseJsonArray() {
+        JSONArray teachCourseArray = new JSONArray();
+        try {
+            for (TeachableCourse course :
+                    teacherPrice) {
+                JSONObject courseJson = new JSONObject();
+                courseJson.put("course", course.getCourse());
+                courseJson.put("grade", course.getGrade());
+                courseJson.put("price", course.getPrice());
+
+                teachCourseArray.put(courseJson);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return teachCourseArray;
+    }
+
+    public JSONObject getTeacherJson(){
+        JSONObject teacherJson = new JSONObject();
+        try {
+            teacherJson.put("idCard", idCard);
+            teacherJson.put("images", images.getImageJson());
+            teacherJson.put("school", school);
+            teacherJson.put("profession", profession);
+            teacherJson.put("hadTeach", hadTeach);
+            teacherJson.put("teachTime", teachTime);
+            teacherJson.put("singleBookTime", getSingleBookTimeArray());
+            teacherJson.put("multiBookTime", getMultiBookTimeArray());
+            teacherJson.put("minCourseTime", minCourseTime);
+            teacherJson.put("freeTrafficTime", freeTrafficTime);
+            teacherJson.put("maxTrafficTime", maxTrafficTime);
+            teacherJson.put("subsidy", subsidy);
+            teacherJson.put("angelPlan", angelPlan.getAngelPlanJson());
+            teacherJson.put("detail", profile);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return teacherJson;
+    }
+
+    public JSONArray getSingleBookTimeArray(){
+        JSONArray jsonArray = new JSONArray();
+        for (SingleBookTime time :
+                singleBookTime) {
+            jsonArray.put(time.getSingleBookTimeJson());
+        }
+        return jsonArray;
+    }
+
+
+    public JSONArray getMultiBookTimeArray(){
+        JSONArray jsonArray = new JSONArray();
+        for (MultiBookTime time :
+                multiBookTime) {
+            jsonArray.put(time.getMultiBookTimeJson());
+        }
+        return jsonArray;
     }
 }

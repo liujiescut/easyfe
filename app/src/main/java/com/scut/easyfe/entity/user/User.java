@@ -7,6 +7,10 @@ import com.scut.easyfe.entity.BaseEntity;
 import com.scut.easyfe.utils.ACache;
 import com.scut.easyfe.utils.LogUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +18,7 @@ import java.util.List;
  * 用户基本信息类(家长家教共有的)
  * Created by jay on 16/4/1.
  */
-public class User extends BaseEntity{
+public class User extends BaseEntity {
     //用户token
     private String token = "";
 
@@ -34,7 +38,7 @@ public class User extends BaseEntity{
     private String password = "";
 
     //用户类型
-    private int type = Constants.Identifier.USER_TEACHER;
+    private int type = Constants.Identifier.USER_UNDEFINED;
 
     //用户头像
     private String avatar = "";
@@ -57,25 +61,31 @@ public class User extends BaseEntity{
     //家教信息
     private Teacher teacherMessage = new Teacher();
 
+    //收款渠道信息
+    private Business business = new Business();
+
     /**
      * 判断当前用户是否已登陆
      */
-    public boolean hasLogin(){
+    public boolean hasLogin() {
         return token != null && token.length() != 0;
     }
 
     /**
      * 将用户信息缓存到本地
      */
-    public void save2Cache(){
+    public void save2Cache() {
         LogUtils.i("更新缓存用户信息到本地 -> " + this);
         ACache.getInstance().put(Constants.Key.USER_CACHE, this);
+
+        User test = (User) ACache.getInstance().getAsObject(Constants.Key.USER_CACHE);
+        LogUtils.i("更新缓存用户信息到本地 -> " + this);
     }
 
     /**
      * 执行默认登录,从缓存中获取用户信息
      */
-    public static void doLogout(){
+    public static void doLogout() {
         User user = new User();
         App.setUser(user);
         user.save2Cache();
@@ -84,10 +94,18 @@ public class User extends BaseEntity{
     /**
      * 执行默认登录,从缓存中获取用户信息
      */
-    public static void doLogin(){
+    public static void doLogin() {
         User user = (User) ACache.getInstance().getAsObject(Constants.Key.USER_CACHE);
-        if(user != null) App.setUser(user);
+        if (user != null) App.setUser(user);
         LogUtils.i("登录该用户 -> " + user);
+    }
+
+    public Business getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(Business business) {
+        this.business = business;
     }
 
     public String get_id() {
@@ -201,4 +219,79 @@ public class User extends BaseEntity{
     public void setGender(int gender) {
         this.gender = gender;
     }
+
+    public class Business implements Serializable{
+        private String ali = "";
+        private String wechat = "";
+        private Bank bank = new Bank();
+
+        public JSONObject getBusinessJson() {
+            JSONObject json = new JSONObject();
+            try {
+                json.put("ali", ali);
+                json.put("wechat", wechat);
+                json.put("bank", bank.getBankJson());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return json;
+        }
+
+        public String getAli() {
+            return ali;
+        }
+
+        public void setAli(String ali) {
+            this.ali = ali;
+        }
+
+        public String getWechat() {
+            return wechat;
+        }
+
+        public void setWechat(String wechat) {
+            this.wechat = wechat;
+        }
+
+        public Bank getBank() {
+            return bank;
+        }
+
+        public void setBank(Bank bank) {
+            this.bank = bank;
+        }
+
+        public class Bank implements Serializable{
+            private String name = "";
+            private String account = "";
+
+            public JSONObject getBankJson() {
+                JSONObject json = new JSONObject();
+                try {
+                    json.put("name", name);
+                    json.put("account", account);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return json;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getAccount() {
+                return account;
+            }
+
+            public void setAccount(String account) {
+                this.account = account;
+            }
+        }
+    }
+
 }

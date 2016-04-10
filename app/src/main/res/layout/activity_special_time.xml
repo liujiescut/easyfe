@@ -133,6 +133,7 @@
                 android:layout_height="80dp"
                 android:gravity="start"
                 android:padding="@dimen/layout_padding_small"
+                android:maxLength="50"
                 android:hint="@string/special_time_hint"
                 android:textColorHint="#A7A7A7"
                 android:maxHeight="80dp"

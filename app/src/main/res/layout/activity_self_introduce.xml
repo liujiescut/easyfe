@@ -25,6 +25,8 @@
         android:gravity="start"
         android:padding="@dimen/layout_padding_small"
         android:textColorHint="#A7A7A7"
+        android:hint="@string/profile_hint"
+        android:maxLength="200"
         android:maxHeight="280dp"
         android:minHeight="140dp" />
     <TextView

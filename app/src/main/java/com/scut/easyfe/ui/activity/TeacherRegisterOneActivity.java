@@ -242,9 +242,11 @@ public class TeacherRegisterOneActivity extends BaseActivity {
                     mSchoolNames.add(school.getSchool());
                 }
 
-                mProfessionNames.addAll(mSchools.get(0).getProfession());
-                mSchoolTextView.setText(mSchoolNames.get(0));
-                mProfessionTextView.setText(mProfessionNames.get(0));
+                if(mSchools.size() > 0) {
+                    mProfessionNames.addAll(mSchools.get(0).getProfession());
+                    mSchoolTextView.setText(mSchoolNames.get(0));
+                    mProfessionTextView.setText(mProfessionNames.get(0));
+                }
                 stopLoading();
             }
 
@@ -490,7 +492,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
         }
 
         mUser.setName(mNameEditText.getText().toString());
-        mUser.setGender(mUser.getGender() == Constants.Identifier.MALE ? R.string.male : R.string.female);
+        mUser.setGender(mGender);
         mUser.setBirthday(mBirthday.getTime());
         mUser.setPhone(mPhoneEditText.getText().toString());
         mUser.setPassword(mPasswordEditText.getText().toString());

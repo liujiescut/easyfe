@@ -40,10 +40,9 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
     private TextView mMinTeachTimeTextView;         //最短课时
     private TextView mTrafficTextView;              //能接受交通时间
     private TextView mMaxTrafficTextView;           //能接受最长交通时间
-    private TextView mSubsidyTextView;                  //交通补贴
+    private TextView mSubsidyTextView;              //交通补贴
     private TextView mTeachableCourseTextView;      //可教授课程
     private TextView mJoinAngleTextView;            //是否加入天使计划
-    private TextView mAngleDetailTextView;          //天使计划详情
     private TextView mAngleBoyAgeTextView;          //能接受男孩最大年龄
     private TextView mAngleGirlAgeTextView;         //能接受女孩最大年龄
     private TextView mAnglePriceTextView;           //天使计划价格
@@ -55,15 +54,13 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
     private ToggleButton mWorkOrNotToggle;
 
 
-    private boolean mSelectedTeachTime = false;     //是否选择了授课时间
     private boolean mJoinAngelPlan = false;         //是否加入天使计划
-    private boolean mSelectTeachableCourse = false; //是否选择了可教授课程
     private int mMinCourseTime = 120;               //最短课时(分钟)
     private int mTrafficTime = 120;                 //可接受交通时间(分钟)
     private int mMaxTrafficTime = 180;              //可接受最长交通时间(分钟)
     private int mSubsidy = 5;                           //交通补贴
-    private int mMaxBoyAge = -1;                    //天使计划男孩最大年龄(默认0表示不接受)
-    private int mMaxGirlAge = -1;                   //天使计划女孩最大年龄(默认0表示不接受)
+    private int mMaxBoyAge = 0;                    //天使计划男孩最大年龄(默认0表示不接受)
+    private int mMaxGirlAge = 0;                   //天使计划女孩最大年龄(默认0表示不接受)
     private int mAngelPrice = 0;                    //天使计划价格
 
     private MyTimePicker mTimePicker;
@@ -101,7 +98,7 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
         mTeachTimeTextView.setText(mUser.getTeacherMessage().getSingleBookTime().size() == 0 ?
                 "请选择您方便授课的时间" : "已填写");
 
-        mTeachableCourseTextView.setText(mUser.getTeacherMessage().getCourse().size() == 0 ?
+        mTeachableCourseTextView.setText(mUser.getTeacherMessage().getTeacherPrice().size() == 0 ?
                 "请完善此信息" : "已填写");
     }
 
@@ -130,7 +127,7 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
         mMaxGirlAge = mUser.getTeacherMessage().getAngelPlan().getGirl();
         mMaxBoyAge = mUser.getTeacherMessage().getAngelPlan().getBoy();
         mAngelPrice = mUser.getTeacherMessage().getAngelPlan().getPrice();
-        //Todo 授课时间跟可教授课程信息
+
     }
 
     @Override
@@ -172,8 +169,13 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
 
         if (mJoinAngelPlan && mUser.getTeacherMessage().getAngelPlan().getPrice() != 0) {
             mJoinAngleTextView.setText(mUser.getTeacherMessage().getAngelPlan().isJoin() ? R.string.yes : R.string.no);
-            mAngleBoyAgeTextView.setText(String.format("%d 岁", mUser.getTeacherMessage().getAngelPlan().getBoy()));
-            mAngleGirlAgeTextView.setText(String.format("%d 岁", mUser.getTeacherMessage().getAngelPlan().getGirl()));
+            mAngleBoyAgeTextView.setText(mUser.getTeacherMessage().getAngelPlan().getBoy() == 0 ?
+                    "不接受":
+                    String.format("%d 岁", mUser.getTeacherMessage().getAngelPlan().getBoy()));
+
+            mAngleGirlAgeTextView.setText(mUser.getTeacherMessage().getAngelPlan().getGirl() == 0 ?
+                    "不接受":
+                    String.format("%d 岁", mUser.getTeacherMessage().getAngelPlan().getGirl()));
             mAnglePriceTextView.setText(String.format("%d元/小时", mUser.getTeacherMessage().getAngelPlan().getPrice()));
         }
     }
@@ -223,7 +225,7 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
                     case PICK_OPTION_ANGEL_GIRL_AGE:
                         mMaxGirlAge = options1;
                         if (options1 == 0) {
-                            mAngleBoyAgeTextView.setText(mAge.get(0));
+                            mAngleGirlAgeTextView.setText(mAge.get(0));
                             break;
                         }
                         mAngleGirlAgeTextView.setText(String.format("%d 岁", mMaxGirlAge));
@@ -234,11 +236,6 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
                 }
             }
         });
-    }
-
-    @Override
-    protected void fetchData() {
-        super.fetchData();
     }
 
     /**
@@ -401,6 +398,21 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
 
 
     private boolean validate(User user) {
+        if(user.getTeacherMessage().getMultiBookTime().size() == 0){
+            toast("请先选择授课时间");
+            return false;
+        }
+
+        if(user.getTeacherMessage().getSingleBookTime().size() == 0){
+            toast("请确认最近两月授课时间");
+            return false;
+        }
+
+        if(user.getTeacherMessage().getTeacherPrice().size() == 0){
+            toast("请选择可教授课程");
+            return false;
+        }
+
         if (user.getTeacherMessage().getAngelPlan().isJoin() &&
                 user.getTeacherMessage().getAngelPlan().getPrice() == 0) {
             toast("请输入天使计划价格");

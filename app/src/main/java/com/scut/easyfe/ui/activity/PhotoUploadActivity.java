@@ -24,9 +24,16 @@ import com.qiniu.android.storage.UploadOptions;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.entity.user.User;
+import com.scut.easyfe.network.RequestBase;
+import com.scut.easyfe.network.RequestListener;
+import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.authentication.RTeacherRegister;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.BitmapUtils;
 import com.scut.easyfe.utils.DensityUtil;
+import com.scut.easyfe.utils.DialogUtils;
+import com.scut.easyfe.utils.ImageUtils;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
@@ -50,6 +57,10 @@ public class PhotoUploadActivity extends BaseActivity {
     private static final int TYPE_AVATAR = 2;
     private int mPhotoType = -1;    //选择图片对应的类型
 
+    private String mIdCardUrl = "";
+    private String mStudentCardUrl = "";
+    private String mAvatarUrl = "";
+
     private Bitmap newAvatar;
     private Uri imageCaptureUri;
     private boolean tryingAnotherCropMethod = false;
@@ -61,9 +72,25 @@ public class PhotoUploadActivity extends BaseActivity {
 
     private boolean mIsUploading = false;
 
+    private User mUser;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mUser = App.getUser();
+    }
+
     @Override
     protected void setLayoutView() {
         setContentView(R.layout.activity_photo_upload);
+    }
+
+    @Override
+    protected void initData() {
+        mUser = App.getUser();
+        mIdCardUrl = mUser.getTeacherMessage().getImages().getIdCard();
+        mStudentCardUrl = mUser.getTeacherMessage().getImages().getStudentCard();
+        mAvatarUrl = mUser.getTeacherMessage().getImages().getOfficial();
     }
 
     @Override
@@ -95,10 +122,14 @@ public class PhotoUploadActivity extends BaseActivity {
                 }
             }
         });
-    }
 
-    @Override
-    protected void initListener() {
+        ImageUtils.displayImage(mIdCardUrl, mIdCardImageView);
+        ImageUtils.displayImage(mStudentCardUrl, mStudentCardImageView);
+        ImageUtils.displayImage(mAvatarUrl, mAvatarImageView);
+
+        mIdCardImageView.setVisibility(mIdCardUrl.length() > 0 ? View.VISIBLE : View.GONE);
+        mStudentCardImageView.setVisibility(mStudentCardUrl.length() > 0 ? View.VISIBLE : View.GONE);
+        mAvatarImageView.setVisibility(mAvatarUrl.length() > 0 ? View.VISIBLE : View.GONE);
     }
 
     /**
@@ -135,6 +166,56 @@ public class PhotoUploadActivity extends BaseActivity {
         }
         mPhotoType = TYPE_AVATAR;
         mSelectAlertView.show();
+    }
+
+    public void onSubmitClick(View view){
+        if(null == mIdCardUrl || mIdCardUrl.length() == 0){
+            toast("请上传身份证照");
+            return;
+        }
+
+        mUser.getTeacherMessage().getImages().setIdCard(mIdCardUrl);
+
+        if(null == mStudentCardUrl || mStudentCardUrl.length() == 0){
+            toast("请上传学生证证照");
+            return;
+        }
+
+        mUser.getTeacherMessage().getImages().setStudentCard(mStudentCardUrl);
+
+        if(null == mAvatarUrl || mAvatarUrl.length() == 0){
+            toast("请上传免冠证件照");
+            return;
+        }
+
+        mUser.getTeacherMessage().getImages().setOfficial(mAvatarUrl);
+
+        App.setUser(mUser);
+
+        RequestManager.get().execute(new RTeacherRegister(mUser), new RequestListener<JSONObject>() {
+            @Override
+            public void onSuccess(RequestBase request, JSONObject result) {
+                mUser.set_id(result.optString("_id"));
+                mUser.setToken(result.optString("token"));
+                mUser.setAvatar(result.optString("avatar"));
+                mUser.setType(result.optInt("type"));
+
+                DialogUtils.makeConfirmDialog(PhotoUploadActivity.this, "提示", "您的信息正在审核中,请耐心等待", new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Object o, int position) {
+                        if (position == 0) {
+                            redirectToActivity(mContext, MainActivity.class);
+                        }
+                    }
+                });
+
+            }
+
+            @Override
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                toast(errorMsg);
+            }
+        });
     }
 
     /**
@@ -299,7 +380,24 @@ public class PhotoUploadActivity extends BaseActivity {
                     LogUtils.i(Constants.Tag.TEACHER_REGISTER_TAG, responseInfo.toString());
                     if (responseInfo.isOK()) {
                         try {
-                            LogUtils.i(Constants.Tag.TEACHER_REGISTER_TAG, Constants.URL.DEFAULT_QINIU_URL + jsonObject.get("key"));
+                            String photoUrl = Constants.URL.DEFAULT_QINIU_URL + jsonObject.get("key");
+                            LogUtils.i(Constants.Tag.TEACHER_REGISTER_TAG, photoUrl);
+                            switch (mPhotoType){
+                                case TYPE_ID_CARD:
+                                    mIdCardUrl = photoUrl;
+                                    break;
+
+                                case TYPE_STUDENT_CARD:
+                                    mStudentCardUrl = photoUrl;
+                                    break;
+
+                                case TYPE_AVATAR:
+                                    mAvatarUrl = photoUrl;
+                                    break;
+
+                                default:
+                                    break;
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
