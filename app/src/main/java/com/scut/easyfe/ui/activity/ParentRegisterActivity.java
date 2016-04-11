@@ -1,5 +1,6 @@
 package com.scut.easyfe.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,16 +12,25 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.Address;
+import com.scut.easyfe.entity.ChildGrade;
 import com.scut.easyfe.entity.user.Parent;
 import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.request.authentication.RParentRegister;
+import com.scut.easyfe.network.request.info.RGetChildGrade;
+import com.scut.easyfe.network.request.parent.RGetParentInfo;
+import com.scut.easyfe.network.request.parent.RParentInfoModify;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.MapUtils;
 import com.scut.easyfe.utils.OtherUtils;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 家长注册 跟 修改基本信息
@@ -30,7 +40,8 @@ import com.scut.easyfe.utils.OtherUtils;
 public class ParentRegisterActivity extends BaseActivity {
     public static final int REQUEST_CODE = 0;
 
-    private OptionsPickerView<String> mPicker;
+    private OptionsPickerView<String> mDoublePicker;
+    private OptionsPickerView<String> mSinglePicker;
 
     private EditText mParentNameEditText;           //家长姓名
     private EditText mParentPhoneEditText;          //家长手机
@@ -41,9 +52,6 @@ public class ParentRegisterActivity extends BaseActivity {
     private TextView mChildGradeTextView;           //宝贝年级
     private TextView mHasAccountHintTextView;       //已经有账号时的提示信息
     private TextView mRegisterTextView;             //已经有账号时的提示信息
-
-
-    private TextView mModifyTextView;               //修改信息时用到
 
     private int mParentGender = Constants.Identifier.FEMALE;   //家长选择的性别
     private int mChildGender = Constants.Identifier.FEMALE;    //宝贝的性别
@@ -56,6 +64,16 @@ public class ParentRegisterActivity extends BaseActivity {
     private int mFromType = Constants.Identifier.TYPE_REGISTER;   //到此页面的功能(注册还是修改家教信息)
 
     private User mUser = new User();
+    private boolean mGetGradeSuccess = false;
+    private boolean mUpdateUserSuccess = false;
+    private ArrayList<String> mStates = new ArrayList<>();
+    private ArrayList<ArrayList<String>> mGrades = new ArrayList<>();
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mUser = App.getUser();
+    }
 
     @Override
     protected void setLayoutView() {
@@ -64,6 +82,7 @@ public class ParentRegisterActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        mUser = App.getUser();
         Intent intent = getIntent();
         if (null != intent) {
             Bundle extras = intent.getExtras();
@@ -75,8 +94,10 @@ public class ParentRegisterActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        mPicker = new OptionsPickerView<>(this);
-        mPicker.setCancelable(true);
+        mDoublePicker = new OptionsPickerView<>(this);
+        mSinglePicker = new OptionsPickerView<>(this);
+        mDoublePicker.setCancelable(true);
+        mSinglePicker.setCancelable(false);
 
         mParentNameEditText = OtherUtils.findViewById(this, R.id.parent_register_et_name);
         mParentPhoneEditText = OtherUtils.findViewById(this, R.id.parent_register_et_phone);
@@ -87,7 +108,6 @@ public class ParentRegisterActivity extends BaseActivity {
         mChildGradeTextView = OtherUtils.findViewById(this, R.id.parent_register_tv_child_grade);
         mAddressTextView = OtherUtils.findViewById(this, R.id.parent_register_tv_address);
         mRegisterTextView = OtherUtils.findViewById(this, R.id.parent_register_tv_submit);
-        mModifyTextView = OtherUtils.findViewById(this, R.id.base_info_tv_modify);
         mHasAccountHintTextView = OtherUtils.findViewById(this, R.id.parent_register_tv_has_account_hint);
 
         updateView();
@@ -100,8 +120,7 @@ public class ParentRegisterActivity extends BaseActivity {
         } else {
             ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("基本信息维护");
             mHasAccountHintTextView.setVisibility(View.GONE);
-            mRegisterTextView.setVisibility(View.GONE);
-            mModifyTextView.setVisibility(View.VISIBLE);
+            mRegisterTextView.setText("确认并保存");
             mParentNameEditText.setTextColor(mResources.getColor(R.color.text_area_text_color));
             mParentNameEditText.setEnabled(false);
             mParentGenderTextView.setTextColor(mResources.getColor(R.color.text_area_text_color));
@@ -138,7 +157,7 @@ public class ParentRegisterActivity extends BaseActivity {
                 mAddress = (null == address ? "" : address);
                 mCity = city;
 
-                if(mFromType == Constants.Identifier.TYPE_REGISTER) {
+                if (mFromType == Constants.Identifier.TYPE_REGISTER) {
                     mAddressTextView.setText(mAddress);
                 }
             }
@@ -148,6 +167,97 @@ public class ParentRegisterActivity extends BaseActivity {
                 LogUtils.i(Constants.Tag.MAP_TAG, "定位失败");
             }
         });
+
+        startLoading("加载数据中", new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if (mFromType == Constants.Identifier.TYPE_REGISTER) {
+                    if (!mGetGradeSuccess) {
+                        toast("获取数据失败");
+                        finish();
+                    }
+                } else {
+                    if (!(mGetGradeSuccess && mUpdateUserSuccess)) {
+                        toast("获取数据失败");
+                        finish();
+                    }
+                }
+            }
+        });
+
+        RequestManager.get().execute(new RGetChildGrade(), new RequestListener<List<ChildGrade>>() {
+            @Override
+            public void onSuccess(RequestBase request, List<ChildGrade> result) {
+                for (ChildGrade childGrade :
+                        result) {
+                    mStates.add(childGrade.getName());
+                    ArrayList<String> tempGrades = new ArrayList<>();
+                    tempGrades.addAll(childGrade.getGrade());
+                    mGrades.add(tempGrades);
+                }
+
+                if (mStates.size() > 0) {
+                    mDoublePicker.setPicker(mStates, mGrades, true);
+                    mDoublePicker.setCyclic(false);
+                    mDoublePicker.setSelectOptions(0, 0);
+                    mChildGradeTextView.setText(String.format("%s %s", mStates.get(0), mGrades.get(0).get(0)));
+                }
+
+                if (mFromType == Constants.Identifier.TYPE_REGISTER) {
+                    mGetGradeSuccess = true;
+                    stopLoading();
+                } else {
+                    mGetGradeSuccess = true;
+                    if (mUpdateUserSuccess) {
+                        stopLoading();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                toast(errorMsg);
+            }
+        });
+
+        if(mFromType == Constants.Identifier.TYPE_MODIFY) {
+            RequestManager.get().execute(new RGetParentInfo(App.getUser().getToken()), new RequestListener<User>() {
+                @Override
+                public void onSuccess(RequestBase request, User user) {
+                    mUser.setName(user.getName());
+                    mUser.setGender(user.getGender());
+                    mUser.setPhone(user.getPhone());
+                    mUser.setPassword(user.getPassword());
+                    mUser.setToken(user.getToken());
+                    mUser.setType(user.getType());
+                    mUser.setPosition(user.getPosition());
+                    mUser.setAvatar(user.getAvatar());
+                    mUser.setParentMessage(user.getParentMessage());
+
+                    mParentNameEditText.setText(mUser.getName());
+                    mParentGenderTextView.setText(mUser.getGender() == Constants.Identifier.FEMALE ? R.string.female : R.string.male);
+                    mParentPhoneEditText.setText(mUser.getPhone());
+                    mParentPasswordEditText.setText(mUser.getPassword());
+                    mChildGenderTextView.setText(mUser.getParentMessage().getChildGender() == Constants.Identifier.FEMALE ? R.string.female : R.string.male);
+                    mChildGradeTextView.setText(mUser.getParentMessage().getChildGrade());
+                    mAddressTextView.setText(mUser.getPosition().getAddress());
+                    mAddress = mUser.getPosition().getAddress();
+                    mLatitude = mUser.getPosition().getLatitude();
+                    mLongitude = mUser.getPosition().getLongitude();
+
+                    mUpdateUserSuccess = true;
+                    if (mGetGradeSuccess) {
+                        stopLoading();
+                    }
+                }
+
+                @Override
+                public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                    toast(errorMsg);
+                }
+            });
+        }
+
     }
 
     /**
@@ -166,22 +276,22 @@ public class ParentRegisterActivity extends BaseActivity {
      */
     public void onParentGenderClick(View view) {
         OtherUtils.hideSoftInputWindow(mParentGenderTextView.getWindowToken());
-        if (mPicker.isShowing()) {
-            mPicker.dismiss();
+        if (mSinglePicker.isShowing()) {
+            mSinglePicker.dismiss();
             return;
         }
-        mPicker.setTitle("选择您的性别");
-        mPicker.setPicker(Constants.Data.genderList);
-        mPicker.setSelectOptions(0);
-        mPicker.setCyclic(false);
-        mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+        mSinglePicker.setTitle("选择您的性别");
+        mSinglePicker.setPicker(Constants.Data.genderList);
+        mSinglePicker.setSelectOptions(0);
+        mSinglePicker.setCyclic(false);
+        mSinglePicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 mParentGender = options1 == 0 ? Constants.Identifier.FEMALE : Constants.Identifier.MALE;
                 mParentGenderTextView.setText(Constants.Data.genderList.get(options1));
             }
         });
-        mPicker.show();
+        mSinglePicker.show();
     }
 
     /**
@@ -189,22 +299,22 @@ public class ParentRegisterActivity extends BaseActivity {
      */
     public void onChildGenderClick(View view) {
         OtherUtils.hideSoftInputWindow(mChildGenderTextView.getWindowToken());
-        if (mPicker.isShowing()) {
-            mPicker.dismiss();
+        if (mSinglePicker.isShowing()) {
+            mSinglePicker.dismiss();
             return;
         }
-        mPicker.setTitle("选择宝贝性别");
-        mPicker.setPicker(Constants.Data.genderList);
-        mPicker.setSelectOptions(0);
-        mPicker.setCyclic(false);
-        mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+        mSinglePicker.setTitle("选择宝贝性别");
+        mSinglePicker.setPicker(Constants.Data.genderList);
+        mSinglePicker.setSelectOptions(0);
+        mSinglePicker.setCyclic(false);
+        mSinglePicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 mChildGender = options1 == 0 ? Constants.Identifier.FEMALE : Constants.Identifier.MALE;
                 mChildGenderTextView.setText(Constants.Data.genderList.get(options1));
             }
         });
-        mPicker.show();
+        mSinglePicker.show();
     }
 
     /**
@@ -212,24 +322,22 @@ public class ParentRegisterActivity extends BaseActivity {
      */
     public void onChildGradeClick(View view) {
         OtherUtils.hideSoftInputWindow(mChildGradeTextView.getWindowToken());
-        if (mPicker.isShowing()) {
-            mPicker.dismiss();
+        if (mDoublePicker.isShowing()) {
+            mDoublePicker.dismiss();
             return;
         }
 
-        mPicker.setTitle("选择宝贝年级");
-        mPicker.setPicker(Constants.Data.studentStateList, Constants.Data.studentGradeList, true);
-        mPicker.setSelectOptions(0, 0);
-        mPicker.setCyclic(false);
-        mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+        mDoublePicker.setTitle("选择宝贝年级");
+        mDoublePicker.setSelectOptions(0, 0);
+        mDoublePicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 mChildGradeTextView.setText(String.format("%s %s",
-                        Constants.Data.studentStateList.get(options1),
-                        Constants.Data.studentGradeList.get(options1).get(option2)));
+                        mStates.get(options1),
+                        mGrades.get(options1).get(option2)));
             }
         });
-        mPicker.show();
+        mDoublePicker.show();
     }
 
     /**
@@ -275,47 +383,57 @@ public class ParentRegisterActivity extends BaseActivity {
      * @param view 被点击视图
      */
     public void onRegisterClick(View view) {
-        final User user = new User();
-        user.setName(mParentNameEditText.getText().toString());
-        user.setGender(mParentGender);
-        user.setPhone(mParentPhoneEditText.getText().toString());
-        user.setPassword(mParentPasswordEditText.getText().toString());
+        mUser.setName(mParentNameEditText.getText().toString());
+        mUser.setGender(mParentGender);
+        mUser.setPhone(mParentPhoneEditText.getText().toString());
+        mUser.setPassword(mParentPasswordEditText.getText().toString());
 
         Parent parentMsg = new Parent();
         parentMsg.setChildGender(mChildGender);
         parentMsg.setChildGrade(mChildGradeTextView.getText().toString());
-        user.setParentMessage(parentMsg);
+        mUser.setParentMessage(parentMsg);
 
         Address address = new Address();
         address.setAddress(mAddress);
         address.setLatitude(mLatitude);
         address.setLongitude(mLongitude);
-        user.setPosition(address);
+        mUser.setPosition(address);
 
-        if (!validate(user)) {
+        if (!validate(mUser)) {
             return;
         }
 
-        //Todo 删除这里代码
-        user.getParentMessage().setChildGrade("56fd4787618da04c17b1d167");
+        if (mFromType == Constants.Identifier.TYPE_REGISTER) {
+            RequestManager.get().execute(new RParentRegister(mUser), new RequestListener<User>() {
+                @Override
+                public void onSuccess(RequestBase request, User result) {
+                    toast("注册成功");
+                    mUser.set_id(result.get_id());
+                    mUser.setToken(result.getToken());
+                    mUser.setAvatar(result.getAvatar());
+                    mUser.setType(result.getType());
+                    App.setUser(mUser);
+                    redirectToActivity(mContext, MainActivity.class);
+                }
 
-        RequestManager.get().execute(new RParentRegister(user), new RequestListener<User>() {
-            @Override
-            public void onSuccess(RequestBase request, User result) {
-                toast("注册成功");
-                user.set_id(result.get_id());
-                user.setToken(result.getToken());
-                user.setAvatar(result.getAvatar());
-                user.setType(result.getType());
-                App.setUser(user);
-                redirectToActivity(mContext, MainActivity.class);
-            }
+                @Override
+                public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                    toast(errorMsg);
+                }
+            });
+        } else if (mFromType == Constants.Identifier.TYPE_MODIFY) {
+            RequestManager.get().execute(new RParentInfoModify(mUser), new RequestListener<JSONObject>() {
+                @Override
+                public void onSuccess(RequestBase request, JSONObject result) {
+                    toast("修改成功");
+                }
 
-            @Override
-            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
-                toast(errorMsg);
-            }
-        });
+                @Override
+                public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                    toast(errorMsg);
+                }
+            });
+        }
 
     }
 
@@ -349,13 +467,6 @@ public class ParentRegisterActivity extends BaseActivity {
         }
 
         return true;
-    }
-
-    /**
-     * @param view 被点击视图
-     */
-    public void onModifyClick(View view) {
-        toast("就修改喽");
     }
 
     @Override

@@ -132,6 +132,10 @@ public class PhotoUploadActivity extends BaseActivity {
         mAvatarImageView.setVisibility(mAvatarUrl.length() > 0 ? View.VISIBLE : View.GONE);
     }
 
+    public void onBackClick(View view){
+        finish();
+    }
+
     /**
      * 上传身份证
      */

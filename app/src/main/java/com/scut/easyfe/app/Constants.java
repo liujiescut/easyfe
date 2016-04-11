@@ -29,6 +29,11 @@ public class Constants {
         public static final String URL_CALLBACK = URL_BASE + "Share/Feedback";
         public static final String URL_ONLINE_PARAMS = URL_BASE + "Share/OnlineParams";
         public static final String URL_TEACHER_REGISTER = URL_BASE + "Authentication/SignUp/Teacher";
+        public static final String URL_PARENT_INFO_MODIFY = URL_BASE + "Parent/Data";
+        public static final String URL_WALLET_INFO = URL_BASE + "Money/Wallet";
+        public static final String URL_GET_PARENT_INFO = URL_BASE + "Parent/Data";
+        public static final String URL_GET_TEACHER_INFO = URL_BASE + "Teacher";
+        public static final String URL_PUBLISH_SPECIAL_ORDER = URL_BASE + "Teacher/DiscountOrder";
     }
 
     /**

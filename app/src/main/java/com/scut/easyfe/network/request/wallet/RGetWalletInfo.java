@@ -1,9 +1,9 @@
-package com.scut.easyfe.network.request.authentication;
+package com.scut.easyfe.network.request.wallet;
 
 import android.support.annotation.NonNull;
 
 import com.scut.easyfe.app.Constants;
-import com.scut.easyfe.entity.user.User;
+import com.scut.easyfe.entity.Wallet;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.kjFrame.http.HttpParams;
 import com.scut.easyfe.network.kjFrame.http.Request;
@@ -15,23 +15,19 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 /**
- * 登陆请求
+ * 获取钱包信息  Todo: test
  * Created by jay on 16/4/7.
  */
-public class RLogin extends RequestBase<User> {
-    //手机号
-    private String mPhone = "";
-    //密码
-    private String mPassword = "";
+public class RGetWalletInfo extends RequestBase<Wallet>{
+    private String mToken = "";
 
-    public RLogin(@NonNull String mPhone, @NonNull String mPassword) {
-        this.mPhone = mPhone;
-        this.mPassword = mPassword;
+    public RGetWalletInfo(@NonNull String token) {
+        this.mToken = token;
     }
 
     @Override
     public String getUrl() {
-        return Constants.URL.URL_LOGIN;
+        return Constants.URL.URL_WALLET_INFO;
     }
 
     @Override
@@ -42,21 +38,20 @@ public class RLogin extends RequestBase<User> {
     @Override
     public HttpParams getQueryParams() {
         HttpParams params = new HttpParams();
-        params.putQueryParams("phone", mPhone);
-        params.putQueryParams("password", mPassword);
+        params.putQueryParams("token", mToken);
         return params;
     }
 
     @Override
-    public User parseResultAsObject(JSONObject jsonObject) throws IOException, JSONException {
-        User user = new User();
+    public Wallet parseResultAsObject(JSONObject jsonObject) throws IOException, JSONException {
+        Wallet wallet = new Wallet();
         try {
-            user = mObjectMapper.readValue(jsonObject.toString(), User.class);
+            wallet = mObjectMapper.readValue(jsonObject.toString(), Wallet.class);
         }catch (Exception e){
-            LogUtils.i("User  parseResultAsObject -> 解析出错");
+            LogUtils.i("Wallet  parseResultAsObject -> 解析出错");
             e.printStackTrace();
         }
-        return user;
+        return wallet;
     }
 
     @Override

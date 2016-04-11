@@ -1,9 +1,8 @@
 package com.scut.easyfe.network.request.info;
 
 import com.fasterxml.jackson.databind.JavaType;
-import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
-import com.scut.easyfe.entity.Message;
+import com.scut.easyfe.entity.ChildGrade;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.kjFrame.http.HttpParams;
 import com.scut.easyfe.network.kjFrame.http.Request;
@@ -21,7 +20,7 @@ import java.util.List;
  * 获取学生年级
  * Created by jay on 16/4/8.
  */
-public class RGetChildGrade extends RequestBase<List<List>>{
+public class RGetChildGrade extends RequestBase<List<ChildGrade>>{
     @Override
     public String getUrl() {
         return Constants.URL.URL_GET_CHILD_GRADE;
@@ -38,28 +37,19 @@ public class RGetChildGrade extends RequestBase<List<List>>{
     }
 
     @Override
-    public List<List> parseResultAsObject(JSONObject jsonObject) throws IOException, JSONException {
-        List<List> result = new ArrayList<>();
-        ArrayList<String> stateList = new ArrayList<>();
-        ArrayList<ArrayList<String>> gradeList = new ArrayList<>();
-        JSONArray data = jsonObject.optJSONArray("grades");
-        if(null != data){
-            JSONObject stateJSONObject;
-            JSONArray gradeJSONArray;
-            for (int i = 0; i < data.length(); i++) {
-                stateJSONObject = data.getJSONObject(i);
-                gradeJSONArray = stateJSONObject.optJSONArray("grade");
-                stateList.add(stateJSONObject.optString("name"));
-                ArrayList<String> gradeArrayList = new ArrayList<>();
-                for(int j = 0; j < gradeJSONArray.length(); j++){
-                    gradeArrayList.add(gradeJSONArray.getString(i));
-                }
-                gradeList.add(gradeArrayList);
+    public List<ChildGrade> parseResultAsObject(JSONObject jsonObject) throws IOException, JSONException {
+        List<ChildGrade> result = new ArrayList<>();
+        JavaType javaType = mObjectMapper.getTypeFactory().constructParametricType(List.class, ChildGrade.class);
+        try {
+            JSONArray grades = jsonObject.optJSONArray("grades");
+            if(null != grades){
+                /** 将返回的地址JsonArray转化为List<ChildGrade> */
+                result = mObjectMapper.readValue(grades.toString(), javaType);
             }
+        } catch (IOException e) {
+            LogUtils.i("Json转换为List<ChildGrade>失败!");
+            e.printStackTrace();
         }
-
-        result.add(stateList);
-        result.add(gradeList);
 
         return result;
     }

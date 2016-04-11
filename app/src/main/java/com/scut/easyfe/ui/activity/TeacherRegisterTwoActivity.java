@@ -155,6 +155,7 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
 
         if (!mIsRegister) {
             mWorkOrNotLinearLayout.setVisibility(View.VISIBLE);
+            mSaveTextView.setText("确认并保存");
         }
 
         mMinTeachTimeTextView.setText(OtherUtils.getTimeFromMimute(mUser.getTeacherMessage().getMinCourseTime()));
@@ -374,26 +375,29 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
      * 点击注册
      */
     public void onRegisterTwoClick(View view) {
-        mUser.getTeacherMessage().setMinCourseTime(mMinCourseTime);
-        mUser.getTeacherMessage().setFreeTrafficTime(mTrafficTime);
-        mUser.getTeacherMessage().setMaxTrafficTime(mMaxTrafficTime);
-        mUser.getTeacherMessage().setSubsidy(mSubsidy);
-        mUser.getTeacherMessage().getAngelPlan().setJoin(mJoinAngelPlan);
+            mUser.getTeacherMessage().setMinCourseTime(mMinCourseTime);
+            mUser.getTeacherMessage().setFreeTrafficTime(mTrafficTime);
+            mUser.getTeacherMessage().setMaxTrafficTime(mMaxTrafficTime);
+            mUser.getTeacherMessage().setSubsidy(mSubsidy);
+            mUser.getTeacherMessage().getAngelPlan().setJoin(mJoinAngelPlan);
 
-        if (mJoinAngelPlan) {
-            mUser.getTeacherMessage().getAngelPlan().setBoy(mMaxBoyAge);
-            mUser.getTeacherMessage().getAngelPlan().setGirl(mMaxGirlAge);
-            mUser.getTeacherMessage().getAngelPlan().setPrice(mAngelPrice);
-        }
+            if (mJoinAngelPlan) {
+                mUser.getTeacherMessage().getAngelPlan().setBoy(mMaxBoyAge);
+                mUser.getTeacherMessage().getAngelPlan().setGirl(mMaxGirlAge);
+                mUser.getTeacherMessage().getAngelPlan().setPrice(mAngelPrice);
+            }
 
-        if (!validate(mUser)) {
-            return;
-        }
+            if (!validate(mUser)) {
+                return;
+            }
 
         App.setUser(mUser);
         toast("保存成功");
+        if(!mIsRegister){
 
-        redirectToActivity(this, ReceivablesChannelActivity.class);
+        }else {
+            redirectToActivity(this, ReceivablesChannelActivity.class);
+        }
     }
 
 

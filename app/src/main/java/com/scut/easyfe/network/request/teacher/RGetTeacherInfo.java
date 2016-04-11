@@ -1,4 +1,4 @@
-package com.scut.easyfe.network.request.authentication;
+package com.scut.easyfe.network.request.teacher;
 
 import android.support.annotation.NonNull;
 
@@ -15,23 +15,19 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 /**
- * 登陆请求
+ * 获取家教信息
  * Created by jay on 16/4/7.
  */
-public class RLogin extends RequestBase<User> {
-    //手机号
-    private String mPhone = "";
-    //密码
-    private String mPassword = "";
+public class RGetTeacherInfo extends RequestBase<User>{
+    private String mToken = "";
 
-    public RLogin(@NonNull String mPhone, @NonNull String mPassword) {
-        this.mPhone = mPhone;
-        this.mPassword = mPassword;
+    public RGetTeacherInfo(@NonNull String token) {
+        this.mToken = token;
     }
 
     @Override
     public String getUrl() {
-        return Constants.URL.URL_LOGIN;
+        return Constants.URL.URL_GET_TEACHER_INFO;
     }
 
     @Override
@@ -42,8 +38,7 @@ public class RLogin extends RequestBase<User> {
     @Override
     public HttpParams getQueryParams() {
         HttpParams params = new HttpParams();
-        params.putQueryParams("phone", mPhone);
-        params.putQueryParams("password", mPassword);
+        params.putQueryParams("token", mToken);
         return params;
     }
 

@@ -1,8 +1,9 @@
-package com.scut.easyfe.network.request.authentication;
+package com.scut.easyfe.network.request.parent;
 
 import android.support.annotation.NonNull;
 
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.entity.Wallet;
 import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.kjFrame.http.HttpParams;
@@ -15,23 +16,19 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 /**
- * 登陆请求
+ * 获取家长信息
  * Created by jay on 16/4/7.
  */
-public class RLogin extends RequestBase<User> {
-    //手机号
-    private String mPhone = "";
-    //密码
-    private String mPassword = "";
+public class RGetParentInfo extends RequestBase<User>{
+    private String mToken = "";
 
-    public RLogin(@NonNull String mPhone, @NonNull String mPassword) {
-        this.mPhone = mPhone;
-        this.mPassword = mPassword;
+    public RGetParentInfo(@NonNull String token) {
+        this.mToken = token;
     }
 
     @Override
     public String getUrl() {
-        return Constants.URL.URL_LOGIN;
+        return Constants.URL.URL_GET_PARENT_INFO;
     }
 
     @Override
@@ -42,8 +39,7 @@ public class RLogin extends RequestBase<User> {
     @Override
     public HttpParams getQueryParams() {
         HttpParams params = new HttpParams();
-        params.putQueryParams("phone", mPhone);
-        params.putQueryParams("password", mPassword);
+        params.putQueryParams("token", mToken);
         return params;
     }
 

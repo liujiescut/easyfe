@@ -58,17 +58,25 @@ public class LoginActivity extends BaseActivity {
         String phone = mPhoneEditText.getText().toString();
         String password = mPasswordEditText.getText().toString();
 
-//        if(!validate(phone, password)){
-//            return;
-//        }
-
-        phone = "18814111130";
-        password = "123456";
+        if(!validate(phone, password)){
+            return;
+        }
 
         RequestManager.get().execute(new RLogin(phone, password), new RequestListener<User>() {
             @Override
             public void onSuccess(RequestBase request, User user) {
-                App.setUser(user);
+                User mUser = App.getUser();
+                mUser.set_id(user.get_id());
+                mUser.setToken(user.getToken());
+                mUser.setName(user.getName());
+                mUser.setType(user.getType());
+                mUser.setAvatar(user.getAvatar());
+
+                //Todo: 返回level?
+
+                App.setUser(mUser);
+                toast("登录成功");
+                redirectToActivity(mContext, MainActivity.class);
                 LogUtils.i(Constants.Tag.LOGIN_TAG, user.getToken());
             }
 

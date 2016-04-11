@@ -21,10 +21,13 @@ import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.request.info.RGetSchool;
+import com.scut.easyfe.network.request.parent.RParentInfoModify;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.MapUtils;
 import com.scut.easyfe.utils.OtherUtils;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -234,7 +237,6 @@ public class TeacherRegisterOneActivity extends BaseActivity {
             public void onSuccess(RequestBase request, List<School> result) {
                 mSchools.clear();
                 mSchools.addAll(result);
-                isLoadingDialogDismissByUser = false;
 
                 mSchoolNames.clear();
                 for (School school :
@@ -247,6 +249,8 @@ public class TeacherRegisterOneActivity extends BaseActivity {
                     mSchoolTextView.setText(mSchoolNames.get(0));
                     mProfessionTextView.setText(mProfessionNames.get(0));
                 }
+
+                isLoadingDialogDismissByUser = false;
                 stopLoading();
             }
 
@@ -558,7 +562,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
 
 
     public void onModifyClick(View view) {
-        toast("就保存喽");
+//Todo 既是家长又是家教修改信息
     }
 
     public void onChildGenderClick(View view) {

@@ -174,25 +174,6 @@
         android:id="@+id/parent_register_tv_submit" />
 
     <TextView
-        android:id="@+id/base_info_tv_modify"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/layout_margin_small"
-        android:layout_marginEnd="@dimen/layout_margin_small"
-        android:layout_marginStart="@dimen/layout_margin_small"
-        android:layout_marginTop="@dimen/layout_margin_small"
-        android:background="@drawable/selector_main_left_drawer_item"
-        android:clickable="true"
-        android:gravity="center"
-        android:onClick="onModifyClick"
-        android:padding="@dimen/layout_padding_small"
-        android:text="@string/sure_and_save"
-        android:textColor="@color/title_text_color"
-        android:visibility="gone"
-        android:textSize="@dimen/text_size_normal" />
-
-
-    <TextView
         android:id="@+id/parent_register_tv_has_account_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

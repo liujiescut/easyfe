@@ -3,6 +3,7 @@ package com.scut.easyfe.entity.user;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.Address;
+import com.scut.easyfe.entity.Bank;
 import com.scut.easyfe.entity.BaseEntity;
 import com.scut.easyfe.utils.ACache;
 import com.scut.easyfe.utils.LogUtils;
@@ -261,37 +262,6 @@ public class User extends BaseEntity {
             this.bank = bank;
         }
 
-        public class Bank implements Serializable{
-            private String name = "";
-            private String account = "";
-
-            public JSONObject getBankJson() {
-                JSONObject json = new JSONObject();
-                try {
-                    json.put("name", name);
-                    json.put("account", account);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                return json;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-
-            public String getAccount() {
-                return account;
-            }
-
-            public void setAccount(String account) {
-                this.account = account;
-            }
-        }
     }
 
 }

@@ -37,7 +37,6 @@ public class RParentRegister extends RequestBase<User> {
     @Override
     public JSONObject getJsonParams() {
         JSONObject params = new JSONObject();
-        JSONObject position = new JSONObject();
         try {
             params.put("name", user.getName());
             params.put("gender", user.getGender());
@@ -46,10 +45,7 @@ public class RParentRegister extends RequestBase<User> {
             params.put("childGender", user.getParentMessage().getChildGender());
             params.put("childGrade", user.getParentMessage().getChildGrade());
 
-            position.put("address", user.getPosition().getAddress());
-            position.put("latitude", user.getPosition().getLatitude());
-            position.put("longitude", user.getPosition().getLongitude());
-            params.put("position", position);
+            params.put("position", user.getPosition().getAddressJson());
         } catch (JSONException e) {
             e.printStackTrace();
         }
