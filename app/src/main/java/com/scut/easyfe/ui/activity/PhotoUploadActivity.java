@@ -77,7 +77,7 @@ public class PhotoUploadActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mUser = App.getUser();
+        mUser = App.getUser(false);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class PhotoUploadActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        mUser = App.getUser();
+        mUser = App.getUser(false);
         mIdCardUrl = mUser.getTeacherMessage().getImages().getIdCard();
         mStudentCardUrl = mUser.getTeacherMessage().getImages().getStudentCard();
         mAvatarUrl = mUser.getTeacherMessage().getImages().getOfficial();
@@ -384,7 +384,7 @@ public class PhotoUploadActivity extends BaseActivity {
                     LogUtils.i(Constants.Tag.TEACHER_REGISTER_TAG, responseInfo.toString());
                     if (responseInfo.isOK()) {
                         try {
-                            String photoUrl = Constants.URL.DEFAULT_QINIU_URL + jsonObject.get("key");
+                            String photoUrl = Constants.DefaultValue.DEFAULT_QINIU_URL + jsonObject.get("key");
                             LogUtils.i(Constants.Tag.TEACHER_REGISTER_TAG, photoUrl);
                             switch (mPhotoType){
                                 case TYPE_ID_CARD:

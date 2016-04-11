@@ -16,10 +16,14 @@ public class Constants {
         public static final boolean ISSHOWTOAST = true;  //是否显示使用LogUtil.toast出来的东西
     }
 
-    public class URL{
+    public class DefaultValue{
         public static final String DEFAULT_QINIU_URL = "http://7xrvd4.com1.z0.glb.clouddn.com/";            //七牛储存图片的地址
+        public static final int DEFAULT_LOAD_COUNT = 15;
+    }
 
+    public class URL{
         public static final String URL_BASE = "http://121.42.37.233/";
+        public static final String URL_UPDATE_USER = URL_BASE + "user/data";
         public static final String URL_PARENT_REGISTER = URL_BASE + "Authentication/SignUp/Parent";
         public static final String URL_LOGIN = URL_BASE + "Authentication/Login";
         public static final String URL_GET_MESSAGES = URL_BASE + "Share/Message";
@@ -29,11 +33,10 @@ public class Constants {
         public static final String URL_CALLBACK = URL_BASE + "Share/Feedback";
         public static final String URL_ONLINE_PARAMS = URL_BASE + "Share/OnlineParams";
         public static final String URL_TEACHER_REGISTER = URL_BASE + "Authentication/SignUp/Teacher";
-        public static final String URL_PARENT_INFO_MODIFY = URL_BASE + "Parent/Data";
+        public static final String URL_USER_INFO_MODIFY = URL_BASE + "User/Data";
         public static final String URL_WALLET_INFO = URL_BASE + "Money/Wallet";
-        public static final String URL_GET_PARENT_INFO = URL_BASE + "Parent/Data";
-        public static final String URL_GET_TEACHER_INFO = URL_BASE + "Teacher";
         public static final String URL_PUBLISH_SPECIAL_ORDER = URL_BASE + "Teacher/DiscountOrder";
+        public static final String URL_GET_SPECIAL_ORDER = URL_BASE + "Share/DiscountOrder";
     }
 
     /**

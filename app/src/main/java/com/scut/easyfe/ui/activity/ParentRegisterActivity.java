@@ -20,8 +20,7 @@ import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.request.authentication.RParentRegister;
 import com.scut.easyfe.network.request.info.RGetChildGrade;
-import com.scut.easyfe.network.request.parent.RGetParentInfo;
-import com.scut.easyfe.network.request.parent.RParentInfoModify;
+import com.scut.easyfe.network.request.user.RUserInfoModify;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.MapUtils;
@@ -65,14 +64,13 @@ public class ParentRegisterActivity extends BaseActivity {
 
     private User mUser = new User();
     private boolean mGetGradeSuccess = false;
-    private boolean mUpdateUserSuccess = false;
     private ArrayList<String> mStates = new ArrayList<>();
     private ArrayList<ArrayList<String>> mGrades = new ArrayList<>();
 
     @Override
     protected void onResume() {
         super.onResume();
-        mUser = App.getUser();
+        mUser = App.getUser(mFromType != Constants.Identifier.TYPE_REGISTER);
     }
 
     @Override
@@ -82,7 +80,6 @@ public class ParentRegisterActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        mUser = App.getUser();
         Intent intent = getIntent();
         if (null != intent) {
             Bundle extras = intent.getExtras();
@@ -90,6 +87,8 @@ public class ParentRegisterActivity extends BaseActivity {
                 mFromType = extras.getInt(Constants.Key.TO_PARENT_REGISTER_ACTIVITY_TYPE, Constants.Identifier.TYPE_REGISTER);
             }
         }
+
+        mUser = App.getUser(mFromType != Constants.Identifier.TYPE_REGISTER);
     }
 
     @Override
@@ -131,7 +130,6 @@ public class ParentRegisterActivity extends BaseActivity {
             mParentPasswordEditText.setTextColor(mResources.getColor(R.color.text_area_text_color));
             mParentPasswordEditText.setEnabled(false);
 
-            mUser = App.getUser();
             mParentNameEditText.setText(mUser.getName());
             mParentGenderTextView.setText(mUser.getGender() == Constants.Identifier.MALE ? R.string.male : R.string.female);
             mParentPhoneEditText.setText(mUser.getPhone());
@@ -171,16 +169,9 @@ public class ParentRegisterActivity extends BaseActivity {
         startLoading("加载数据中", new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                if (mFromType == Constants.Identifier.TYPE_REGISTER) {
-                    if (!mGetGradeSuccess) {
-                        toast("获取数据失败");
-                        finish();
-                    }
-                } else {
-                    if (!(mGetGradeSuccess && mUpdateUserSuccess)) {
-                        toast("获取数据失败");
-                        finish();
-                    }
+                if (!mGetGradeSuccess) {
+                    toast("获取数据失败");
+                    finish();
                 }
             }
         });
@@ -203,15 +194,8 @@ public class ParentRegisterActivity extends BaseActivity {
                     mChildGradeTextView.setText(String.format("%s %s", mStates.get(0), mGrades.get(0).get(0)));
                 }
 
-                if (mFromType == Constants.Identifier.TYPE_REGISTER) {
-                    mGetGradeSuccess = true;
-                    stopLoading();
-                } else {
-                    mGetGradeSuccess = true;
-                    if (mUpdateUserSuccess) {
-                        stopLoading();
-                    }
-                }
+                mGetGradeSuccess = true;
+                stopLoading();
             }
 
             @Override
@@ -219,45 +203,6 @@ public class ParentRegisterActivity extends BaseActivity {
                 toast(errorMsg);
             }
         });
-
-        if(mFromType == Constants.Identifier.TYPE_MODIFY) {
-            RequestManager.get().execute(new RGetParentInfo(App.getUser().getToken()), new RequestListener<User>() {
-                @Override
-                public void onSuccess(RequestBase request, User user) {
-                    mUser.setName(user.getName());
-                    mUser.setGender(user.getGender());
-                    mUser.setPhone(user.getPhone());
-                    mUser.setPassword(user.getPassword());
-                    mUser.setToken(user.getToken());
-                    mUser.setType(user.getType());
-                    mUser.setPosition(user.getPosition());
-                    mUser.setAvatar(user.getAvatar());
-                    mUser.setParentMessage(user.getParentMessage());
-
-                    mParentNameEditText.setText(mUser.getName());
-                    mParentGenderTextView.setText(mUser.getGender() == Constants.Identifier.FEMALE ? R.string.female : R.string.male);
-                    mParentPhoneEditText.setText(mUser.getPhone());
-                    mParentPasswordEditText.setText(mUser.getPassword());
-                    mChildGenderTextView.setText(mUser.getParentMessage().getChildGender() == Constants.Identifier.FEMALE ? R.string.female : R.string.male);
-                    mChildGradeTextView.setText(mUser.getParentMessage().getChildGrade());
-                    mAddressTextView.setText(mUser.getPosition().getAddress());
-                    mAddress = mUser.getPosition().getAddress();
-                    mLatitude = mUser.getPosition().getLatitude();
-                    mLongitude = mUser.getPosition().getLongitude();
-
-                    mUpdateUserSuccess = true;
-                    if (mGetGradeSuccess) {
-                        stopLoading();
-                    }
-                }
-
-                @Override
-                public void onFailed(RequestBase request, int errorCode, String errorMsg) {
-                    toast(errorMsg);
-                }
-            });
-        }
-
     }
 
     /**
@@ -349,6 +294,7 @@ public class ParentRegisterActivity extends BaseActivity {
             bundle.putDouble(Constants.Key.LATITUDE, mLatitude);
             bundle.putDouble(Constants.Key.LONGITUDE, mLongitude);
             bundle.putString(Constants.Key.ADDRESS, mAddress);
+            bundle.putString(Constants.Key.CITY, mCity);
             Intent intent = new Intent(this, AddressActivity.class);
             intent.putExtras(bundle);
             startActivityForResult(intent, REQUEST_CODE);
@@ -397,6 +343,7 @@ public class ParentRegisterActivity extends BaseActivity {
         address.setAddress(mAddress);
         address.setLatitude(mLatitude);
         address.setLongitude(mLongitude);
+        address.setCity(mCity);
         mUser.setPosition(address);
 
         if (!validate(mUser)) {
@@ -422,10 +369,11 @@ public class ParentRegisterActivity extends BaseActivity {
                 }
             });
         } else if (mFromType == Constants.Identifier.TYPE_MODIFY) {
-            RequestManager.get().execute(new RParentInfoModify(mUser), new RequestListener<JSONObject>() {
+            RequestManager.get().execute(new RUserInfoModify(mUser), new RequestListener<JSONObject>() {
                 @Override
                 public void onSuccess(RequestBase request, JSONObject result) {
                     toast("修改成功");
+                    App.setUser(mUser);
                 }
 
                 @Override
@@ -461,7 +409,8 @@ public class ParentRegisterActivity extends BaseActivity {
         if (null == user.getPosition() ||
                 user.getPosition().getAddress() == null || user.getPosition().getAddress().length() == 0 ||
                 user.getPosition().getLatitude() == -1 ||
-                user.getPosition().getLongitude() == -1) {
+                user.getPosition().getLongitude() == -1 ||
+                user.getPosition().getCity().length() == 0) {
             toast("选择地址无效,请重新选择");
             return false;
         }

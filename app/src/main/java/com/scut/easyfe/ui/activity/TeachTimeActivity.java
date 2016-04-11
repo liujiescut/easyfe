@@ -39,7 +39,7 @@ public class TeachTimeActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mUser = App.getUser();
+        mUser = App.getUser(false);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class TeachTimeActivity extends BaseActivity {
             mTime.add(times);
         }
 
-        mUser = App.getUser();
+        mUser = App.getUser(false);
 
         for (MultiBookTime time :
                 mUser.getTeacherMessage().getMultiBookTime()) {

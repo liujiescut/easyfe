@@ -80,7 +80,7 @@ public class ConfirmOrderActivity extends BaseActivity {
         mTeachGradeTextView.setText(String.format("%s %s", mOrder.getStudentState(), mOrder.getStudentGrade()));
         mTeachCourseTextView.setText(mOrder.getCourseName());
         mTeachDateTextView.setText(String.format("%s %s", OtherUtils.getTime(mOrder.getDate(), "yyyy年MM月dd日(EEEE)"), mOrder.getTeachPeriod()));
-        mTeachTimeTextView.setText(OtherUtils.getTimeFromMimute(mOrder.getTeachTime()));
+        mTeachTimeTextView.setText(OtherUtils.getTimeFromMinute(mOrder.getTeachTime()));
         mTeachPriceTextView.setText(String.format("%.2f 元", mOrder.getPrice()));
         mTeachTipTextView.setText(String.format("%.2f 元", mOrder.getTip()));
         mTeachTotalPriceTextView.setText(String.format("%.2f 元", mOrder.getPrice() + mOrder.getTip()));

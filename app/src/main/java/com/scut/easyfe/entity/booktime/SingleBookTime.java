@@ -1,11 +1,7 @@
 package com.scut.easyfe.entity.booktime;
 
-import com.scut.easyfe.utils.OtherUtils;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Date;
 
 /**
  * 单次预约的时间实体
@@ -13,15 +9,15 @@ import java.util.Date;
  */
 public class SingleBookTime extends BookTime{
     //具体日期的格林威治时间
-    private long date = 0;
+    private String date = "1970-01-01";
 
     private String memo = "";
 
-    public long getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(long date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -36,7 +32,7 @@ public class SingleBookTime extends BookTime{
     public JSONObject getSingleBookTimeJson(){
         JSONObject json = new JSONObject();
         try {
-            json.put("date", OtherUtils.getTime(new Date(date), "yyyy-MM-dd"));
+            json.put("date", date);
             json.put("isOk", isOk());
             json.put("morning", isMorning());
             json.put("afternoon", isAfternoon());

@@ -1,10 +1,16 @@
 package com.scut.easyfe.entity.user;
 
+import android.widget.Toast;
+
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.Address;
 import com.scut.easyfe.entity.Bank;
 import com.scut.easyfe.entity.BaseEntity;
+import com.scut.easyfe.network.RequestBase;
+import com.scut.easyfe.network.RequestListener;
+import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.authentication.RUpdateUser;
 import com.scut.easyfe.utils.ACache;
 import com.scut.easyfe.utils.LogUtils;
 
@@ -97,7 +103,9 @@ public class User extends BaseEntity {
      */
     public static void doLogin() {
         User user = (User) ACache.getInstance().getAsObject(Constants.Key.USER_CACHE);
-        if (user != null) App.setUser(user);
+        if (user != null) {
+            App.setUser(user);
+        }
         LogUtils.i("登录该用户 -> " + user);
     }
 
@@ -264,4 +272,11 @@ public class User extends BaseEntity {
 
     }
 
+    public boolean isTeacher(){
+        return type == Constants.Identifier.USER_TEACHER || type == Constants.Identifier.USER_TP;
+    }
+
+    public boolean isParent(){
+        return type == Constants.Identifier.USER_PARENT || type == Constants.Identifier.USER_TP;
+    }
 }

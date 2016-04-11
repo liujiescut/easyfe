@@ -26,12 +26,12 @@ public class SelfIntroduceActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mUser = App.getUser();
+        mUser = App.getUser(false);
     }
 
     @Override
     protected void initData() {
-        mUser = App.getUser();
+        mUser = App.getUser(false);
     }
 
     @Override

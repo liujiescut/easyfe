@@ -2,7 +2,9 @@ package com.scut.easyfe.app;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.widget.Toast;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -15,8 +17,16 @@ import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
 import com.qiniu.android.storage.Zone;
 import com.scut.easyfe.entity.user.User;
+import com.scut.easyfe.ui.activity.LoginActivity;
 import com.scut.easyfe.utils.ActivityManagerUtils;
+import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.SpUtils;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 
 /**
@@ -54,8 +64,19 @@ public class App extends Application{
     }
 
     public static synchronized User getUser(){
-        if(null == mUser){
+        return getUser(true);
+    }
+
+    public static synchronized User getUser(boolean goLogin){
+        if(null == mUser || mUser.getToken().length() == 0){
             mUser = new User();
+            if(goLogin) {
+                if (App.get().getTopActivity() != null) {
+                    Toast.makeText(App.get().getTopActivity(), "请重新登录", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(App.get().getTopActivity(), LoginActivity.class);
+                    App.get().getTopActivity().startActivity(intent);
+                }
+            }
         }
 
         return mUser;

@@ -65,12 +65,12 @@ public class SpecialTimeActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mUser = App.getUser();
+        mUser = App.getUser(false);
     }
 
     @Override
     protected void initData() {
-        mUser = App.getUser();
+        mUser = App.getUser(false);
     }
 
     @Override
@@ -161,7 +161,7 @@ public class SpecialTimeActivity extends BaseActivity {
             }
 
             singleBookTime.setIsOk(true);
-            singleBookTime.setDate(mSelectedDate.getTime());
+            singleBookTime.setDate(OtherUtils.getTime(mSelectedDate, "yyyy-MM-dd"));
             singleBookTime.setMorning(mMorningSelectorButton.isSelected());
             singleBookTime.setAfternoon(mAfternoonSelectorButton.isSelected());
             singleBookTime.setEvening(mEveningSelectorButton.isSelected());
@@ -245,9 +245,9 @@ public class SpecialTimeActivity extends BaseActivity {
                     singleBookTime.setMorning(tempMultiBookTime.isMorning());
                     singleBookTime.setAfternoon(tempMultiBookTime.isAfternoon());
                     singleBookTime.setEvening(tempMultiBookTime.isEvening());
-                    singleBookTime.setDate(CalendarHelper.convertDateTimeToDate(minDateTime).getTime());
+                    singleBookTime.setDate(OtherUtils.getTime(CalendarHelper.convertDateTimeToDate(minDateTime), "yyyy-MM-dd"));
 
-                    mSingleBookTimes.put(singleBookTime.getDate(), singleBookTime);
+                    mSingleBookTimes.put(OtherUtils.getDateFromString(singleBookTime.getDate()).getTime(), singleBookTime);
                     mUser.getTeacherMessage().getSingleBookTime().add(singleBookTime);
                     App.setUser(mUser);
                 }
@@ -260,8 +260,8 @@ public class SpecialTimeActivity extends BaseActivity {
             /** 重新进来特别时间安排 */
             for (SingleBookTime singleBookTime :
                     mUser.getTeacherMessage().getSingleBookTime()) {
-                mSingleBookTimes.put(singleBookTime.getDate(), singleBookTime);
-                mWorkDays.add(CalendarHelper.convertDateToDateTime(new Date(singleBookTime.getDate())));
+                mSingleBookTimes.put(OtherUtils.getDateFromString(singleBookTime.getDate()).getTime(), singleBookTime);
+                mWorkDays.add(CalendarHelper.convertDateToDateTime(OtherUtils.getDateFromString(singleBookTime.getDate())));
             }
         }
 
@@ -291,7 +291,7 @@ public class SpecialTimeActivity extends BaseActivity {
                 mAfternoonSelectorButton.setIsSelected(true);
                 mEveningSelectorButton.setIsSelected(true);
                 singleBookTime = new SingleBookTime();
-                singleBookTime.setDate(mSelectedDate.getTime());
+                singleBookTime.setDate(OtherUtils.getTime(mSelectedDate, "yyyy-MM-dd"));
                 singleBookTime.setIsOk(true);
                 singleBookTime.setMorning(true);
                 singleBookTime.setAfternoon(true);

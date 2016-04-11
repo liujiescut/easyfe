@@ -126,6 +126,7 @@ public class AddressActivity extends BaseActivity {
                 mCity = result.getAddressDetail().city;
             }
         });
+
         mBaiduMap.setOnMarkerDragListener(new BaiduMap.OnMarkerDragListener() {
             @Override
             public void onMarkerDrag(Marker marker) {

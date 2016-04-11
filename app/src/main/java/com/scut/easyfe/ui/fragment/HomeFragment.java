@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.ui.activity.CallbackActivity;
 import com.scut.easyfe.ui.activity.ReserveActivity;
@@ -137,9 +138,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
      */
     private void onTeacherClick(View view){
         if(null != mActivity) {
-            Bundle bundle = new Bundle();
-            bundle.putInt(Constants.Key.TO_TEACHER_REGISTER_ONE_ACTIVITY_TYPE, Constants.Identifier.TYPE_REGISTER);
-            mActivity.redirectToActivity(mActivity, TeacherRegisterOneActivity.class);
+            if(!App.getUser().isTeacher()) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(Constants.Key.TO_TEACHER_REGISTER_ONE_ACTIVITY_TYPE, Constants.Identifier.TYPE_REGISTER);
+                mActivity.redirectToActivity(mActivity, TeacherRegisterOneActivity.class);
+            }
         }
     }
 

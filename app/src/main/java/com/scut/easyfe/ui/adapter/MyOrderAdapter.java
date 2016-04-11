@@ -84,7 +84,7 @@ public class MyOrderAdapter extends BaseListViewScrollStateAdapter {
         holder.course.setText(order.getCourseName());
         holder.date.setText(OtherUtils.getTime(order.getDate(), "yyyy 年 MM 月 dd 日 (EEEE)"));
         holder.period.setText(order.getTeachPeriod());
-        holder.teachTime.setText(OtherUtils.getTimeFromMimute(order.getTeachTime()));
+        holder.teachTime.setText(OtherUtils.getTimeFromMinute(order.getTeachTime()));
         holder.price.setText(String.format("%.2f 元", order.getPrice()));
 
         if (mState == Constants.Identifier.STATE_NORMAL && holder.checkBox.getVisibility() == View.VISIBLE) {

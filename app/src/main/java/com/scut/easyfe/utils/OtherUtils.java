@@ -6,13 +6,17 @@ import android.content.Context;
 import android.os.IBinder;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.scut.easyfe.app.App;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * 其他一些常用工具
@@ -58,9 +62,26 @@ public class OtherUtils {
      * @param minutes 被转换分钟数
      * @return  转换后字符串
      */
-    public static String getTimeFromMimute(int minutes){
+    public static String getTimeFromMinute(int minutes){
         int hours = minutes / 60;
         int minute = minutes % 60;
         return String.format("%s小时%s分钟", hours, minute);
+    }
+
+    public static Date getDateFromString(String dateString) {
+        return getDateFromString(dateString, "yyyy-MM-dd");
+    }
+
+        @Nullable
+    public static Date getDateFromString(String dateString, String formatString){
+        DateFormat format = new SimpleDateFormat(formatString, Locale.CHINA);
+
+        Date date = null;
+        try {
+            date = format.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
     }
 }

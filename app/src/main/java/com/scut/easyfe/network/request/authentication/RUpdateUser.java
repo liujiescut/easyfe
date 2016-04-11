@@ -1,6 +1,4 @@
-package com.scut.easyfe.network.request.teacher;
-
-import android.support.annotation.NonNull;
+package com.scut.easyfe.network.request.authentication;
 
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.user.User;
@@ -15,19 +13,19 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 /**
- * 获取家教信息
- * Created by jay on 16/4/7.
+ * 更新User信息
+ * Created by jay on 16/4/11.
  */
-public class RGetTeacherInfo extends RequestBase<User>{
+public class RUpdateUser extends RequestBase<User>{
     private String mToken = "";
 
-    public RGetTeacherInfo(@NonNull String token) {
-        this.mToken = token;
+    public RUpdateUser(String mToken) {
+        this.mToken = mToken;
     }
 
     @Override
     public String getUrl() {
-        return Constants.URL.URL_GET_TEACHER_INFO;
+        return Constants.URL.URL_UPDATE_USER;
     }
 
     @Override

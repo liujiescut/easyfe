@@ -6,11 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
-import com.scut.easyfe.entity.test.Order;
+import com.scut.easyfe.entity.SpecialOrder;
 import com.scut.easyfe.ui.activity.ConfirmOrderActivity;
+import com.scut.easyfe.ui.activity.LoginActivity;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.ui.base.BaseListViewScrollStateAdapter;
 import com.scut.easyfe.utils.DialogUtils;
@@ -20,16 +23,17 @@ import com.scut.easyfe.utils.OtherUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * 特价订单页面使用的Adapter
  * Created by jay on 16/3/29.
  */
 public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
-    private ArrayList<Order> mSpecialOrders;
+    private ArrayList<SpecialOrder> mSpecialOrders;
     private WeakReference<Context> mContextReference;
 
-    public SpecialOrderAdapter(Context context, ArrayList<Order> mSpecialOrders) {
+    public SpecialOrderAdapter(Context context, ArrayList<SpecialOrder> mSpecialOrders) {
         this.mSpecialOrders = mSpecialOrders;
         mContextReference = new WeakReference<>(context);
     }
@@ -64,22 +68,61 @@ public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.teacherName.setText(mSpecialOrders.get(position).getTeacherName());
-        holder.price.setText(String.format("%.2f 元/小时", mSpecialOrders.get(position).getSpecialPrice()));
+        holder.teacherName.setText(mSpecialOrders.get(position).getTeacher().getName());
+        holder.price.setText(String.format("%.2f 元/小时", mSpecialOrders.get(position).getPrice()));
         holder.contentUp.setText(getContentUp(position));
         holder.contentDown.setText(getContentDown(position));
         holder.reserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MapUtils.getDurationFromPosition(mSpecialOrders.get(position).getTeacherLatitude(), mSpecialOrders.get(position).getTeacherLongitude(),
-                        mSpecialOrders.get(position).getParentLatitude(), mSpecialOrders.get(position).getParentLongitude(),
-                        mSpecialOrders.get(position).getCity(), new MapUtils.GetDurationCallback() {
+                if(!App.getUser().isParent()){
+                    if(null == mContextReference.get()){
+                        return;
+                    }
+
+                    DialogUtils.makeChooseDialog(mContextReference.get(), "提示", "只有家长才可以预约特价订单呦-.-\n去注册家长?", new DialogUtils.OnChooseListener() {
+                        @Override
+                        public void onChoose(boolean sure) {
+                            if (sure) {
+                                if(null == mContextReference.get()){
+                                    return;
+                                }
+
+                                BaseActivity activity = (BaseActivity) mContextReference.get();
+                                activity.redirectToActivity(activity, LoginActivity.class);
+                            }
+                        }
+                    });
+                    return;
+                }
+
+                if(App.getUser().get_id().equals(mSpecialOrders.get(position).getTeacher().get_id())){
+                    DialogUtils.makeConfirmDialog(mContextReference.get(), "提示", "您不能预约自己的特价订单呦");
+                    return;
+                }
+
+                final SpecialOrder.SpecialOrderTeacher teacher = mSpecialOrders.get(position).getTeacher();
+
+                MapUtils.getDurationFromPosition(
+                        teacher.getPosition().getLatitude(),
+                        teacher.getPosition().getLongitude(),
+                        App.getUser().getPosition().getLatitude(),
+                        App.getUser().getPosition().getLongitude(),
+                        teacher.getPosition().getCity(),
+                        new MapUtils.GetDurationCallback() {
+
                             @Override
                             public void onSuccess(int durationSeconds) {
-                                if (durationSeconds / 60 > mSpecialOrders.get(position).getTeacherMaxAcceptTime()) {
-                                    DialogUtils.makeConfirmDialog(mContextReference.get(), "温馨提示", "您与家教老师的距离已超过他（她）设定的最远距离，试试别的老师吧。");
+                                if(null == mContextReference.get()){
+                                    return;
+                                }
+
+                                if (durationSeconds / 60 > teacher.getTeacherMessage().getMaxTrafficTime()) {
+                                    DialogUtils.makeConfirmDialog(mContextReference.get(),
+                                            "温馨提示", "您与家教老师的距离已超过他（她）设定的最远距离，试试别的老师吧。");
+
                                 } else {
-                                    if (durationSeconds / 60 < mSpecialOrders.get(position).getTeacherAcceptTime()) {
+                                    if (durationSeconds / 60 < teacher.getTeacherMessage().getMaxTrafficTime()) {
                                         mSpecialOrders.get(position).setTip(0);
                                     }
 
@@ -89,15 +132,19 @@ public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
                                         extras.putSerializable(Constants.Key.ORDER, mSpecialOrders.get(position));
                                         ((BaseActivity) mContextReference.get()).redirectToActivity(mContextReference.get(), ConfirmOrderActivity.class, extras);
                                     }
+
                                 }
+
                             }
 
                             @Override
                             public void onFailed(String errorMsg) {
                                 LogUtils.i(Constants.Tag.MAP_TAG, errorMsg);
-                                DialogUtils.makeConfirmDialog(mContextReference.get(), "温馨提示", "您与家教老师的距离已超过他（她）设定的最远距离，试试别的老师吧。");
+                                DialogUtils.makeConfirmDialog(mContextReference.get(),
+                                        "温馨提示", "您与家教老师的距离已超过他（她）设定的最远距离，试试别的老师吧。");
                             }
                         });
+
             }
         });
 
@@ -105,32 +152,35 @@ public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
     }
 
     private String getContentUp(int position) {
+        SpecialOrder.SpecialOrderTeacher teacher = mSpecialOrders.get(position).getTeacher();
         String contentUp = "";
         contentUp += "性别: ";
-        contentUp += mSpecialOrders.get(position).getTeacherGender() == Constants.Identifier.MALE ? "男\n" : "女\n";
+        contentUp += teacher.getGender() == Constants.Identifier.MALE ? "男\n" : "女\n";
         contentUp += "大学专业: ";
-        contentUp += mSpecialOrders.get(position).getTeacherSchool() + " " + mSpecialOrders.get(position).getTeacherProfession() + "\n";
+        contentUp += teacher.getTeacherMessage().getSchool() + " "
+                + teacher.getTeacherMessage().getProfession() + "\n";
         contentUp += "已家教过的孩子数量: ";
-        contentUp += mSpecialOrders.get(position).getTeacherHasTeachCount() + "\n";
+        contentUp += teacher.getTeacherMessage().getHadTeach() + "\n";
         contentUp += "已家教时长: ";
-        contentUp += OtherUtils.getTimeFromMimute(mSpecialOrders.get(position).getTeacherHasTeachTime()) + "\n";
+        contentUp += teacher.getTeacherMessage().getHadTeach() + "\n";
         contentUp += "综合评分: ";
-        contentUp += String.format("%.2f 分", mSpecialOrders.get(position).getTeacherScore());
+        contentUp += String.format("%.2f 分", teacher.getTeacherMessage().getScore());
         return contentUp;
     }
 
     private String getContentDown(int position) {
         String contentDown = "";
         contentDown += "授课年级: ";
-        contentDown += mSpecialOrders.get(position).getStudentState() + " " + mSpecialOrders.get(position).getStudentGrade() + "\n";
+        contentDown += mSpecialOrders.get(position).getGrade() + "\n";
         contentDown += "授课课程: ";
-        contentDown += mSpecialOrders.get(position).getCourseName() + "\n";
+        contentDown += mSpecialOrders.get(position).getCourse() + "\n";
         contentDown += "授课时间: ";
-        contentDown += OtherUtils.getTime(mSpecialOrders.get(position).getDate(), "yyyy年MM月dd日(EEEE)") + " " + mSpecialOrders.get(position).getTeachPeriod() + "\n";
+        contentDown += OtherUtils.getTime(new Date(mSpecialOrders.get(position).getTeachTime().getDate()), "yyyy年MM月dd日(EEEE)") + " " +
+                mSpecialOrders.get(position).getTeachTime().getChineseTime() + "\n";
         contentDown += "授课时长: ";
-        contentDown += OtherUtils.getTimeFromMimute(mSpecialOrders.get(position).getTeachTime()) + "\n";
+        contentDown += OtherUtils.getTimeFromMinute((int) mSpecialOrders.get(position).getTime()) + "\n";
         contentDown += "原价: ";
-        contentDown += String.format("%f 元/小时", mSpecialOrders.get(position).getPrice());
+        contentDown += String.format("%.0f 元/小时", mSpecialOrders.get(position).getPrice());
         return contentDown;
     }
 

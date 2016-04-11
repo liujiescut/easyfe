@@ -105,7 +105,7 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
         mGradeTextView.setText(String.format("%s %s", mOrder.getStudentState(), mOrder.getStudentGrade()));
         mCourseTextView.setText(mOrder.getCourseName());
         mDateTextView.setText(String.format("%s %s", OtherUtils.getTime(mOrder.getDate(), "yyyy年MM月dd日(EEEE)"), mOrder.getTeachPeriod()));
-        mTimeTextView.setText(OtherUtils.getTimeFromMimute(mOrder.getTeachTime()));
+        mTimeTextView.setText(OtherUtils.getTimeFromMinute(mOrder.getTeachTime()));
         mPriceTextView.setText(String.format("%.2f", mOrder.getPrice()));
         mTipTextView.setText(String.format("%.2f", mOrder.getTip()));
         mTotalPriceTextView.setText(String.format("%.2f", mOrder.getPrice() + mOrder.getTip()));

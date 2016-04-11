@@ -134,14 +134,14 @@ public abstract class BaseActivity extends AppCompatActivity{
         MobclickAgent.onPause(this);
     }
 
-    protected void startLoading(String message){
+    public void startLoading(String message){
         startLoading(message, null);
     }
-    protected void startLoading(String message, DialogInterface.OnDismissListener listener){
+    public void startLoading(String message, DialogInterface.OnDismissListener listener){
         PairProgressHUD.showLoading(mContext, message, true, listener);
     }
 
-    protected void stopLoading(){
+    public void stopLoading(){
         PairProgressHUD.dismiss();
     }
 

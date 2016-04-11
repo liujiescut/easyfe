@@ -14,8 +14,10 @@ import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.TimePickerView;
 import com.bigkoo.pickerview.listener.OnDismissListener;
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.test.ToSelectItem;
+import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.ui.adapter.SelectItemAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.ListViewUtil;
@@ -54,9 +56,15 @@ public class ReserveActivity extends BaseActivity {
     private MyTimePicker mTimePicker;
     private TimePickerView mDatePicker;
 
-    private String mDateString = "";
-
     private int mReserveType = Constants.Identifier.RESERVE_MULTI;
+
+    private String mDateStringToShow = "";
+
+    private User mUser;
+    private String mDate = "";
+    private int mWeek = 0;
+    private String mPeriod = "";
+    private int mTeachTime = 120;
 
     @Override
     protected void setLayoutView() {
@@ -72,6 +80,8 @@ public class ReserveActivity extends BaseActivity {
                 mReserveType = extras.getInt(Constants.Key.RESERVE_WAY, Constants.Identifier.RESERVE_MULTI);
             }
         }
+
+        mUser = App.getUser();
 
         mSchoolItems = new ArrayList<>();
         mPriceItems = new ArrayList<>();
@@ -153,6 +163,8 @@ public class ReserveActivity extends BaseActivity {
         mCourseTextView.setText(String.format("%s(%s)",
                 Constants.Data.courseList.get(0),
                 Constants.Data.courseGradeList.get(0).get(0)));
+
+        mTeachTimeTextView.setText("2 小时 0 分钟");
     }
 
     @Override
@@ -197,7 +209,7 @@ public class ReserveActivity extends BaseActivity {
             @Override
             public void onPick(int hour, int minute) {
                 String timeString = String.format("%s 小时 %s 分钟", hour, minute);
-                int timeInt = hour * 60 + minute;
+                 mTeachTime = hour * 60 + minute;
                 mTeachTimeTextView.setText(timeString);
             }
         });
@@ -205,15 +217,16 @@ public class ReserveActivity extends BaseActivity {
         mDatePicker.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date) {
-                mDateString = OtherUtils.getTime(date, "yyyy 年 MM 月 dd 日 (EEEE)");
-                LogUtils.i(Constants.Tag.ORDER_TAG, mDateString);
+                mDateStringToShow = OtherUtils.getTime(date, "yyyy 年 MM 月 dd 日 (EEEE)");
+                mDate = OtherUtils.getTime(date, "yyyy-MM-dd");
+                LogUtils.i(Constants.Tag.ORDER_TAG, mDateStringToShow);
             }
         });
 
         mDatePicker.setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss(Object o) {
-                if ("".equals(mDateString)) {
+                if ("".equals(mDateStringToShow)) {
                     return;
                 }
 
@@ -229,15 +242,19 @@ public class ReserveActivity extends BaseActivity {
             @Override
             public void onItemClick(Object o, int position) {
                 if (position == 0) {
-                    mDateString += " 上午";
+                    mDateStringToShow += " 上午";
+                    mPeriod = "morning";
                 } else if (position == 1) {
-                    mDateString += " 下午";
+                    mDateStringToShow += " 下午";
+                    mPeriod = "afternoon";
                 } else if (position == 2) {
-                    mDateString += " 晚上";
+                    mDateStringToShow += " 晚上";
+                    mPeriod = "evening";
                 } else {
-                    mDateString = "";
+                    mDateStringToShow = "";
+                    mPeriod = "";
                 }
-                mTeachDateTextView.setText(mDateString);
+                mTeachDateTextView.setText(mDateStringToShow);
             }
         }).show();
     }
@@ -298,7 +315,7 @@ public class ReserveActivity extends BaseActivity {
             mSinglePicker.setOnDismissListener(new OnDismissListener() {
                 @Override
                 public void onDismiss(Object o) {
-                    if ("".equals(mDateString)) {
+                    if ("".equals(mDateStringToShow)) {
                         return;
                     }
 
@@ -308,7 +325,8 @@ public class ReserveActivity extends BaseActivity {
             mSinglePicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
                 @Override
                 public void onOptionsSelect(int options1, int option2, int options3) {
-                    mDateString = Constants.Data.weekList.get(options1);
+                    mWeek = options1;
+                    mDateStringToShow = Constants.Data.weekList.get(options1);
                 }
             });
             mSinglePicker.show();
@@ -364,6 +382,11 @@ public class ReserveActivity extends BaseActivity {
     }
 
     public void onSearchClick(View view){
+        if(mReserveType == Constants.Identifier.RESERVE_SINGLE){
+            //Todo
+        }else{
+
+        }
         Bundle bundle = new Bundle();
         bundle.putInt(Constants.Key.RESERVE_WAY, mReserveType);
         redirectToActivity(mContext, SearchResultActivity.class, bundle);

@@ -1,6 +1,5 @@
-package com.scut.easyfe.network.request.parent;
+package com.scut.easyfe.network.request.user;
 
-import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.network.RequestBase;
@@ -16,16 +15,16 @@ import java.io.IOException;
  * 家长修改自己资料 Todo: test
  * Created by jay on 16/4/10.
  */
-public class RParentInfoModify extends RequestBase<JSONObject>{
+public class RUserInfoModify extends RequestBase<JSONObject>{
     User mUser;
 
-    public RParentInfoModify(User user) {
+    public RUserInfoModify(User user) {
         this.mUser = user;
     }
 
     @Override
     public String getUrl() {
-        return Constants.URL.URL_PARENT_INFO_MODIFY;
+        return Constants.URL.URL_USER_INFO_MODIFY;
     }
 
     @Override
@@ -33,8 +32,19 @@ public class RParentInfoModify extends RequestBase<JSONObject>{
         JSONObject params = new JSONObject();
         params.put("token", mUser.getToken());
         params.put("position", mUser.getPosition().getAddressJson());
-        params.put("childGender", mUser.getParentMessage().getChildGender());
-        params.put("childGrade", mUser.getParentMessage().getChildGrade());
+        if(mUser.isParent()) {
+            JSONObject parentMessage = new JSONObject();
+            parentMessage.put("childGender", mUser.getParentMessage().getChildGender());
+            parentMessage.put("childGrade", mUser.getParentMessage().getChildGrade());
+            params.put("parentMessage", parentMessage);
+        }
+
+        if(mUser.isTeacher()){
+            JSONObject teacherMessage = new JSONObject();
+            teacherMessage.put("hadTeach", mUser.getTeacherMessage().getHadTeach());
+            teacherMessage.put("teachCount", mUser.getTeacherMessage().getTeachCount());
+            params.put("teacherMessage", teacherMessage);
+        }
         return params;
     }
 

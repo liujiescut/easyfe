@@ -47,7 +47,7 @@ public class LoginActivity extends BaseActivity {
      * @param view 被点击视图
      */
     public void onBackClick(View view){
-        toast("点击返回");
+        finish();
     }
 
     /**
@@ -65,16 +65,15 @@ public class LoginActivity extends BaseActivity {
         RequestManager.get().execute(new RLogin(phone, password), new RequestListener<User>() {
             @Override
             public void onSuccess(RequestBase request, User user) {
-                User mUser = App.getUser();
-                mUser.set_id(user.get_id());
-                mUser.setToken(user.getToken());
-                mUser.setName(user.getName());
-                mUser.setType(user.getType());
-                mUser.setAvatar(user.getAvatar());
+                user.set_id(user.get_id());
+                user.setToken(user.getToken());
+                user.setName(user.getName());
+                user.setType(user.getType());
+                user.setAvatar(user.getAvatar());
 
                 //Todo: 返回level?
 
-                App.setUser(mUser);
+                App.setUser(user);
                 toast("登录成功");
                 redirectToActivity(mContext, MainActivity.class);
                 LogUtils.i(Constants.Tag.LOGIN_TAG, user.getToken());

@@ -63,7 +63,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.LoginActivity" />
+        <activity android:name=".ui.activity.LoginActivity"
+            android:launchMode="singleTask"/>
         <activity android:name=".ui.activity.ParentRegisterActivity" />
         <activity android:name=".ui.activity.AddressActivity" />
         <activity

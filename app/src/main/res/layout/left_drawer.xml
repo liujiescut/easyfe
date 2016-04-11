@@ -72,16 +72,22 @@
     <TextView
         style="@style/main_left_drawer_item"
         android:onClick="onPocketClick"
-        android:text="@string/main_left_drawer_pocket" />
+        android:text="@string/main_left_drawer_pocket"
+        android:id="@+id/left_drawer_tv_wallet" />
 
-    <View style="@style/main_left_drawer_divider" />
+    <View
+        android:id="@+id/left_drawer_tv_divider_wallet"
+        style="@style/main_left_drawer_divider" />
 
     <TextView
         style="@style/main_left_drawer_item"
         android:text="@string/main_left_drawer_fe_msg"
-        android:onClick="onTeacherMsgManageClick"/>
+        android:onClick="onTeacherMsgManageClick"
+        android:id="@+id/left_drawer_tv_teacher_info" />
 
-    <View style="@style/main_left_drawer_divider" />
+    <View
+        android:id="@+id/left_drawer_tv_divider_teacher_info"
+        style="@style/main_left_drawer_divider" />
 
     <TextView
         style="@style/main_left_drawer_item"
@@ -98,9 +104,12 @@
     <TextView
         style="@style/main_left_drawer_item"
         android:onClick="onSpreadClick"
-        android:text="@string/main_left_drawer_special_order" />
+        android:text="@string/main_left_drawer_special_order"
+        android:id="@+id/left_drawer_tv_special_order" />
 
-    <View style="@style/main_left_drawer_divider" />
+    <View
+        android:id="@+id/left_drawer_tv_divider_special_order"
+        style="@style/main_left_drawer_divider" />
 
     <TextView
         style="@style/main_left_drawer_item"
@@ -121,6 +130,11 @@
         android:onClick="onMoreClick"
         android:text="@string/main_left_drawer_more" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
     <TextView
         android:id="@+id/left_drawer_tv_bottom_hint"
         android:layout_width="match_parent"
@@ -131,6 +145,7 @@
         android:padding="@dimen/layout_padding_small"
         android:background="@color/theme_color_dark"
         android:textColor="@color/title_text_color"
+        android:layout_marginBottom="@dimen/layout_margin_normal"
         android:textSize="@dimen/text_size_small"
         android:text="@string/main_left_drawer_reward_text"/>
 

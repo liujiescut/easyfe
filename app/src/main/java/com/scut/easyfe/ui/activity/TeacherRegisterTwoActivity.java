@@ -9,12 +9,9 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.MyTimePicker;
 import com.bigkoo.pickerview.OptionsPickerView;
-import com.roomorama.caldroid.CalendarHelper;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
-import com.scut.easyfe.entity.booktime.MultiBookTime;
-import com.scut.easyfe.entity.booktime.SingleBookTime;
 import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.DialogUtils;
@@ -23,11 +20,6 @@ import com.scut.easyfe.utils.OtherUtils;
 import com.zcw.togglebutton.ToggleButton;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import hirondelle.date4j.DateTime;
 
 /**
  * 家教注册第二部(家教时间) 家教信息维护页
@@ -93,7 +85,7 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         /** 让User保持最新 */
-        mUser = App.getUser();
+        mUser = App.getUser(!mIsRegister);
 
         mTeachTimeTextView.setText(mUser.getTeacherMessage().getSingleBookTime().size() == 0 ?
                 "请选择您方便授课的时间" : "已填写");
@@ -117,7 +109,7 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
             }
         }
 
-        mUser = App.getUser();
+        mUser = App.getUser(!mIsRegister);
 
         mMinCourseTime = mUser.getTeacherMessage().getMinCourseTime();
         mTrafficTime = mUser.getTeacherMessage().getFreeTrafficTime();
@@ -158,9 +150,9 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
             mSaveTextView.setText("确认并保存");
         }
 
-        mMinTeachTimeTextView.setText(OtherUtils.getTimeFromMimute(mUser.getTeacherMessage().getMinCourseTime()));
-        mTrafficTextView.setText(OtherUtils.getTimeFromMimute(mUser.getTeacherMessage().getFreeTrafficTime()));
-        mMaxTrafficTextView.setText(OtherUtils.getTimeFromMimute(mUser.getTeacherMessage().getMaxTrafficTime()));
+        mMinTeachTimeTextView.setText(OtherUtils.getTimeFromMinute(mUser.getTeacherMessage().getMinCourseTime()));
+        mTrafficTextView.setText(OtherUtils.getTimeFromMinute(mUser.getTeacherMessage().getFreeTrafficTime()));
+        mMaxTrafficTextView.setText(OtherUtils.getTimeFromMinute(mUser.getTeacherMessage().getMaxTrafficTime()));
         mSubsidyTextView.setText(String.format("%d元", mUser.getTeacherMessage().getSubsidy()));
 
         mJoinAngleTextView.setText(mJoinAngelPlan ? R.string.yes : R.string.no);

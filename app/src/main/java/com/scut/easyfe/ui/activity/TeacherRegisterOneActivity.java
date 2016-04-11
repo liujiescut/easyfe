@@ -21,7 +21,7 @@ import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.request.info.RGetSchool;
-import com.scut.easyfe.network.request.parent.RParentInfoModify;
+import com.scut.easyfe.network.request.user.RUserInfoModify;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.MapUtils;
@@ -63,6 +63,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
     private TextView mChildGenderTextView;             //宝贝性别
     private TextView mChildGradeTextView;              //宝贝年级
     private TextView mDoModifyTextView;                //确认保存修改
+    private int mChildGender = Constants.Identifier.FEMALE;
 
     private double mLatitude = -1d;    //定位所在的纬度
     private double mLongitude = -1d;   //定位所在的经度
@@ -88,7 +89,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         /** 让User保持最新 */
-        mUser = App.getUser();
+        mUser = App.getUser(mFromType != Constants.Identifier.TYPE_REGISTER);
     }
 
     @Override
@@ -106,7 +107,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
             }
         }
 
-        mUser = App.getUser();
+        mUser = App.getUser(mFromType != Constants.Identifier.TYPE_REGISTER);
     }
 
     @Override
@@ -491,6 +492,21 @@ public class TeacherRegisterOneActivity extends BaseActivity {
      * 家教注册第一步点击保存并进入下一页
      */
     public void onRegisterOneClick(View view) {
+        getBaseUserInfo();
+
+        if (!validate(mUser)) {
+            return;
+        }
+
+        toast("保存成功");
+        App.setUser(mUser);
+
+        Bundle extras = new Bundle();
+        extras.putBoolean(Constants.Key.IS_REGISTER, true);
+        redirectToActivity(this, TeacherRegisterTwoActivity.class, extras);
+    }
+
+    private void getBaseUserInfo(){
         if (null == mUser) {
             mUser = new User();
         }
@@ -516,17 +532,6 @@ public class TeacherRegisterOneActivity extends BaseActivity {
         address.setLongitude(mLongitude);
         address.setCity(mCity);
         mUser.setPosition(address);
-
-        if (!validate(mUser)) {
-            return;
-        }
-
-        toast("保存成功");
-        App.setUser(mUser);
-
-        Bundle extras = new Bundle();
-        extras.putBoolean(Constants.Key.IS_REGISTER, true);
-        redirectToActivity(this, TeacherRegisterTwoActivity.class, extras);
     }
 
     private boolean validate(User user) {
@@ -542,6 +547,11 @@ public class TeacherRegisterOneActivity extends BaseActivity {
 
         if (null == user.getPassword() || user.getPassword().length() == 0) {
             toast("请输入密码");
+            return false;
+        }
+
+        if (null == user.getTeacherMessage().getIdCard() || user.getTeacherMessage().getIdCard().length() == 0) {
+            toast("请输入身份证号");
             return false;
         }
 
@@ -562,7 +572,29 @@ public class TeacherRegisterOneActivity extends BaseActivity {
 
 
     public void onModifyClick(View view) {
-//Todo 既是家长又是家教修改信息
+        getBaseUserInfo();
+        validate(mUser);
+
+        mUser.getTeacherMessage().setTeachCount(mHadTeachChildTextView.getText().toString());
+        mUser.getTeacherMessage().setHadTeach(mHadTeachTimeTextView.getText().toString());
+
+        if(mUser.getType() == Constants.Identifier.USER_TP){
+            mUser.getParentMessage().setChildGrade(mChildGradeTextView.getText().toString());
+            mUser.getParentMessage().setChildGender(mChildGender);
+        }
+
+        RequestManager.get().execute(new RUserInfoModify(mUser), new RequestListener<JSONObject>() {
+            @Override
+            public void onSuccess(RequestBase request, JSONObject result) {
+                toast("修改成功");
+                App.setUser(mUser);
+            }
+
+            @Override
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                toast(errorMsg);
+            }
+        });
     }
 
     public void onChildGenderClick(View view) {
@@ -576,6 +608,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 mChildGenderTextView.setText(Constants.Data.genderList.get(options1));
+                mChildGender = options1;
             }
         });
         mSinglePicker.show();
