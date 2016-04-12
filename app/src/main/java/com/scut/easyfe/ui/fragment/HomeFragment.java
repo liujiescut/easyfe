@@ -8,7 +8,7 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.ui.activity.CallbackActivity;
-import com.scut.easyfe.ui.activity.ReserveActivity;
+import com.scut.easyfe.ui.activity.BookActivity;
 import com.scut.easyfe.ui.activity.SpecialOrderActivity;
 import com.scut.easyfe.ui.activity.TeacherRegisterOneActivity;
 import com.scut.easyfe.ui.base.BaseFragment;
@@ -116,7 +116,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         if(null != mActivity){
             Bundle bundle = new Bundle();
             bundle.putInt(Constants.Key.RESERVE_WAY, Constants.Identifier.RESERVE_MULTI);
-            mActivity.redirectToActivity(mActivity, ReserveActivity.class, bundle);
+            mActivity.redirectToActivity(mActivity, BookActivity.class, bundle);
         }
     }
 
@@ -128,7 +128,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         if(null != mActivity){
             Bundle bundle = new Bundle();
             bundle.putInt(Constants.Key.RESERVE_WAY, Constants.Identifier.RESERVE_SINGLE);
-            mActivity.redirectToActivity(mActivity, ReserveActivity.class, bundle);
+            mActivity.redirectToActivity(mActivity, BookActivity.class, bundle);
         }
     }
 

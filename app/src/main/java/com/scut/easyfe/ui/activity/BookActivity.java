@@ -31,7 +31,7 @@ import java.util.Date;
 /**
  * 预约界面
  */
-public class ReserveActivity extends BaseActivity {
+public class BookActivity extends BaseActivity {
     private TextView mGradeTextView;
     private TextView mCourseTextView;
     private TextView mTeachDateLabelTextView;
@@ -68,7 +68,7 @@ public class ReserveActivity extends BaseActivity {
 
     @Override
     protected void setLayoutView() {
-        setContentView(R.layout.activity_reserve);
+        setContentView(R.layout.activity_book);
     }
 
     @Override
@@ -112,21 +112,21 @@ public class ReserveActivity extends BaseActivity {
         ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText(
                 mReserveType == Constants.Identifier.RESERVE_MULTI ? "多次预约" : "单次预约");
 
-        mGradeTextView = OtherUtils.findViewById(this, R.id.reserve_tv_grade);
-        mCourseTextView = OtherUtils.findViewById(this, R.id.reserve_tv_course);
-        mTeachDateTextView = OtherUtils.findViewById(this, R.id.reserve_tv_date);
-        mTeachDateLabelTextView = OtherUtils.findViewById(this, R.id.reserve_tv_date_label);
-        mTeachTimeTextView = OtherUtils.findViewById(this, R.id.reserve_tv_time);
-        mTeachTimeLabelTextView = OtherUtils.findViewById(this, R.id.reserve_tv_time_label);
-        mStudentAgeTextView = OtherUtils.findViewById(this, R.id.reserve_tv_student_age);
-        mStudentGenderTextView = OtherUtils.findViewById(this, R.id.reserve_tv_student_gender);
-        mSchoolLabelTextView = OtherUtils.findViewById(this, R.id.reserve_tv_school_label);
-        mPriceLabelTextView = OtherUtils.findViewById(this, R.id.reserve_tv_price_label);
-        mScoreLabelTextView = OtherUtils.findViewById(this, R.id.reserve_tv_score_label);
-        mSchoolListView = OtherUtils.findViewById(this, R.id.reserve_lv_school);
-        mPriceListView = OtherUtils.findViewById(this, R.id.reserve_lv_price);
-        mScoreListView = OtherUtils.findViewById(this, R.id.reserve_lv_score);
-        mContainerScrollView = OtherUtils.findViewById(this, R.id.reserve_sv_container);
+        mGradeTextView = OtherUtils.findViewById(this, R.id.book_tv_grade);
+        mCourseTextView = OtherUtils.findViewById(this, R.id.book_tv_course);
+        mTeachDateTextView = OtherUtils.findViewById(this, R.id.book_tv_date);
+        mTeachDateLabelTextView = OtherUtils.findViewById(this, R.id.book_tv_date_label);
+        mTeachTimeTextView = OtherUtils.findViewById(this, R.id.book_tv_time);
+        mTeachTimeLabelTextView = OtherUtils.findViewById(this, R.id.book_tv_time_label);
+        mStudentAgeTextView = OtherUtils.findViewById(this, R.id.book_tv_student_age);
+        mStudentGenderTextView = OtherUtils.findViewById(this, R.id.book_tv_student_gender);
+        mSchoolLabelTextView = OtherUtils.findViewById(this, R.id.book_tv_school_label);
+        mPriceLabelTextView = OtherUtils.findViewById(this, R.id.book_tv_price_label);
+        mScoreLabelTextView = OtherUtils.findViewById(this, R.id.book_tv_score_label);
+        mSchoolListView = OtherUtils.findViewById(this, R.id.book_lv_school);
+        mPriceListView = OtherUtils.findViewById(this, R.id.book_lv_price);
+        mScoreListView = OtherUtils.findViewById(this, R.id.book_lv_score);
+        mContainerScrollView = OtherUtils.findViewById(this, R.id.book_sv_container);
 
         mSchoolListView.setAdapter(new SelectItemAdapter(this, mSchoolItems));
         mPriceListView.setAdapter(new SelectItemAdapter(this, mPriceItems));
@@ -172,9 +172,9 @@ public class ReserveActivity extends BaseActivity {
         mSchoolLabelTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSchoolLabelTextView.setBackgroundResource(R.mipmap.reserve_selected_bg);
-                mPriceLabelTextView.setBackgroundResource(R.mipmap.reserve_unselected_bg);
-                mScoreLabelTextView.setBackgroundResource(R.mipmap.reserve_unselected_bg);
+                mSchoolLabelTextView.setBackgroundResource(R.mipmap.book_selected_bg);
+                mPriceLabelTextView.setBackgroundResource(R.mipmap.book_unselected_bg);
+                mScoreLabelTextView.setBackgroundResource(R.mipmap.book_unselected_bg);
                 mSchoolListView.setVisibility(View.VISIBLE);
                 mPriceListView.setVisibility(View.GONE);
                 mScoreListView.setVisibility(View.GONE);
@@ -184,9 +184,9 @@ public class ReserveActivity extends BaseActivity {
         mPriceLabelTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSchoolLabelTextView.setBackgroundResource(R.mipmap.reserve_unselected_bg);
-                mPriceLabelTextView.setBackgroundResource(R.mipmap.reserve_selected_bg);
-                mScoreLabelTextView.setBackgroundResource(R.mipmap.reserve_unselected_bg);
+                mSchoolLabelTextView.setBackgroundResource(R.mipmap.book_unselected_bg);
+                mPriceLabelTextView.setBackgroundResource(R.mipmap.book_selected_bg);
+                mScoreLabelTextView.setBackgroundResource(R.mipmap.book_unselected_bg);
                 mSchoolListView.setVisibility(View.GONE);
                 mPriceListView.setVisibility(View.VISIBLE);
                 mScoreListView.setVisibility(View.GONE);
@@ -196,9 +196,9 @@ public class ReserveActivity extends BaseActivity {
         mScoreLabelTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSchoolLabelTextView.setBackgroundResource(R.mipmap.reserve_unselected_bg);
-                mPriceLabelTextView.setBackgroundResource(R.mipmap.reserve_unselected_bg);
-                mScoreLabelTextView.setBackgroundResource(R.mipmap.reserve_selected_bg);
+                mSchoolLabelTextView.setBackgroundResource(R.mipmap.book_unselected_bg);
+                mPriceLabelTextView.setBackgroundResource(R.mipmap.book_unselected_bg);
+                mScoreLabelTextView.setBackgroundResource(R.mipmap.book_selected_bg);
                 mSchoolListView.setVisibility(View.GONE);
                 mPriceListView.setVisibility(View.GONE);
                 mScoreListView.setVisibility(View.VISIBLE);
@@ -238,7 +238,7 @@ public class ReserveActivity extends BaseActivity {
     private void showPeriodSelectView(){
         new AlertView("时间段", null, null, null,
                 new String[]{"上午", "下午", "晚上"},
-                ReserveActivity.this, AlertView.Style.ActionSheet, new OnItemClickListener() {
+                BookActivity.this, AlertView.Style.ActionSheet, new OnItemClickListener() {
             @Override
             public void onItemClick(Object o, int position) {
                 if (position == 0) {

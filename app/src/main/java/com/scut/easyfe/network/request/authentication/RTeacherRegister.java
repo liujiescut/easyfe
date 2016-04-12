@@ -1,12 +1,10 @@
 package com.scut.easyfe.network.request.authentication;
 
 import com.scut.easyfe.app.Constants;
-import com.scut.easyfe.entity.booktime.MultiBookTime;
 import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.kjFrame.http.HttpParams;
 import com.scut.easyfe.network.kjFrame.http.Request;
-import com.scut.easyfe.utils.LogUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;

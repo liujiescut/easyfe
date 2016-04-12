@@ -59,12 +59,12 @@ public class TeachCourseActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mUser = App.getUser(false);
+        mUser = App.getUser(false).getCopy();
     }
 
     @Override
     protected void initData() {
-        mUser = App.getUser(false);
+        mUser = App.getUser(false).getCopy();
     }
 
     @Override

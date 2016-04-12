@@ -1,4 +1,4 @@
-package com.scut.easyfe.entity.booktime;
+package com.scut.easyfe.entity.book;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -7,7 +7,7 @@ import org.json.JSONObject;
  * 单次预约的时间实体
  * Created by jay on 16/4/5.
  */
-public class SingleBookTime extends BookTime{
+public class SingleBookTime extends BaseBookTime {
     //具体日期的格林威治时间
     private String date = "1970-01-01";
 

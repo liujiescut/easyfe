@@ -1,5 +1,7 @@
 package com.scut.easyfe.ui.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -7,11 +9,18 @@ import android.widget.TextView;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
-import com.scut.easyfe.entity.booktime.MultiBookTime;
+import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.entity.book.MultiBookTime;
 import com.scut.easyfe.entity.user.User;
+import com.scut.easyfe.network.RequestBase;
+import com.scut.easyfe.network.RequestListener;
+import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.user.teacher.RTeacherMultiBookTimeModify;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.OtherUtils;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,15 +44,24 @@ public class TeachTimeActivity extends BaseActivity {
     private int[][] mCourseTime = new int[7][4];
 
     private User mUser;
+    private int mFromType = Constants.Identifier.TYPE_REGISTER;
 
     @Override
     protected void onResume() {
         super.onResume();
-        mUser = App.getUser(false);
+        mUser = App.getUser(false).getCopy();
     }
 
     @Override
     protected void initData() {
+        Intent intent = getIntent();
+        if (null != intent) {
+            Bundle extras = intent.getExtras();
+            if (null != extras) {
+                mFromType = extras.getInt(Constants.Key.TO_TEACH_TIME_ACTIVITY_TYPE, Constants.Identifier.TYPE_REGISTER);
+            }
+        }
+
         mWeek.add(getResources().getString(R.string.sunday));
         mWeek.add(getResources().getString(R.string.monday));
         mWeek.add(getResources().getString(R.string.tuesday));
@@ -60,7 +78,7 @@ public class TeachTimeActivity extends BaseActivity {
             mTime.add(times);
         }
 
-        mUser = App.getUser(false);
+        mUser = App.getUser(false).getCopy();
 
         for (MultiBookTime time :
                 mUser.getTeacherMessage().getMultiBookTime()) {
@@ -81,6 +99,11 @@ public class TeachTimeActivity extends BaseActivity {
     @Override
     protected void initView() {
         ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("授课时间");
+        if(mFromType == Constants.Identifier.TYPE_MODIFY){
+            ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_right)).setText("保存");
+            ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_right)).setVisibility(View.VISIBLE);
+        }
+
         mContainerLinearLayout = OtherUtils.findViewById(this, R.id.teach_time_ll_container);
 
         mPicker = new OptionsPickerView<>(this);
@@ -166,6 +189,10 @@ public class TeachTimeActivity extends BaseActivity {
         ((TextView) itemView.findViewById(R.id.item_course_time)).setText(time);
     }
 
+    public void onRightClick(View view){
+        saveAndValidate();
+    }
+
     /**
      * 点击近两月时间特别安排
      */
@@ -174,7 +201,9 @@ public class TeachTimeActivity extends BaseActivity {
             return;
         }
 
-        redirectToActivity(mContext, SpecialTimeActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constants.Key.TO_SPECIAL_TIME_ACTIVITY_TYPE, mFromType);
+        redirectToActivity(mContext, SpecialTimeActivity.class, bundle);
     }
 
     public void onBackClick(View view) {
@@ -183,8 +212,7 @@ public class TeachTimeActivity extends BaseActivity {
     }
 
     private boolean saveAndValidate() {
-        List<MultiBookTime> times = mUser.getTeacherMessage().getMultiBookTime();
-        times.clear();
+        List<MultiBookTime> times = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
             if (mCourseTime[i][0] == 1) {
                 MultiBookTime time = new MultiBookTime();
@@ -196,14 +224,31 @@ public class TeachTimeActivity extends BaseActivity {
                 times.add(time);
             }
         }
-        mUser.getTeacherMessage().setMultiBookTime(times);
 
         if (times.size() == 0) {
             toast("请先选择授课时间");
             return false;
         }
 
-        App.setUser(mUser);
+        mUser.getTeacherMessage().getMultiBookTime().clear();
+        mUser.getTeacherMessage().setMultiBookTime(times);
+        if(mFromType == Constants.Identifier.TYPE_REGISTER) {
+            App.setUser(mUser);
+
+        }else{
+            RequestManager.get().execute(new RTeacherMultiBookTimeModify(mUser), new RequestListener<JSONObject>() {
+                @Override
+                public void onSuccess(RequestBase request, JSONObject result) {
+                    App.setUser(mUser);
+                    toast("修改成功");
+                }
+
+                @Override
+                public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                    toast(errorMsg);
+                }
+            });
+        }
 
         return true;
     }

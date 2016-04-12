@@ -1,5 +1,6 @@
 package com.scut.easyfe.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -13,14 +14,20 @@ import com.roomorama.caldroid.CalendarHelper;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
-import com.scut.easyfe.entity.booktime.MultiBookTime;
-import com.scut.easyfe.entity.booktime.SingleBookTime;
+import com.scut.easyfe.entity.book.MultiBookTime;
+import com.scut.easyfe.entity.book.SingleBookTime;
 import com.scut.easyfe.entity.user.User;
+import com.scut.easyfe.network.RequestBase;
+import com.scut.easyfe.network.RequestListener;
+import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.user.teacher.RTeacherSingleBookTimeModify;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.ui.customView.SelectorButton;
 import com.scut.easyfe.ui.fragment.CalendarFragment;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -55,6 +62,8 @@ public class SpecialTimeActivity extends BaseActivity {
 
     private boolean mTeachOrNot = false;
 
+    private int mFromType = Constants.Identifier.TYPE_REGISTER;
+
     private SelectorButton.OnSelectChangeListener mOnSelectChangeListener;
 
     @Override
@@ -65,12 +74,20 @@ public class SpecialTimeActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mUser = App.getUser(false);
+        mUser = App.getUser(false).getCopy();
     }
 
     @Override
     protected void initData() {
-        mUser = App.getUser(false);
+        Intent intent = getIntent();
+        if (null != intent) {
+            Bundle extras = intent.getExtras();
+            if (null != extras) {
+                mFromType = extras.getInt(Constants.Key.TO_SPECIAL_TIME_ACTIVITY_TYPE, Constants.Identifier.TYPE_REGISTER);
+            }
+        }
+
+        mUser = App.getUser(false).getCopy();
     }
 
     @Override
@@ -325,12 +342,28 @@ public class SpecialTimeActivity extends BaseActivity {
         }
         mUser.getTeacherMessage().setSingleBookTime(singleBookTimes);
 
-        App.setUser(mUser);
-        toast("保存成功");
+        if(mFromType == Constants.Identifier.TYPE_REGISTER) {
+            App.setUser(mUser);
+            toast("保存成功");
 
-        Bundle extras = new Bundle();
-        extras.putBoolean(Constants.Key.IS_REGISTER, true);
-        redirectToActivity(mContext, TeacherRegisterTwoActivity.class, extras);
+            Bundle extras = new Bundle();
+            extras.putBoolean(Constants.Key.IS_REGISTER, true);
+            redirectToActivity(mContext, TeacherRegisterTwoActivity.class, extras);
+        }else{
+
+            RequestManager.get().execute(new RTeacherSingleBookTimeModify(mUser), new RequestListener<JSONObject>() {
+                @Override
+                public void onSuccess(RequestBase request, JSONObject result) {
+                    toast("修改成功");
+                    App.setUser(mUser);
+                }
+
+                @Override
+                public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                    toast(errorMsg);
+                }
+            });
+        }
     }
 
     public void onBackClick(View view) {

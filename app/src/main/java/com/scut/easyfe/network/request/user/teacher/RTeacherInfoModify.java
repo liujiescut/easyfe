@@ -1,4 +1,4 @@
-package com.scut.easyfe.network.request.user;
+package com.scut.easyfe.network.request.user.teacher;
 
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.user.User;
@@ -12,39 +12,32 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 /**
- * 用户修改自己基本资料(点击头像处)
+ * 家教信息维护页面的修改
  * Created by jay on 16/4/10.
  */
-public class RUserInfoModify extends RequestBase<JSONObject>{
+public class RTeacherInfoModify extends RequestBase<JSONObject>{
     User mUser;
 
-    public RUserInfoModify(User user) {
+    public RTeacherInfoModify(User user) {
         this.mUser = user;
     }
 
     @Override
     public String getUrl() {
-        return Constants.URL.URL_USER_INFO_MODIFY;
+        return Constants.URL.URL_TEACHER_INFO_MODIFY;
     }
 
     @Override
     public JSONObject getJsonParams() throws JSONException {
         JSONObject params = new JSONObject();
         params.put("token", mUser.getToken());
-        params.put("position", mUser.getPosition().getAddressJson());
-        if(mUser.isParent()) {
-            JSONObject parentMessage = new JSONObject();
-            parentMessage.put("childGender", mUser.getParentMessage().getChildGender());
-            parentMessage.put("childGrade", mUser.getParentMessage().getChildGrade());
-            params.put("parentMessage", parentMessage);
-        }
+        params.put("isLock", mUser.getTeacherMessage().isLock());
+        params.put("freeTrafficTime", mUser.getTeacherMessage().getFreeTrafficTime());
+        params.put("maxTrafficTime", mUser.getTeacherMessage().getMaxTrafficTime());
+        params.put("minCourseTime", mUser.getTeacherMessage().getMinCourseTime());
+        params.put("subsidy", mUser.getTeacherMessage().getSubsidy());
+        params.put("angelPlan", mUser.getTeacherMessage().getAngelPlan().getAngelPlanJson());
 
-        if(mUser.isTeacher()){
-            JSONObject teacherMessage = new JSONObject();
-            teacherMessage.put("hadTeach", mUser.getTeacherMessage().getHadTeach());
-            teacherMessage.put("teachCount", mUser.getTeacherMessage().getTeachCount());
-            params.put("teacherMessage", teacherMessage);
-        }
         return params;
     }
 

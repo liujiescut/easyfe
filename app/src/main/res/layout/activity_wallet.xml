@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.scut.easyfe.ui.activity.PocketActivity">
+    tools:context=".ui.activity.WalletActivity">
     <include
         layout="@layout/titlebar"/>
 
@@ -20,7 +20,7 @@
             android:text="@string/account" />
 
         <TextView
-            android:id="@+id/pocket_tv_account_balance"
+            android:id="@+id/wallet_tv_account_balance"
             style="@style/text_normal_style"
             android:layout_weight="2.2"
             android:textSize="@dimen/text_size_large"
@@ -38,7 +38,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/selector_pocket_withdraw"
+                android:background="@drawable/selector_wallet_withdraw"
                 android:textSize="@dimen/text_size_small"
                 android:singleLine="true"
                 android:paddingTop="2dp"
@@ -63,7 +63,7 @@
             android:text="@string/has_withdraw_count" />
 
         <TextView
-            android:id="@+id/pocket_tv_has_withdraw_count"
+            android:id="@+id/wallet_tv_has_withdraw_count"
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:textSize="@dimen/text_size_medium"
@@ -83,7 +83,7 @@
             android:text="@string/withdrawing_count" />
 
         <TextView
-            android:id="@+id/pocket_tv_withdrawing_count"
+            android:id="@+id/wallet_tv_withdrawing_count"
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:textSize="@dimen/text_size_medium"
@@ -104,7 +104,7 @@
             android:text="@string/alipay" />
 
         <TextView
-            android:id="@+id/pocket_tv_alipay"
+            android:id="@+id/wallet_tv_alipay"
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:textSize="@dimen/text_size_medium"
@@ -125,7 +125,7 @@
             android:text="@string/wechat" />
 
         <TextView
-            android:id="@+id/pocket_tv_wechat"
+            android:id="@+id/wallet_tv_wechat"
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:textSize="@dimen/text_size_medium"
@@ -147,7 +147,7 @@
             android:text="@string/account_bank" />
 
         <TextView
-            android:id="@+id/pocket_tv_bank_name"
+            android:id="@+id/wallet_tv_bank_name"
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:textSize="@dimen/text_size_medium"
@@ -168,7 +168,7 @@
             android:text="@string/bank_card_number" />
 
         <TextView
-            android:id="@+id/pocket_tv_card_num"
+            android:id="@+id/wallet_tv_card_num"
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:textSize="@dimen/text_size_medium"

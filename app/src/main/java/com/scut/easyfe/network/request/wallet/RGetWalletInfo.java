@@ -15,7 +15,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 /**
- * 获取钱包信息  Todo: test
+ * 获取钱包信息
  * Created by jay on 16/4/7.
  */
 public class RGetWalletInfo extends RequestBase<Wallet>{

@@ -13,11 +13,17 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.user.User;
+import com.scut.easyfe.network.RequestBase;
+import com.scut.easyfe.network.RequestListener;
+import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.user.teacher.RTeacherInfoModify;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 import com.zcw.togglebutton.ToggleButton;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -85,7 +91,7 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         /** 让User保持最新 */
-        mUser = App.getUser(!mIsRegister);
+        mUser = App.getUser(!mIsRegister).getCopy();
 
         mTeachTimeTextView.setText(mUser.getTeacherMessage().getSingleBookTime().size() == 0 ?
                 "请选择您方便授课的时间" : "已填写");
@@ -109,7 +115,7 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
             }
         }
 
-        mUser = App.getUser(!mIsRegister);
+        mUser = App.getUser(!mIsRegister).getCopy();
 
         mMinCourseTime = mUser.getTeacherMessage().getMinCourseTime();
         mTrafficTime = mUser.getTeacherMessage().getFreeTrafficTime();
@@ -163,11 +169,11 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
         if (mJoinAngelPlan && mUser.getTeacherMessage().getAngelPlan().getPrice() != 0) {
             mJoinAngleTextView.setText(mUser.getTeacherMessage().getAngelPlan().isJoin() ? R.string.yes : R.string.no);
             mAngleBoyAgeTextView.setText(mUser.getTeacherMessage().getAngelPlan().getBoy() == 0 ?
-                    "不接受":
+                    "不接受" :
                     String.format("%d 岁", mUser.getTeacherMessage().getAngelPlan().getBoy()));
 
             mAngleGirlAgeTextView.setText(mUser.getTeacherMessage().getAngelPlan().getGirl() == 0 ?
-                    "不接受":
+                    "不接受" :
                     String.format("%d 岁", mUser.getTeacherMessage().getAngelPlan().getGirl()));
             mAnglePriceTextView.setText(String.format("%d元/小时", mUser.getTeacherMessage().getAngelPlan().getPrice()));
         }
@@ -235,7 +241,9 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
      * 点击选择授课时间
      */
     public void onTeachTimeClick(View view) {
-        redirectToActivity(this, TeachTimeActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constants.Key.TO_TEACH_TIME_ACTIVITY_TYPE, mIsRegister ? Constants.Identifier.TYPE_REGISTER : Constants.Identifier.TYPE_MODIFY);
+        redirectToActivity(this, TeachTimeActivity.class, bundle);
     }
 
     /**
@@ -367,44 +375,56 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
      * 点击注册
      */
     public void onRegisterTwoClick(View view) {
-            mUser.getTeacherMessage().setMinCourseTime(mMinCourseTime);
-            mUser.getTeacherMessage().setFreeTrafficTime(mTrafficTime);
-            mUser.getTeacherMessage().setMaxTrafficTime(mMaxTrafficTime);
-            mUser.getTeacherMessage().setSubsidy(mSubsidy);
-            mUser.getTeacherMessage().getAngelPlan().setJoin(mJoinAngelPlan);
+        mUser.getTeacherMessage().setMinCourseTime(mMinCourseTime);
+        mUser.getTeacherMessage().setFreeTrafficTime(mTrafficTime);
+        mUser.getTeacherMessage().setMaxTrafficTime(mMaxTrafficTime);
+        mUser.getTeacherMessage().setSubsidy(mSubsidy);
+        mUser.getTeacherMessage().getAngelPlan().setJoin(mJoinAngelPlan);
 
-            if (mJoinAngelPlan) {
-                mUser.getTeacherMessage().getAngelPlan().setBoy(mMaxBoyAge);
-                mUser.getTeacherMessage().getAngelPlan().setGirl(mMaxGirlAge);
-                mUser.getTeacherMessage().getAngelPlan().setPrice(mAngelPrice);
-            }
+        if (mJoinAngelPlan) {
+            mUser.getTeacherMessage().getAngelPlan().setBoy(mMaxBoyAge);
+            mUser.getTeacherMessage().getAngelPlan().setGirl(mMaxGirlAge);
+            mUser.getTeacherMessage().getAngelPlan().setPrice(mAngelPrice);
+        }
 
-            if (!validate(mUser)) {
-                return;
-            }
+        if (!validate(mUser)) {
+            return;
+        }
 
-        App.setUser(mUser);
-        toast("保存成功");
-        if(!mIsRegister){
+        if (!mIsRegister) {
+            mUser.getTeacherMessage().setIsLock(mWorkOrNotToggle.isToggleOn());
+            RequestManager.get().execute(new RTeacherInfoModify(mUser), new RequestListener<JSONObject>() {
+                @Override
+                public void onSuccess(RequestBase request, JSONObject result) {
+                    toast("修改成功");
+                    App.setUser(mUser);
+                }
 
-        }else {
+                @Override
+                public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                    toast(errorMsg);
+                }
+            });
+        } else {
+            toast("保存成功");
+            App.setUser(mUser);
             redirectToActivity(this, ReceivablesChannelActivity.class);
         }
     }
 
 
     private boolean validate(User user) {
-        if(user.getTeacherMessage().getMultiBookTime().size() == 0){
+        if (mIsRegister && user.getTeacherMessage().getMultiBookTime().size() == 0) {
             toast("请先选择授课时间");
             return false;
         }
 
-        if(user.getTeacherMessage().getSingleBookTime().size() == 0){
+        if (mIsRegister && user.getTeacherMessage().getSingleBookTime().size() == 0) {
             toast("请确认最近两月授课时间");
             return false;
         }
 
-        if(user.getTeacherMessage().getTeacherPrice().size() == 0){
+        if (mIsRegister && user.getTeacherMessage().getTeacherPrice().size() == 0) {
             toast("请选择可教授课程");
             return false;
         }

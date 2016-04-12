@@ -19,21 +19,14 @@ import com.qiniu.android.storage.Zone;
 import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.ui.activity.LoginActivity;
 import com.scut.easyfe.utils.ActivityManagerUtils;
-import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.SpUtils;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 
 /**
  * 自定义 Application
  * Created by jay on 15/9/11.
  */
-public class App extends Application{
+public class App extends Application {
     private static App mInstance;           // Application单例
     private static User mUser;
     private static SpUtils mSpUtils;            // 用于管理 SharePreference 的工具类对象
@@ -45,10 +38,11 @@ public class App extends Application{
 
     /**
      * 单例获取Application的实例
+     *
      * @return application
      */
-    public static synchronized App get(){
-        if(null == mInstance){
+    public static synchronized App get() {
+        if (null == mInstance) {
             mInstance = new App();
         }
         return mInstance;
@@ -63,35 +57,37 @@ public class App extends Application{
         init();
     }
 
-    public static synchronized User getUser(){
+    public static synchronized User getUser() {
         return getUser(true);
     }
 
-    public static synchronized User getUser(boolean goLogin){
-        if(null == mUser || mUser.getToken().length() == 0){
+    public static synchronized User getUser(boolean goLogin) {
+        if (null == mUser) {
             mUser = new User();
-            if(goLogin) {
-                if (App.get().getTopActivity() != null) {
-                    Toast.makeText(App.get().getTopActivity(), "请重新登录", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(App.get().getTopActivity(), LoginActivity.class);
-                    App.get().getTopActivity().startActivity(intent);
-                }
+        }
+
+        if (goLogin && mUser.getToken().length() == 0) {
+            if (App.get().getTopActivity() != null) {
+                Toast.makeText(App.get().getTopActivity(), "请重新登录", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(App.get().getTopActivity(), LoginActivity.class);
+                App.get().getTopActivity().startActivity(intent);
             }
         }
 
         return mUser;
     }
 
-    public static void setUser(User user){
+    public static void setUser(User user) {
         mUser = user;
         mUser.save2Cache();
     }
 
     /**
      * 获取 SpUtils 实例(整个应用没有特殊要求统一使用这个实例)
+     *
      * @return SpUtils 实例
      */
-    public static SpUtils getSpUtils(){
+    public static SpUtils getSpUtils() {
         if (null == mSpUtils) {
             mSpUtils = new SpUtils(get().getApplicationContext());
         }
@@ -101,10 +97,11 @@ public class App extends Application{
 
     /**
      * 获取七牛的管理工具
-     * @return  七牛管理工具对象
+     *
+     * @return 七牛管理工具对象
      */
-    public UploadManager getQiniuManager(){
-        if(null == qiniuManager){
+    public UploadManager getQiniuManager() {
+        if (null == qiniuManager) {
             initQiniu();
         }
         return qiniuManager;
@@ -114,13 +111,13 @@ public class App extends Application{
     /**
      * Application 默认构造函数
      */
-    public App(){
+    public App() {
     }
 
     /**
      * 执行初始化操作
      */
-    private void init(){
+    private void init() {
         initQiniu();
         initBaiduMap();
         initImageLoader();
@@ -130,12 +127,10 @@ public class App extends Application{
     }
 
 
-
-
     /**
      * 初始化七牛相关配置(用于保存图片)
      */
-    private void initQiniu(){
+    private void initQiniu() {
         Configuration config = new Configuration.Builder()
                 .chunkSize(256 * 1024)  //分片上传时，每片的大小。 默认 256K
                 .putThreshhold(512 * 1024)  // 启用分片上传阀值。默认 512K
@@ -152,11 +147,11 @@ public class App extends Application{
     /**
      * 初始化百度地图
      */
-    private void initBaiduMap(){
+    private void initBaiduMap() {
         SDKInitializer.initialize(this);
     }
 
-    private void initImageLoader(){
+    private void initImageLoader() {
         // ImageLoader 的初始化
         DisplayImageOptions options = new DisplayImageOptions.Builder()
 //                .showImageForEmptyUri(R.mipmap.image_fail)
@@ -190,25 +185,27 @@ public class App extends Application{
         return mQNToken;
     }
 
-    public static  void setQNToken(String token) {
+    public static void setQNToken(String token) {
         mQNToken = token;
         mSpUtils.setValue(Constants.Key.QN_TOKEN, mQNToken);
     }
 
     /**
      * 向 activity栈 中添加一个 activity
+     *
      * @param activity Activity引用
      */
-    public void addActivity(Activity activity){
+    public void addActivity(Activity activity) {
         mActivityManagerUtils.addActivity(activity);
     }
 
 
     /**
      * 从 activity栈 中移除一个 activity
+     *
      * @param activity Activity引用
      */
-    public void removeActivity(Activity activity){
+    public void removeActivity(Activity activity) {
         mActivityManagerUtils.removeActivity(activity);
     }
 
@@ -216,14 +213,14 @@ public class App extends Application{
     /**
      * 获取 activity栈 中栈顶的 activity
      */
-    public Activity getTopActivity(){
+    public Activity getTopActivity() {
         return mActivityManagerUtils.getTopActivity();
     }
 
     /**
      * 退出应用时清空所有的 activity
      */
-    public void exit(){
+    public void exit() {
         mActivityManagerUtils.removeAllActivity();
     }
 

@@ -25,7 +25,7 @@ import java.util.List;
  * 用户基本信息类(家长家教共有的)
  * Created by jay on 16/4/1.
  */
-public class User extends BaseEntity {
+public class User extends BaseEntity{
     //用户token
     private String token = "";
 
@@ -82,11 +82,13 @@ public class User extends BaseEntity {
      * 将用户信息缓存到本地
      */
     public void save2Cache() {
-        LogUtils.i("更新缓存用户信息到本地 -> " + this);
-        ACache.getInstance().put(Constants.Key.USER_CACHE, this);
-
-        User test = (User) ACache.getInstance().getAsObject(Constants.Key.USER_CACHE);
-        LogUtils.i("更新缓存用户信息到本地 -> " + this);
+        final User user = this;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ACache.getInstance().put(Constants.Key.USER_CACHE, user);
+            }
+        }).start();
     }
 
     /**

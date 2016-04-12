@@ -2,7 +2,6 @@ package com.scut.easyfe.utils;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -127,17 +126,18 @@ public class MapUtils {
 
 
     /**
-     *  获取两点之间公交时间
-     * @param startLatitude     起始点纬度
-     * @param startLongitude    起始点经度
-     * @param endLatitude       终点纬度
-     * @param endLongitude      终点经度
-     * @param city              所在城市
-     * @param callback          查询回调
+     * 获取两点之间公交时间
+     *
+     * @param startLatitude  起始点纬度
+     * @param startLongitude 起始点经度
+     * @param endLatitude    终点纬度
+     * @param endLongitude   终点经度
+     * @param city           所在城市
+     * @param callback       查询回调
      */
     public synchronized static void getDurationFromPosition(double startLatitude, double startLongitude,
-                                                           double endLatitude, double endLongitude, String city,
-                                                           final GetDurationCallback callback) {
+                                                            double endLatitude, double endLongitude, String city,
+                                                            final GetDurationCallback callback) {
         getRoutePlanSearch().setOnGetRoutePlanResultListener(new OnGetRoutePlanResultListener() {
             @Override
             public void onGetWalkingRouteResult(WalkingRouteResult walkingRouteResult) {
@@ -170,11 +170,16 @@ public class MapUtils {
                         callback.onSuccess(minDuration);
                     }
 
+                } else if (result.error == SearchResult.ERRORNO.ST_EN_TOO_NEAR) {
+                    //距离很近
+                    callback.onSuccess(0);
+
                 } else {
                     LogUtils.i(Constants.Tag.MAP_TAG, result.error + "");
                     callback.onFailed("获取公交信息失败");
                 }
             }
+
 
             @Override
             public void onGetDrivingRouteResult(DrivingRouteResult drivingRouteResult) {
@@ -207,8 +212,9 @@ public class MapUtils {
     /**
      * 获取两点之间公交时间回调
      */
-    public interface GetDurationCallback{
+    public interface GetDurationCallback {
         void onSuccess(int durationSeconds);
+
         void onFailed(String errorMsg);
     }
 

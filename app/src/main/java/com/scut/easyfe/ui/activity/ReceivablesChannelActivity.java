@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
+import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.OtherUtils;
@@ -31,15 +32,6 @@ public class ReceivablesChannelActivity extends BaseActivity {
 
     private OptionsPickerView<String> mPicker;
 
-    private static ArrayList<String> mBankNames = new ArrayList<>();
-
-    static {
-        mBankNames.add("工商银行");
-        mBankNames.add("中国银行");
-        mBankNames.add("建设银行");
-        mBankNames.add("邮政储蓄");
-    }
-
     private User mUser;
 
     @Override
@@ -50,12 +42,12 @@ public class ReceivablesChannelActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mUser = App.getUser(false);
+        mUser = App.getUser(false).getCopy();
     }
 
     @Override
     protected void initData() {
-        mUser = App.getUser(false);
+        mUser = App.getUser(false).getCopy();
     }
 
     @Override
@@ -63,7 +55,7 @@ public class ReceivablesChannelActivity extends BaseActivity {
         ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("家教注册 - 收款渠道");
 
         mPicker = new OptionsPickerView<>(mContext);
-        mPicker.setPicker(mBankNames);
+        mPicker.setPicker(Constants.Data.mBankNameList);
         mPicker.setCyclic(false);
 
         mAlipayEditText = OtherUtils.findViewById(this, R.id.receivables_channel_et_alipay);
@@ -84,7 +76,7 @@ public class ReceivablesChannelActivity extends BaseActivity {
         mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
-                mBankNameTextView.setText(mBankNames.get(options1));
+                mBankNameTextView.setText(Constants.Data.mBankNameList.get(options1));
             }
         });
     }

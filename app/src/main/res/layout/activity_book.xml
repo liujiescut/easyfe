@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/shape_app_bg"
-    tools:context="com.scut.easyfe.ui.activity.PocketActivity">
+    tools:context=".ui.activity.WalletActivity">
 
     <include layout="@layout/titlebar" />
     <RelativeLayout
@@ -51,7 +51,7 @@
     </RelativeLayout>
 
     <ScrollView
-        android:id="@+id/reserve_sv_container"
+        android:id="@+id/book_sv_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -77,7 +77,7 @@
                     android:text="@string/teach_grade" />
 
                 <TextView
-                    android:id="@+id/reserve_tv_grade"
+                    android:id="@+id/book_tv_grade"
                     style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
@@ -98,7 +98,7 @@
                     android:text="@string/teach_course" />
 
                 <TextView
-                    android:id="@+id/reserve_tv_course"
+                    android:id="@+id/book_tv_course"
                     style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
@@ -120,10 +120,10 @@
                     android:text="@string/teach_time"
                     android:paddingLeft="0dp"
                     android:paddingRight="0dp"
-                    android:id="@+id/reserve_tv_date_label" />
+                    android:id="@+id/book_tv_date_label" />
 
                 <TextView
-                    android:id="@+id/reserve_tv_date"
+                    android:id="@+id/book_tv_date"
                     style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
@@ -142,10 +142,10 @@
                     android:text="@string/min_teach_time_1"
                     android:paddingLeft="0dp"
                     android:paddingRight="0dp"
-                    android:id="@+id/reserve_tv_time_label" />
+                    android:id="@+id/book_tv_time_label" />
 
                 <TextView
-                    android:id="@+id/reserve_tv_time"
+                    android:id="@+id/book_tv_time"
                     style="@style/text_editable_style"
 
                     android:layout_weight="3"
@@ -169,7 +169,7 @@
                     android:text="@string/teach_student_age" />
 
                 <TextView
-                    android:id="@+id/reserve_tv_student_age"
+                    android:id="@+id/book_tv_student_age"
                     style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
@@ -189,7 +189,7 @@
                     android:text="@string/teach_student_gender" />
 
                 <TextView
-                    android:id="@+id/reserve_tv_student_gender"
+                    android:id="@+id/book_tv_student_gender"
                     style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
@@ -223,27 +223,27 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/reserve_tv_school_label"
+                        android:id="@+id/book_tv_school_label"
                         style="@style/text_normal_style"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/text_area_height"
-                        android:background="@mipmap/reserve_selected_bg"
+                        android:background="@mipmap/book_selected_bg"
                         android:text="@string/school" />
 
                     <TextView
-                        android:id="@+id/reserve_tv_price_label"
+                        android:id="@+id/book_tv_price_label"
                         style="@style/text_normal_style"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/text_area_height"
-                        android:background="@mipmap/reserve_unselected_bg"
+                        android:background="@mipmap/book_unselected_bg"
                         android:text="@string/teach_price" />
 
                     <TextView
-                        android:id="@+id/reserve_tv_score_label"
+                        android:id="@+id/book_tv_score_label"
                         style="@style/text_normal_style"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/text_area_height"
-                        android:background="@mipmap/reserve_unselected_bg"
+                        android:background="@mipmap/book_unselected_bg"
                         android:text="@string/score" />
 
                 </LinearLayout>
@@ -256,18 +256,18 @@
                     android:layout_weight="3">
 
                     <ListView
-                        android:id="@+id/reserve_lv_school"
+                        android:id="@+id/book_lv_school"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
                     <ListView
-                        android:id="@+id/reserve_lv_price"
+                        android:id="@+id/book_lv_price"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:visibility="gone" />
 
                     <ListView
-                        android:id="@+id/reserve_lv_score"
+                        android:id="@+id/book_lv_score"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:visibility="gone" />

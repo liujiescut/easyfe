@@ -2,8 +2,8 @@ package com.scut.easyfe.entity.user;
 
 import com.scut.easyfe.entity.BaseEntity;
 import com.scut.easyfe.entity.TeachableCourse;
-import com.scut.easyfe.entity.booktime.MultiBookTime;
-import com.scut.easyfe.entity.booktime.SingleBookTime;
+import com.scut.easyfe.entity.book.MultiBookTime;
+import com.scut.easyfe.entity.book.SingleBookTime;
 
 import org.json.JSONArray;
 import org.json.JSONException;

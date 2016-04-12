@@ -70,7 +70,7 @@ public class ParentRegisterActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mUser = App.getUser(mFromType != Constants.Identifier.TYPE_REGISTER);
+        mUser = App.getUser(mFromType != Constants.Identifier.TYPE_REGISTER).getCopy();
     }
 
     @Override
@@ -88,7 +88,7 @@ public class ParentRegisterActivity extends BaseActivity {
             }
         }
 
-        mUser = App.getUser(mFromType != Constants.Identifier.TYPE_REGISTER);
+        mUser = App.getUser(mFromType != Constants.Identifier.TYPE_REGISTER).getCopy();
     }
 
     @Override

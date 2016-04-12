@@ -14,7 +14,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 /**
- * 修改钱包信息  Todo: test
+ * 修改钱包信息
  * Created by jay on 16/4/7.
  */
 public class RModifyWalletInfo extends RequestBase<JSONObject>{

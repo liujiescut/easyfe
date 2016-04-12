@@ -172,7 +172,10 @@ public class MainActivity extends BaseActivity {
      * 点击我的钱包
      */
     public void onPocketClick(View view) {
-        redirectToActivity(mContext, PocketActivity.class);
+        if(!App.getUser().isTeacher()){
+            return;
+        }
+        redirectToActivity(mContext, WalletActivity.class);
     }
 
     /**

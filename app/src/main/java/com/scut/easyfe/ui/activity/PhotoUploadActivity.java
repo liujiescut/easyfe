@@ -77,7 +77,7 @@ public class PhotoUploadActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mUser = App.getUser(false);
+        mUser = App.getUser(false).getCopy();
     }
 
     @Override
@@ -87,7 +87,7 @@ public class PhotoUploadActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        mUser = App.getUser(false);
+        mUser = App.getUser(false).getCopy();
         mIdCardUrl = mUser.getTeacherMessage().getImages().getIdCard();
         mStudentCardUrl = mUser.getTeacherMessage().getImages().getStudentCard();
         mAvatarUrl = mUser.getTeacherMessage().getImages().getOfficial();
@@ -193,7 +193,6 @@ public class PhotoUploadActivity extends BaseActivity {
         }
 
         mUser.getTeacherMessage().getImages().setOfficial(mAvatarUrl);
-
         App.setUser(mUser);
 
         RequestManager.get().execute(new RTeacherRegister(mUser), new RequestListener<JSONObject>() {
@@ -203,6 +202,7 @@ public class PhotoUploadActivity extends BaseActivity {
                 mUser.setToken(result.optString("token"));
                 mUser.setAvatar(result.optString("avatar"));
                 mUser.setType(result.optInt("type"));
+                App.setUser(mUser);
 
                 DialogUtils.makeConfirmDialog(PhotoUploadActivity.this, "提示", "您的信息正在审核中,请耐心等待", new OnItemClickListener() {
                     @Override

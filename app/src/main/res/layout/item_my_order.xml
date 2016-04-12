@@ -95,7 +95,7 @@
                         style="@style/my_order_item_style"
                         android:layout_width="wrap_content"
                         android:gravity="center_vertical|left"
-                        android:textSize="@dimen/text_size_small"
+                        android:textSize="@dimen/text_size_tiny"
                         android:clickable="false"
                         tools:text="2016年12月12日(星期六)" />
 
@@ -107,7 +107,7 @@
                         android:gravity="center"
                         android:paddingLeft="2dp"
                         android:paddingRight="2dp"
-                        android:textSize="@dimen/text_size_small"
+                        android:textSize="@dimen/text_size_tiny"
                         android:clickable="false"
                         tools:text="上午" />
 
@@ -117,7 +117,7 @@
                         android:layout_width="wrap_content"
                         android:gravity="center"
                         android:paddingLeft="0dp"
-                        android:textSize="@dimen/text_size_small"
+                        android:textSize="@dimen/text_size_tiny"
                         android:clickable="false"
                         tools:text="2小时0分钟" />
                 </LinearLayout>

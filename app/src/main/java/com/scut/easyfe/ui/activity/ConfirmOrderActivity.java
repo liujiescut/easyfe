@@ -8,11 +8,18 @@ import android.widget.TextView;
 
 import com.bigkoo.alertview.OnDismissListener;
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
-import com.scut.easyfe.entity.test.Order;
+import com.scut.easyfe.entity.order.Order;
+import com.scut.easyfe.network.RequestBase;
+import com.scut.easyfe.network.RequestListener;
+import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.user.parent.RComfirmSpecialOrder;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.OtherUtils;
+
+import org.json.JSONObject;
 
 /**
  * 确认订单页面(包括特价推广订单,单次预约订单,多次预约订单)
@@ -76,14 +83,16 @@ public class ConfirmOrderActivity extends BaseActivity {
         mTeachTotalPriceTextView = OtherUtils.findViewById(this, R.id.confirm_order_tv_total_price);
         mTeachTotalPriceLabelTextView = OtherUtils.findViewById(this, R.id.confirm_order_tv_total_price_label);
 
-        mTeacherTextView.setText(mOrder.getTeacherName());
-        mTeachGradeTextView.setText(String.format("%s %s", mOrder.getStudentState(), mOrder.getStudentGrade()));
-        mTeachCourseTextView.setText(mOrder.getCourseName());
-        mTeachDateTextView.setText(String.format("%s %s", OtherUtils.getTime(mOrder.getDate(), "yyyy年MM月dd日(EEEE)"), mOrder.getTeachPeriod()));
-        mTeachTimeTextView.setText(OtherUtils.getTimeFromMinute(mOrder.getTeachTime()));
+        mTeacherTextView.setText(mOrder.getTeacher().getName());
+        mTeachGradeTextView.setText(String.format("%s", mOrder.getGrade()));
+        mTeachCourseTextView.setText(mOrder.getCourse());
+        mTeachDateTextView.setText(String.format("%s %s",
+                OtherUtils.getTime(OtherUtils.getDateFromString(mOrder.getTeachTime().getDate()), "yyyy年MM月dd日(EEEE)"),
+                mOrder.getTeachTime().getChineseTime()));
+        mTeachTimeTextView.setText(OtherUtils.getTimeFromMinute(mOrder.getTime()));
         mTeachPriceTextView.setText(String.format("%.2f 元", mOrder.getPrice()));
-        mTeachTipTextView.setText(String.format("%.2f 元", mOrder.getTip()));
-        mTeachTotalPriceTextView.setText(String.format("%.2f 元", mOrder.getPrice() + mOrder.getTip()));
+        mTeachTipTextView.setText(String.format("%.2f 元", mOrder.getSubsidy()));
+        mTeachTotalPriceTextView.setText(String.format("%.2f 元", mOrder.getPrice() + mOrder.getSubsidy()));
 
         initOtherViews();
     }
@@ -128,8 +137,30 @@ public class ConfirmOrderActivity extends BaseActivity {
     }
 
     public void onConfirmClick(View view){
+        switch (mConfirmOrderType){
+            case Constants.Identifier.CONFIRM_ORDER_SPECIAL:
+                RequestManager.get().execute(new RComfirmSpecialOrder(App.getUser().getToken(),
+                        mOrder.getTrafficeTime(), mOrder.get_id()),
+                        new RequestListener<JSONObject>() {
+                    @Override
+                    public void onSuccess(RequestBase request, JSONObject result) {
+                        showDialog(mOrder.getTeacher().getName());
+                    }
+
+                    @Override
+                    public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
+                break;
+
+            //Todo 其他订单
+        }
+    }
+
+    private void showDialog(String teacherName){
         DialogUtils.makeConfirmDialog(mContext, "生成订单成功!",
-                String.format("%s确认后将于第一时间与您联系，在老师联系您前可以修改或取消订单。", mOrder.getTeacherName())).
+                String.format("%s确认后将于第一时间与您联系，在老师联系您前可以修改或取消订单。", teacherName)).
                 setOnDismissListener(new OnDismissListener() {
                     @Override
                     public void onDismiss(Object o) {

@@ -6,12 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
-import com.scut.easyfe.entity.SpecialOrder;
+import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.ui.activity.ConfirmOrderActivity;
 import com.scut.easyfe.ui.activity.LoginActivity;
 import com.scut.easyfe.ui.base.BaseActivity;
@@ -30,22 +29,22 @@ import java.util.Date;
  * Created by jay on 16/3/29.
  */
 public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
-    private ArrayList<SpecialOrder> mSpecialOrders;
+    private ArrayList<Order> mOrders;
     private WeakReference<Context> mContextReference;
 
-    public SpecialOrderAdapter(Context context, ArrayList<SpecialOrder> mSpecialOrders) {
-        this.mSpecialOrders = mSpecialOrders;
+    public SpecialOrderAdapter(Context context, ArrayList<Order> mOrders) {
+        this.mOrders = mOrders;
         mContextReference = new WeakReference<>(context);
     }
 
     @Override
     public int getCount() {
-        return mSpecialOrders.size();
+        return mOrders.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mSpecialOrders.get(position);
+        return mOrders.get(position);
     }
 
     @Override
@@ -68,8 +67,8 @@ public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.teacherName.setText(mSpecialOrders.get(position).getTeacher().getName());
-        holder.price.setText(String.format("%.2f 元/小时", mSpecialOrders.get(position).getPrice()));
+        holder.teacherName.setText(mOrders.get(position).getTeacher().getName());
+        holder.price.setText(String.format("%.2f 元/小时", mOrders.get(position).getPrice()));
         holder.contentUp.setText(getContentUp(position));
         holder.contentDown.setText(getContentDown(position));
         holder.reserve.setOnClickListener(new View.OnClickListener() {
@@ -96,12 +95,12 @@ public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
                     return;
                 }
 
-                if(App.getUser().get_id().equals(mSpecialOrders.get(position).getTeacher().get_id())){
+                if(App.getUser().get_id().equals(mOrders.get(position).getTeacher().get_id())){
                     DialogUtils.makeConfirmDialog(mContextReference.get(), "提示", "您不能预约自己的特价订单呦");
                     return;
                 }
 
-                final SpecialOrder.SpecialOrderTeacher teacher = mSpecialOrders.get(position).getTeacher();
+                final Order.TeacherInfo teacher = mOrders.get(position).getTeacher();
 
                 MapUtils.getDurationFromPosition(
                         teacher.getPosition().getLatitude(),
@@ -122,14 +121,15 @@ public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
                                             "温馨提示", "您与家教老师的距离已超过他（她）设定的最远距离，试试别的老师吧。");
 
                                 } else {
+                                    mOrders.get(position).setTrafficeTime(durationSeconds);
                                     if (durationSeconds / 60 < teacher.getTeacherMessage().getMaxTrafficTime()) {
-                                        mSpecialOrders.get(position).setTip(0);
+                                        mOrders.get(position).setSubsidy(0);
                                     }
 
                                     if (null != mContextReference.get()) {
                                         Bundle extras = new Bundle();
                                         extras.putInt(Constants.Key.CONFIRM_ORDER_TYPE, Constants.Identifier.CONFIRM_ORDER_SPECIAL);
-                                        extras.putSerializable(Constants.Key.ORDER, mSpecialOrders.get(position));
+                                        extras.putSerializable(Constants.Key.ORDER, mOrders.get(position));
                                         ((BaseActivity) mContextReference.get()).redirectToActivity(mContextReference.get(), ConfirmOrderActivity.class, extras);
                                     }
 
@@ -152,7 +152,7 @@ public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
     }
 
     private String getContentUp(int position) {
-        SpecialOrder.SpecialOrderTeacher teacher = mSpecialOrders.get(position).getTeacher();
+        Order.TeacherInfo teacher = mOrders.get(position).getTeacher();
         String contentUp = "";
         contentUp += "性别: ";
         contentUp += teacher.getGender() == Constants.Identifier.MALE ? "男\n" : "女\n";
@@ -171,16 +171,18 @@ public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
     private String getContentDown(int position) {
         String contentDown = "";
         contentDown += "授课年级: ";
-        contentDown += mSpecialOrders.get(position).getGrade() + "\n";
+        contentDown += mOrders.get(position).getGrade() + "\n";
         contentDown += "授课课程: ";
-        contentDown += mSpecialOrders.get(position).getCourse() + "\n";
+        contentDown += mOrders.get(position).getCourse() + "\n";
         contentDown += "授课时间: ";
-        contentDown += OtherUtils.getTime(new Date(mSpecialOrders.get(position).getTeachTime().getDate()), "yyyy年MM月dd日(EEEE)") + " " +
-                mSpecialOrders.get(position).getTeachTime().getChineseTime() + "\n";
+        contentDown += OtherUtils.getTime(
+                OtherUtils.getDateFromString(mOrders.get(position).getTeachTime().getDate()),
+                "yyyy年MM月dd日(EEEE)") + " " +
+                mOrders.get(position).getTeachTime().getChineseTime() + "\n";
         contentDown += "授课时长: ";
-        contentDown += OtherUtils.getTimeFromMinute((int) mSpecialOrders.get(position).getTime()) + "\n";
+        contentDown += OtherUtils.getTimeFromMinute(mOrders.get(position).getTime()) + "\n";
         contentDown += "原价: ";
-        contentDown += String.format("%.0f 元/小时", mSpecialOrders.get(position).getPrice());
+        contentDown += String.format("%.0f 元/小时", mOrders.get(position).getPrice());
         return contentDown;
     }
 

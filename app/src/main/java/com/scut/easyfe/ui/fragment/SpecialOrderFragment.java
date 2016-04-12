@@ -4,8 +4,7 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.scut.easyfe.app.Constants;
-import com.scut.easyfe.entity.SpecialOrder;
-import com.scut.easyfe.entity.test.Order;
+import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
@@ -22,7 +21,7 @@ import java.util.List;
  * @author jay
  */
 public class SpecialOrderFragment extends BaseRefreshFragment {
-    private ArrayList<SpecialOrder> mSpecialOrders = new ArrayList<>();
+    private ArrayList<Order> mOrders = new ArrayList<>();
     @Override
     protected void initView(View view) {
         super.initView(view);
@@ -37,7 +36,7 @@ public class SpecialOrderFragment extends BaseRefreshFragment {
 
         mDataListView.addHeaderView(headView);
         mDataListView.setDividerHeight(DensityUtil.dip2px(mActivity, 5));
-        mAdapter = new SpecialOrderAdapter(getActivity(), mSpecialOrders);
+        mAdapter = new SpecialOrderAdapter(getActivity(), mOrders);
         setBaseAdapter(mAdapter);
     }
 
@@ -50,13 +49,13 @@ public class SpecialOrderFragment extends BaseRefreshFragment {
     private void loadData(int skip, int limit, final boolean clear){
         setIsLoading(true);
 
-        RequestManager.get().execute(new RGetSpecialOrder(limit, skip), new RequestListener<List<SpecialOrder>>() {
+        RequestManager.get().execute(new RGetSpecialOrder(limit, skip), new RequestListener<List<Order>>() {
             @Override
-            public void onSuccess(RequestBase request, List<SpecialOrder> result) {
+            public void onSuccess(RequestBase request, List<Order> result) {
                 if(clear){
-                    mSpecialOrders.clear();
+                    mOrders.clear();
                 }
-                mSpecialOrders.addAll(result);
+                mOrders.addAll(result);
                 mAdapter.notifyDataSetChanged();
 
                 if(result.size() == 0){
@@ -76,7 +75,7 @@ public class SpecialOrderFragment extends BaseRefreshFragment {
 
     @Override
     protected void onLoadingData() {
-        loadData(mSpecialOrders.size(), Constants.DefaultValue.DEFAULT_LOAD_COUNT, false);
+        loadData(mOrders.size(), Constants.DefaultValue.DEFAULT_LOAD_COUNT, false);
     }
 
     @Override

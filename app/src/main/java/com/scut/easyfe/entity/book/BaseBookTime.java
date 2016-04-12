@@ -1,4 +1,4 @@
-package com.scut.easyfe.entity.booktime;
+package com.scut.easyfe.entity.book;
 
 import com.scut.easyfe.entity.BaseEntity;
 
@@ -6,7 +6,7 @@ import com.scut.easyfe.entity.BaseEntity;
  * 预约的时间基类
  * Created by jay on 16/4/5.
  */
-public class BookTime extends BaseEntity{
+public class BaseBookTime extends BaseEntity{
     //是否可以授课
     private boolean isOk = false;
     //早上授课

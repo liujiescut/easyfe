@@ -1,8 +1,7 @@
-package com.scut.easyfe.network.request.wallet;
-
-import android.support.annotation.NonNull;
+package com.scut.easyfe.network.request.user.teacher;
 
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.kjFrame.http.HttpParams;
 import com.scut.easyfe.network.kjFrame.http.Request;
@@ -13,31 +12,27 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 /**
- * 提现接口
+ * 修改单次预约时间 Todo: test
  * Created by jay on 16/4/10.
  */
-public class RWithdraw extends RequestBase<JSONObject>{
-    private String mToken = "";
-    private float mMoney = 0f;
-    private JSONObject mWay = new JSONObject();
+public class RTeacherSingleBookTimeModify extends RequestBase<JSONObject>{
+    User mUser;
 
-    public RWithdraw(@NonNull String mToken, @NonNull float mMoney, @NonNull JSONObject way) {
-        this.mToken = mToken;
-        this.mMoney = mMoney;
-        this.mWay = way;
+    public RTeacherSingleBookTimeModify(User user) {
+        this.mUser = user;
     }
 
     @Override
     public String getUrl() {
-        return Constants.URL.URL_WALLET_WITHDRAW;
+        return Constants.URL.URL_TEACHER_SINGLE_BOOK_TIME_MODIFY;
     }
 
     @Override
     public JSONObject getJsonParams() throws JSONException {
         JSONObject params = new JSONObject();
-        params.put("token", mToken);
-        params.put("money", mMoney);
-        params.put("way", mWay);
+        params.put("token", mUser.getToken());
+        params.put("singleBookTime", mUser.getTeacherMessage().getSingleBookTimeArray());
+
         return params;
     }
 
@@ -53,6 +48,6 @@ public class RWithdraw extends RequestBase<JSONObject>{
 
     @Override
     public int getMethod() {
-        return Request.HttpMethod.POST;
+        return Request.HttpMethod.PUT;
     }
 }

@@ -15,7 +15,7 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.Course;
-import com.scut.easyfe.entity.SpecialOrder;
+import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
@@ -269,19 +269,19 @@ public class PublishSpreadActivity extends BaseActivity {
      * 点击选择授课年级
      */
     public void onConfirmClick(View view) {
-        SpecialOrder specialOrder = new SpecialOrder();
-        specialOrder.setCourse(mCourseTextView.getText().toString());
-        specialOrder.setGrade(mGradeTextView.getText().toString());
-        specialOrder.setTime(mTeachTime);
-        specialOrder.setPrice(mPrice);
-        specialOrder.getTeachTime().setDate(mTeachDate == null ? 0 : mTeachDate.getTime());
-        specialOrder.getTeachTime().setTime(mPeriod);
+        Order order = new Order();
+        order.setCourse(mCourseTextView.getText().toString());
+        order.setGrade(mGradeTextView.getText().toString());
+        order.setTime(mTeachTime);
+        order.setPrice(mPrice);
+        order.getTeachTime().setDate(OtherUtils.getTime(mTeachDate, "yyyy-MM-dd"));
+        order.getTeachTime().setTime(mPeriod);
 
-        if(!validate(specialOrder)){
+        if(!validate(order)){
             return;
         }
 
-        RequestManager.get().execute(new RPublishSpecialOrder(App.getUser().getToken(), specialOrder), new RequestListener<JSONObject>() {
+        RequestManager.get().execute(new RPublishSpecialOrder(App.getUser().getToken(), order), new RequestListener<JSONObject>() {
             @Override
             public void onSuccess(RequestBase request, JSONObject result) {
                 DialogUtils.makeConfirmDialog(PublishSpreadActivity.this, "提示", "特价订单发布成功\n待工作人员审核通过后即可在特价订单页可见", new OnItemClickListener() {
@@ -300,7 +300,7 @@ public class PublishSpreadActivity extends BaseActivity {
 
     }
 
-    private boolean validate(SpecialOrder order){
+    private boolean validate(Order order){
         if(null == order.getCourse() || order.getCourse().length() == 0){
             toast("请选择授课课程");
             return false;
@@ -315,7 +315,7 @@ public class PublishSpreadActivity extends BaseActivity {
             toast("请选择授课时长");
             return false;
         }
-        if(0 == order.getTeachTime().getDate() || order.getTeachTime().getTime().length() == 0){
+        if(order.getTeachTime().getDate().length() == 0 || order.getTeachTime().getTime().length() == 0){
             toast("请选择授课时间");
             return false;
         }

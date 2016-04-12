@@ -1,17 +1,13 @@
-package com.scut.easyfe.entity.booktime;
-
-import com.scut.easyfe.utils.OtherUtils;
+package com.scut.easyfe.entity.book;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Date;
 
 /**
  * 多次预约时间实体类
  * Created by jay on 16/4/5.
  */
-public class MultiBookTime extends BookTime{
+public class MultiBookTime extends BaseBookTime {
     //0-6代表周日到周六
     int weekDay = 0;
 

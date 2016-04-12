@@ -23,20 +23,30 @@ public class Constants {
 
     public class URL{
         public static final String URL_BASE = "http://121.42.37.233/";
-        public static final String URL_UPDATE_USER = URL_BASE + "user/data";
-        public static final String URL_PARENT_REGISTER = URL_BASE + "Authentication/SignUp/Parent";
+
         public static final String URL_LOGIN = URL_BASE + "Authentication/Login";
+        public static final String URL_UPDATE_USER = URL_BASE + "user/data";
+        public static final String URL_USER_INFO_MODIFY = URL_BASE + "User/Data";
+        public static final String URL_GET_SPECIAL_ORDER = URL_BASE + "Share/DiscountOrder";
         public static final String URL_GET_MESSAGES = URL_BASE + "Share/Message";
         public static final String URL_GET_CHILD_GRADE = URL_BASE + "Share/Grade";
         public static final String URL_GET_COURSE = URL_BASE + "Share/Course";
         public static final String URL_GET_SCHOOL = URL_BASE + "Share/Education";
         public static final String URL_CALLBACK = URL_BASE + "Share/Feedback";
         public static final String URL_ONLINE_PARAMS = URL_BASE + "Share/OnlineParams";
+
         public static final String URL_TEACHER_REGISTER = URL_BASE + "Authentication/SignUp/Teacher";
-        public static final String URL_USER_INFO_MODIFY = URL_BASE + "User/Data";
-        public static final String URL_WALLET_INFO = URL_BASE + "Money/Wallet";
+        public static final String URL_TEACHER_INFO_MODIFY = URL_BASE + "Teacher/Data";
+        public static final String URL_TEACHER_MULTI_BOOK_TIME_MODIFY = URL_BASE + "Teacher/MultiBookTime";
+        public static final String URL_TEACHER_SINGLE_BOOK_TIME_MODIFY = URL_BASE + "Teacher/SingleBookTime";
         public static final String URL_PUBLISH_SPECIAL_ORDER = URL_BASE + "Teacher/DiscountOrder";
-        public static final String URL_GET_SPECIAL_ORDER = URL_BASE + "Share/DiscountOrder";
+
+        public static final String URL_WALLET_INFO = URL_BASE + "Money/Wallet";
+        public static final String URL_WALLET_WITHDRAW = URL_BASE + "Money/Withdraw";
+
+        public static final String URL_PARENT_REGISTER = URL_BASE + "Authentication/SignUp/Parent";
+        public static final String URL_CONFIRM_SPECIAL_ORDER = URL_BASE + "Parent/Sure/Special";
+        public static final String URL_SINGLE_RESERVE = URL_BASE + "Book/Single";
     }
 
     /**
@@ -68,6 +78,8 @@ public class Constants {
         public static final String TO_TEACHER_INFO_ACTIVITY_TYPE = "to_teacher_info_activity_type";
         public static final String TO_TEACHER_REGISTER_ONE_ACTIVITY_TYPE = "to_teacher_register_one_activity_type";
         public static final String TO_PARENT_REGISTER_ACTIVITY_TYPE = "to_parent_register_activity_type";
+        public static final String TO_TEACH_TIME_ACTIVITY_TYPE = "to_teach_time_activity_type";
+        public static final String TO_SPECIAL_TIME_ACTIVITY_TYPE = "to_special_time_activity_type";
         public static final String IS_FIRST_IN_SPECIAL_TIME_ACTIVITY  = "is_fist_time_in_special_activity";
         public static final String QN_TOKEN = "qn_token";
     }
@@ -148,8 +160,27 @@ public class Constants {
         public static final ArrayList<String> scoreRangeList = new ArrayList<>();
         public static final ArrayList<String> hasTeachChildCountRangeList = new ArrayList<>();
         public static final ArrayList<String> hasTeachChildTimeRangeList = new ArrayList<>();
+        public static ArrayList<String> mBankNameList = new ArrayList<>();
 
         static {
+
+
+            mBankNameList.add("工商银行");
+            mBankNameList.add("建设银行");
+            mBankNameList.add("中国银行");
+            mBankNameList.add("农业银行");
+            mBankNameList.add("交通银行");
+            mBankNameList.add("招商银行");
+            mBankNameList.add("邮政储蓄银行");
+            mBankNameList.add("光大银行");
+            mBankNameList.add("民生银行");
+            mBankNameList.add("平安银行");
+            mBankNameList.add("浦发银行");
+            mBankNameList.add("中信银行");
+            mBankNameList.add("兴业银行");
+            mBankNameList.add("华夏银行");
+            mBankNameList.add("北京银行");
+            mBankNameList.add("上海银行");
 
             schoolList.add("华南理工大学");
             schoolList.add("中山大学");

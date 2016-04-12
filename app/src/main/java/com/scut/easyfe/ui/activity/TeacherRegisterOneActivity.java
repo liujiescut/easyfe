@@ -89,7 +89,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         /** 让User保持最新 */
-        mUser = App.getUser(mFromType != Constants.Identifier.TYPE_REGISTER);
+        mUser = App.getUser(mFromType != Constants.Identifier.TYPE_REGISTER).getCopy();
     }
 
     @Override
@@ -107,7 +107,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
             }
         }
 
-        mUser = App.getUser(mFromType != Constants.Identifier.TYPE_REGISTER);
+        mUser = App.getUser(mFromType != Constants.Identifier.TYPE_REGISTER).getCopy();
     }
 
     @Override
