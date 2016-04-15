@@ -14,10 +14,13 @@ import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.user.parent.RComfirmSingleOrder;
 import com.scut.easyfe.network.request.user.parent.RComfirmSpecialOrder;
+import com.scut.easyfe.network.request.user.parent.RGetTeacherInfo;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.OtherUtils;
+import com.scut.easyfe.utils.TimeUtils;
 
 import org.json.JSONObject;
 
@@ -86,10 +89,7 @@ public class ConfirmOrderActivity extends BaseActivity {
         mTeacherTextView.setText(mOrder.getTeacher().getName());
         mTeachGradeTextView.setText(String.format("%s", mOrder.getGrade()));
         mTeachCourseTextView.setText(mOrder.getCourse());
-        mTeachDateTextView.setText(String.format("%s %s",
-                OtherUtils.getTime(OtherUtils.getDateFromString(mOrder.getTeachTime().getDate()), "yyyy年MM月dd日(EEEE)"),
-                mOrder.getTeachTime().getChineseTime()));
-        mTeachTimeTextView.setText(OtherUtils.getTimeFromMinute(mOrder.getTime()));
+        mTeachTimeTextView.setText(TimeUtils.getTimeFromMinute(mOrder.getTime()));
         mTeachPriceTextView.setText(String.format("%.2f 元", mOrder.getPrice()));
         mTeachTipTextView.setText(String.format("%.2f 元", mOrder.getSubsidy()));
         mTeachTotalPriceTextView.setText(String.format("%.2f 元", mOrder.getPrice() + mOrder.getSubsidy()));
@@ -104,6 +104,9 @@ public class ConfirmOrderActivity extends BaseActivity {
                 mWeekLinearLayout.setVisibility(View.GONE);
                 mTeacherTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.mipmap.icon_right_arrow_padding, 0);
                 title = "特价订单详情";
+                mTeachDateTextView.setText(String.format("%s %s",
+                        TimeUtils.getTime(TimeUtils.getDateFromString(mOrder.getTeachTime().getDate()), "yyyy年MM月dd日(EEEE)"),
+                        mOrder.getTeachTime().getChineseTime()));
                 break;
 
             case Constants.Identifier.CONFIRM_ORDER_MULTI_RESERVE:
@@ -113,10 +116,16 @@ public class ConfirmOrderActivity extends BaseActivity {
                 mTeachTimeLabelTextView.setText("每次授课时长");
                 mTeachTotalPriceLabelTextView.setText("每次价格");
                 title = "多次预约订单信息";
+                mTeachDateTextView.setText(String.format("%s %s",
+                        mOrder.getTeachTime().getDate(),
+                        mOrder.getTeachTime().getChineseTime()));
                 break;
 
             case Constants.Identifier.CONFIRM_ORDER_SINGLE_RESERVE:
                 mWeekLinearLayout.setVisibility(View.GONE);
+                mTeachDateTextView.setText(String.format("%s %s",
+                        TimeUtils.getTime(TimeUtils.getDateFromString(mOrder.getTeachTime().getDate()), "yyyy年MM月dd日(EEEE)"),
+                        mOrder.getTeachTime().getChineseTime()));
                 title = "单次预约订单信息";
                 break;
 
@@ -129,10 +138,20 @@ public class ConfirmOrderActivity extends BaseActivity {
 
     public void onTeacherNameClick(View view){
         if(mConfirmOrderType == Constants.Identifier.CONFIRM_ORDER_SPECIAL){
-            Bundle bundle = new Bundle();
-            bundle.putInt(Constants.Key.TO_TEACHER_INFO_ACTIVITY_TYPE, Constants.Identifier.TYPE_SEE_TEACHER_INFO);
-            bundle.putSerializable(Constants.Key.ORDER, mOrder);
-            redirectToActivity(mContext, TeacherInfoActivity.class, bundle);
+            RequestManager.get().execute(new RGetTeacherInfo(App.getUser().getToken(), mOrder.getTeacher().get_id()), new RequestListener<Order>() {
+                @Override
+                public void onSuccess(RequestBase request, Order result) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(Constants.Key.TO_TEACHER_INFO_ACTIVITY_TYPE, Constants.Identifier.TYPE_SEE_TEACHER_INFO);
+                    bundle.putSerializable(Constants.Key.ORDER, result);
+                    redirectToActivity(mContext, TeacherInfoActivity.class, bundle);
+                }
+
+                @Override
+                public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                    toast(errorMsg);
+                }
+            });
         }
     }
 
@@ -140,8 +159,22 @@ public class ConfirmOrderActivity extends BaseActivity {
         switch (mConfirmOrderType){
             case Constants.Identifier.CONFIRM_ORDER_SPECIAL:
                 RequestManager.get().execute(new RComfirmSpecialOrder(App.getUser().getToken(),
-                        mOrder.getTrafficeTime(), mOrder.get_id()),
+                        mOrder.getTrafficTime(), mOrder.get_id()),
                         new RequestListener<JSONObject>() {
+                    @Override
+                    public void onSuccess(RequestBase request, JSONObject result) {
+                        showDialog(mOrder.getTeacher().getName());
+                    }
+
+                    @Override
+                    public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
+                break;
+
+            case Constants.Identifier.CONFIRM_ORDER_SINGLE_RESERVE:
+                RequestManager.get().execute(new RComfirmSingleOrder(App.getUser().getToken(), mOrder), new RequestListener<JSONObject>() {
                     @Override
                     public void onSuccess(RequestBase request, JSONObject result) {
                         showDialog(mOrder.getTeacher().getName());

@@ -1,6 +1,7 @@
 package com.scut.easyfe.ui.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
+import com.bigkoo.pickerview.listener.OnDismissListener;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
@@ -20,11 +22,14 @@ import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.request.info.RGetCourse;
+import com.scut.easyfe.network.request.user.teacher.RTeacherAddCourse;
 import com.scut.easyfe.ui.adapter.CourseAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +43,7 @@ public class TeachCourseActivity extends BaseActivity {
     private GridView mCourseGridView;
     private LinearLayout mGradeLinearLayout;
     private OptionsPickerView<String> mPicker;
+    private TextView mSaveTextView;
 
     CourseAdapter mCourseAdapter;
 
@@ -47,9 +53,12 @@ public class TeachCourseActivity extends BaseActivity {
     private List<TeachableCourse> mTeachableCourses = new ArrayList<>();
 
     private int mSelectedCoursePosition = 0;
+    private int mSelectedGradePosition = -1;
 
     private boolean mISLoadingCloseByUser = true;
     private User mUser;
+
+    private int mFromType = Constants.Identifier.TYPE_REGISTER;
 
     @Override
     protected void setLayoutView() {
@@ -65,6 +74,14 @@ public class TeachCourseActivity extends BaseActivity {
     @Override
     protected void initData() {
         mUser = App.getUser(false).getCopy();
+
+        Intent intent = getIntent();
+        if (null != intent) {
+            Bundle extras = intent.getExtras();
+            if (null != extras) {
+                mFromType = extras.getInt(Constants.Key.TO_TEACH_COURSE_ACTIVITY_TYPE, Constants.Identifier.TYPE_REGISTER);
+            }
+        }
     }
 
     @Override
@@ -72,6 +89,7 @@ public class TeachCourseActivity extends BaseActivity {
         ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("家教注册 - 可教授课程及收费");
         mCourseGridView = OtherUtils.findViewById(this, R.id.teach_course_gv_course);
         mGradeLinearLayout = OtherUtils.findViewById(this, R.id.teach_course_ll_container);
+        mSaveTextView = OtherUtils.findViewById(this, R.id.teach_course_tv_save);
         mCourseAdapter = new CourseAdapter(mCourseNames);
         mCourseAdapter.setItemClickable(false);
         mCourseGridView.setAdapter(mCourseAdapter);
@@ -81,9 +99,12 @@ public class TeachCourseActivity extends BaseActivity {
         mTeachableCourses.addAll(mUser.getTeacherMessage().getTeacherPrice());
         for (TeachableCourse teachableCourse :
                 mTeachableCourses) {
-            addTeachableCourseItem(teachableCourse.getCourse(), teachableCourse.getGrade(), teachableCourse.getPrice());
+            addTeachableCourseItem(teachableCourse.getCourse(), teachableCourse.getGrade(), teachableCourse.getPrice(), false);
         }
 
+        if (mFromType == Constants.Identifier.TYPE_MODIFY) {
+            mSaveTextView.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -103,8 +124,66 @@ public class TeachCourseActivity extends BaseActivity {
 
         mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
-                addTeachableCourseItem(mCourseNames.get(mSelectedCoursePosition), mGrade.get(options1), 100);
+            public void onOptionsSelect(final int options1, int option2, int options3) {
+                mSelectedGradePosition = options1;
+            }
+        });
+
+        mPicker.setOnDismissListener(new OnDismissListener() {
+            @Override
+            public void onDismiss(Object o) {
+                if (mSelectedGradePosition == -1) {
+                    return;
+                }
+
+                DialogUtils.makeInputDialog(mContext, "收费", InputType.TYPE_CLASS_NUMBER, new DialogUtils.OnInputListener() {
+                    @Override
+                    public void onFinish(final String message) {
+                        LogUtils.i(Constants.Tag.TEACHER_REGISTER_TAG, message);
+
+                        if (mFromType == Constants.Identifier.TYPE_REGISTER) {
+                            try {
+                                addTeachableCourseItem(mCourseNames.get(mSelectedCoursePosition),
+                                        mGrade.get(mSelectedGradePosition), Integer.parseInt(message));
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                                toast("只能输入数字");
+                            }
+
+                            mSelectedGradePosition = -1;
+
+                        } else if (mFromType == Constants.Identifier.TYPE_MODIFY) {
+
+                            try {
+                                TeachableCourse teachableCourse = new TeachableCourse(0x99999, mCourseNames.get(mSelectedCoursePosition),
+                                        mGrade.get(mSelectedGradePosition), Float.parseFloat(message));
+
+                                RequestManager.get().execute(new RTeacherAddCourse(App.getUser().getToken(), teachableCourse), new RequestListener<JSONObject>() {
+                                    @Override
+                                    public void onSuccess(RequestBase request, JSONObject result) {
+                                        toast("增加课程成功");
+                                        addTeachableCourseItem(mCourseNames.get(mSelectedCoursePosition),
+                                                mGrade.get(mSelectedGradePosition), Integer.parseInt(message));
+
+                                        mSelectedGradePosition = -1;
+                                    }
+
+                                    @Override
+                                    public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                                        toast(errorMsg);
+                                        mSelectedGradePosition = -1;
+                                    }
+                                });
+
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                                toast("只能输入数字");
+                            }
+                        }
+
+                    }
+                }).show();
+
             }
         });
     }
@@ -155,7 +234,11 @@ public class TeachCourseActivity extends BaseActivity {
 
     }
 
-    private void addTeachableCourseItem(String courseName, String  mGradeName, float price){
+    private void addTeachableCourseItem(String courseName, String mGradeName, float price) {
+        addTeachableCourseItem(courseName, mGradeName, price, true);
+    }
+
+    private void addTeachableCourseItem(String courseName, String mGradeName, float price, boolean updateUser) {
         int itemViewId = courseName.hashCode() * mGradeName.hashCode() + mGradeName.hashCode();
         View itemView = mGradeLinearLayout.findViewById(itemViewId);
         if (null == itemView) {
@@ -165,7 +248,7 @@ public class TeachCourseActivity extends BaseActivity {
         }
 
         TeachableCourse teachableCourse = new TeachableCourse(itemViewId, courseName, mGradeName, price);
-        if(!mTeachableCourses.contains(teachableCourse)) {
+        if (!mTeachableCourses.contains(teachableCourse)) {
             mTeachableCourses.add(teachableCourse);
         }
         ((TextView) itemView.findViewById(R.id.item_course_price_tv_state)).setText(Course.getStateFromGrade(mGradeName));
@@ -174,45 +257,58 @@ public class TeachCourseActivity extends BaseActivity {
         priceTextView.setText(String.format("%.0f 元/小时", price));
         itemView.setTag(teachableCourse);
 
-        final View finalItemView = itemView;
-        priceTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                DialogUtils.makeInputDialog(mContext, "收费", InputType.TYPE_CLASS_NUMBER, new DialogUtils.OnInputListener() {
-                    @Override
-                    public void onFinish(String message) {
-                        LogUtils.i(Constants.Tag.TEACHER_REGISTER_TAG, message);
-                        try {
-                            TeachableCourse clickPriceItem = (TeachableCourse) finalItemView.getTag();
-                            clickPriceItem.setPrice(Integer.parseInt(message));
-                            for (TeachableCourse item :
-                                    mTeachableCourses) {
-                                if (item.get_id() == clickPriceItem.get_id()) {
-                                    item.setPrice(clickPriceItem.getPrice());
+        if (mFromType == Constants.Identifier.TYPE_REGISTER) {
+            final View finalItemView = itemView;
+            priceTextView.setClickable(true);
+            priceTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    DialogUtils.makeInputDialog(mContext, "收费", InputType.TYPE_CLASS_NUMBER, new DialogUtils.OnInputListener() {
+                        @Override
+                        public void onFinish(String message) {
+                            LogUtils.i(Constants.Tag.TEACHER_REGISTER_TAG, message);
+                            try {
+                                TeachableCourse clickPriceItem = (TeachableCourse) finalItemView.getTag();
+                                clickPriceItem.setPrice(Integer.parseInt(message));
+                                for (TeachableCourse item :
+                                        mTeachableCourses) {
+                                    if (item.get_id() == clickPriceItem.get_id()) {
+                                        item.setPrice(clickPriceItem.getPrice());
+                                    }
                                 }
+                                priceTextView.setText(String.format("%s 元/小时", message));
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                                toast("只能输入数字");
                             }
-                            priceTextView.setText(String.format("%s 元/小时", message));
-                        } catch (NumberFormatException e) {
-                            e.printStackTrace();
-                            toast("只能输入数字");
                         }
-                    }
-                }).show();
+                    }).show();
 
+                }
+            });
+        }else if(mFromType == Constants.Identifier.TYPE_MODIFY){
+            priceTextView.setClickable(false);
+            priceTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+
+            if(updateUser) {
+                mUser.getTeacherMessage().getTeacherPrice().clear();
+                mUser.getTeacherMessage().getTeacherPrice().addAll(mTeachableCourses);
+                App.setUser(mUser);
+                mUser = App.getUser().getCopy();
             }
-        });
+        }
     }
 
-    private void refreshGradeLinearLayout(String course){
-        if(null == mGradeLinearLayout){
+    private void refreshGradeLinearLayout(String course) {
+        if (null == mGradeLinearLayout) {
             return;
         }
 
-        for (int index = 0; index < mGradeLinearLayout.getChildCount(); index++){
+        for (int index = 0; index < mGradeLinearLayout.getChildCount(); index++) {
             TeachableCourse teachableCourse = (TeachableCourse) mGradeLinearLayout.getChildAt(index).getTag();
-            if(teachableCourse.getCourse().equals(course)){
+            if (teachableCourse.getCourse().equals(course)) {
                 mGradeLinearLayout.getChildAt(index).setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 mGradeLinearLayout.getChildAt(index).setVisibility(View.GONE);
             }
         }
@@ -233,7 +329,7 @@ public class TeachCourseActivity extends BaseActivity {
     public void onConfirmClick(View view) {
         mUser.getTeacherMessage().getTeacherPrice().clear();
         mUser.getTeacherMessage().getTeacherPrice().addAll(mTeachableCourses);
-        if(mTeachableCourses.size() == 0){
+        if (mTeachableCourses.size() == 0) {
             toast("请先选择授课课程");
             return;
         }

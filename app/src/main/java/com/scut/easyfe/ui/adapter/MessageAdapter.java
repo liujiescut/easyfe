@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.scut.easyfe.R;
 import com.scut.easyfe.entity.Message;
 import com.scut.easyfe.utils.OtherUtils;
+import com.scut.easyfe.utils.TimeUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -57,7 +58,7 @@ public class MessageAdapter extends BaseAdapter{
         }
 
         holder.sender.setText(mMessages.get(position).getSenderName());
-        holder.date.setText(OtherUtils.getTime(mMessages.get(position).getTimestamp(), "yyyy-MM-dd HH: mm"));
+        holder.date.setText(TimeUtils.getTime(mMessages.get(position).getTimestamp(), "yyyy-MM-dd HH: mm"));
         holder.content.setText(mMessages.get(position).getContent());
         return convertView;
     }

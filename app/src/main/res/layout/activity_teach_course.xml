@@ -47,6 +47,7 @@
                 android:onClick="onAddClick"
                 android:src="@mipmap/icon_plus" />
             <TextView
+                android:id="@+id/teach_course_tv_save"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/layout_margin_small"

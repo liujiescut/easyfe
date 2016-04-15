@@ -1,7 +1,8 @@
-package com.scut.easyfe.network.request.reserve;
+package com.scut.easyfe.network.request.book;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.entity.book.MultiBookCondition;
 import com.scut.easyfe.entity.book.SingleBookCondition;
 import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.network.RequestBase;
@@ -18,14 +19,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 单次预约
+ * 多次预约
  * Created by jay on 16/4/12.
  */
-public class RSingleReserve extends RequestBase<List<Order>>{
-    private SingleBookCondition mCondition = new SingleBookCondition();
+public class RMultiBook extends RequestBase<List<Order>>{
+    private MultiBookCondition mCondition = new MultiBookCondition();
+
+    public RMultiBook(MultiBookCondition mCondition) {
+        this.mCondition = mCondition;
+    }
+
     @Override
     public String getUrl() {
-        return Constants.URL.URL_SINGLE_RESERVE;
+        return Constants.URL.URL_MULTI_RESERVE;
     }
 
     @Override
@@ -37,9 +43,23 @@ public class RSingleReserve extends RequestBase<List<Order>>{
         params.put("time", mCondition.getTime());
         params.put("childAge", mCondition.getChildAge());
         params.put("childGender", mCondition.getChildGender());
-        params.put("school", mCondition.getSchool());
-        params.put("price", String.format("[%.2f,%.2f]", mCondition.getPrice()[0], mCondition.getPrice()[1]));
-        params.put("score", String.format("[%.2f,%.2f]", mCondition.getScore()[0], mCondition.getScore()[1]));
+        params.put("multiBookTime", mCondition.getMultiBookTime().getMultiBookConditionJson());
+        params.put("score", mCondition.getScore());
+
+        JSONArray priceArray = new JSONArray();
+        for (JSONArray price :
+             mCondition.getPrice()) {
+            priceArray.put(price);
+        }
+        params.put("price", priceArray);
+
+        JSONArray schoolArray = new JSONArray();
+        for (String schoolName :
+             mCondition.getSchool()) {
+            schoolArray.put(schoolName);
+        }
+        params.put("school", schoolArray);
+
         return params;
     }
 

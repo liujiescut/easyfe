@@ -6,10 +6,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
-import com.scut.easyfe.entity.test.Order;
+import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.OtherUtils;
+import com.scut.easyfe.utils.TimeUtils;
 
 public class ToDoOrderActivity extends BaseActivity {
 
@@ -89,30 +91,32 @@ public class ToDoOrderActivity extends BaseActivity {
     }
 
     private void updateView(){
-        mOrderNumTextView.setText("XXXX XXXX XXXX");
-        mInsuranceNumTextView.setText("XXXX XXXX XXXX");
+        mOrderNumTextView.setText(mOrder.getOrderNumber());
+        mInsuranceNumTextView.setText(mOrder.getInsurance().getInsuranceNumber());
 
-        mGradeTextView.setText(String.format("%s %s", mOrder.getStudentState(), mOrder.getStudentGrade()));
-        mCourseTextView.setText(mOrder.getCourseName());
-        mDateTextView.setText(String.format("%s %s", OtherUtils.getTime(mOrder.getDate(), "yyyy年MM月dd日(EEEE)"), mOrder.getTeachPeriod()));
-        mTimeTextView.setText(OtherUtils.getTimeFromMinute(mOrder.getTeachTime()));
+        mGradeTextView.setText(String.format("%s", mOrder.getGrade()));
+        mCourseTextView.setText(mOrder.getCourse());
+        mDateTextView.setText(String.format("%s %s",
+                TimeUtils.getTime(TimeUtils.getDateFromString(mOrder.getTeachTime().getDate()), "yyyy年MM月dd日(EEEE)"),
+                mOrder.getTeachTime().getChineseTime()));
+        mTimeTextView.setText(TimeUtils.getTimeFromMinute(mOrder.getTime()));
         mPriceTextView.setText(String.format("%.2f", mOrder.getPrice()));
-        mTipTextView.setText(String.format("%.2f", mOrder.getTip()));
-        mTotalPriceTextView.setText(String.format("%.2f", mOrder.getPrice() + mOrder.getTip()));
+        mTipTextView.setText(String.format("%.2f", mOrder.getSubsidy()));
+        mTotalPriceTextView.setText(String.format("%.2f", mOrder.getPrice() + mOrder.getSubsidy()));
         mWarningTextView.setText("我就是温馨提示喽");
 
         if(isTeacher()){
-            mNameTextView.setText(mOrder.getParentName());
-            mPhoneTextView.setText(mOrder.getParentPhone());
-            mParentAddressTextView.setText(mOrder.getParentAddress());
+            mNameTextView.setText(mOrder.getParent().getName());
+            mPhoneTextView.setText(mOrder.getParent().getPhone());
+            mParentAddressTextView.setText(mOrder.getParent().getPosition().getAddress());
 
-            mStudentAgeTextView.setText(String.format("%d", mOrder.getStudentAge()));
-            mStudentGenderTextView.setText(mOrder.getStudentGender() == Constants.Identifier.MALE ? "男" : "女");
+            mStudentAgeTextView.setText(String.format("%d", mOrder.getChildAge()));
+            mStudentGenderTextView.setText(mOrder.getChildGender() == Constants.Identifier.MALE ? "男" : "女");
         }else {
             mNameLabelTextView.setText("家教姓名");
-            mNameTextView.setText(mOrder.getTeacherName());
+            mNameTextView.setText(mOrder.getTeacher().getName());
             mNameTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,R.mipmap.icon_right_arrow_padding,0);
-            mPhoneTextView.setText(mOrder.getTeacherPhone());
+            mPhoneTextView.setText(mOrder.getTeacher().getPhone());
             mParentAddressContainer.setVisibility(View.GONE);
             mStudentInfoContainer.setVisibility(View.GONE);
             mDoingTextView.setVisibility(View.GONE);
@@ -125,6 +129,6 @@ public class ToDoOrderActivity extends BaseActivity {
     }
 
     private boolean isTeacher(){
-        return true;
+        return App.getUser().get_id().equals(mOrder.getTeacher().get_id());
     }
 }

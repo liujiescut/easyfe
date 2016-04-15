@@ -56,70 +56,70 @@ public class Order extends BaseEntity implements Serializable{
     public Order() {
     }
 
-    public static ArrayList<Order> getTestOrders() {
-        ArrayList<Order> orders = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            Order order = new Order();
+//    public static ArrayList<Order> getTestOrders() {
+//        ArrayList<Order> orders = new ArrayList<>();
+//        for (int i = 0; i < 20; i++) {
+//            Order order = new Order();
+//
+//            if (i == 0) {
+//                //不用交通补贴
+//                order.setParentLatitude(23.06555387370726);
+//                order.setParentLongitude(113.41226534667324);
+//            } else if (i == 1) {
+//                //需要交通补贴
+//                order.setParentLatitude(23.132843978618187);
+//                order.setParentLongitude(113.3695868519083);
+//            } else {
+//                //超出最大家教时间范围
+//                order.setParentLatitude(23.215710873792418);
+//                order.setParentLongitude(113.28358308241141);
+//            }
+//
+//            order.setTeacherLatitude(23.059061572474914);
+//            order.setTeacherLongitude(113.40638144558483);
+//            order.setCity("广州");
+//
+//            order.setPrice(250f);
+//            order.setSpecialPrice(60f);
+//            order.setCourseName("数学");
+//            order.setTeachTime(120);
+//            order.setTeachPeriod("晚上");
+//            order.setTeachTime(100);
+//            order.setDate(new Date());
+//
+//            order.setTeacherName("林老师");
+//            order.setTeacherGender(Constants.Identifier.MALE);
+//            order.setTeacherProfession("软件工程");
+//            order.setTeacherSchool("华南理工大学");
+//            order.setTeacherHasTeachCount(10);
+//            order.setTeacherHasTeachTime(200 + i * 10);
+//            order.setTeacherScore(4.8f);
+//
+//            order.setStudentAge(16);
+//            order.setStudentGender(Constants.Identifier.MALE);
+//            order.setStudentState("小学");
+//            order.setStudentGrade("三年级");
+//
+//            orders.add(order);
+//        }
+//
+//        return orders;
+//    }
 
-            if (i == 0) {
-                //不用交通补贴
-                order.setParentLatitude(23.06555387370726);
-                order.setParentLongitude(113.41226534667324);
-            } else if (i == 1) {
-                //需要交通补贴
-                order.setParentLatitude(23.132843978618187);
-                order.setParentLongitude(113.3695868519083);
-            } else {
-                //超出最大家教时间范围
-                order.setParentLatitude(23.215710873792418);
-                order.setParentLongitude(113.28358308241141);
-            }
-
-            order.setTeacherLatitude(23.059061572474914);
-            order.setTeacherLongitude(113.40638144558483);
-            order.setCity("广州");
-
-            order.setPrice(250f);
-            order.setSpecialPrice(60f);
-            order.setCourseName("数学");
-            order.setTeachTime(120);
-            order.setTeachPeriod("晚上");
-            order.setTeachTime(100);
-            order.setDate(new Date());
-
-            order.setTeacherName("林老师");
-            order.setTeacherGender(Constants.Identifier.MALE);
-            order.setTeacherProfession("软件工程");
-            order.setTeacherSchool("华南理工大学");
-            order.setTeacherHasTeachCount(10);
-            order.setTeacherHasTeachTime(200 + i * 10);
-            order.setTeacherScore(4.8f);
-
-            order.setStudentAge(16);
-            order.setStudentGender(Constants.Identifier.MALE);
-            order.setStudentState("小学");
-            order.setStudentGrade("三年级");
-
-            orders.add(order);
-        }
-
-        return orders;
-    }
-
-    public static String getBaseInfo(Order order){
-        String content = "";
-        content += String.format("性别: %s\n", order.getTeacherGender() == Constants.Identifier.MALE ? "男" : "女");
-        content += String.format("年龄: %d\n", order.getTeacherAge());
-        content += String.format("大学专业: %s %s\n", order.getTeacherSchool(), order.getTeacherProfession());
-        content += String.format("已家教过的孩子数量：%d\n", order.getTeacherHasTeachCount());
-        content += String.format("已家教的时长：%d 小时\n", order.getTeacherHasTeachTime());
-        content += String.format("综合评分：%.2f", order.getTeacherScore());
-        return content;
-    }
-
-    public static String getScoreInfo(Order order){
-        return "";
-    }
+//    public static String getBaseInfo(Order order){
+//        String content = "";
+//        content += String.format("性别: %s\n", order.getTeacherGender() == Constants.Identifier.MALE ? "男" : "女");
+//        content += String.format("年龄: %d\n", order.getTeacherAge());
+//        content += String.format("大学专业: %s %s\n", order.getTeacherSchool(), order.getTeacherProfession());
+//        content += String.format("已家教过的孩子数量：%d\n", order.getTeacherHasTeachCount());
+//        content += String.format("已家教的时长：%d 小时\n", order.getTeacherHasTeachTime());
+//        content += String.format("综合评分：%.2f", order.getTeacherScore());
+//        return content;
+//    }
+//
+//    public static String getScoreInfo(Order order){
+//        return "";
+//    }
 
     public String get_id() {
         return _id;

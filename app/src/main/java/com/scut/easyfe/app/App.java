@@ -123,7 +123,7 @@ public class App extends Application {
         initImageLoader();
 
         /** 用户登陆*/
-//        User.doLogin();
+        User.doLogin();
     }
 
 

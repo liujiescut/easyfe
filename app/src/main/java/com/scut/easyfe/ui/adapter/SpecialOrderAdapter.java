@@ -11,6 +11,7 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.order.Order;
+import com.scut.easyfe.entity.user.TeacherInfo;
 import com.scut.easyfe.ui.activity.ConfirmOrderActivity;
 import com.scut.easyfe.ui.activity.LoginActivity;
 import com.scut.easyfe.ui.base.BaseActivity;
@@ -19,10 +20,10 @@ import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.MapUtils;
 import com.scut.easyfe.utils.OtherUtils;
+import com.scut.easyfe.utils.TimeUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * 特价订单页面使用的Adapter
@@ -100,7 +101,7 @@ public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
                     return;
                 }
 
-                final Order.TeacherInfo teacher = mOrders.get(position).getTeacher();
+                final TeacherInfo teacher = mOrders.get(position).getTeacher();
 
                 MapUtils.getDurationFromPosition(
                         teacher.getPosition().getLatitude(),
@@ -121,9 +122,12 @@ public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
                                             "温馨提示", "您与家教老师的距离已超过他（她）设定的最远距离，试试别的老师吧。");
 
                                 } else {
-                                    mOrders.get(position).setTrafficeTime(durationSeconds);
-                                    if (durationSeconds / 60 < teacher.getTeacherMessage().getMaxTrafficTime()) {
+                                    mOrders.get(position).setTrafficTime(durationSeconds / 60);
+                                    if (durationSeconds / 60 < teacher.getTeacherMessage().getFreeTrafficTime()) {
                                         mOrders.get(position).setSubsidy(0);
+                                    }else {
+                                        //因为服务器返回的路程费在家教信息中
+                                        mOrders.get(position).setSubsidy(mOrders.get(position).getTeacher().getTeacherMessage().getSubsidy());
                                     }
 
                                     if (null != mContextReference.get()) {
@@ -152,7 +156,7 @@ public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
     }
 
     private String getContentUp(int position) {
-        Order.TeacherInfo teacher = mOrders.get(position).getTeacher();
+        TeacherInfo teacher = mOrders.get(position).getTeacher();
         String contentUp = "";
         contentUp += "性别: ";
         contentUp += teacher.getGender() == Constants.Identifier.MALE ? "男\n" : "女\n";
@@ -175,12 +179,12 @@ public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
         contentDown += "授课课程: ";
         contentDown += mOrders.get(position).getCourse() + "\n";
         contentDown += "授课时间: ";
-        contentDown += OtherUtils.getTime(
-                OtherUtils.getDateFromString(mOrders.get(position).getTeachTime().getDate()),
+        contentDown += TimeUtils.getTime(
+                TimeUtils.getDateFromString(mOrders.get(position).getTeachTime().getDate()),
                 "yyyy年MM月dd日(EEEE)") + " " +
                 mOrders.get(position).getTeachTime().getChineseTime() + "\n";
         contentDown += "授课时长: ";
-        contentDown += OtherUtils.getTimeFromMinute(mOrders.get(position).getTime()) + "\n";
+        contentDown += TimeUtils.getTimeFromMinute(mOrders.get(position).getTime()) + "\n";
         contentDown += "原价: ";
         contentDown += String.format("%.0f 元/小时", mOrders.get(position).getPrice());
         return contentDown;

@@ -11,6 +11,7 @@ import com.scut.easyfe.ui.activity.CallbackActivity;
 import com.scut.easyfe.ui.activity.BookActivity;
 import com.scut.easyfe.ui.activity.SpecialOrderActivity;
 import com.scut.easyfe.ui.activity.TeacherRegisterOneActivity;
+import com.scut.easyfe.ui.activity.TeacherRegisterTwoActivity;
 import com.scut.easyfe.ui.base.BaseFragment;
 import com.scut.easyfe.utils.OtherUtils;
 
@@ -142,6 +143,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
                 Bundle bundle = new Bundle();
                 bundle.putInt(Constants.Key.TO_TEACHER_REGISTER_ONE_ACTIVITY_TYPE, Constants.Identifier.TYPE_REGISTER);
                 mActivity.redirectToActivity(mActivity, TeacherRegisterOneActivity.class);
+            }else{
+
+                Bundle extras = new Bundle();
+                extras.putBoolean(Constants.Key.IS_REGISTER, false);
+                mActivity.redirectToActivity(mActivity, TeacherRegisterTwoActivity.class, extras);
             }
         }
     }

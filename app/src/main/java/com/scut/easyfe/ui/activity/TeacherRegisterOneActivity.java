@@ -26,6 +26,7 @@ import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.MapUtils;
 import com.scut.easyfe.utils.OtherUtils;
+import com.scut.easyfe.utils.TimeUtils;
 
 import org.json.JSONObject;
 
@@ -144,7 +145,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
         mChildGradeTextView = OtherUtils.findViewById(this, R.id.base_info_tv_child_grade);
         mDoModifyTextView = OtherUtils.findViewById(this, R.id.base_info_tv_modify);
 
-        mBirthdayTextView.setText(OtherUtils.getTime(calendar.getTime(), "yyyy 年 MM 月 dd 日"));
+        mBirthdayTextView.setText(TimeUtils.getTime(calendar.getTime(), "yyyy 年 MM 月 dd 日"));
         mSchoolTextView.setText(Constants.Data.schoolList.get(0));
         mGradeTextView.setText(Constants.Data.teacherGradeList.get(0));
         mProfessionTextView.setText(Constants.Data.professionList.get(0));
@@ -195,7 +196,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
 
         mNameEditText.setText(mUser.getName());
         mGenderTextView.setText(mUser.getGender() == Constants.Identifier.MALE ? R.string.male : R.string.female);
-        mBirthdayTextView.setText(OtherUtils.getTime(new Date(mUser.getBirthday()), "yyyy 年 MM 月 dd 日"));
+        mBirthdayTextView.setText(TimeUtils.getTime(new Date(mUser.getBirthday()), "yyyy 年 MM 月 dd 日"));
         mPhoneEditText.setText(mUser.getPhone());
         mPasswordEditText.setText(mUser.getPassword());
         mIdCardEditText.setText(mUser.getTeacherMessage().getIdCard());
@@ -292,7 +293,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
         mTimePicker.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date) {
-                mBirthdayTextView.setText(OtherUtils.getTime(date, "yyyy 年 MM 月 dd 日"));
+                mBirthdayTextView.setText(TimeUtils.getTime(date, "yyyy 年 MM 月 dd 日"));
                 mBirthday = date;
             }
         });

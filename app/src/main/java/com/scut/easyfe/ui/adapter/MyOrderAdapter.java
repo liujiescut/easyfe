@@ -15,10 +15,11 @@ import android.widget.TextView;
 
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.Constants;
-import com.scut.easyfe.entity.test.Order;
+import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.ui.base.BaseListViewScrollStateAdapter;
 import com.scut.easyfe.utils.DensityUtil;
 import com.scut.easyfe.utils.OtherUtils;
+import com.scut.easyfe.utils.TimeUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -80,11 +81,11 @@ public class MyOrderAdapter extends BaseListViewScrollStateAdapter {
 
         Order order = mOrders.get(position);
         holder.orderNum.setText(String.format("订单 : %s", order.getOrderNumber()));
-        holder.teacherName.setText(order.getTeacherName());
-        holder.course.setText(order.getCourseName());
-        holder.date.setText(OtherUtils.getTime(order.getDate(), "yyyy 年 MM 月 dd 日 (EEEE)"));
-        holder.period.setText(order.getTeachPeriod());
-        holder.teachTime.setText(OtherUtils.getTimeFromMinute(order.getTeachTime()));
+        holder.teacherName.setText(order.getTeacher().getName());
+        holder.course.setText(order.getCourse());
+        holder.date.setText(TimeUtils.getTime(TimeUtils.getDateFromString(order.getTeachTime().getDate()), "yyyy 年 MM 月 dd 日 (EEEE)"));
+        holder.period.setText(order.getTeachTime().getChineseTime());
+        holder.teachTime.setText(TimeUtils.getTimeFromMinute(order.getTime()));
         holder.price.setText(String.format("%.2f 元", order.getPrice()));
 
         if (mState == Constants.Identifier.STATE_NORMAL && holder.checkBox.getVisibility() == View.VISIBLE) {

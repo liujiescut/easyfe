@@ -89,6 +89,11 @@ public class ParentRegisterActivity extends BaseActivity {
         }
 
         mUser = App.getUser(mFromType != Constants.Identifier.TYPE_REGISTER).getCopy();
+
+        mAddress = mUser.getPosition().getAddress();
+        mLatitude = mUser.getPosition().getLatitude();
+        mLongitude = mUser.getPosition().getLongitude();
+        mCity = mUser.getPosition().getCity();
     }
 
     @Override
@@ -129,15 +134,15 @@ public class ParentRegisterActivity extends BaseActivity {
             mParentPhoneEditText.setEnabled(false);
             mParentPasswordEditText.setTextColor(mResources.getColor(R.color.text_area_text_color));
             mParentPasswordEditText.setEnabled(false);
-
-            mParentNameEditText.setText(mUser.getName());
-            mParentGenderTextView.setText(mUser.getGender() == Constants.Identifier.MALE ? R.string.male : R.string.female);
-            mParentPhoneEditText.setText(mUser.getPhone());
-            mParentPasswordEditText.setText(mUser.getPassword());
-            mChildGenderTextView.setText(mUser.getParentMessage().getChildGender() == Constants.Identifier.MALE ? R.string.male : R.string.female);
-            mChildGradeTextView.setText(mUser.getParentMessage().getChildGrade());
-            mAddressTextView.setText(mUser.getPosition().getAddress());
         }
+
+        mParentNameEditText.setText(mUser.getName());
+        mParentGenderTextView.setText(mUser.getGender() == Constants.Identifier.MALE ? R.string.male : R.string.female);
+        mParentPhoneEditText.setText(mUser.getPhone());
+        mParentPasswordEditText.setText(mUser.getPassword());
+        mChildGenderTextView.setText(mUser.getParentMessage().getChildGender() == Constants.Identifier.MALE ? R.string.male : R.string.female);
+        mChildGradeTextView.setText(mUser.getParentMessage().getChildGrade());
+        mAddressTextView.setText(mUser.getPosition().getAddress());
     }
 
     @Override
@@ -147,24 +152,26 @@ public class ParentRegisterActivity extends BaseActivity {
 
     @Override
     protected void fetchData() {
-        MapUtils.getLocation(new MapUtils.LocationCallback() {
-            @Override
-            public void onSuccess(double latitude, double longitude, String address, String city) {
-                mLatitude = latitude;
-                mLongitude = longitude;
-                mAddress = (null == address ? "" : address);
-                mCity = city;
+        if(null == mAddress || mAddress.length() == 0) {
+            MapUtils.getLocation(new MapUtils.LocationCallback() {
+                @Override
+                public void onSuccess(double latitude, double longitude, String address, String city) {
+                    mLatitude = latitude;
+                    mLongitude = longitude;
+                    mAddress = (null == address ? "" : address);
+                    mCity = city;
 
-                if (mFromType == Constants.Identifier.TYPE_REGISTER) {
-                    mAddressTextView.setText(mAddress);
+                    if (mFromType == Constants.Identifier.TYPE_REGISTER) {
+                        mAddressTextView.setText(mAddress);
+                    }
                 }
-            }
 
-            @Override
-            public void onFailed() {
-                LogUtils.i(Constants.Tag.MAP_TAG, "定位失败");
-            }
-        });
+                @Override
+                public void onFailed() {
+                    LogUtils.i(Constants.Tag.MAP_TAG, "定位失败");
+                }
+            });
+        }
 
         startLoading("加载数据中", new DialogInterface.OnDismissListener() {
             @Override

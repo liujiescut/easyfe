@@ -25,6 +25,7 @@ import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
+import com.scut.easyfe.utils.TimeUtils;
 
 import org.json.JSONObject;
 
@@ -140,7 +141,7 @@ public class PublishSpreadActivity extends BaseActivity {
             @Override
             public void onTimeSelect(Date date) {
                 mTeachDate = date;
-                mDateString = OtherUtils.getTime(date, "yyyy 年 MM 月 dd 日 (EEEE)");
+                mDateString = TimeUtils.getTime(date, "yyyy 年 MM 月 dd 日 (EEEE)");
                 LogUtils.i(Constants.Tag.ORDER_TAG, mDateString);
             }
         });
@@ -274,7 +275,7 @@ public class PublishSpreadActivity extends BaseActivity {
         order.setGrade(mGradeTextView.getText().toString());
         order.setTime(mTeachTime);
         order.setPrice(mPrice);
-        order.getTeachTime().setDate(OtherUtils.getTime(mTeachDate, "yyyy-MM-dd"));
+        order.getTeachTime().setDate(TimeUtils.getTime(mTeachDate, "yyyy-MM-dd"));
         order.getTeachTime().setTime(mPeriod);
 
         if(!validate(order)){

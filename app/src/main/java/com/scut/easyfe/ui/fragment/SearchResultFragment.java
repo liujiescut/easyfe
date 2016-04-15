@@ -1,5 +1,6 @@
 package com.scut.easyfe.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -7,8 +8,9 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
-import com.scut.easyfe.entity.test.Order;
+import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.ui.activity.TeacherInfoActivity;
 import com.scut.easyfe.ui.adapter.SearchResultAdapter;
 import com.scut.easyfe.ui.base.BaseRefreshFragment;
@@ -17,6 +19,7 @@ import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.MapUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,26 +28,18 @@ import java.util.List;
  */
 public class SearchResultFragment extends BaseRefreshFragment {
     private int mReserveType = Constants.Identifier.RESERVE_MULTI;
-    private List<Order> mOrders;
+    private List<Order> mOrders = new ArrayList<>();
 
     @Override
-    protected void initData() {
-        mOrders = Order.getTestOrders();
-    }
+    protected void initData() {}
 
     @Override
     protected void initView(View view) {
         super.initView(view);
 
-        if (null == getActivity()) {
-            return;
-        }
-
-        int mOrderNum = 4;
-
         TextView headView = new TextView(getActivity());
         headView.setMinimumHeight(DensityUtil.dip2px(mActivity, 5));
-        if (mOrderNum > 5) {
+        if (mOrders.size() > 5) {
             headView.setBackground(null);
         } else {
             headView.setBackgroundResource(R.color.search_result_tip_bg);
@@ -62,7 +57,7 @@ public class SearchResultFragment extends BaseRefreshFragment {
 
     @Override
     protected void onLoadingData() {
-
+        setIsLoading(false);
     }
 
     @Override
@@ -82,20 +77,20 @@ public class SearchResultFragment extends BaseRefreshFragment {
         }
 
         final int index = position - 1;   //减1是为了减去HeaderView
-        MapUtils.getDurationFromPosition(mOrders.get(index).getTeacherLatitude(), mOrders.get(index).getTeacherLongitude(),
-                mOrders.get(index).getParentLatitude(), mOrders.get(index).getParentLongitude(),
-                mOrders.get(index).getCity(), new MapUtils.GetDurationCallback() {
+        MapUtils.getDurationFromPosition(mOrders.get(index).getTeacher().getPosition().getLatitude(), mOrders.get(index).getTeacher().getPosition().getLongitude(),
+                App.getUser().getPosition().getLatitude(), App.getUser().getPosition().getLongitude(),
+                mOrders.get(index).getTeacher().getPosition().getCity(), new MapUtils.GetDurationCallback() {
                     @Override
                     public void onSuccess(int durationSeconds) {
                         if (null == mActivity) {
                             return;
                         }
 
-                        if (durationSeconds / 60 > mOrders.get(index).getTeacherMaxAcceptTime()) {
+                        if (durationSeconds / 60 > mOrders.get(index).getTeacher().getTeacherMessage().getMaxTrafficTime()) {
                             DialogUtils.makeConfirmDialog(mActivity, "温馨提示", "您与家教老师的距离已超过他（她）设定的最远距离，试试别的老师吧。");
                         } else {
-                            if (durationSeconds / 60 < mOrders.get(index).getTeacherAcceptTime()) {
-                                mOrders.get(index).setTip(0);
+                            if (durationSeconds / 60 < mOrders.get(index).getTeacher().getTeacherMessage().getFreeTrafficTime()) {
+                                mOrders.get(index).setSubsidy(0);
                             }
 
                             Bundle bundle = new Bundle();
@@ -124,5 +119,9 @@ public class SearchResultFragment extends BaseRefreshFragment {
 
     public void setReserveType(int mReserveType) {
         this.mReserveType = mReserveType;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.mOrders = orders;
     }
 }

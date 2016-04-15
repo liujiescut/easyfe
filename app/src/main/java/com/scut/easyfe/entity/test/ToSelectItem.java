@@ -8,11 +8,25 @@ import com.scut.easyfe.entity.BaseEntity;
  */
 public class ToSelectItem extends BaseEntity {
     private String text;              //被选择内容
+    private Object formatText;        //被选择内容
     private boolean selected = false; //是否被选中
 
     public ToSelectItem(String text, boolean selected) {
+        this(text, selected, "");
+    }
+
+    public ToSelectItem(String text, boolean selected, Object formatText) {
         this.text = text;
         this.selected = selected;
+        this.formatText = formatText;
+    }
+
+    public Object getFormatText() {
+        return formatText;
+    }
+
+    public void setFormatText(Object formatText) {
+        this.formatText = formatText;
     }
 
     public String getText() {

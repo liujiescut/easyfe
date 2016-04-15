@@ -1,5 +1,6 @@
 package com.scut.easyfe.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,17 +17,34 @@ import com.bigkoo.pickerview.listener.OnDismissListener;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.entity.Course;
+import com.scut.easyfe.entity.book.BaseBookCondition;
+import com.scut.easyfe.entity.book.MultiBookCondition;
+import com.scut.easyfe.entity.book.SingleBookCondition;
+import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.entity.test.ToSelectItem;
 import com.scut.easyfe.entity.user.User;
+import com.scut.easyfe.network.RequestBase;
+import com.scut.easyfe.network.RequestListener;
+import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.book.RMultiBook;
+import com.scut.easyfe.network.request.info.RGetCourse;
+import com.scut.easyfe.network.request.book.RSingleBook;
 import com.scut.easyfe.ui.adapter.SelectItemAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
+import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.ListViewUtil;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
+import com.scut.easyfe.utils.TimeUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 预约界面
@@ -52,18 +70,26 @@ public class BookActivity extends BaseActivity {
     ArrayList<ToSelectItem> mScoreItems;
 
     private OptionsPickerView<String> mSinglePicker;
-    private OptionsPickerView<String> mDoublePicker;
     private MyTimePicker mTimePicker;
     private TimePickerView mDatePicker;
+
+    private ArrayList<String> mGrade = new ArrayList<>();
+    private static List<Course> mCourses = new ArrayList<>();
+    private static ArrayList<String> mCourseNames = new ArrayList<>();
+    private int mSelectedCoursePosition = -1;
+
+    private boolean mISLoadingCloseByUser = true;
 
     private int mReserveType = Constants.Identifier.RESERVE_MULTI;
 
     private String mDateStringToShow = "";
 
     private User mUser;
-    private String mDate = "";
+    private String mDate = TimeUtils.getTime(new Date(), "yyyy-MM-dd");
+    private int mChildAge = 10;
+    private int mChildGender = Constants.Identifier.FEMALE;
     private int mWeek = 0;
-    private String mPeriod = "";
+    private String mPeriod = "morning";
     private int mTeachTime = 120;
 
     @Override
@@ -92,18 +118,21 @@ public class BookActivity extends BaseActivity {
             mSchoolItems.add(new ToSelectItem(school, false));
         }
 
-        for (String score :
-                Constants.Data.scoreRangeList) {
-            mScoreItems.add(new ToSelectItem(score, false));
-        }
+        mScoreItems.add(new ToSelectItem("6 分以上", false, "6"));
+        mScoreItems.add(new ToSelectItem("8 分以上", false, "8"));
+        mScoreItems.add(new ToSelectItem("12 分以上", false, "12"));
 
-        mPriceItems.add(new ToSelectItem("50以下", false));
-        mPriceItems.add(new ToSelectItem("50 - 80", false));
-        mPriceItems.add(new ToSelectItem("80 - 100", false));
-        mPriceItems.add(new ToSelectItem("100 - 120", false));
-        mPriceItems.add(new ToSelectItem("120 - 140", false));
-        mPriceItems.add(new ToSelectItem("140 - 160", false));
-        mPriceItems.add(new ToSelectItem("160 - 180", false));
+        try {
+            mPriceItems.add(new ToSelectItem("50以下", false, new JSONArray("[0,50]")));
+            mPriceItems.add(new ToSelectItem("50 - 80", false, new JSONArray("[50,80]")));
+            mPriceItems.add(new ToSelectItem("80 - 100", false, new JSONArray("[80,100]")));
+            mPriceItems.add(new ToSelectItem("100 - 120", false, new JSONArray("[100,120]")));
+            mPriceItems.add(new ToSelectItem("120 - 140", false, new JSONArray("[120,140]")));
+            mPriceItems.add(new ToSelectItem("140 - 160", false, new JSONArray("[140,160]")));
+            mPriceItems.add(new ToSelectItem("160 - 180", false, new JSONArray("[160,180]")));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -135,15 +164,7 @@ public class BookActivity extends BaseActivity {
         ListViewUtil.setListViewHeightBasedOnChildren(mPriceListView);
         ListViewUtil.setListViewHeightBasedOnChildren(mScoreListView);
 
-        if(mReserveType == Constants.Identifier.RESERVE_MULTI){
-            mTeachDateLabelTextView.setText("每周授课时间");
-            mTeachTimeLabelTextView.setText("最短授课时长");
-        }
-
         mContainerScrollView.smoothScrollTo(0, 0);
-
-        mDoublePicker = new OptionsPickerView<>(this);
-        mDoublePicker.setCancelable(true);
 
         mSinglePicker = new OptionsPickerView<>(this);
         mSinglePicker.setCancelable(true);
@@ -165,6 +186,16 @@ public class BookActivity extends BaseActivity {
                 Constants.Data.courseGradeList.get(0).get(0)));
 
         mTeachTimeTextView.setText("2 小时 0 分钟");
+
+        mStudentAgeTextView.setText(String.format("%d", mChildAge));
+
+        if(mReserveType == Constants.Identifier.RESERVE_MULTI){
+            mTeachDateLabelTextView.setText("每周授课时间");
+            mTeachTimeLabelTextView.setText("最短授课时长");
+            mTeachDateTextView.setText("星期日 上午");
+        }else {
+            mTeachDateTextView.setText(String.format("%s %s", TimeUtils.getTime(new Date(), "yyyy年MM月dd日(EEEE)"), "上午"));
+        }
     }
 
     @Override
@@ -209,7 +240,7 @@ public class BookActivity extends BaseActivity {
             @Override
             public void onPick(int hour, int minute) {
                 String timeString = String.format("%s 小时 %s 分钟", hour, minute);
-                 mTeachTime = hour * 60 + minute;
+                mTeachTime = hour * 60 + minute;
                 mTeachTimeTextView.setText(timeString);
             }
         });
@@ -217,8 +248,8 @@ public class BookActivity extends BaseActivity {
         mDatePicker.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date) {
-                mDateStringToShow = OtherUtils.getTime(date, "yyyy 年 MM 月 dd 日 (EEEE)");
-                mDate = OtherUtils.getTime(date, "yyyy-MM-dd");
+                mDateStringToShow = TimeUtils.getTime(date, "yyyy 年 MM 月 dd 日 (EEEE)");
+                mDate = TimeUtils.getTime(date, "yyyy-MM-dd");
                 LogUtils.i(Constants.Tag.ORDER_TAG, mDateStringToShow);
             }
         });
@@ -231,6 +262,47 @@ public class BookActivity extends BaseActivity {
                 }
 
                 showPeriodSelectView();
+            }
+        });
+    }
+
+    @Override
+    protected void fetchData() {
+        startLoading("加载数据中", new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if (mISLoadingCloseByUser) {
+                    toast("数据加载失败");
+                    finish();
+                }
+            }
+        });
+
+        RequestManager.get().execute(new RGetCourse(), new RequestListener<List<Course>>() {
+            @Override
+            public void onSuccess(RequestBase request, List<Course> result) {
+                mCourses.clear();
+                mCourses.addAll(result);
+                mCourseNames.clear();
+                for (Course course :
+                        mCourses) {
+                    mCourseNames.add(course.getCourse());
+                }
+
+                if (mCourseNames.size() > 0) {
+                    mSelectedCoursePosition = 0;
+                    mCourseTextView.setText(mCourseNames.get(0));
+                    mGrade = mCourses.get(0).getGrade();
+                    mGradeTextView.setText(mGrade.get(0));
+                }
+
+                mISLoadingCloseByUser = false;
+                stopLoading();
+            }
+
+            @Override
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+
             }
         });
     }
@@ -261,46 +333,51 @@ public class BookActivity extends BaseActivity {
 
     public void onGradeClick(View view){
         OtherUtils.hideSoftInputWindow(mGradeTextView.getWindowToken());
-        if (mDoublePicker.isShowing()) {
-            mDoublePicker.dismiss();
+        if (mSinglePicker.isShowing()) {
+            mSinglePicker.dismiss();
             return;
         }
 
-        mDoublePicker.setTitle("选择授课年级");
-        mDoublePicker.setPicker(Constants.Data.studentStateList, Constants.Data.studentGradeList, true);
-        mDoublePicker.setSelectOptions(0, 0);
-        mDoublePicker.setCyclic(false);
-        mDoublePicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+        if(mSelectedCoursePosition == -1 || mGrade.size() == 0){
+            toast("请先选择授课课程");
+            return;
+        }
+
+        mSinglePicker.setTitle("选择授课年级");
+        mSinglePicker.setPicker(mGrade);
+        mSinglePicker.setSelectOptions(0);
+        mSinglePicker.setCyclic(false);
+        mSinglePicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
-                mGradeTextView.setText(String.format("%s %s",
-                        Constants.Data.studentStateList.get(options1),
-                        Constants.Data.studentGradeList.get(options1).get(option2)));
+                mGradeTextView.setText(mGrade.get(options1));
             }
         });
-        mDoublePicker.show();
+        mSinglePicker.show();
     }
 
-    public void onCourseClick(View view){
+    public void onCourseClick(View view) {
         OtherUtils.hideSoftInputWindow(mCourseTextView.getWindowToken());
-        if (mDoublePicker.isShowing()) {
-            mDoublePicker.dismiss();
+        if (mSinglePicker.isShowing()) {
+            mSinglePicker.dismiss();
             return;
         }
 
-        mDoublePicker.setTitle("选择授课课程");
-        mDoublePicker.setPicker(Constants.Data.courseList, Constants.Data.courseGradeList, true);
-        mDoublePicker.setSelectOptions(0, 0);
-        mDoublePicker.setCyclic(false);
-        mDoublePicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+        mSinglePicker.setTitle("选择授课课程");
+        mSinglePicker.setPicker(mCourseNames);
+        mSinglePicker.setSelectOptions(0);
+        mSinglePicker.setCyclic(false);
+        mSinglePicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
-                mCourseTextView.setText(String.format("%s(%s)",
-                        Constants.Data.courseList.get(options1),
-                        Constants.Data.courseGradeList.get(options1).get(option2)));
+                mSelectedCoursePosition = options1;
+                mGrade = mCourses.get(mSelectedCoursePosition).getGrade();
+                mCourseTextView.setText(mCourseNames.get(mSelectedCoursePosition));
+                mGradeTextView.setText(mGrade.get(0));
             }
         });
-        mDoublePicker.show();
+        mSinglePicker.show();
+
     }
 
     public void onDateClick(View view){
@@ -355,6 +432,7 @@ public class BookActivity extends BaseActivity {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 mStudentAgeTextView.setText(Constants.Data.ageList.get(options1));
+                mChildAge = options1;
             }
         });
         mSinglePicker.show();
@@ -376,20 +454,156 @@ public class BookActivity extends BaseActivity {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 mStudentGenderTextView.setText(Constants.Data.genderList.get(options1));
+                mChildGender = options1;
             }
         });
         mSinglePicker.show();
     }
 
     public void onSearchClick(View view){
-        if(mReserveType == Constants.Identifier.RESERVE_SINGLE){
-            //Todo
-        }else{
-
+        if(!mUser.isParent()){
+            DialogUtils.makeChooseDialog(mContext, "提示", "只有家长才可以注册呦\n去注册?", new DialogUtils.OnChooseListener() {
+                @Override
+                public void onChoose(boolean sure) {
+                    if(sure){
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(Constants.Key.TO_PARENT_REGISTER_ACTIVITY_TYPE, Constants.Identifier.TYPE_REGISTER);
+                        redirectToActivity(mContext, ParentRegisterActivity.class, bundle);
+                    }
+                }
+            });
+            return;
         }
-        Bundle bundle = new Bundle();
-        bundle.putInt(Constants.Key.RESERVE_WAY, mReserveType);
-        redirectToActivity(mContext, SearchResultActivity.class, bundle);
+
+        if(mReserveType == Constants.Identifier.RESERVE_SINGLE){
+            final SingleBookCondition condition = getSingleBookCondition();
+            if(null == condition){
+                return;
+            }
+
+            RequestManager.get().execute(new RSingleBook(condition), new RequestListener<List<Order>>() {
+                @Override
+                public void onSuccess(RequestBase request, List<Order> result) {
+                    for (Order order :
+                            result) {
+
+                        order.setSubsidy(order.getTeacher().getTeacherMessage().getSubsidy()); //同步一下(搜索只返回 teacher 里面的)
+
+                        /** 加上这些信息在后面预约会用到 */
+                        order.getTeachTime().setDate(condition.getSingleBookTime().getDate());
+                        order.getTeachTime().setTime(condition.getSingleBookTime().getTime());
+                        order.setChildAge(condition.getChildAge());
+                        order.setChildGender(condition.getChildGender());
+                        order.setCourse(condition.getCourse());
+                        order.setGrade(condition.getGrade());
+                        order.setTime(condition.getTime());
+                    }
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(Constants.Key.RESERVE_WAY, mReserveType);
+                    bundle.putSerializable(Constants.Key.ORDERS, new ArrayList<>(result));
+                    redirectToActivity(mContext, SearchResultActivity.class, bundle);
+                }
+
+                @Override
+                public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                    toast(errorMsg);
+                }
+            });
+
+        }else{
+            final MultiBookCondition condition = getMultiBookCondition();
+            if(null == condition){
+                return;
+            }
+
+            RequestManager.get().execute(new RMultiBook(condition), new RequestListener<List<Order>>() {
+                @Override
+                public void onSuccess(RequestBase request, List<Order> result) {
+
+                    for (Order order :
+                            result) {
+                        order.setSubsidy(order.getTeacher().getTeacherMessage().getSubsidy()); //同步一下(搜索只返回 teacher 里面的)
+
+                        /** 加上这些信息在后面预约会用到 */
+                        order.getTeachTime().setDate(TimeUtils.getWeekStringFromInt(condition.getMultiBookTime().getWeekDay()));
+                        order.getTeachTime().setTime(condition.getMultiBookTime().getTime());
+                        order.setChildAge(condition.getChildAge());
+                        order.setChildGender(condition.getChildGender());
+                        order.setCourse(condition.getCourse());
+                        order.setGrade(condition.getGrade());
+                        order.setTime(condition.getTime());
+                    }
+
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(Constants.Key.RESERVE_WAY, mReserveType);
+                    bundle.putSerializable(Constants.Key.ORDERS, new ArrayList<>(result));
+                    redirectToActivity(mContext, SearchResultActivity.class, bundle);
+                }
+
+                @Override
+                public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                    toast(errorMsg);
+                }
+            });
+        }
+    }
+
+
+    /**
+     * 获取单次预约的搜索条件
+     * @return 搜索条件
+     */
+    private SingleBookCondition getSingleBookCondition(){
+        SingleBookCondition condition = new SingleBookCondition();
+        getBaseCondition(condition);
+        condition.getSingleBookTime().setDate(mDate);
+        condition.getSingleBookTime().setTime(mPeriod);
+
+        return condition;
+    }
+
+    private MultiBookCondition getMultiBookCondition(){
+        MultiBookCondition condition  = new MultiBookCondition();
+        getBaseCondition(condition);
+
+        condition.getMultiBookTime().setWeekDay(mWeek);
+        condition.getMultiBookTime().setTime(mPeriod);
+
+        return condition;
+    }
+
+
+    /**
+     * 获取单次预约多次预约共有的条件
+     * @param condition  预约条件
+     */
+    private void getBaseCondition(BaseBookCondition condition){
+        condition.setToken(App.getUser().getToken());
+        condition.setCourse(mCourseTextView.getText().toString());
+        condition.setGrade(mGradeTextView.getText().toString());
+        condition.setChildGender(mChildGender);
+        condition.setChildAge(mChildAge);
+        condition.setTime(mTeachTime);
+
+
+        for(ToSelectItem school : mSchoolItems){
+            if(school.isSelected()) {
+                condition.getSchool().add(school.getText());
+            }
+        }
+
+        for(ToSelectItem price : mPriceItems){
+            if(price.isSelected()){
+                condition.getPrice().add((JSONArray)price.getFormatText());
+            }
+        }
+
+        for(ToSelectItem score : mScoreItems){
+            if(score.isSelected()){
+                condition.setScore(Integer.parseInt((String)score.getFormatText()));
+                break;
+            }
+        }
     }
     public void onBackClick(View view){
         finish();

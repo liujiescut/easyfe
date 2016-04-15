@@ -19,6 +19,7 @@ import com.scut.easyfe.utils.OtherUtils;
 
 /**
  * 登录注册页面
+ *
  * @author jay
  */
 public class LoginActivity extends BaseActivity {
@@ -44,21 +45,23 @@ public class LoginActivity extends BaseActivity {
 
     /**
      * 点击返回
+     *
      * @param view 被点击视图
      */
-    public void onBackClick(View view){
+    public void onBackClick(View view) {
         finish();
     }
 
     /**
      * 点击登录
+     *
      * @param view 被点击视图
      */
-    public void onLoginClick(View view){
+    public void onLoginClick(View view) {
         String phone = mPhoneEditText.getText().toString();
         String password = mPasswordEditText.getText().toString();
 
-        if(!validate(phone, password)){
+        if (!validate(phone, password)) {
             return;
         }
 
@@ -86,13 +89,13 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    private boolean validate(String phone, String password){
-        if(phone == null || phone.length() != 11){
+    private boolean validate(String phone, String password) {
+        if (phone == null || phone.length() != 11) {
             toast("请输入有效手机号");
             return false;
         }
 
-        if(password == null || password.length() == 0){
+        if (password == null || password.length() == 0) {
             toast("密码不能为空");
             return false;
         }
@@ -102,17 +105,18 @@ public class LoginActivity extends BaseActivity {
 
     /**
      * 点击家长注册
+     *
      * @param view 被点击视图
      */
-    public void onParentRegisterClick(View view){
+    public void onParentRegisterClick(View view) {
         Bundle bundle = new Bundle();
         bundle.putInt(Constants.Key.TO_PARENT_REGISTER_ACTIVITY_TYPE, Constants.Identifier.TYPE_REGISTER);
-                    redirectToActivity(mContext, ParentRegisterActivity.class, bundle);
         redirectToActivity(mContext, ParentRegisterActivity.class, bundle);
     }
 
     /**
      * 点击家教注册
+     *
      * @param view 被点击视图
      */
     public void onTeacherRegisterClick(View view) {
@@ -121,9 +125,10 @@ public class LoginActivity extends BaseActivity {
 
     /**
      * 点击协议
+     *
      * @param view 被点击视图
      */
-    public void onProtocolClick(View view){
+    public void onProtocolClick(View view) {
         toast("点击协议");
     }
 

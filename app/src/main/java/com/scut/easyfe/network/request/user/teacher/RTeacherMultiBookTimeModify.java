@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 /**
- * 修改多次预约时间 Todo: test
+ * 修改多次预约时间
  * Created by jay on 16/4/10.
  */
 public class RTeacherMultiBookTimeModify extends RequestBase<JSONObject>{

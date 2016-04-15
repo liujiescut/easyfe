@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.scut.easyfe.app.Constants;
-import com.scut.easyfe.entity.test.Order;
+import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.ui.activity.EvaluationActivity;
 import com.scut.easyfe.ui.activity.ReservedOrCompletedOrderActivity;
 import com.scut.easyfe.ui.activity.ToDoOrderActivity;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class MyOrderFragment extends BaseRefreshFragment {
     private int mOrderType;
     private int mState = Constants.Identifier.STATE_NORMAL;
-    private ArrayList<Order> mOrders = Order.getTestOrders();
+    private ArrayList<Order> mOrders = new ArrayList<>();
 
     @Override
     protected void initView(View view) {

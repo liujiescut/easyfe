@@ -21,6 +21,7 @@ import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
+import com.scut.easyfe.utils.TimeUtils;
 import com.zcw.togglebutton.ToggleButton;
 
 import org.json.JSONObject;
@@ -156,9 +157,9 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
             mSaveTextView.setText("确认并保存");
         }
 
-        mMinTeachTimeTextView.setText(OtherUtils.getTimeFromMinute(mUser.getTeacherMessage().getMinCourseTime()));
-        mTrafficTextView.setText(OtherUtils.getTimeFromMinute(mUser.getTeacherMessage().getFreeTrafficTime()));
-        mMaxTrafficTextView.setText(OtherUtils.getTimeFromMinute(mUser.getTeacherMessage().getMaxTrafficTime()));
+        mMinTeachTimeTextView.setText(TimeUtils.getTimeFromMinute(mUser.getTeacherMessage().getMinCourseTime()));
+        mTrafficTextView.setText(TimeUtils.getTimeFromMinute(mUser.getTeacherMessage().getFreeTrafficTime()));
+        mMaxTrafficTextView.setText(TimeUtils.getTimeFromMinute(mUser.getTeacherMessage().getMaxTrafficTime()));
         mSubsidyTextView.setText(String.format("%d元", mUser.getTeacherMessage().getSubsidy()));
 
         mJoinAngleTextView.setText(mJoinAngelPlan ? R.string.yes : R.string.no);
@@ -300,7 +301,10 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
      * 点击选择可教授课程
      */
     public void onTeachCourseClick(View view) {
-        redirectToActivity(mContext, TeachCourseActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constants.Key.TO_TEACH_COURSE_ACTIVITY_TYPE, mIsRegister ?
+                Constants.Identifier.TYPE_REGISTER : Constants.Identifier.TYPE_MODIFY);
+        redirectToActivity(mContext, TeachCourseActivity.class, bundle);
     }
 
     /**

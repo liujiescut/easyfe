@@ -45,43 +45,4 @@ public class OtherUtils {
             imm.hideSoftInputFromWindow(windowToken, 0);
         }
     }
-
-    /**
-     * 转换Date
-     * @param date     需要转化的Date
-     * @param format   转换的格式
-     * @return         转换后字符串
-     */
-    public static String getTime(Date date, String format){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
-        return simpleDateFormat.format(date);
-    }
-
-    /**
-     * 转换分钟数为小时加分钟
-     * @param minutes 被转换分钟数
-     * @return  转换后字符串
-     */
-    public static String getTimeFromMinute(int minutes){
-        int hours = minutes / 60;
-        int minute = minutes % 60;
-        return String.format("%s小时%s分钟", hours, minute);
-    }
-
-    public static Date getDateFromString(String dateString) {
-        return getDateFromString(dateString, "yyyy-MM-dd");
-    }
-
-        @Nullable
-    public static Date getDateFromString(String dateString, String formatString){
-        DateFormat format = new SimpleDateFormat(formatString, Locale.CHINA);
-
-        Date date = null;
-        try {
-            date = format.parse(dateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return date;
-    }
 }

@@ -26,6 +26,7 @@ import com.scut.easyfe.ui.customView.SelectorButton;
 import com.scut.easyfe.ui.fragment.CalendarFragment;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
+import com.scut.easyfe.utils.TimeUtils;
 
 import org.json.JSONObject;
 
@@ -117,7 +118,7 @@ public class SpecialTimeActivity extends BaseActivity {
 
             @Override
             public void onSelectDate(Date date, View view, int position) {
-                LogUtils.i(Constants.Tag.TEACHER_REGISTER_TAG, OtherUtils.getTime(date, "yyyy 年 MM 月 dd 日 (EEEE)"));
+                LogUtils.i(Constants.Tag.TEACHER_REGISTER_TAG, TimeUtils.getTime(date, "yyyy 年 MM 月 dd 日 (EEEE)"));
                 saveDateInfo();
                 refreshDateInfo(date);
             }
@@ -178,7 +179,7 @@ public class SpecialTimeActivity extends BaseActivity {
             }
 
             singleBookTime.setIsOk(true);
-            singleBookTime.setDate(OtherUtils.getTime(mSelectedDate, "yyyy-MM-dd"));
+            singleBookTime.setDate(TimeUtils.getTime(mSelectedDate, "yyyy-MM-dd"));
             singleBookTime.setMorning(mMorningSelectorButton.isSelected());
             singleBookTime.setAfternoon(mAfternoonSelectorButton.isSelected());
             singleBookTime.setEvening(mEveningSelectorButton.isSelected());
@@ -194,7 +195,7 @@ public class SpecialTimeActivity extends BaseActivity {
         mSelectedDate = date;
         mSelectedDateTime = CalendarHelper.convertDateToDateTime(mSelectedDate);
         SingleBookTime singleBookTime = mSingleBookTimes.get(mSelectedDate.getTime());
-        mSelectedDateTextView.setText(OtherUtils.getTime(mSelectedDate, "yyyy 年 MM 月 dd 日 (EEEE)"));
+        mSelectedDateTextView.setText(TimeUtils.getTime(mSelectedDate, "yyyy 年 MM 月 dd 日 (EEEE)"));
         if (null != singleBookTime) {
             mTeachOrNot = true;
             mTeachOrNotTextView.setText(R.string.yes);
@@ -262,9 +263,9 @@ public class SpecialTimeActivity extends BaseActivity {
                     singleBookTime.setMorning(tempMultiBookTime.isMorning());
                     singleBookTime.setAfternoon(tempMultiBookTime.isAfternoon());
                     singleBookTime.setEvening(tempMultiBookTime.isEvening());
-                    singleBookTime.setDate(OtherUtils.getTime(CalendarHelper.convertDateTimeToDate(minDateTime), "yyyy-MM-dd"));
+                    singleBookTime.setDate(TimeUtils.getTime(CalendarHelper.convertDateTimeToDate(minDateTime), "yyyy-MM-dd"));
 
-                    mSingleBookTimes.put(OtherUtils.getDateFromString(singleBookTime.getDate()).getTime(), singleBookTime);
+                    mSingleBookTimes.put(TimeUtils.getDateFromString(singleBookTime.getDate()).getTime(), singleBookTime);
                     mUser.getTeacherMessage().getSingleBookTime().add(singleBookTime);
                     App.setUser(mUser);
                 }
@@ -277,8 +278,8 @@ public class SpecialTimeActivity extends BaseActivity {
             /** 重新进来特别时间安排 */
             for (SingleBookTime singleBookTime :
                     mUser.getTeacherMessage().getSingleBookTime()) {
-                mSingleBookTimes.put(OtherUtils.getDateFromString(singleBookTime.getDate()).getTime(), singleBookTime);
-                mWorkDays.add(CalendarHelper.convertDateToDateTime(OtherUtils.getDateFromString(singleBookTime.getDate())));
+                mSingleBookTimes.put(TimeUtils.getDateFromString(singleBookTime.getDate()).getTime(), singleBookTime);
+                mWorkDays.add(CalendarHelper.convertDateToDateTime(TimeUtils.getDateFromString(singleBookTime.getDate())));
             }
         }
 
@@ -308,7 +309,7 @@ public class SpecialTimeActivity extends BaseActivity {
                 mAfternoonSelectorButton.setIsSelected(true);
                 mEveningSelectorButton.setIsSelected(true);
                 singleBookTime = new SingleBookTime();
-                singleBookTime.setDate(OtherUtils.getTime(mSelectedDate, "yyyy-MM-dd"));
+                singleBookTime.setDate(TimeUtils.getTime(mSelectedDate, "yyyy-MM-dd"));
                 singleBookTime.setIsOk(true);
                 singleBookTime.setMorning(true);
                 singleBookTime.setAfternoon(true);

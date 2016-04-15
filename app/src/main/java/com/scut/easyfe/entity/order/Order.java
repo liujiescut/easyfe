@@ -3,16 +3,20 @@ package com.scut.easyfe.entity.order;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.Address;
 import com.scut.easyfe.entity.BaseEntity;
+import com.scut.easyfe.entity.Comment;
+import com.scut.easyfe.entity.user.ParentInfo;
+import com.scut.easyfe.entity.user.TeacherInfo;
 import com.scut.easyfe.entity.user.Parent;
-import com.scut.easyfe.entity.user.Teacher;
+import com.scut.easyfe.utils.TimeUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * 普通订单类
+ * 普通订单类(用在单双次预约结果解析并在预约流程中通用)
  * Created by jay on 16/4/12.
  */
 public class Order extends BaseEntity {
@@ -33,15 +37,50 @@ public class Order extends BaseEntity {
     private TeachTime teachTime = new TeachTime();
     private TeacherInfo teacher = new TeacherInfo();
     private ParentInfo parent = new ParentInfo();
+    private Insurance insurance = new Insurance();
     private float subsidy = 5;     //超过交通时间，收的交通补贴
-    private int trafficeTime = 0;
+    private int addPrice = 0;
+    private List<Comment> comments = new ArrayList<>();
 
-    public int getTrafficeTime() {
-        return trafficeTime;
+    private int trafficTime = 0;
+
+    public float getTotalPrice(){
+        return price * ((float)time / 60) + subsidy + addPrice;
     }
 
-    public void setTrafficeTime(int trafficeTime) {
-        this.trafficeTime = trafficeTime;
+    public static String getBaseInfo(Order order){
+        String content = "";
+        content += String.format("性别: %s\n", order.getTeacher().getGender() == Constants.Identifier.MALE ? "男" : "女");
+        content += String.format("年龄: %d\n", TimeUtils.getAgeFromBirthday(order.getTeacher().getBirthday()));
+        content += String.format("大学专业: %s %s\n", order.getTeacher().getTeacherMessage().getSchool(), order.getTeacher().getTeacherMessage().getProfession());
+        content += String.format("已家教过的孩子数量：%s\n", order.getTeacher().getTeacherMessage().getTeachCount());
+        content += String.format("已家教的时长：%s\n", order.getTeacher().getTeacherMessage().getHadTeach());
+        content += String.format("综合评分：%.2f", order.getTeacher().getTeacherMessage().getScore());
+        return content;
+    }
+
+    public int getAddPrice() {
+        return addPrice;
+    }
+
+    public void setAddPrice(int addPrice) {
+        this.addPrice = addPrice;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public int getTrafficTime() {
+        return trafficTime;
+    }
+
+    public void setTrafficTime(int trafficTime) {
+        this.trafficTime = trafficTime;
     }
 
     public String get_id() {
@@ -188,6 +227,14 @@ public class Order extends BaseEntity {
         this.subsidy = subsidy;
     }
 
+    public Insurance getInsurance() {
+        return insurance;
+    }
+
+    public void setInsurance(Insurance insurance) {
+        this.insurance = insurance;
+    }
+
     public class Insurance extends BaseEntity {
         private String insuranceNumber = "";
         private String _id = "";
@@ -218,102 +265,6 @@ public class Order extends BaseEntity {
 
         public void set_id(String _id) {
             this._id = _id;
-        }
-    }
-
-    public class TeacherInfo implements Serializable {
-        String name = "";
-        String _id = "";
-        int gender = Constants.Identifier.FEMALE;
-        long birthday = 0;
-        Teacher teacherMessage = new Teacher();
-        Address position = new Address();
-
-        public String get_id() {
-            return _id;
-        }
-
-        public void set_id(String _id) {
-            this._id = _id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public int getGender() {
-            return gender;
-        }
-
-        public void setGender(int gender) {
-            this.gender = gender;
-        }
-
-        public long getBirthday() {
-            return birthday;
-        }
-
-        public void setBirthday(long birthday) {
-            this.birthday = birthday;
-        }
-
-        public Teacher getTeacherMessage() {
-            return teacherMessage;
-        }
-
-        public void setTeacherMessage(Teacher teacherMessage) {
-            this.teacherMessage = teacherMessage;
-        }
-
-        public Address getPosition() {
-            return position;
-        }
-
-        public void setPosition(Address position) {
-            this.position = position;
-        }
-    }
-
-    public class ParentInfo extends BaseEntity{
-        private String name = "";
-        private String avatar = "";
-        private int gender = Constants.Identifier.FEMALE;
-        private Parent parentMessage = new Parent();
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getAvatar() {
-            return avatar;
-        }
-
-        public void setAvatar(String avatar) {
-            this.avatar = avatar;
-        }
-
-        public int getGender() {
-            return gender;
-        }
-
-        public void setGender(int gender) {
-            this.gender = gender;
-        }
-
-        public Parent getParentMessage() {
-            return parentMessage;
-        }
-
-        public void setParentMessage(Parent parentMessage) {
-            this.parentMessage = parentMessage;
         }
     }
 }

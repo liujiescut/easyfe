@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.scut.easyfe.R;
-import com.scut.easyfe.entity.test.Order;
+import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.ui.base.BaseListViewScrollStateAdapter;
 import com.scut.easyfe.ui.customView.CircleImageView;
 import com.scut.easyfe.utils.ImageUtils;
@@ -61,10 +61,10 @@ public class SearchResultAdapter extends BaseListViewScrollStateAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.teacherName.setText(mOrders.get(position).getTeacherName());
+        holder.teacherName.setText(mOrders.get(position).getTeacher().getName());
         holder.price.setText(String.format("%.2f 元/小时", mOrders.get(position).getPrice()));
         holder.content.setText(Order.getBaseInfo(mOrders.get(position)));
-        ImageUtils.displayImage(mOrders.get(position).getTeacherAvatar(), holder.avatar);
+        ImageUtils.displayImage(mOrders.get(position).getTeacher().getAvatar(), holder.avatar);
 
         return convertView;
     }

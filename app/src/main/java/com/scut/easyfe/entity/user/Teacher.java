@@ -398,6 +398,7 @@ public class Teacher extends BaseEntity {
             teacherJson.put("school", school);
             teacherJson.put("profession", profession);
             teacherJson.put("hadTeach", hadTeach);
+            teacherJson.put("teachCount", teachCount);
             teacherJson.put("teachTime", teachTime);
             teacherJson.put("singleBookTime", getSingleBookTimeArray());
             teacherJson.put("multiBookTime", getMultiBookTimeArray());
@@ -406,7 +407,7 @@ public class Teacher extends BaseEntity {
             teacherJson.put("maxTrafficTime", maxTrafficTime);
             teacherJson.put("subsidy", subsidy);
             teacherJson.put("angelPlan", angelPlan.getAngelPlanJson());
-            teacherJson.put("detail", profile);
+            teacherJson.put("profile", profile);
         } catch (JSONException e) {
             e.printStackTrace();
         }

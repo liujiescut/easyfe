@@ -3,6 +3,8 @@ package com.scut.easyfe.entity.book;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.BaseEntity;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +20,8 @@ public class BaseBookCondition extends BaseEntity{
     private int childAge = 7;
     private int childGender = Constants.Identifier.FEMALE;
     private List<String> school = new ArrayList<>();
-    private List<String> price = new ArrayList<>();             //[100, 200]表示匹配大于100，小于200的家教
-    private float[] score = new float[]{0, Float.MAX_VALUE};    //[1.5, 2]表示匹配大于1.5小于2的教师
+    private List<JSONArray> price = new ArrayList<>();             //[100, 200]表示匹配大于100，小于200的家教
+    private int score = 0;                                      //最小家教评分
 
     public String getToken() {
         return token;
@@ -34,7 +36,8 @@ public class BaseBookCondition extends BaseEntity{
     }
 
     public void setCourse(String course) {
-        this.course = course;
+        this.course
+                = course;
     }
 
     public String getGrade() {
@@ -77,19 +80,19 @@ public class BaseBookCondition extends BaseEntity{
         this.school = school;
     }
 
-    public List<String> getPrice() {
+    public List<JSONArray> getPrice() {
         return price;
     }
 
-    public void setPrice(List<String> price) {
+    public void setPrice(List<JSONArray> price) {
         this.price = price;
     }
 
-    public float[] getScore() {
+    public int getScore() {
         return score;
     }
 
-    public void setScore(float[] score) {
+    public void setScore(int score) {
         this.score = score;
     }
 }

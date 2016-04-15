@@ -9,6 +9,7 @@
             android:id="@+id/item_course_price_tv_state"
             style="@style/text_editable_style"
             android:layout_marginRight="@dimen/container_stoke_width"
+            android:clickable="false"
             android:layout_weight="1" />
 
         <TextView
@@ -16,6 +17,7 @@
             style="@style/text_editable_style"
             android:layout_weight="1"
             android:layout_marginRight="@dimen/container_stoke_width"
+            android:clickable="false"
             android:gravity="start|center_vertical"
             android:textSize="@dimen/text_size_small" />
 

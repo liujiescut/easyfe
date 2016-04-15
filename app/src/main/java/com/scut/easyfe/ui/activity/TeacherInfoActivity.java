@@ -10,7 +10,8 @@ import android.widget.TextView;
 
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.Constants;
-import com.scut.easyfe.entity.test.Order;
+import com.scut.easyfe.entity.Comment;
+import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.entity.test.ToSelectItem;
 import com.scut.easyfe.ui.adapter.SelectItemAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
@@ -52,25 +53,25 @@ public class TeacherInfoActivity extends BaseActivity {
     @Override
     protected void initData() {
         Intent intent = getIntent();
-        if(null != intent){
+        if (null != intent) {
             Bundle extras = intent.getExtras();
             if (null != extras) {
                 mFromType = extras.getInt(Constants.Key.TO_TEACHER_INFO_ACTIVITY_TYPE, Constants.Identifier.TYPE_RESERVE);
-                if(mFromType == Constants.Identifier.TYPE_RESERVE) {
+                if (mFromType == Constants.Identifier.TYPE_RESERVE) {
                     mReserveType = extras.getInt(Constants.Key.RESERVE_WAY, Constants.Identifier.RESERVE_MULTI);
                 }
                 mOrder = (Order) extras.getSerializable(Constants.Key.ORDER);
-            }else{
+            } else {
                 mOrder = new Order();
             }
-        }else{
+        } else {
             mOrder = new Order();
         }
     }
 
     @Override
     protected void initView() {
-        ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText(String.format("%s 老师", mOrder.getTeacherName() ));
+        ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText(String.format("%s 老师", mOrder.getTeacher().getName()));
 
         mNameTextView = OtherUtils.findViewById(this, R.id.item_search_result_tv_teacher);
         mPriceTextView = OtherUtils.findViewById(this, R.id.item_search_result_tv_price);
@@ -85,12 +86,19 @@ public class TeacherInfoActivity extends BaseActivity {
         mCommentListView = OtherUtils.findViewById(this, R.id.teacher_info_lv_comments);
         mDoReserveTextView = OtherUtils.findViewById(this, R.id.teacher_info_tv_do_reserve);
 
-        if(mFromType == Constants.Identifier.TYPE_SEE_TEACHER_INFO){
+        if (mFromType == Constants.Identifier.TYPE_SEE_TEACHER_INFO) {
+            ((TextView) OtherUtils.findViewById(this, R.id.item_search_result_tv_price)).setVisibility(View.GONE);
             mDoReserveTextView.setVisibility(View.GONE);
             mMultiReserveHintTextView.setVisibility(View.GONE);
             mMultiReserveTimesLinearLayout.setVisibility(View.GONE);
             mMultiReserveTimesTextView.setVisibility(View.GONE);
-        }else {
+        } else {
+
+            ((TextView) OtherUtils.findViewById(this, R.id.item_search_result_tv_price)).setText(
+                    String.format("%s%s",
+                            String.format("%.2f元/次", mOrder.getTotalPrice()),
+                            (0 == mOrder.getSubsidy() ? "" : String.format("包含交通补贴%.2f元", mOrder.getSubsidy()))));
+
             if (mReserveType == Constants.Identifier.RESERVE_SINGLE) {
                 mMultiReserveHintTextView.setVisibility(View.GONE);
                 mMultiReserveTimesLinearLayout.setVisibility(View.GONE);
@@ -99,7 +107,7 @@ public class TeacherInfoActivity extends BaseActivity {
                 mMultiReserveTimesTextView.setText(mReserveTimes + "");
             }
 
-            if(mOrder.getTip() != 0){
+            if (mOrder.getSubsidy() != 0) {
                 DialogUtils.makeConfirmDialog(mContext, null, getString(R.string.add_tip_info));
             }
         }
@@ -108,66 +116,71 @@ public class TeacherInfoActivity extends BaseActivity {
 
     }
 
-    private void showTeacherInfo(){
+    private void showTeacherInfo() {
         String priceString = String.format("%.2f 元/次", mOrder.getPrice());
-        if(mOrder.getTip() != 0){
+        if (mOrder.getSubsidy() != 0) {
             mPriceTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.mipmap.icon_detail_question_small, 0);
-            priceString = String.format("%.2f 元/次", mOrder.getPrice() + mOrder.getTip());
-            priceString += String.format("(包含交通补贴%.0f元)", mOrder.getTip());
+            priceString = String.format("%.2f 元/次", mOrder.getPrice() + mOrder.getSubsidy());
+            priceString += String.format("(包含交通补贴%.2f元)", mOrder.getSubsidy());
         }
 
         mPriceTextView.setText(priceString);
-        mNameTextView.setText(mOrder.getTeacherName());
+        mNameTextView.setText(mOrder.getTeacher().getName());
         mBaseInfoTextView.setText(Order.getBaseInfo(mOrder));
 
-        ImageUtils.displayImage(mOrder.getTeacherAvatar(), mAvatarImageView);
+        ImageUtils.displayImage(mOrder.getTeacher().getAvatar(), mAvatarImageView);
 
-        ArrayList<String> comments = new ArrayList<>();
+        String teacherProfile = mOrder.getTeacher().getTeacherMessage().getProfile();
+        mSelfIntroduceTextView.setText(teacherProfile.length() == 0 ? "该家教暂无个人简介" : teacherProfile);
+
+
         ArrayList<ToSelectItem> commentItems = new ArrayList<>();
-        comments.add("掌柜人不错，鞋很好，很热情。");
-        comments.add("很难得的正品，网购以来最满意的了。");
-        comments.add("本来有点担心，不过去验证了，是行货，是个好卖家。");
-        for (String comment :
-                comments) {
-            commentItems.add(new ToSelectItem(comment, false));
+        for (Comment comment :
+                mOrder.getComments()) {
+            commentItems.add(new ToSelectItem(comment.getContent(), false));
         }
+
+        if (commentItems.size() == 0) {
+            commentItems.add(new ToSelectItem("暂无家长评语", false));
+        }
+
         SelectItemAdapter adapter = new SelectItemAdapter(mContext, commentItems);
         adapter.setSelectable(false);
         mCommentListView.setAdapter(adapter);
         ListViewUtil.setListViewHeightBasedOnChildren(mCommentListView);
     }
 
-    public void onReserveTimesClick(View view){
+    public void onReserveTimesClick(View view) {
         DialogUtils.makeInputDialog(mContext, "预约次数", InputType.TYPE_CLASS_NUMBER, new DialogUtils.OnInputListener() {
             @Override
             public void onFinish(String msg) {
                 try {
                     mReserveTimes = Integer.parseInt(msg);
                     mMultiReserveTimesTextView.setText(String.format("%s 次", msg));
-                }catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
                     toast("请输入数字");
                 }
             }
         }).show();
     }
 
-    public void onMoreCommentsClick(View view){
+    public void onMoreCommentsClick(View view) {
         redirectToActivity(mContext, CommentsActivity.class);
     }
 
-    public void onDoReservationClick(View view){
+    public void onDoReservationClick(View view) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constants.Key.ORDER, mOrder);
-        if(mReserveType == Constants.Identifier.RESERVE_MULTI){
+        if (mReserveType == Constants.Identifier.RESERVE_MULTI) {
             bundle.putInt(Constants.Key.CONFIRM_ORDER_TYPE, Constants.Identifier.CONFIRM_ORDER_MULTI_RESERVE);
             bundle.putInt(Constants.Key.TEACH_WEEK, mReserveTimes);
-        }else{
+        } else {
             bundle.putInt(Constants.Key.CONFIRM_ORDER_TYPE, Constants.Identifier.CONFIRM_ORDER_SINGLE_RESERVE);
         }
         redirectToActivity(mContext, ConfirmOrderActivity.class, bundle);
     }
 
-    public void onBackClick(View view){
+    public void onBackClick(View view) {
         finish();
     }
 }

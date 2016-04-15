@@ -37,6 +37,7 @@ public class Constants {
 
         public static final String URL_TEACHER_REGISTER = URL_BASE + "Authentication/SignUp/Teacher";
         public static final String URL_TEACHER_INFO_MODIFY = URL_BASE + "Teacher/Data";
+        public static final String URL_TEACHER_ADD_COURSE = URL_BASE + "Teacher/Price";
         public static final String URL_TEACHER_MULTI_BOOK_TIME_MODIFY = URL_BASE + "Teacher/MultiBookTime";
         public static final String URL_TEACHER_SINGLE_BOOK_TIME_MODIFY = URL_BASE + "Teacher/SingleBookTime";
         public static final String URL_PUBLISH_SPECIAL_ORDER = URL_BASE + "Teacher/DiscountOrder";
@@ -46,7 +47,11 @@ public class Constants {
 
         public static final String URL_PARENT_REGISTER = URL_BASE + "Authentication/SignUp/Parent";
         public static final String URL_CONFIRM_SPECIAL_ORDER = URL_BASE + "Parent/Sure/Special";
+        public static final String URL_CONFIRM_SINGLE_ORDER = URL_BASE + "Parent/Sure/Single";
+        public static final String URL_CONFIRM_MULTI_ORDER = URL_BASE + "Parent/Sure/Multi";
         public static final String URL_SINGLE_RESERVE = URL_BASE + "Book/Single";
+        public static final String URL_MULTI_RESERVE = URL_BASE + "Book/Multi";
+        public static final String URL_GET_TEACHER_DETAIL_INFO = URL_BASE + "Parent/Teacher/Data";
     }
 
     /**
@@ -73,6 +78,7 @@ public class Constants {
         public static final String CALLBACK_TYPE =  "callback_type";
         public static final String CONFIRM_ORDER_TYPE =  "confirm_order_type";
         public static final String ORDER =  "order";
+        public static final String ORDERS =  "orders";
         public static final String TEACH_WEEK =  "teach_week";
         public static final String RESERVE_WAY = "reserve_way";
         public static final String TO_TEACHER_INFO_ACTIVITY_TYPE = "to_teacher_info_activity_type";
@@ -80,6 +86,7 @@ public class Constants {
         public static final String TO_PARENT_REGISTER_ACTIVITY_TYPE = "to_parent_register_activity_type";
         public static final String TO_TEACH_TIME_ACTIVITY_TYPE = "to_teach_time_activity_type";
         public static final String TO_SPECIAL_TIME_ACTIVITY_TYPE = "to_special_time_activity_type";
+        public static final String TO_TEACH_COURSE_ACTIVITY_TYPE = "to_special_time_activity_type";
         public static final String IS_FIRST_IN_SPECIAL_TIME_ACTIVITY  = "is_fist_time_in_special_activity";
         public static final String QN_TOKEN = "qn_token";
     }

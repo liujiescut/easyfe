@@ -7,13 +7,18 @@ import android.widget.TextView;
 
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.ui.fragment.SearchResultFragment;
 import com.scut.easyfe.utils.OtherUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SearchResultActivity extends BaseActivity {
 
     private int mReserveType = Constants.Identifier.RESERVE_MULTI;
+    private List<Order> mOrders = new ArrayList<>();
 
     @Override
     protected void setLayoutView() {
@@ -23,10 +28,11 @@ public class SearchResultActivity extends BaseActivity {
     @Override
     protected void initData() {
         Intent intent = getIntent();
-        if(null != intent){
+        if (null != intent) {
             Bundle extras = intent.getExtras();
-            if(null != extras){
+            if (null != extras) {
                 mReserveType = extras.getInt(Constants.Key.RESERVE_WAY, Constants.Identifier.RESERVE_MULTI);
+                mOrders = (List<Order>) extras.getSerializable(Constants.Key.ORDERS);
             }
         }
     }
@@ -35,6 +41,7 @@ public class SearchResultActivity extends BaseActivity {
     protected void initView() {
         ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("筛选结果");
         SearchResultFragment fragment = new SearchResultFragment();
+        fragment.setOrders(mOrders);
         fragment.setReserveType(mReserveType);
         getSupportFragmentManager().
                 beginTransaction().

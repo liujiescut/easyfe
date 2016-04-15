@@ -8,10 +8,11 @@ import android.widget.TextView;
 
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.Constants;
-import com.scut.easyfe.entity.test.Order;
+import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.ImageUtils;
 import com.scut.easyfe.utils.OtherUtils;
+import com.scut.easyfe.utils.TimeUtils;
 
 /**
  * 已预定跟已完成订单详情
@@ -102,23 +103,25 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
     }
 
     private void updateView(){
-        mGradeTextView.setText(String.format("%s %s", mOrder.getStudentState(), mOrder.getStudentGrade()));
-        mCourseTextView.setText(mOrder.getCourseName());
-        mDateTextView.setText(String.format("%s %s", OtherUtils.getTime(mOrder.getDate(), "yyyy年MM月dd日(EEEE)"), mOrder.getTeachPeriod()));
-        mTimeTextView.setText(OtherUtils.getTimeFromMinute(mOrder.getTeachTime()));
+        mGradeTextView.setText(String.format("%s", mOrder.getGrade()));
+        mCourseTextView.setText(mOrder.getCourse());
+        mDateTextView.setText(String.format("%s %s",
+                TimeUtils.getTime(TimeUtils.getDateFromString(mOrder.getTeachTime().getDate()), "yyyy年MM月dd日(EEEE)"),
+                mOrder.getTeachTime().getChineseTime()));
+        mTimeTextView.setText(TimeUtils.getTimeFromMinute(mOrder.getTime()));
         mPriceTextView.setText(String.format("%.2f", mOrder.getPrice()));
-        mTipTextView.setText(String.format("%.2f", mOrder.getTip()));
-        mTotalPriceTextView.setText(String.format("%.2f", mOrder.getPrice() + mOrder.getTip()));
+        mTipTextView.setText(String.format("%.2f", mOrder.getSubsidy()));
+        mTotalPriceTextView.setText(String.format("%.2f", mOrder.getPrice() + mOrder.getSubsidy()));
 
         if(mOrderType == Constants.Identifier.ORDER_COMPLETED){
             mNumContainer.setVisibility(View.VISIBLE);
         }
 
         if(isTeacher()){
-            mParentNameTextView.setText(mOrder.getParentName());
-            mParentGenderTextView.setText("男");   //Todo fix it
-            mStudentGenderTextView.setText(mOrder.getStudentGender() == Constants.Identifier.MALE ? "男" : "女");
-            mStudentAgeTextView.setText(String.format("%d", mOrder.getStudentAge()));
+            mParentNameTextView.setText(mOrder.getParent().getName());
+            mParentGenderTextView.setText(mOrder.getParent().getGender() == Constants.Identifier.MALE ? "男" : "女");
+            mStudentGenderTextView.setText(mOrder.getParent().getParentMessage().getChildGender() == Constants.Identifier.MALE ? "男" : "女");
+            mStudentAgeTextView.setText(String.format("%d", mOrder.getChildAge()));
 
             if(mOrderType == Constants.Identifier.ORDER_COMPLETED){
                 mOperationButtonsContainer.setVisibility(View.GONE);
@@ -130,9 +133,9 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
             mTeacherInfoContainer.setVisibility(View.VISIBLE);
             mWaitTeacherApplyTextView.setVisibility(View.VISIBLE);
 
-            mTeacherNameTextView.setText(mOrder.getTeacherName());
+            mTeacherNameTextView.setText(mOrder.getTeacher().getName());
             mTeacherInfoTextView.setText(Order.getBaseInfo(mOrder));
-            ImageUtils.displayImage(mOrder.getTeacherAvatar(), mTeacherAvatarImageView);
+            ImageUtils.displayImage(mOrder.getTeacher().getAvatar(), mTeacherAvatarImageView);
 
             if(mOrderType == Constants.Identifier.ORDER_COMPLETED){
                 mWaitTeacherApplyTextView.setVisibility(View.GONE);

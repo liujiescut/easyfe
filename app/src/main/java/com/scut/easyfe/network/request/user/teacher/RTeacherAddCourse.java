@@ -1,37 +1,44 @@
 package com.scut.easyfe.network.request.user.teacher;
 
+import android.support.annotation.NonNull;
+
 import com.scut.easyfe.app.Constants;
-import com.scut.easyfe.entity.user.User;
+import com.scut.easyfe.entity.TeachableCourse;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.kjFrame.http.HttpParams;
 import com.scut.easyfe.network.kjFrame.http.Request;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
 /**
- * 修改单次预约时间
- * Created by jay on 16/4/10.
+ * 家教增加可教授课程
+ * Created by jay on 16/4/14.
  */
-public class RTeacherSingleBookTimeModify extends RequestBase<JSONObject>{
-    User mUser;
+public class RTeacherAddCourse extends RequestBase<JSONObject>{
+    private TeachableCourse mTeachableCourse;
+    private String mToken;
 
-    public RTeacherSingleBookTimeModify(User user) {
-        this.mUser = user;
+    public RTeacherAddCourse(@NonNull String token, @NonNull TeachableCourse teachableCourse) {
+        this.mTeachableCourse = teachableCourse;
+        this.mToken = token;
     }
 
     @Override
     public String getUrl() {
-        return Constants.URL.URL_TEACHER_SINGLE_BOOK_TIME_MODIFY;
+        return Constants.URL.URL_TEACHER_ADD_COURSE;
     }
 
     @Override
     public JSONObject getJsonParams() throws JSONException {
         JSONObject params = new JSONObject();
-        params.put("token", mUser.getToken());
-        params.put("singleBookTime", mUser.getTeacherMessage().getSingleBookTimeArray());
+        params.put("token", mToken);
+        params.put("grade", mTeachableCourse.getGrade());
+        params.put("course", mTeachableCourse.getCourse());
+        params.put("price", mTeachableCourse.getPrice());
 
         return params;
     }
@@ -48,6 +55,6 @@ public class RTeacherSingleBookTimeModify extends RequestBase<JSONObject>{
 
     @Override
     public int getMethod() {
-        return Request.HttpMethod.PUT;
+        return Request.HttpMethod.POST;
     }
 }
