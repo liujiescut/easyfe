@@ -4,8 +4,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.order.Order;
+import com.scut.easyfe.network.RequestBase;
+import com.scut.easyfe.network.RequestListener;
+import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.order.RGetOrders;
 import com.scut.easyfe.ui.activity.EvaluationActivity;
 import com.scut.easyfe.ui.activity.ReservedOrCompletedOrderActivity;
 import com.scut.easyfe.ui.activity.ToDoOrderActivity;
@@ -14,6 +19,7 @@ import com.scut.easyfe.ui.base.BaseRefreshFragment;
 import com.scut.easyfe.utils.DensityUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 我的订单页面使用的Fragment
@@ -45,12 +51,43 @@ public class MyOrderFragment extends BaseRefreshFragment {
 
     @Override
     protected void onLoadingData() {
+        RequestManager.get().execute(
+                new RGetOrders(App.getUser().getToken(), mOrderType, Constants.DefaultValue.DEFAULT_LOAD_COUNT, mOrders.size()),
+                new RequestListener<List<Order>>() {
+                    @Override
+                    public void onSuccess(RequestBase request, List<Order> result) {
+                        mOrders.addAll(result);
+                        setIsLoading(false);
+                        mAdapter.notifyDataSetChanged();
+                    }
 
+                    @Override
+                    public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                        toast(errorMsg);
+                        setIsLoading(false);
+                    }
+                });
     }
 
     @Override
     protected void onRefreshData() {
+        RequestManager.get().execute(
+                new RGetOrders(App.getUser().getToken(), mOrderType, Constants.DefaultValue.DEFAULT_LOAD_COUNT, 0),
+                new RequestListener<List<Order>>() {
+            @Override
+            public void onSuccess(RequestBase request, List<Order> result) {
+                mOrders.clear();
+                mOrders.addAll(result);
+                setIsLoading(false);
+                mAdapter.notifyDataSetChanged();
+            }
 
+            @Override
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                toast(errorMsg);
+                setIsLoading(false);
+            }
+        });
     }
 
     @Override

@@ -62,7 +62,7 @@ public class SearchResultFragment extends BaseRefreshFragment {
 
     @Override
     protected void onRefreshData() {
-
+        setIsLoading(false);
     }
 
     @Override

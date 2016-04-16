@@ -26,6 +26,7 @@ public class Constants {
 
         public static final String URL_LOGIN = URL_BASE + "Authentication/Login";
         public static final String URL_UPDATE_USER = URL_BASE + "user/data";
+        public static final String URL_GET_ORDERS = URL_BASE + "Order";
         public static final String URL_USER_INFO_MODIFY = URL_BASE + "User/Data";
         public static final String URL_GET_SPECIAL_ORDER = URL_BASE + "Share/DiscountOrder";
         public static final String URL_GET_MESSAGES = URL_BASE + "Share/Message";

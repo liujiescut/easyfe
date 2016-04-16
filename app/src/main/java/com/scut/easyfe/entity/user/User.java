@@ -106,9 +106,8 @@ public class User extends BaseEntity{
     public static void doLogin() {
         User user = (User) ACache.getInstance().getAsObject(Constants.Key.USER_CACHE);
         if (user != null) {
-            App.setUser(user);
+            App.setUser(user, false);
         }
-        LogUtils.i("登录该用户 -> " + user);
     }
 
     public Business getBusiness() {

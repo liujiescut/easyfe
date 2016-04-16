@@ -55,14 +55,27 @@
             android:process=":remote" />
 
         <activity
-            android:name=".ui.activity.MainActivity"
-            android:launchMode="singleTask">
+            android:name=".ui.activity.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeAndFullScreen"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.activity.IntroActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeAndFullScreen" />
+
+
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:launchMode="singleTask"/>
         <activity android:name=".ui.activity.LoginActivity"
             android:launchMode="singleTask"/>
         <activity android:name=".ui.activity.ParentRegisterActivity" />
@@ -97,7 +110,7 @@
         <activity android:name=".ui.activity.CommentsActivity" />
         <activity android:name=".ui.activity.ReservedOrCompletedOrderActivity" />
         <activity android:name=".ui.activity.ToDoOrderActivity" />
-        <activity android:name=".ui.activity.EvaluationActivity"></activity>
+        <activity android:name=".ui.activity.EvaluationActivity"/>
     </application>
 
 </manifest>

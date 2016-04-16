@@ -8,6 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppThemeAndFullScreen" parent="AppTheme">
+        <!--FullScreen-->
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
     <!-- 首页侧拉栏每个项的样式 -->
     <style name="main_left_drawer_item">
         <item name="android:layout_width">match_parent</item>

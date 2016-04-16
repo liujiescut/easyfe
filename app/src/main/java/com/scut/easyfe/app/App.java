@@ -78,8 +78,14 @@ public class App extends Application {
     }
 
     public static void setUser(User user) {
+        setUser(user, true);
+    }
+
+    public static void setUser(User user, boolean saveToCache) {
         mUser = user;
-        mUser.save2Cache();
+        if(saveToCache) {
+            mUser.save2Cache();
+        }
     }
 
     /**
