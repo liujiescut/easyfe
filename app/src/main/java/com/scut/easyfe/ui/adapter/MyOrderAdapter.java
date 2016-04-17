@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.entity.order.BriefOrder;
 import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.ui.base.BaseListViewScrollStateAdapter;
 import com.scut.easyfe.utils.DensityUtil;
@@ -36,10 +37,10 @@ public class MyOrderAdapter extends BaseListViewScrollStateAdapter {
     private ScaleAnimation scaleIn;
     private ScaleAnimation scaleOut;
 
-    private ArrayList<Order> mOrders = new ArrayList<>();
+    private ArrayList<BriefOrder> mOrders = new ArrayList<>();
     private WeakReference<Activity> mActivityReference;
 
-    public MyOrderAdapter(Activity activity, ArrayList<Order> mOrders) {
+    public MyOrderAdapter(Activity activity, ArrayList<BriefOrder> mOrders) {
         mActivityReference = new WeakReference<>(activity);
         this.mOrders = mOrders;
     }
@@ -79,9 +80,9 @@ public class MyOrderAdapter extends BaseListViewScrollStateAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Order order = mOrders.get(position);
+        BriefOrder order = mOrders.get(position);
         holder.orderNum.setText(String.format("订单 : %s", order.getOrderNumber()));
-        holder.teacherName.setText(order.getTeacher().getName());
+        holder.teacherName.setText(order.getTeacherName());
         holder.course.setText(order.getCourse());
         holder.date.setText(TimeUtils.getTime(TimeUtils.getDateFromString(order.getTeachTime().getDate()), "yyyy 年 MM 月 dd 日 (EEEE)"));
         holder.period.setText(order.getTeachTime().getChineseTime());

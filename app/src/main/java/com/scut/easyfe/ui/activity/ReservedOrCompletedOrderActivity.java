@@ -7,12 +7,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.order.Order;
+import com.scut.easyfe.network.RequestBase;
+import com.scut.easyfe.network.RequestListener;
+import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.user.teacher.RTeacherComfirmOrder;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.ImageUtils;
 import com.scut.easyfe.utils.OtherUtils;
 import com.scut.easyfe.utils.TimeUtils;
+
+import org.json.JSONObject;
 
 /**
  * 已预定跟已完成订单详情
@@ -102,6 +109,32 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
         updateView();
     }
 
+
+    public void onConfirmOrderClick(View view){
+        RequestManager.get().execute(new RTeacherComfirmOrder(App.getUser().getToken(), mOrder.get_id()),
+                new RequestListener<JSONObject>() {
+                    @Override
+                    public void onSuccess(RequestBase request, JSONObject result) {
+                        toast(result.optString("message"));
+
+                        //Todo 更新Order状态
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(Constants.Key.ORDER, mOrder);
+                        redirectToActivity(mContext, ToDoOrderActivity.class, bundle);
+                    }
+
+                    @Override
+                    public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
+    }
+
+    public void onCancelOrderClick(View view){
+        //Todo
+        toast("取消订单");
+    }
+
     private void updateView(){
         mGradeTextView.setText(String.format("%s", mOrder.getGrade()));
         mCourseTextView.setText(mOrder.getCourse());
@@ -148,6 +181,6 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
     }
 
     private boolean isTeacher(){
-        return true;
+        return mOrder.getTeacher().get_id().equals(App.getUser().get_id());
     }
 }

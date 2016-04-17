@@ -79,4 +79,32 @@ public class TimeUtils {
     public static String getWeekStringFromInt(@IntRange(from = 0, to = 6) int weekDay){
         return Constants.Data.weekList.get(weekDay);
     }
+
+    public static int getWeekIntFromString(String weekString){
+        if(weekString.equals("星期日") || weekString.equals("星期天")){
+            return 0;
+        }
+        if(weekString.equals("星期一")){
+            return 1;
+        }
+        if(weekString.equals("星期二")){
+            return 2;
+        }
+        if(weekString.equals("星期三")){
+            return 3;
+        }
+        if(weekString.equals("星期四")){
+            return 4;
+        }
+        if(weekString.equals("星期五")){
+            return 5;
+        }
+        if(weekString.equals("星期六")){
+            return 6;
+        }
+
+
+        return -1;
+    }
+
 }

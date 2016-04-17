@@ -2,11 +2,13 @@ package com.scut.easyfe.network.request.user.parent;
 
 import android.support.annotation.NonNull;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.kjFrame.http.HttpParams;
 import com.scut.easyfe.network.kjFrame.http.Request;
+import com.scut.easyfe.utils.TimeUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,16 +16,18 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 /**
- * 家长确认单次预约订单
+ * 家长确认多次预约订单
  * Created by jay on 16/4/10.
  */
-public class RComfirmMultiOrder extends RequestBase<JSONObject>{
+public class RConfirmMultiOrder extends RequestBase<JSONObject>{
     private String mToken = "";
     private Order mOrder = new Order();
+    private int mTimes = 0;
 
-    public RComfirmMultiOrder(@NonNull String token, @NonNull Order order) {
+    public RConfirmMultiOrder(@NonNull String token, @NonNull Order order, int times) {
         this.mToken = token;
         this.mOrder = order;
+        this.mTimes = times;
     }
 
     @Override
@@ -38,12 +42,18 @@ public class RComfirmMultiOrder extends RequestBase<JSONObject>{
         params.put("teacherId", mOrder.getTeacher().get_id());
         params.put("grade", mOrder.getGrade());
         params.put("course", mOrder.getCourse());
-        params.put("teachTime", mOrder.getTeachTime().getTeachTimeJson());
         params.put("time", mOrder.getTime());
         params.put("price", mOrder.getPrice());
         params.put("subsidy", mOrder.getSubsidy());
         params.put("childAge", mOrder.getChildAge());
         params.put("childGender", mOrder.getChildGender());
+
+        JSONObject multiBookTime = new JSONObject();
+        multiBookTime.put("weekDay", TimeUtils.getWeekIntFromString(mOrder.getTeachTime().getDate()));
+        multiBookTime.put("time", mOrder.getTeachTime().getTime());
+        params.put("multiBookTime", multiBookTime);
+
+        //Todo teachTime
 
         return params;
     }

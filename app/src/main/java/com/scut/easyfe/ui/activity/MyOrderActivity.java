@@ -37,6 +37,7 @@ public class MyOrderActivity extends BaseActivity {
     private ViewPager mViewPager;
     private OrderPagerAdapter mPagerAdapter;
     private int mCurrentOrderType = Constants.Identifier.ORDER_TO_DO;
+    private int mSelectedPage = 2;
 
     private View.OnClickListener mModifyListener;
     private View.OnClickListener mDoModifyListener;
@@ -71,7 +72,7 @@ public class MyOrderActivity extends BaseActivity {
             mTabs.setViewPager(mViewPager);
         }
 
-        mViewPager.setCurrentItem(mCurrentOrderType);
+        mViewPager.setCurrentItem(mSelectedPage);
     }
 
     @Override
@@ -84,9 +85,10 @@ public class MyOrderActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
+                mSelectedPage = position;
                 mCurrentOrderType = types[position];
                 refreshButtonsState(getButtonTypeFromOrderType(mCurrentOrderType));
-                mPagerAdapter.getItem(mCurrentOrderType).setState(Constants.Identifier.STATE_NORMAL);
+                mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
             }
 
             @Override
@@ -101,18 +103,18 @@ public class MyOrderActivity extends BaseActivity {
                 refreshButtonsState(BUTTON_TYPE_ONE_MODIFY);
                 switch (mCurrentOrderType) {
                     case Constants.Identifier.ORDER_RESERVATION:
-                        if(mPagerAdapter.getItem(mCurrentOrderType).getState() == Constants.Identifier.STATE_NORMAL){
-                            mPagerAdapter.getItem(mCurrentOrderType).setState(Constants.Identifier.STATE_EDIT);
+                        if(mPagerAdapter.getItem(mSelectedPage).getState() == Constants.Identifier.STATE_NORMAL){
+                            mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_EDIT);
                         }else{
-                            mPagerAdapter.getItem(mCurrentOrderType).setState(Constants.Identifier.STATE_NORMAL);
+                            mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
                         }
                         break;
 
                     case Constants.Identifier.ORDER_TO_DO:
-                        if(mPagerAdapter.getItem(mCurrentOrderType).getState() == Constants.Identifier.STATE_NORMAL){
-                            mPagerAdapter.getItem(mCurrentOrderType).setState(Constants.Identifier.STATE_EDIT);
+                        if(mPagerAdapter.getItem(mSelectedPage).getState() == Constants.Identifier.STATE_NORMAL){
+                            mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_EDIT);
                         }else{
-                            mPagerAdapter.getItem(mCurrentOrderType).setState(Constants.Identifier.STATE_NORMAL);
+                            mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
                         }
                         break;
 
@@ -128,18 +130,18 @@ public class MyOrderActivity extends BaseActivity {
                 refreshButtonsState(BUTTON_TYPE_ONE_CANCEL);
                 switch (mCurrentOrderType) {
                     case Constants.Identifier.ORDER_RESERVATION:
-                        if(mPagerAdapter.getItem(mCurrentOrderType).getState() == Constants.Identifier.STATE_NORMAL){
-                            mPagerAdapter.getItem(mCurrentOrderType).setState(Constants.Identifier.STATE_EDIT);
+                        if(mPagerAdapter.getItem(mSelectedPage).getState() == Constants.Identifier.STATE_NORMAL){
+                            mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_EDIT);
                         }else{
-                            mPagerAdapter.getItem(mCurrentOrderType).setState(Constants.Identifier.STATE_NORMAL);
+                            mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
                         }
                         break;
 
                     case Constants.Identifier.ORDER_TO_DO:
-                        if(mPagerAdapter.getItem(mCurrentOrderType).getState() == Constants.Identifier.STATE_NORMAL){
-                            mPagerAdapter.getItem(mCurrentOrderType).setState(Constants.Identifier.STATE_EDIT);
+                        if(mPagerAdapter.getItem(mSelectedPage).getState() == Constants.Identifier.STATE_NORMAL){
+                            mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_EDIT);
                         }else{
-                            mPagerAdapter.getItem(mCurrentOrderType).setState(Constants.Identifier.STATE_NORMAL);
+                            mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
                         }
                         break;
 
@@ -154,7 +156,7 @@ public class MyOrderActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 toast("修改成功");
-                mPagerAdapter.getItem(mCurrentOrderType).setState(Constants.Identifier.STATE_NORMAL);
+                mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
                 refreshButtonsState(BUTTON_TYPE_BOTH);
             }
         };
@@ -163,7 +165,7 @@ public class MyOrderActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 toast("取消成功");
-                mPagerAdapter.getItem(mCurrentOrderType).setState(Constants.Identifier.STATE_NORMAL);
+                mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
                 refreshButtonsState(BUTTON_TYPE_BOTH);
             }
         };

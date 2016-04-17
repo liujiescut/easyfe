@@ -26,7 +26,8 @@ public class Constants {
 
         public static final String URL_LOGIN = URL_BASE + "Authentication/Login";
         public static final String URL_UPDATE_USER = URL_BASE + "user/data";
-        public static final String URL_GET_ORDERS = URL_BASE + "Order";
+        public static final String URL_ORDERS = URL_BASE + "Order";
+        public static final String URL_GET_ORDER_DETAIL = URL_BASE + "Order/Data";
         public static final String URL_USER_INFO_MODIFY = URL_BASE + "User/Data";
         public static final String URL_GET_SPECIAL_ORDER = URL_BASE + "Share/DiscountOrder";
         public static final String URL_GET_MESSAGES = URL_BASE + "Share/Message";
@@ -42,6 +43,7 @@ public class Constants {
         public static final String URL_TEACHER_MULTI_BOOK_TIME_MODIFY = URL_BASE + "Teacher/MultiBookTime";
         public static final String URL_TEACHER_SINGLE_BOOK_TIME_MODIFY = URL_BASE + "Teacher/SingleBookTime";
         public static final String URL_PUBLISH_SPECIAL_ORDER = URL_BASE + "Teacher/DiscountOrder";
+        public static final String URL_TEACHER_CONFIRM_ORDER = URL_BASE + "Teacher/Sure/Order";
 
         public static final String URL_WALLET_INFO = URL_BASE + "Money/Wallet";
         public static final String URL_WALLET_WITHDRAW = URL_BASE + "Money/Withdraw";
@@ -108,9 +110,10 @@ public class Constants {
         public static final int FEMALE = 0;
 
         /** 订单类型 */
-        public static final int ORDER_ALL = 0;
-        public static final int ORDER_RESERVATION = 1;
-        public static final int ORDER_TO_DO = 2;
+        public static final int ORDER_ALL = -1;
+        public static final int ORDER_RESERVATION = 0;
+        public static final int ORDER_TO_DO = 1;
+        public static final int ORDER_MODIFIED_WAILT_CONFIRM = 2; //前台将该订单显示在已预约那里
         public static final int ORDER_COMPLETED = 3;
         public static final int ORDER_INVALID = 4;
 

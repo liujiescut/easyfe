@@ -2,11 +2,10 @@ package com.scut.easyfe.network.request.order;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.scut.easyfe.app.Constants;
-import com.scut.easyfe.entity.order.Order;
+import com.scut.easyfe.entity.order.BriefOrder;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.kjFrame.http.HttpParams;
 import com.scut.easyfe.network.kjFrame.http.Request;
-import com.scut.easyfe.utils.ListViewUtil;
 import com.scut.easyfe.utils.LogUtils;
 
 import org.json.JSONArray;
@@ -21,7 +20,7 @@ import java.util.List;
  * 获取订单列表
  * Created by jay on 16/4/15.
  */
-public class RGetOrders extends RequestBase<List<Order>>{
+public class RGetOrders extends RequestBase<List<BriefOrder>>{
     private String mToken = "";
     private int mState = Constants.Identifier.ORDER_ALL;
     private int mLimit = Constants.DefaultValue.DEFAULT_LOAD_COUNT;
@@ -36,7 +35,7 @@ public class RGetOrders extends RequestBase<List<Order>>{
 
     @Override
     public String getUrl() {
-        return Constants.URL.URL_GET_ORDERS;
+        return Constants.URL.URL_ORDERS;
     }
 
     @Override
@@ -56,9 +55,9 @@ public class RGetOrders extends RequestBase<List<Order>>{
     }
 
     @Override
-    public List<Order> parseResultAsObject(JSONObject jsonObject) throws IOException, JSONException {
-        List<Order> result = new ArrayList<>();
-        JavaType javaType = mObjectMapper.getTypeFactory().constructParametricType(List.class, Order.class);
+    public List<BriefOrder> parseResultAsObject(JSONObject jsonObject) throws IOException, JSONException {
+        List<BriefOrder> result = new ArrayList<>();
+        JavaType javaType = mObjectMapper.getTypeFactory().constructParametricType(List.class, BriefOrder.class);
         try {
             JSONArray specialOrders = jsonObject.optJSONArray("orders");
             if(null != specialOrders){

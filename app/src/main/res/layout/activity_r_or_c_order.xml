@@ -76,6 +76,7 @@
                     android:gravity="center"
                     android:padding="6dp"
                     android:text="@string/confirm_order"
+                    android:onClick="onConfirmOrderClick"
                     android:textColor="@color/title_text_color"
                     android:textSize="@dimen/text_size_normal" />
 
@@ -88,6 +89,7 @@
                     android:clickable="true"
                     android:gravity="center"
                     android:padding="6dp"
+                    android:onClick="onCancelOrderClick"
                     android:text="@string/cancel_order"
                     android:textColor="@color/theme_color"
                     android:textSize="@dimen/text_size_normal" />

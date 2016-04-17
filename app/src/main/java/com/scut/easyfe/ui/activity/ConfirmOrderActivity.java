@@ -14,8 +14,9 @@ import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
-import com.scut.easyfe.network.request.user.parent.RComfirmSingleOrder;
-import com.scut.easyfe.network.request.user.parent.RComfirmSpecialOrder;
+import com.scut.easyfe.network.request.user.parent.RConfirmMultiOrder;
+import com.scut.easyfe.network.request.user.parent.RConfirmSingleOrder;
+import com.scut.easyfe.network.request.user.parent.RConfirmSpecialOrder;
 import com.scut.easyfe.network.request.user.parent.RGetTeacherInfo;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.DialogUtils;
@@ -158,7 +159,7 @@ public class ConfirmOrderActivity extends BaseActivity {
     public void onConfirmClick(View view){
         switch (mConfirmOrderType){
             case Constants.Identifier.CONFIRM_ORDER_SPECIAL:
-                RequestManager.get().execute(new RComfirmSpecialOrder(App.getUser().getToken(),
+                RequestManager.get().execute(new RConfirmSpecialOrder(App.getUser().getToken(),
                         mOrder.getTrafficTime(), mOrder.get_id()),
                         new RequestListener<JSONObject>() {
                     @Override
@@ -174,7 +175,7 @@ public class ConfirmOrderActivity extends BaseActivity {
                 break;
 
             case Constants.Identifier.CONFIRM_ORDER_SINGLE_RESERVE:
-                RequestManager.get().execute(new RComfirmSingleOrder(App.getUser().getToken(), mOrder), new RequestListener<JSONObject>() {
+                RequestManager.get().execute(new RConfirmSingleOrder(App.getUser().getToken(), mOrder), new RequestListener<JSONObject>() {
                     @Override
                     public void onSuccess(RequestBase request, JSONObject result) {
                         showDialog(mOrder.getTeacher().getName());
@@ -187,7 +188,24 @@ public class ConfirmOrderActivity extends BaseActivity {
                 });
                 break;
 
-            //Todo 其他订单
+            case Constants.Identifier.CONFIRM_ORDER_MULTI_RESERVE:
+                RequestManager.get().execute(new RConfirmMultiOrder(App.getUser().getToken(),
+                        mOrder, mTeachWeek),
+                        new RequestListener<JSONObject>() {
+                    @Override
+                    public void onSuccess(RequestBase request, JSONObject result) {
+                        showDialog(mOrder.getTeacher().getName());
+                    }
+
+                    @Override
+                    public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
+                break;
+
+            default:
+                break;
         }
     }
 
