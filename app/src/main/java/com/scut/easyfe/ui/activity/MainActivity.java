@@ -127,13 +127,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
-        findViewById(R.id.left_drawer_tv_bottom_hint).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                App.getUser().doLogout();
-                redirectToActivity(mContext, LoginActivity.class);
-            }
-        });
     }
 
 

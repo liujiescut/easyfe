@@ -10,6 +10,7 @@ import android.view.animation.OvershootInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ import com.scut.easyfe.utils.TimeUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 我的订单页面Adapter
@@ -61,7 +63,7 @@ public class MyOrderAdapter extends BaseListViewScrollStateAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if(null == convertView){
             if(null == mActivityReference.get()){
@@ -88,6 +90,15 @@ public class MyOrderAdapter extends BaseListViewScrollStateAdapter {
         holder.period.setText(order.getTeachTime().getChineseTime());
         holder.teachTime.setText(TimeUtils.getTimeFromMinute(order.getTime()));
         holder.price.setText(String.format("%.2f 元", order.getPrice()));
+
+        holder.checkBox.setOnCheckedChangeListener(null);
+        holder.checkBox.setChecked(mOrders.get(position).isSelected());
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mOrders.get(position).setSelected(isChecked);
+            }
+        });
 
         if (mState == Constants.Identifier.STATE_NORMAL && holder.checkBox.getVisibility() == View.VISIBLE) {
             holder.background.startAnimation(translateOut);

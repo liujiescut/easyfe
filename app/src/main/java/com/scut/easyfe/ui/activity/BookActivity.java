@@ -462,7 +462,7 @@ public class BookActivity extends BaseActivity {
 
     public void onSearchClick(View view){
         if(!mUser.isParent()){
-            DialogUtils.makeChooseDialog(mContext, "提示", "只有家长才可以注册呦\n去注册?", new DialogUtils.OnChooseListener() {
+            DialogUtils.makeChooseDialog(mContext, "提示", "只有家长才可以预约呦\n去注册?", new DialogUtils.OnChooseListener() {
                 @Override
                 public void onChoose(boolean sure) {
                     if(sure){

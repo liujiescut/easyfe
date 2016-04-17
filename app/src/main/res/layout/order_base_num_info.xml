@@ -40,6 +40,7 @@
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:gravity="start|center_vertical"
+            android:onClick="onInsuranceClick"
             android:drawableRight="@mipmap/icon_detail_question_padding"
             tools:text="XXXX XXXX XXXX"
             />

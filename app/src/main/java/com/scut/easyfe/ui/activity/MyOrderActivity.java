@@ -4,14 +4,25 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.entity.order.BriefOrder;
+import com.scut.easyfe.entity.order.Order;
+import com.scut.easyfe.network.RequestBase;
+import com.scut.easyfe.network.RequestListener;
+import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.user.parent.RCancelOrders;
 import com.scut.easyfe.ui.adapter.OrderPagerAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.OtherUtils;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 我的订单页面
@@ -43,6 +54,14 @@ public class MyOrderActivity extends BaseActivity {
     private View.OnClickListener mDoModifyListener;
     private View.OnClickListener mCancelListener;
     private View.OnClickListener mDoCancelListener;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(null != mPagerAdapter && null != mPagerAdapter.getItem(mSelectedPage)){
+            mPagerAdapter.getItem(mSelectedPage).updateData();
+        }
+    }
 
     @Override
     protected void setLayoutView() {
@@ -103,19 +122,8 @@ public class MyOrderActivity extends BaseActivity {
                 refreshButtonsState(BUTTON_TYPE_ONE_MODIFY);
                 switch (mCurrentOrderType) {
                     case Constants.Identifier.ORDER_RESERVATION:
-                        if(mPagerAdapter.getItem(mSelectedPage).getState() == Constants.Identifier.STATE_NORMAL){
-                            mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_EDIT);
-                        }else{
-                            mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
-                        }
-                        break;
-
                     case Constants.Identifier.ORDER_TO_DO:
-                        if(mPagerAdapter.getItem(mSelectedPage).getState() == Constants.Identifier.STATE_NORMAL){
-                            mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_EDIT);
-                        }else{
-                            mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
-                        }
+                        changePageState();
                         break;
 
                     default:
@@ -130,19 +138,8 @@ public class MyOrderActivity extends BaseActivity {
                 refreshButtonsState(BUTTON_TYPE_ONE_CANCEL);
                 switch (mCurrentOrderType) {
                     case Constants.Identifier.ORDER_RESERVATION:
-                        if(mPagerAdapter.getItem(mSelectedPage).getState() == Constants.Identifier.STATE_NORMAL){
-                            mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_EDIT);
-                        }else{
-                            mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
-                        }
-                        break;
-
                     case Constants.Identifier.ORDER_TO_DO:
-                        if(mPagerAdapter.getItem(mSelectedPage).getState() == Constants.Identifier.STATE_NORMAL){
-                            mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_EDIT);
-                        }else{
-                            mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
-                        }
+                        changePageState();
                         break;
 
                     default:
@@ -157,16 +154,30 @@ public class MyOrderActivity extends BaseActivity {
             public void onClick(View v) {
                 toast("修改成功");
                 mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
-                refreshButtonsState(BUTTON_TYPE_BOTH);
+                refreshButtonsState(getButtonTypeFromOrderType(mCurrentOrderType));
             }
         };
 
         mDoCancelListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toast("取消成功");
+                RequestManager.get().execute(new RCancelOrders(App.getUser().getToken(), mPagerAdapter.getItem(mSelectedPage).getSelectedOrderIds()),
+                        new RequestListener<JSONObject>() {
+                    @Override
+                    public void onSuccess(RequestBase request, JSONObject result) {
+                        toast(result.optString("message"));
+                        if(null != mPagerAdapter.getItem(mSelectedPage)){
+                            mPagerAdapter.getItem(mSelectedPage).updateData();
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
                 mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
-                refreshButtonsState(BUTTON_TYPE_BOTH);
+                refreshButtonsState(getButtonTypeFromOrderType(mCurrentOrderType));
             }
         };
 
@@ -177,12 +188,27 @@ public class MyOrderActivity extends BaseActivity {
      * 根据 Order 的 type 来获取按钮的显示状态
      */
     private int getButtonTypeFromOrderType(int orderType){
+        if(!App.getUser().isParent()){
+            return BUTTON_TYPE_NONE;
+        }
+
         if(orderType == Constants.Identifier.ORDER_RESERVATION ||
                 orderType == Constants.Identifier.ORDER_TO_DO){
             return BUTTON_TYPE_BOTH;
         }
 
         return BUTTON_TYPE_NONE;
+    }
+
+    /**
+     * 更换当前页面状态（编辑状态还是普通状态）
+     */
+    private void changePageState(){
+        if(mPagerAdapter.getItem(mSelectedPage).getState() == Constants.Identifier.STATE_NORMAL){
+            mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_EDIT);
+        }else{
+            mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
+        }
     }
     /**
      * 根据当前显示订单类型修改底部按钮显示
@@ -226,7 +252,12 @@ public class MyOrderActivity extends BaseActivity {
     }
 
     public void onBackClick(View view){
+        redirectToActivity(mContext, MainActivity.class);
         finish();
     }
 
+    @Override
+    public void onBackPressed() {
+        onBackClick(null);
+    }
 }

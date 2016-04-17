@@ -39,6 +39,7 @@
                         style="@style/text_normal_style"
                         android:layout_weight="3"
                         android:gravity="start|center_vertical"
+                        android:onClick="onTeacherNameClick"
                         tools:text="张小龙" />
                 </LinearLayout>
 
@@ -57,6 +58,7 @@
                         android:gravity="start|center_vertical"
                         android:textColor="@color/theme_color"
                         android:autoLink="phone"
+                        android:textColorLink="@color/text_area_editable_text_color"
                         tools:text="18831415926" />
                 </LinearLayout>
 
@@ -131,6 +133,8 @@
                 android:layout_margin="@dimen/layout_margin_small"
                 android:background="@drawable/selector_main_left_drawer_item"
                 android:gravity="center"
+                android:clickable="true"
+                android:onClick="onPayClick"
                 android:padding="@dimen/layout_padding_tiny"
                 android:text="@string/pay_and_finish_course"
                 android:textColor="@color/title_text_color"

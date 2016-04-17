@@ -6,7 +6,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.OtherUtils;
 
@@ -46,6 +48,12 @@ public class MoreActivity extends BaseActivity {
         bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "关于我们");
         bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.about_us_content));
         redirectToActivity(mContext, ShowTextActivity.class, bundle);
+    }
+
+    public void onLogoutClick(View view){
+        User.doLogout();
+        App.get().removeAllActivity();
+        redirectToActivity(mContext, LoginActivity.class);
     }
 
     public void onCallbackClick(View view){

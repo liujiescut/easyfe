@@ -52,6 +52,7 @@ public class Constants {
         public static final String URL_CONFIRM_SPECIAL_ORDER = URL_BASE + "Parent/Sure/Special";
         public static final String URL_CONFIRM_SINGLE_ORDER = URL_BASE + "Parent/Sure/Single";
         public static final String URL_CONFIRM_MULTI_ORDER = URL_BASE + "Parent/Sure/Multi";
+        public static final String URL_CANCEL_ORDERS = URL_BASE + "Order/Cancel";
         public static final String URL_SINGLE_RESERVE = URL_BASE + "Book/Single";
         public static final String URL_MULTI_RESERVE = URL_BASE + "Book/Multi";
         public static final String URL_GET_TEACHER_DETAIL_INFO = URL_BASE + "Parent/Teacher/Data";

@@ -216,6 +216,11 @@ public class App extends Application {
     }
 
 
+    public void removeAllActivity(){
+        mActivityManagerUtils.removeAllActivity();
+    }
+
+
     /**
      * 获取 activity栈 中栈顶的 activity
      */

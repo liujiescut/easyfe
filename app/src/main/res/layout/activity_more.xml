@@ -55,4 +55,22 @@
             android:onClick="onCallbackClick"
             android:text="@string/user_advice"/>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/to_do_order_tv_pay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/layout_margin_large"
+        android:layout_marginRight="@dimen/layout_margin_large"
+        android:layout_marginTop="46dp"
+        android:background="@drawable/selector_main_left_drawer_item"
+        android:gravity="center"
+        android:clickable="true"
+        android:onClick="onLogoutClick"
+        android:padding="@dimen/layout_padding_tiny"
+        android:text="退出登录"
+        android:textColor="@color/title_text_color"
+        android:visibility="visible"
+        />
+
 </LinearLayout>

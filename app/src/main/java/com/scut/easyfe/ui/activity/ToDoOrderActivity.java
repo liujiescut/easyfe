@@ -9,6 +9,10 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.order.Order;
+import com.scut.easyfe.network.RequestBase;
+import com.scut.easyfe.network.RequestListener;
+import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.user.parent.RGetTeacherInfo;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.OtherUtils;
 import com.scut.easyfe.utils.TimeUtils;
@@ -124,8 +128,42 @@ public class ToDoOrderActivity extends BaseActivity {
         }
     }
 
+    public void onPayClick(View view) {
+        toast("发起支付");
+    }
+
+    public void onInsuranceClick(View view) {
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "关于保险");
+        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.about_us_content));
+        redirectToActivity(mContext, ShowTextActivity.class, bundle);
+    }
+
+    public void onTeacherNameClick(View view) {
+            RequestManager.get().execute(new RGetTeacherInfo(App.getUser().getToken(), mOrder.getTeacher().get_id()), new RequestListener<Order>() {
+                @Override
+                public void onSuccess(RequestBase request, Order result) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(Constants.Key.TO_TEACHER_INFO_ACTIVITY_TYPE, Constants.Identifier.TYPE_SEE_TEACHER_INFO);
+                    bundle.putSerializable(Constants.Key.ORDER, result);
+                    redirectToActivity(mContext, TeacherInfoActivity.class, bundle);
+                }
+
+                @Override
+                public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                    toast(errorMsg);
+                }
+            });
+    }
+
     public void onBackClick(View view){
+        redirectToActivity(mContext, MyOrderActivity.class);
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        onBackClick(null);
     }
 
     private boolean isTeacher(){

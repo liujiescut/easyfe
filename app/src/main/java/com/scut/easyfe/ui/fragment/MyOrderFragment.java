@@ -95,6 +95,10 @@ public class MyOrderFragment extends BaseRefreshFragment {
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if(position <= 0){
+            return;
+        }
+
         RequestManager.get().execute(new RGetOrderDetail(App.getUser().getToken(),
                 mOrders.get(position - 1).get_id()), new RequestListener<Order>() {
             @Override
@@ -140,8 +144,31 @@ public class MyOrderFragment extends BaseRefreshFragment {
         }
     }
 
+    /**
+     * 重新从服务器拉取数据
+     */
+    public void updateData(){
+        if(null != mAdapter) {
+            mOrders.clear();
+            mAdapter.notifyDataSetChanged();
+            onRefreshData();
+        }
+    }
+
     public void setType(int type) {
         mOrderType = type;
+    }
+
+    public List<String> getSelectedOrderIds(){
+        List<String> selectedOrders = new ArrayList<>();
+        for (BriefOrder briefOrder :
+                mOrders) {
+            if (briefOrder.isSelected()) {
+                selectedOrders.add(briefOrder.get_id());
+            }
+        }
+
+        return selectedOrders;
     }
 
     public void setState(int state) {

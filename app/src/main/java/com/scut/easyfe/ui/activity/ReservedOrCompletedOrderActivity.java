@@ -177,7 +177,13 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
     }
 
     public void onBackClick(View view){
+        redirectToActivity(mContext, MyOrderActivity.class);
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        onBackClick(null);
     }
 
     private boolean isTeacher(){

@@ -1,11 +1,13 @@
 package com.scut.easyfe.ui.activity;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.test.Problem;
 import com.scut.easyfe.ui.adapter.ProblemAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
@@ -44,6 +46,13 @@ public class ProblemAndHelpActivity extends BaseActivity {
                 ListViewUtil.setListViewHeightBasedOnChildren(mProblemListView);
             }
         });
+    }
+
+    public void onMoreProblemsClick(View view){
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "更多问题");
+        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.about_us_content));
+        redirectToActivity(mContext, ShowTextActivity.class, bundle);
     }
 
     public void onBackClick(View view){

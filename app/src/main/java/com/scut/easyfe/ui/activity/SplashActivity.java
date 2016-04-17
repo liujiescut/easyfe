@@ -38,12 +38,6 @@ public class SplashActivity extends BaseActivity {
 //        boolean isFirstStart = true;
 
         if (isFirstStart) {
-            //清除登录信息，购物车信息等
-            User.doLogout();
-            ACache.getInstance().clear();
-        }
-
-        if (isFirstStart) {
             // 跳转应用介绍处
             redirectToActivity(this, IntroActivity.class);
         } else {

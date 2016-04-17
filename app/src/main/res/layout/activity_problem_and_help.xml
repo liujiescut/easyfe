@@ -27,6 +27,7 @@
             android:drawableRight="@mipmap/icon_right_arrow_padding"
             android:gravity="left|center_vertical"
             android:paddingLeft="@dimen/layout_padding_small"
+            android:onClick="onMoreProblemsClick"
             android:text="@string/more_problems" />
     </LinearLayout>
 </LinearLayout>

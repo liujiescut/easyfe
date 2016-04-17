@@ -39,7 +39,7 @@
         <!-- 百度地图 -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="rIugtSvYwq830m0aeXlGyBQ7" />
+            android:value="5XzSkHUsp0eCm2eIE7gbkTzCVlz4MiV0" />
 
         <!-- 友盟 -->
         <meta-data
@@ -93,7 +93,8 @@
         <activity android:name=".ui.activity.SelfIntroduceActivity" />
         <activity android:name=".ui.activity.ReceivablesChannelActivity" />
         <activity android:name=".ui.activity.PhotoUploadActivity" />
-        <activity android:name=".ui.activity.MyOrderActivity" />
+        <activity android:name=".ui.activity.MyOrderActivity"
+            android:launchMode="singleTask"/>
         <activity android:name=".ui.activity.WalletActivity" />
         <activity android:name=".ui.activity.PublishSpreadActivity" />
         <activity android:name=".ui.activity.MessageCenterActivity" />

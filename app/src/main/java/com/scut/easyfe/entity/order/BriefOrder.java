@@ -17,6 +17,15 @@ public class BriefOrder extends BaseEntity{
     private int type = 0;
     private int state = 0;
     private TeachTime teachTime = new TeachTime();
+    private boolean selected = false;     //取消跟修改操作是否被选中
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 
     public float getPrice() {
         return price;
