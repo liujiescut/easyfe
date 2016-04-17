@@ -131,7 +131,8 @@ public class MyOrderFragment extends BaseRefreshFragment {
                 bundle.putInt(Constants.Key.ORDER_TYPE, Constants.Identifier.ORDER_COMPLETED);
                 bundle.putSerializable(Constants.Key.ORDER, order);
                 mActivity.redirectToActivity(mActivity,
-                        order.isHadComment() ? ReservedOrCompletedOrderActivity.class : EvaluationActivity.class, bundle);
+                        !order.isHadComment() && App.getUser().isParent() ?
+                                EvaluationActivity.class : ReservedOrCompletedOrderActivity.class, bundle);
                 break;
 
             case Constants.Identifier.ORDER_TO_DO:

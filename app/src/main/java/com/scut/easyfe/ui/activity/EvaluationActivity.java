@@ -20,7 +20,7 @@ public class EvaluationActivity extends BaseActivity {
     @Override
     protected void initView() {
         ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("已完成订单");
-        ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_right)).setText("保存修改");
+        ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_right)).setText("提交");
         ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_right)).setVisibility(View.VISIBLE);
     }
 

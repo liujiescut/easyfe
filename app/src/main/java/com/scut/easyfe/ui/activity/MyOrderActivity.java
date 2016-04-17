@@ -40,7 +40,6 @@ public class MyOrderActivity extends BaseActivity {
     private final int BUTTON_TYPE_BOTH = 1;
     private final int BUTTON_TYPE_ONE_MODIFY = 2;
     private final int BUTTON_TYPE_ONE_CANCEL = 3;
-    private int mButtonType = BUTTON_TYPE_BOTH;
 
     private LinearLayout mBtnLinearLayout;
     private TextView mModifyTextView;

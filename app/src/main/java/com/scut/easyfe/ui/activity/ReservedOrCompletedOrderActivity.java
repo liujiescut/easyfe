@@ -74,7 +74,6 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("已预订订单");
 
         mGradeTextView = OtherUtils.findViewById(this, R.id.order_base_info_tv_grade);
         mCourseTextView = OtherUtils.findViewById(this, R.id.order_base_info_tv_course);
@@ -117,7 +116,8 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
                     public void onSuccess(RequestBase request, JSONObject result) {
                         toast(result.optString("message"));
 
-                        //Todo 更新Order状态
+                        mOrder.setState(Constants.Identifier.ORDER_TO_DO);
+
                         Bundle bundle = new Bundle();
                         bundle.putSerializable(Constants.Key.ORDER, mOrder);
                         redirectToActivity(mContext, ToDoOrderActivity.class, bundle);
@@ -148,6 +148,11 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
 
         if(mOrderType == Constants.Identifier.ORDER_COMPLETED){
             mNumContainer.setVisibility(View.VISIBLE);
+            mOrderNumTextView.setText(mOrder.getOrderNumber());
+            mInsuranceNumTextView.setText(mOrder.getInsurance().getInsuranceNumber());
+            ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("已完成订单");
+        }else{
+            ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("已预订订单");
         }
 
         if(isTeacher()){
@@ -174,6 +179,13 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
                 mWaitTeacherApplyTextView.setVisibility(View.GONE);
             }
         }
+    }
+
+    public void onInsuranceClick(View view){
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "关于保险");
+        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.about_us_content));
+        redirectToActivity(mContext, ShowTextActivity.class, bundle);
     }
 
     public void onBackClick(View view){

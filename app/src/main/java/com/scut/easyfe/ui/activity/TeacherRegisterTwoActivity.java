@@ -154,6 +154,12 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
 
         if (!mIsRegister) {
             mWorkOrNotLinearLayout.setVisibility(View.VISIBLE);
+            if(mUser.getTeacherMessage().isLock() ) {
+                mWorkOrNotToggle.toggleOff();
+            } else{
+                mWorkOrNotToggle.toggleOn();
+            }
+
             mSaveTextView.setText("确认并保存");
         }
 
@@ -396,7 +402,7 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
         }
 
         if (!mIsRegister) {
-            mUser.getTeacherMessage().setIsLock(mWorkOrNotToggle.isToggleOn());
+            mUser.getTeacherMessage().setIsLock(!mWorkOrNotToggle.isToggleOn());
             RequestManager.get().execute(new RTeacherInfoModify(mUser), new RequestListener<JSONObject>() {
                 @Override
                 public void onSuccess(RequestBase request, JSONObject result) {
