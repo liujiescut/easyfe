@@ -5,24 +5,46 @@ package com.scut.easyfe.entity;
  * Created by jay on 16/4/6.
  */
 public class TeachableCourse extends BaseEntity{
-    private int _id = 0;
+    private int intId = 0;
+    private String _id = "";
     private String course = "";
     private String grade = "";
     private float price = 0f;
+    private float addPrice = 0f;
 
-    public TeachableCourse(int _id, String course, String grade, float price) {
-        this._id = _id;
+    public TeachableCourse(){
+
+    }
+
+    public TeachableCourse(int intId, String course, String grade, float price) {
+        this.intId = intId;
         this.course = course;
         this.grade = grade;
         this.price = price;
     }
 
-    public int get_id() {
+    public float getAddPrice() {
+        return addPrice;
+    }
+
+    public void setAddPrice(float addPrice) {
+        this.addPrice = addPrice;
+    }
+
+    public String get_id() {
         return _id;
     }
 
-    public void set_id(int _id) {
+    public void set_id(String _id) {
         this._id = _id;
+    }
+
+    public int getIntId() {
+        return intId;
+    }
+
+    public void setIntId(int intId) {
+        this.intId = intId;
     }
 
     public String getCourse() {

@@ -89,6 +89,18 @@ public class PublishSpreadActivity extends BaseActivity {
         mDatePicker.setRange(calendar.get(Calendar.YEAR) - 100, calendar.get(Calendar.YEAR)); //控制时间范围
         mDatePicker.setTime(new Date());
         mDatePicker.setCyclic(false);
+
+        mTeachDate = new Date();
+        mPeriod = "morning";
+        mDateString = TimeUtils.getTime(mTeachDate, "yyyy 年 MM 月 dd 日 (EEEE)");
+        mDateString += " 上午";
+        mDateTextView.setText(mDateString);
+
+        mTeachTime = 120;
+        mTimeTextView.setText(TimeUtils.getTimeFromMinute(mTeachTime));
+
+        mPrice = 100;
+        mPriceTextView.setText(String.format("%d 元/小时", mPrice));
     }
 
     @Override
@@ -113,6 +125,13 @@ public class PublishSpreadActivity extends BaseActivity {
                 for (Course course :
                         mCourses) {
                     mCourseNames.add(course.getCourse());
+                }
+
+                if(mCourses.size() > 0){
+                    mSelectedCoursePosition = 0;
+                    mGrade = mCourses.get(0).getGrade();
+                    mCourseTextView.setText(mCourseNames.get(0));
+                    mGradeTextView.setText(mGrade.get(0));
                 }
 
                 mISLoadingCloseByUser = false;
@@ -140,6 +159,11 @@ public class PublishSpreadActivity extends BaseActivity {
         mDatePicker.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date) {
+                if(date.getTime() < new Date().getTime()){
+                    toast("请选择有效日期");
+                    return;
+                }
+
                 mTeachDate = date;
                 mDateString = TimeUtils.getTime(date, "yyyy 年 MM 月 dd 日 (EEEE)");
                 LogUtils.i(Constants.Tag.ORDER_TAG, mDateString);

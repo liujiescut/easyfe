@@ -77,6 +77,12 @@ public class SearchResultFragment extends BaseRefreshFragment {
         }
 
         final int index = position - 1;   //减1是为了减去HeaderView
+
+        if(mOrders.get(index).getTeacher().get_id().equals(App.getUser().get_id())){
+            toast("您不能预约自己呦");
+            return;
+        }
+
         MapUtils.getDurationFromPosition(mOrders.get(index).getTeacher().getPosition().getLatitude(), mOrders.get(index).getTeacher().getPosition().getLongitude(),
                 App.getUser().getPosition().getLatitude(), App.getUser().getPosition().getLongitude(),
                 mOrders.get(index).getTeacher().getPosition().getCity(), new MapUtils.GetDurationCallback() {

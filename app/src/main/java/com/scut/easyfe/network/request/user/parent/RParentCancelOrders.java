@@ -19,18 +19,18 @@ import java.util.List;
  * 取消订单接口
  * Created by gz on 16/4/17.
  */
-public class RCancelOrders extends RequestBase<JSONObject>{
+public class RParentCancelOrders extends RequestBase<JSONObject>{
     private String mToken = "";
     private List<String> mOrders = new ArrayList<>();
 
-    public RCancelOrders(@NonNull String token, @NonNull List<String> orders) {
+    public RParentCancelOrders(@NonNull String token, @NonNull List<String> orders) {
         this.mToken = token;
         this.mOrders = orders;
     }
 
     @Override
     public String getUrl() {
-        return Constants.URL.URL_CANCEL_ORDERS;
+        return Constants.URL.URL_PARENT_CANCEL_ORDERS;
     }
 
     @Override

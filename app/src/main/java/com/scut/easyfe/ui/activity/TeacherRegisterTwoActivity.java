@@ -408,6 +408,8 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
                 public void onSuccess(RequestBase request, JSONObject result) {
                     toast("修改成功");
                     App.setUser(mUser);
+                    redirectToActivity(mContext, MainActivity.class);
+                    finish();
                 }
 
                 @Override

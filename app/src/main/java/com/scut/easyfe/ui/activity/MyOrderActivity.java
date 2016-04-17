@@ -9,20 +9,15 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
-import com.scut.easyfe.entity.order.BriefOrder;
-import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
-import com.scut.easyfe.network.request.user.parent.RCancelOrders;
+import com.scut.easyfe.network.request.user.parent.RParentCancelOrders;
 import com.scut.easyfe.ui.adapter.OrderPagerAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.OtherUtils;
 
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 我的订单页面
@@ -160,7 +155,12 @@ public class MyOrderActivity extends BaseActivity {
         mDoCancelListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RequestManager.get().execute(new RCancelOrders(App.getUser().getToken(), mPagerAdapter.getItem(mSelectedPage).getSelectedOrderIds()),
+                if(mPagerAdapter.getItem(mSelectedPage).getSelectedOrderIds().size() == 0){
+                    toast("请选择要取消的订单");
+                    return;
+                }
+
+                RequestManager.get().execute(new RParentCancelOrders(App.getUser().getToken(), mPagerAdapter.getItem(mSelectedPage).getSelectedOrderIds()),
                         new RequestListener<JSONObject>() {
                     @Override
                     public void onSuccess(RequestBase request, JSONObject result) {

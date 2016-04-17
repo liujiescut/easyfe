@@ -272,7 +272,7 @@ public class TeachCourseActivity extends BaseActivity {
                                 clickPriceItem.setPrice(Integer.parseInt(message));
                                 for (TeachableCourse item :
                                         mTeachableCourses) {
-                                    if (item.get_id() == clickPriceItem.get_id()) {
+                                    if (item.getIntId() == clickPriceItem.getIntId()) {
                                         item.setPrice(clickPriceItem.getPrice());
                                     }
                                 }

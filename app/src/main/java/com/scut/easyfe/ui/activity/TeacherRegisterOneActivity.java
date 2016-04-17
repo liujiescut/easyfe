@@ -224,44 +224,47 @@ public class TeacherRegisterOneActivity extends BaseActivity {
 
     @Override
     protected void fetchData() {
-        startLoading("加载数据中", new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                if(isLoadingDialogDismissByUser) {
-                    toast("加载数据失败");
-                    finish();
+        if(mFromType == Constants.Identifier.TYPE_REGISTER) {
+            startLoading("加载数据中", new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    if (isLoadingDialogDismissByUser) {
+                        toast("加载数据失败");
+                        finish();
+                    }
                 }
-            }
-        });
+            });
 
-        RequestManager.get().execute(new RGetSchool(), new RequestListener<List<School>>() {
-            @Override
-            public void onSuccess(RequestBase request, List<School> result) {
-                mSchools.clear();
-                mSchools.addAll(result);
+            RequestManager.get().execute(new RGetSchool(), new RequestListener<List<School>>() {
+                @Override
+                public void onSuccess(RequestBase request, List<School> result) {
+                    mSchools.clear();
+                    mSchools.addAll(result);
 
-                mSchoolNames.clear();
-                for (School school :
-                        mSchools) {
-                    mSchoolNames.add(school.getSchool());
+                    mSchoolNames.clear();
+                    for (School school :
+                            mSchools) {
+                        mSchoolNames.add(school.getSchool());
+                    }
+
+                    if (mSchools.size() > 0) {
+                        mProfessionNames.addAll(mSchools.get(0).getProfession());
+                        mSchoolTextView.setText(mSchoolNames.get(0));
+                        mProfessionTextView.setText(mProfessionNames.get(0));
+                    }
+
+                    isLoadingDialogDismissByUser = false;
+                    stopLoading();
                 }
 
-                if(mSchools.size() > 0) {
-                    mProfessionNames.addAll(mSchools.get(0).getProfession());
-                    mSchoolTextView.setText(mSchoolNames.get(0));
-                    mProfessionTextView.setText(mProfessionNames.get(0));
+                @Override
+                public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                    toast(errorMsg);
+                    stopLoading();
                 }
+            });
+        }
 
-                isLoadingDialogDismissByUser = false;
-                stopLoading();
-            }
-
-            @Override
-            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
-                toast(errorMsg);
-                stopLoading();
-            }
-        });
         if(null == mUser.getPosition().getAddress() || mUser.getPosition().getAddress().length() == 0) {
 
             MapUtils.getLocation(new MapUtils.LocationCallback() {
@@ -589,6 +592,8 @@ public class TeacherRegisterOneActivity extends BaseActivity {
             public void onSuccess(RequestBase request, JSONObject result) {
                 toast("修改成功");
                 App.setUser(mUser);
+                redirectToActivity(mContext, MainActivity.class);
+                finish();
             }
 
             @Override

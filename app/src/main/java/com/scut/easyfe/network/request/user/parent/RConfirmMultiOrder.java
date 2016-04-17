@@ -2,7 +2,6 @@ package com.scut.easyfe.network.request.user.parent;
 
 import android.support.annotation.NonNull;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.roomorama.caldroid.CalendarHelper;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.order.Order;
@@ -17,7 +16,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.TimeZone;
 
 import hirondelle.date4j.DateTime;
