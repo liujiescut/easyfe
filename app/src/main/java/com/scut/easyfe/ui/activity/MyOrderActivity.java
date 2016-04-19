@@ -1,5 +1,6 @@
 package com.scut.easyfe.ui.activity;
 
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -9,15 +10,20 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.entity.order.BriefOrder;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.request.user.parent.RParentCancelOrders;
+import com.scut.easyfe.network.request.user.parent.RParentModifyOrders;
 import com.scut.easyfe.ui.adapter.OrderPagerAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.OtherUtils;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 我的订单页面
@@ -146,9 +152,16 @@ public class MyOrderActivity extends BaseActivity {
         mDoModifyListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toast("修改成功");
                 mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
                 refreshButtonsState(getButtonTypeFromOrderType(mCurrentOrderType));
+
+                if(!validateOrders(mPagerAdapter.getItem(mSelectedPage).getSelectedOrders())){
+                    return;
+                }
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constants.Key.ORDERS, new ArrayList<>(mPagerAdapter.getItem(mSelectedPage).getSelectedOrders()));
+                redirectToActivity(mContext, ModifyOrderActivity.class, bundle);
             }
         };
 
@@ -181,6 +194,30 @@ public class MyOrderActivity extends BaseActivity {
         };
 
         refreshButtonsState(getButtonTypeFromOrderType(mCurrentOrderType));
+    }
+
+    private boolean validateOrders(List<BriefOrder> orders){
+        if(orders.size() == 0){
+            toast("请选择要修改的订单");
+            return false;
+        }
+
+        String tag= orders.get(0).getTag();
+
+        for (BriefOrder order :
+                orders) {
+            if (!tag.equals(order.getTag())) {
+                toast("只有同次多次预约的订单可批量修改");
+                return false;
+            }
+
+            if(App.getUser().get_id().equals(order.getParentId())){
+                toast("您只能修改自己是家长的订单");
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

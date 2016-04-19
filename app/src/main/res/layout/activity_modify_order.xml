@@ -1,0 +1,176 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activity.WalletActivity">
+    <include
+        layout="@layout/titlebar"/>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/layout_margin_small"
+        style="@style/ll_container_normal_style"
+        >
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="1"
+            android:text="@string/course_teacher" />
+
+        <TextView
+            android:id="@+id/modify_order_tv_teacher"
+            style="@style/text_normal_style"
+            android:layout_weight="3"
+            android:gravity="start|center_vertical"
+            android:onClick="onTeacherNameClick"
+            tools:text="林老师"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        >
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="1"
+            android:text="@string/teach_course" />
+
+        <TextView
+            android:id="@+id/modify_order_tv_course"
+            style="@style/text_normal_style"
+            android:layout_weight="3"
+            android:gravity="start|center_vertical"
+            tools:text="2333 元"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/layout_margin_small"
+        style="@style/ll_container_normal_style"
+        >
+
+        <TextView
+            android:id="@+id/modify_order_tv_date_label"
+            style="@style/text_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="1"
+            android:text="@string/teach_time" />
+
+        <TextView
+            android:id="@+id/modify_order_tv_date"
+            style="@style/text_normal_style"
+            android:layout_weight="3"
+            android:gravity="start|center_vertical"
+            android:onClick="onDateClick"
+            tools:text="2015年3月25日（星期五） 晚上"
+            android:drawableRight="@mipmap/icon_right_arrow_padding"
+            android:textColor="@color/text_area_editable_text_color"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        >
+
+        <TextView
+            android:id="@+id/modify_order_tv_time_label"
+            style="@style/text_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="1"
+            android:text="@string/teach_time_length" />
+
+        <TextView
+            android:id="@+id/modify_order_tv_time"
+            style="@style/text_normal_style"
+            android:layout_weight="3"
+            android:gravity="start|center_vertical"
+            tools:text="1 小时 10 分钟"
+            android:onClick="onTimeClick"
+            android:drawableRight="@mipmap/icon_right_arrow_padding"
+            android:textColor="@color/text_area_editable_text_color"
+            />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/layout_margin_small"
+        style="@style/ll_container_normal_style"
+        >
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="1"
+            android:text="@string/teach_price" />
+
+        <TextView
+            android:id="@+id/modify_order_tv_price"
+            style="@style/text_normal_style"
+            android:layout_weight="3"
+            android:gravity="start|center_vertical"
+            tools:text="250 元/小时"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        >
+
+        <TextView
+            android:id="@+id/modify_order_tv_tip_label"
+            style="@style/text_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="1"
+            android:text="@string/traffic_tip" />
+
+        <TextView
+            android:id="@+id/modify_order_tv_tip"
+            style="@style/text_normal_style"
+            android:layout_weight="3"
+            android:gravity="start|center_vertical"
+            tools:text="50 元"
+            />
+    </LinearLayout>
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        android:layout_marginTop="@dimen/layout_margin_small"
+        >
+
+        <TextView
+            android:id="@+id/modify_order_tv_total_price_label"
+            style="@style/text_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="1"
+            android:text="@string/each_price" />
+
+        <TextView
+            android:id="@+id/modify_order_tv_total_price"
+            style="@style/text_normal_style"
+            android:layout_weight="3"
+            android:gravity="start|center_vertical"
+            android:textColor="@color/theme_color"
+            tools:text="300 元"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/layout_margin_small"
+        android:layout_marginStart="@dimen/layout_margin_small"
+        android:layout_marginTop="@dimen/layout_margin_small"
+        android:background="@drawable/selector_main_left_drawer_item"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="onConfirmModifyClick"
+        android:padding="@dimen/layout_padding_small"
+        android:text="@string/confirm_modify"
+        android:textColor="@color/title_text_color"
+        android:textSize="@dimen/text_size_normal"
+        />
+
+</LinearLayout>

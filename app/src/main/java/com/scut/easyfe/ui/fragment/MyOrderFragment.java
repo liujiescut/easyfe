@@ -99,6 +99,10 @@ public class MyOrderFragment extends BaseRefreshFragment {
             return;
         }
 
+        if(mState == Constants.Identifier.STATE_EDIT){
+            return;
+        }
+
         RequestManager.get().execute(new RGetOrderDetail(App.getUser().getToken(),
                 mOrders.get(position - 1).get_id()), new RequestListener<Order>() {
             @Override
@@ -166,6 +170,18 @@ public class MyOrderFragment extends BaseRefreshFragment {
                 mOrders) {
             if (briefOrder.isSelected()) {
                 selectedOrders.add(briefOrder.get_id());
+            }
+        }
+
+        return selectedOrders;
+    }
+
+    public List<BriefOrder> getSelectedOrders(){
+        List<BriefOrder> selectedOrders = new ArrayList<>();
+        for (BriefOrder briefOrder :
+                mOrders) {
+            if (briefOrder.isSelected()) {
+                selectedOrders.add(briefOrder);
             }
         }
 

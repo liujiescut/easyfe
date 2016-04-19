@@ -8,16 +8,38 @@ import com.scut.easyfe.entity.BaseEntity;
  */
 public class BriefOrder extends BaseEntity{
     private String _id = "";
+    private String parentId = "";
     private String course = "";
     private String tag = "";
     private String teacherName = "";
     private String orderNumber = "";
     private int time = 0;
     private float price = 0;
+    private float subsidy = 0;
     private int type = 0;
     private int state = 0;
     private TeachTime teachTime = new TeachTime();
     private boolean selected = false;     //取消跟修改操作是否被选中
+
+    public float getTotalPrice(){
+        return subsidy + price * ((float) time / 60);
+    }
+
+    public float getSubsidy() {
+        return subsidy;
+    }
+
+    public void setSubsidy(float subsidy) {
+        this.subsidy = subsidy;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
 
     public boolean isSelected() {
         return selected;

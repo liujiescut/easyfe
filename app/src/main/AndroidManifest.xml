@@ -57,34 +57,32 @@
         <activity
             android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeAndFullScreen"
-            >
+            android:theme="@style/AppThemeAndFullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.activity.IntroActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeAndFullScreen" />
-
-
         <activity
             android:name=".ui.activity.MainActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".ui.activity.LoginActivity"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.activity.LoginActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".ui.activity.ParentRegisterActivity" />
         <activity android:name=".ui.activity.AddressActivity" />
         <activity
             android:name=".ui.activity.TeacherRegisterOneActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".ui.activity.TeacherRegisterTwoActivity"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".ui.activity.TeacherRegisterTwoActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".ui.activity.TeachTimeActivity" />
         <activity
             android:name=".ui.activity.SpecialTimeActivity"
@@ -93,8 +91,9 @@
         <activity android:name=".ui.activity.SelfIntroduceActivity" />
         <activity android:name=".ui.activity.ReceivablesChannelActivity" />
         <activity android:name=".ui.activity.PhotoUploadActivity" />
-        <activity android:name=".ui.activity.MyOrderActivity"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".ui.activity.MyOrderActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".ui.activity.WalletActivity" />
         <activity android:name=".ui.activity.PublishSpreadActivity" />
         <activity android:name=".ui.activity.MessageCenterActivity" />
@@ -111,7 +110,8 @@
         <activity android:name=".ui.activity.CommentsActivity" />
         <activity android:name=".ui.activity.ReservedOrCompletedOrderActivity" />
         <activity android:name=".ui.activity.ToDoOrderActivity" />
-        <activity android:name=".ui.activity.EvaluationActivity"/>
+        <activity android:name=".ui.activity.EvaluationActivity" />
+        <activity android:name=".ui.activity.ModifyOrderActivity"></activity>
     </application>
 
 </manifest>
