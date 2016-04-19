@@ -103,6 +103,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/login_tv_agree_license"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"

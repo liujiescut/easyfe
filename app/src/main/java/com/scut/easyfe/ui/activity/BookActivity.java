@@ -464,6 +464,11 @@ public class BookActivity extends BaseActivity {
     }
 
     public void onSearchClick(View view){
+        if(OtherUtils.isFastDoubleClick()){
+            return;
+        }
+
+        startLoading("筛选中");
         if(!mUser.isParent()){
             DialogUtils.makeChooseDialog(mContext, "提示", "只有家长才可以预约呦\n去注册?", new DialogUtils.OnChooseListener() {
                 @Override
@@ -502,6 +507,9 @@ public class BookActivity extends BaseActivity {
                         order.setGrade(condition.getGrade());
                         order.setTime(condition.getTime());
                     }
+
+                    stopLoading();
+
                     Bundle bundle = new Bundle();
                     bundle.putInt(Constants.Key.RESERVE_WAY, mReserveType);
                     bundle.putSerializable(Constants.Key.ORDERS, new ArrayList<>(result));
@@ -511,6 +519,7 @@ public class BookActivity extends BaseActivity {
                 @Override
                 public void onFailed(RequestBase request, int errorCode, String errorMsg) {
                     toast(errorMsg);
+                    stopLoading();
                 }
             });
 
@@ -538,6 +547,8 @@ public class BookActivity extends BaseActivity {
                         order.setTime(condition.getTime());
                     }
 
+                    stopLoading();
+
                     Bundle bundle = new Bundle();
                     bundle.putInt(Constants.Key.RESERVE_WAY, mReserveType);
                     bundle.putSerializable(Constants.Key.ORDERS, new ArrayList<>(result));
@@ -547,6 +558,7 @@ public class BookActivity extends BaseActivity {
                 @Override
                 public void onFailed(RequestBase request, int errorCode, String errorMsg) {
                     toast(errorMsg);
+                    stopLoading();
                 }
             });
         }

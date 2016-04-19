@@ -1,6 +1,12 @@
 package com.scut.easyfe.ui.activity;
 
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,6 +31,7 @@ import com.scut.easyfe.utils.OtherUtils;
 public class LoginActivity extends BaseActivity {
     private EditText mPhoneEditText;
     private EditText mPasswordEditText;
+    private TextView mAgreeLicenseTextView;
 
     @Override
     protected void setLayoutView() {
@@ -36,6 +43,24 @@ public class LoginActivity extends BaseActivity {
         ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("登录注册");
         mPhoneEditText = OtherUtils.findViewById(this, R.id.login_et_phone);
         mPasswordEditText = OtherUtils.findViewById(this, R.id.login_et_password);
+        mAgreeLicenseTextView = OtherUtils.findViewById(this, R.id.login_tv_agree_license);
+
+        SpannableStringBuilder builder = new SpannableStringBuilder("点击登录,即表示您已同意用户协议");
+
+        builder.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "用户协议");
+                bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.user_protocol_content));
+                redirectToActivity(mContext, ShowTextActivity.class, bundle);
+            }
+        }, 12, 16, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        builder.setSpan(new ForegroundColorSpan(mResources.getColor(R.color.theme_color)), 12, 16, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        builder.setSpan(new UnderlineSpan(), 12, 16, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        mAgreeLicenseTextView.setText(builder);
+        mAgreeLicenseTextView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override

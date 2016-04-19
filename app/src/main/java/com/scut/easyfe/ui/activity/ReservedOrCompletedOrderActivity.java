@@ -161,9 +161,9 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
                 TimeUtils.getTime(TimeUtils.getDateFromString(mOrder.getTeachTime().getDate()), "yyyy年MM月dd日(EEEE)"),
                 mOrder.getTeachTime().getChineseTime()));
         mTimeTextView.setText(TimeUtils.getTimeFromMinute(mOrder.getTime()));
-        mPriceTextView.setText(String.format("%.2f", mOrder.getPrice()));
-        mTipTextView.setText(String.format("%.2f", mOrder.getSubsidy()));
-        mTotalPriceTextView.setText(String.format("%.2f", mOrder.getPrice() + mOrder.getSubsidy()));
+        mPriceTextView.setText(String.format("%.2f 元/小时", mOrder.getPrice()));
+        mTipTextView.setText(String.format("%.2f 元", mOrder.getSubsidy()));
+        mTotalPriceTextView.setText(String.format("%.2f 元", mOrder.getTotalPrice()));
 
         if(mOrderType == Constants.Identifier.ORDER_COMPLETED){
             mNumContainer.setVisibility(View.VISIBLE);

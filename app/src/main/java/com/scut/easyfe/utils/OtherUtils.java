@@ -23,6 +23,25 @@ import java.util.Locale;
  * Created by jay on 16/3/15.
  */
 public class OtherUtils {
+
+    private static long lastClickTime;
+    private static final long timeInterval = 600;
+
+    /**
+     * 判断是否未连续的快速点击
+     *
+     * @return 判断结果
+     */
+    public static boolean isFastDoubleClick() {
+        long time = System.currentTimeMillis();
+        long timeD = time - lastClickTime;
+        if (0 < timeD && timeD < timeInterval) {
+            return true;
+        }
+        lastClickTime = time;
+        return false;
+    }
+
     public static <T> T findViewById(@NonNull View v, @IdRes int id) {
         return (T) v.findViewById(id);
     }
