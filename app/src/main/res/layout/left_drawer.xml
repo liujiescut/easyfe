@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_gravity="left"
+    android:clickable="true"
     android:background="@color/theme_color"
     android:orientation="vertical">
 

@@ -93,7 +93,7 @@ public class ConfirmOrderActivity extends BaseActivity {
         mTeachTimeTextView.setText(TimeUtils.getTimeFromMinute(mOrder.getTime()));
         mTeachPriceTextView.setText(String.format("%.2f 元", mOrder.getPrice()));
         mTeachTipTextView.setText(String.format("%.2f 元", mOrder.getSubsidy()));
-        mTeachTotalPriceTextView.setText(String.format("%.2f 元", mOrder.getPrice() + mOrder.getSubsidy()));
+        mTeachTotalPriceTextView.setText(String.format("%.2f 元", mOrder.getTotalPrice()));
 
         initOtherViews();
     }

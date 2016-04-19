@@ -8,47 +8,6 @@
     tools:context=".ui.activity.WalletActivity">
 
     <include layout="@layout/titlebar" />
-    <RelativeLayout
-        android:id="@+id/header_key_word_search"
-        android:layout_toLeftOf="@+id/header_scan_code_search"
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:clickable="true"
-        android:background="@drawable/selector_search_bar"
-        >
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/search_header_edit_text_bg"
-            android:layout_marginLeft="7dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginBottom="7dp"
-            android:layout_marginRight="2dp"
-            />
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            >
-            <ImageView
-                android:id="@+id/header_search_icon"
-                android:layout_width="13dp"
-                android:layout_height="13dp"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/icon_search_888"/>
-
-            <TextView
-                android:layout_toRightOf="@+id/header_search_icon"
-                android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:textColor="#888"
-                android:text="@string/search_teacher"
-                android:textSize="14sp"/>
-        </RelativeLayout>
-    </RelativeLayout>
 
     <ScrollView
         android:id="@+id/book_sv_container"
@@ -208,10 +167,30 @@
                 android:textColor="@color/text_hint_color"
                  />
 
+            <LinearLayout
+                style="@style/ll_container_normal_style">
+
+                <TextView
+                    style="@style/text_normal_style"
+                    android:layout_marginRight="1px"
+                    android:layout_weight="1"
+                    android:text="@string/teacher_name" />
+
+                <EditText
+                    android:id="@+id/book_et_teacher_name"
+                    style="@style/text_editable_style"
+                    android:layout_weight="3"
+                    android:gravity="start|center_vertical"
+                    android:paddingLeft="@dimen/layout_padding_small"
+                    android:inputType="phone" />
+            </LinearLayout>
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layout_margin_small"
                 android:layout_gravity="top"
                 android:orientation="horizontal">
 

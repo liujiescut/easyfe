@@ -188,4 +188,5 @@
     <string name="evaluation_info_3">请在这里输入您对老师的评价哦！~</string>
     <string name="profile_hint">简介最多200字</string>
     <string name="confirm_modify">确认修改</string>
+    <string name="teacher_name">家教姓名</string>
 </resources>

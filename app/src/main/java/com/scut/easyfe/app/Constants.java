@@ -44,6 +44,7 @@ public class Constants {
         public static final String URL_TEACHER_SINGLE_BOOK_TIME_MODIFY = URL_BASE + "Teacher/SingleBookTime";
         public static final String URL_PUBLISH_SPECIAL_ORDER = URL_BASE + "Teacher/DiscountOrder";
         public static final String URL_TEACHER_CONFIRM_ORDER = URL_BASE + "Teacher/Sure/Order";
+        public static final String URL_TEACHER_CANCEL_ORDERS = URL_BASE + "Teacher/Cancel/Order";
 
         public static final String URL_WALLET_INFO = URL_BASE + "Money/Wallet";
         public static final String URL_WALLET_WITHDRAW = URL_BASE + "Money/Withdraw";

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bigkoo.alertview.OnItemClickListener;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
@@ -13,8 +14,10 @@ import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.user.teacher.RTeacherCancelOrder;
 import com.scut.easyfe.network.request.user.teacher.RTeacherComfirmOrder;
 import com.scut.easyfe.ui.base.BaseActivity;
+import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.ImageUtils;
 import com.scut.easyfe.utils.OtherUtils;
 import com.scut.easyfe.utils.TimeUtils;
@@ -109,6 +112,27 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
     }
 
 
+    public void onCancelOrderClick(View view){
+        RequestManager.get().execute(new RTeacherCancelOrder(App.getUser().getToken(), mOrder.get_id()),
+                new RequestListener<Integer>() {
+                    @Override
+                    public void onSuccess(RequestBase request, Integer badRecord) {
+                        DialogUtils.makeConfirmDialog(mContext, "警告", "您只有两次取消订单的机会,\n超过两次之后您将不能再取消订单\n(完成6次订单可增加一次取消机会)",
+                                new OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(Object o, int position) {
+                                        redirectToActivity(mContext, MyOrderActivity.class);
+                                    }
+                                });
+                    }
+
+                    @Override
+                    public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
+    }
+
     public void onConfirmOrderClick(View view){
         RequestManager.get().execute(new RTeacherComfirmOrder(App.getUser().getToken(), mOrder.get_id()),
                 new RequestListener<JSONObject>() {
@@ -128,11 +152,6 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
                         toast(errorMsg);
                     }
                 });
-    }
-
-    public void onCancelOrderClick(View view){
-        //Todo
-        toast("取消订单");
     }
 
     private void updateView(){

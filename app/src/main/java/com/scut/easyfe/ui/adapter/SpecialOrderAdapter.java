@@ -69,7 +69,7 @@ public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
         }
 
         holder.teacherName.setText(mOrders.get(position).getTeacher().getName());
-        holder.price.setText(String.format("%.2f 元/小时", mOrders.get(position).getPrice()));
+        holder.price.setText(String.format("%.2f 元/小时", mOrders.get(position).getTotalPrice() - mOrders.get(position).getSubsidy()));
         holder.contentUp.setText(getContentUp(position));
         holder.contentDown.setText(getContentDown(position));
         holder.reserve.setOnClickListener(new View.OnClickListener() {
@@ -164,7 +164,7 @@ public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
         contentUp += teacher.getTeacherMessage().getSchool() + " "
                 + teacher.getTeacherMessage().getProfession() + "\n";
         contentUp += "已家教过的孩子数量: ";
-        contentUp += teacher.getTeacherMessage().getHadTeach() + "\n";
+        contentUp += teacher.getTeacherMessage().getTeachCount() + "\n";
         contentUp += "已家教时长: ";
         contentUp += teacher.getTeacherMessage().getHadTeach() + "\n";
         contentUp += "综合评分: ";
@@ -184,9 +184,11 @@ public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
                 "yyyy年MM月dd日(EEEE)") + " " +
                 mOrders.get(position).getTeachTime().getChineseTime() + "\n";
         contentDown += "授课时长: ";
-        contentDown += TimeUtils.getTimeFromMinute(mOrders.get(position).getTime()) + "\n";
-        contentDown += "原价: ";
-        contentDown += String.format("%.0f 元/小时", mOrders.get(position).getPrice());
+        contentDown += TimeUtils.getTimeFromMinute(mOrders.get(position).getTime());
+        if(0 != mOrders.get(position).getOriginalPrice()) {
+            contentDown += "\n原价: ";
+            contentDown += String.format("%.0f 元/小时", mOrders.get(position).getOriginalPrice());
+        }
         return contentDown;
     }
 

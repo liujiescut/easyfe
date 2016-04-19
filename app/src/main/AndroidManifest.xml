@@ -104,7 +104,8 @@
         <activity android:name=".ui.activity.CallbackActivity" />
         <activity android:name=".ui.activity.SpecialOrderActivity" />
         <activity android:name=".ui.activity.ConfirmOrderActivity" />
-        <activity android:name=".ui.activity.BookActivity" />
+        <activity android:name=".ui.activity.BookActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".ui.activity.SearchResultActivity" />
         <activity android:name=".ui.activity.TeacherInfoActivity" />
         <activity android:name=".ui.activity.CommentsActivity" />

@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -65,6 +66,7 @@ public class BookActivity extends BaseActivity {
     private ListView mPriceListView;
     private ListView mScoreListView;
     private ScrollView mContainerScrollView;
+    private EditText mTeacherNameEditText;
     ArrayList<ToSelectItem> mSchoolItems;
     ArrayList<ToSelectItem> mPriceItems;
     ArrayList<ToSelectItem> mScoreItems;
@@ -152,6 +154,7 @@ public class BookActivity extends BaseActivity {
         mSchoolLabelTextView = OtherUtils.findViewById(this, R.id.book_tv_school_label);
         mPriceLabelTextView = OtherUtils.findViewById(this, R.id.book_tv_price_label);
         mScoreLabelTextView = OtherUtils.findViewById(this, R.id.book_tv_score_label);
+        mTeacherNameEditText = OtherUtils.findViewById(this, R.id.book_et_teacher_name);
         mSchoolListView = OtherUtils.findViewById(this, R.id.book_lv_school);
         mPriceListView = OtherUtils.findViewById(this, R.id.book_lv_price);
         mScoreListView = OtherUtils.findViewById(this, R.id.book_lv_score);
@@ -475,6 +478,7 @@ public class BookActivity extends BaseActivity {
             return;
         }
 
+        //Todo 家教姓名条件的加入
         if(mReserveType == Constants.Identifier.RESERVE_SINGLE){
             final SingleBookCondition condition = getSingleBookCondition();
             if(null == condition){
