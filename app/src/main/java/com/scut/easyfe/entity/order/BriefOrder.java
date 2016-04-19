@@ -8,7 +8,7 @@ import com.scut.easyfe.entity.BaseEntity;
  */
 public class BriefOrder extends BaseEntity{
     private String _id = "";
-    private String parentId = "";
+    private String parent = "";
     private String course = "";
     private String tag = "";
     private String teacherName = "";
@@ -33,12 +33,12 @@ public class BriefOrder extends BaseEntity{
         this.subsidy = subsidy;
     }
 
-    public String getParentId() {
-        return parentId;
+    public String getParent() {
+        return parent;
     }
 
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
+    public void setParent(String parent) {
+        this.parent = parent;
     }
 
     public boolean isSelected() {

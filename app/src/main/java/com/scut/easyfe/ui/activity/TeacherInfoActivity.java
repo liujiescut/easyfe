@@ -165,7 +165,9 @@ public class TeacherInfoActivity extends BaseActivity {
     }
 
     public void onMoreCommentsClick(View view) {
-        redirectToActivity(mContext, CommentsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.Key.TEACHER_ID, mOrder.getTeacher().get_id());
+        redirectToActivity(mContext, CommentsActivity.class, bundle);
     }
 
     public void onDoReservationClick(View view) {

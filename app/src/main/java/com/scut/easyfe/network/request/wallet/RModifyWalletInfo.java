@@ -33,17 +33,18 @@ public class RModifyWalletInfo extends RequestBase<JSONObject>{
 
     @Override
     public JSONObject getJsonParams() throws JSONException {
-        return null;
+        JSONObject params = new JSONObject();
+        params.put("token", mToken);
+        params.put("ali", mWallet.getAli());
+        params.put("wechat", mWallet.getWechat());
+        params.put("bank", mWallet.getBank().getBankJson());
+
+        return params;
     }
 
     @Override
     public HttpParams getQueryParams() {
-        HttpParams params = new HttpParams();
-        params.putQueryParams("token", mToken);
-        params.putQueryParams("ali", mWallet.getAli());
-        params.putQueryParams("wechat", mWallet.getWechat());
-        params.putQueryParams("bank", mWallet.getBank().getBankJson().toString());
-        return params;
+        return null;
     }
 
     @Override

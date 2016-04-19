@@ -28,6 +28,7 @@ public class Constants {
         public static final String URL_UPDATE_USER = URL_BASE + "user/data";
         public static final String URL_ORDERS = URL_BASE + "Order";
         public static final String URL_GET_ORDER_DETAIL = URL_BASE + "Order/Data";
+        public static final String URL_GET_TEACHER_COMMENT = URL_BASE + "Parent/Teacher/Comments";
         public static final String URL_USER_INFO_MODIFY = URL_BASE + "User/Data";
         public static final String URL_GET_SPECIAL_ORDER = URL_BASE + "Share/DiscountOrder";
         public static final String URL_GET_MESSAGES = URL_BASE + "Share/Message";
@@ -95,6 +96,7 @@ public class Constants {
         public static final String TO_TEACH_COURSE_ACTIVITY_TYPE = "to_special_time_activity_type";
         public static final String IS_FIRST_IN_SPECIAL_TIME_ACTIVITY  = "is_fist_time_in_special_activity";
         public static final String QN_TOKEN = "qn_token";
+        public static final String TEACHER_ID = "teacher_id";
     }
 
     /**

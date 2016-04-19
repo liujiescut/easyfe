@@ -15,7 +15,6 @@ import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.request.user.parent.RParentCancelOrders;
-import com.scut.easyfe.network.request.user.parent.RParentModifyOrders;
 import com.scut.easyfe.ui.adapter.OrderPagerAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.OtherUtils;
@@ -211,7 +210,7 @@ public class MyOrderActivity extends BaseActivity {
                 return false;
             }
 
-            if(App.getUser().get_id().equals(order.getParentId())){
+            if(!App.getUser().get_id().equals(order.getParent())){
                 toast("您只能修改自己是家长的订单");
                 return false;
             }

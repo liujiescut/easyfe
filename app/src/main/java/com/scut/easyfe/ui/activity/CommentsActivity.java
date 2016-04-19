@@ -1,24 +1,55 @@
 package com.scut.easyfe.ui.activity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.App;
+import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.entity.Comment;
 import com.scut.easyfe.entity.test.ToSelectItem;
+import com.scut.easyfe.network.RequestBase;
+import com.scut.easyfe.network.RequestListener;
+import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.order.RGetTeacherComment;
 import com.scut.easyfe.ui.adapter.SelectItemAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.DensityUtil;
 import com.scut.easyfe.utils.OtherUtils;
+import com.scut.easyfe.utils.TimeUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.IdentityHashMap;
+import java.util.List;
 
 public class CommentsActivity extends BaseActivity {
     private ListView mCommentListView;
+    private SelectItemAdapter mAdapter;
+
+    ArrayList<ToSelectItem> mComments = new ArrayList<>();
+    private boolean mIsLoadingCloseByUser = true;
+    private String mTeacherId ="";
+
 
     @Override
     protected void setLayoutView() {
         setContentView(R.layout.activity_comments);
+    }
+
+    @Override
+    protected void initData() {
+        Intent intent = getIntent();
+        if (null != intent) {
+            Bundle extras = intent.getExtras();
+            if (null != extras) {
+                mTeacherId = extras.getString(Constants.Key.TEACHER_ID);
+            }
+        }
     }
 
     @Override
@@ -33,14 +64,54 @@ public class CommentsActivity extends BaseActivity {
         headView.setBackground(null);
         mCommentListView.addHeaderView(headView);
 
-        ArrayList<ToSelectItem> comments = new ArrayList<>();
-        for(int i = 0; i < 25; i++){
-            String comment = "\n杨 * 杰 先生  2016-3-8  5：20 \n\n习惯好评   " + i +"\n";
-            comments.add(new ToSelectItem(comment, false));
-        }
-        SelectItemAdapter adapter = new SelectItemAdapter(mContext, comments);
-        adapter.setSelectable(false);
-        mCommentListView.setAdapter(adapter);
+        mAdapter = new SelectItemAdapter(mContext, mComments);
+        mAdapter.setSelectable(false);
+        mCommentListView.setAdapter(mAdapter);
+    }
+
+    @Override
+    protected void fetchData() {
+        startLoading("获取评论中", new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if(mIsLoadingCloseByUser){
+                    toast("获取评论失败");
+                    finish();
+                }
+            }
+        });
+
+        RequestManager.get().execute(new RGetTeacherComment(App.getUser().getToken(), mTeacherId), new RequestListener<List<Comment>>() {
+            @Override
+            public void onSuccess(RequestBase request, List<Comment> comments) {
+                mIsLoadingCloseByUser = false;
+                stopLoading();
+
+                if(comments.size() == 0){
+                    toast("暂无相关评论");
+                    return;
+                }
+
+                for (Comment comment :
+                        comments) {
+                    String commentString = comment.getParent().getName().substring(0, comment.getParent().getName().length() - 1) + "*   ";
+                    commentString += comment.getParent().getGender() == Constants.Identifier.FEMALE ? "女士   " : "先生   ";
+                    commentString += TimeUtils.getTime(new Date(comment.getTimestamp()), "yyyy-MM-dd HH: mm");
+                    commentString += "\n\n";
+                    commentString += comment.getContent();
+                    mComments.add(new ToSelectItem(commentString, false));
+                }
+
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                toast(errorMsg);
+                mIsLoadingCloseByUser = false;
+                stopLoading();
+            }
+        });
     }
 
     public void onBackClick(View view){
