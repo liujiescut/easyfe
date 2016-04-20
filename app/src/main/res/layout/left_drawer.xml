@@ -21,7 +21,7 @@
             android:layout_width="46dp"
             android:layout_height="46dp"
             android:layout_centerHorizontal="true"
-            tools:src="@mipmap/default_avatar" />
+            tools:src="@mipmap/default_avatar_woman" />
 
         <TextView
             android:id="@+id/left_drawer_tv_name"

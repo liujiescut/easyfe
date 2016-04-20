@@ -122,8 +122,8 @@ public class TeacherInfoActivity extends BaseActivity {
         String priceString = String.format("%.2f 元/小时", mOrder.getPrice());
         if (mOrder.getSubsidy() != 0) {
             mPriceTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.mipmap.icon_detail_question_small, 0);
-            priceString = String.format("%.2f 元/小时", mOrder.getPrice() + mOrder.getSubsidy());
-            priceString += String.format("(包含交通补贴%.2f元)", mOrder.getSubsidy());
+            priceString = String.format("%.2f 元/小时", mOrder.getPrice());
+            priceString += String.format("(不包含交通补贴%.2f元)", mOrder.getSubsidy());
         }
 
         mPriceTextView.setText(priceString);

@@ -21,8 +21,6 @@ import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +57,7 @@ public class MyOrderActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(null != mPagerAdapter && null != mPagerAdapter.getItem(mSelectedPage)){
+        if (null != mPagerAdapter && null != mPagerAdapter.getItem(mSelectedPage)) {
             mPagerAdapter.getItem(mSelectedPage).updateData();
         }
     }
@@ -72,7 +70,7 @@ public class MyOrderActivity extends BaseActivity {
     @Override
     protected void initView() {
 
-        ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("我的订单");
+        ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("我的订单");
 
         mBtnLinearLayout = OtherUtils.findViewById(this, R.id.my_order_ll_buttons);
         mModifyTextView = OtherUtils.findViewById(this, R.id.my_order_tv_button_1);
@@ -82,7 +80,7 @@ public class MyOrderActivity extends BaseActivity {
         mViewPager = (ViewPager) findViewById(R.id.my_order_viewpager);
         mViewPager.setAdapter(mPagerAdapter);
         PagerSlidingTabStrip mTabs = (PagerSlidingTabStrip) findViewById(R.id.my_order_tabs);
-        if(null!= mTabs) {
+        if (null != mTabs) {
             mTabs.setTextColor(mResources.getColor(R.color.text_area_text_color));
             mTabs.setDividerColor(mResources.getColor(R.color.transparent));
             mTabs.setIndicatorHeight(8);
@@ -158,7 +156,7 @@ public class MyOrderActivity extends BaseActivity {
                 mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
                 refreshButtonsState(getButtonTypeFromOrderType(mCurrentOrderType));
 
-                if(!validateOrders(mPagerAdapter.getItem(mSelectedPage).getSelectedOrders())){
+                if (!validateOrders(mPagerAdapter.getItem(mSelectedPage).getSelectedOrders())) {
                     return;
                 }
 
@@ -171,34 +169,47 @@ public class MyOrderActivity extends BaseActivity {
         mDoCancelListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mPagerAdapter.getItem(mSelectedPage).getSelectedOrderIds().size() == 0){
+                if (mPagerAdapter.getItem(mSelectedPage).getSelectedOrderIds().size() == 0) {
                     toast("请选择要取消的订单");
                     return;
                 }
 
-                if(App.getUser().getBadRecord() >= Constants.DefaultValue.MAX_BAD_RECORD){
+                if (App.getUser().getBadRecord() >= Constants.DefaultValue.MAX_BAD_RECORD) {
                     DialogUtils.makeConfirmDialog(mContext, "警告", "您已经取消过订单两次,\n不能再取消订单了呦\n(完成6次订单可增加一次取消机会)");
                     return;
                 }
 
-                RequestManager.get().execute(new RParentCancelOrders(App.getUser().getToken(), mPagerAdapter.getItem(mSelectedPage).getSelectedOrderIds()),
-                        new RequestListener<Integer>() {
+                mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
+                refreshButtonsState(getButtonTypeFromOrderType(mCurrentOrderType));
+
+                DialogUtils.makeConfirmDialog(mContext, "提醒", "取消订单将会产生一次不良记录\n不良记录超过两次将不能再取消订单\n(完成6次订单可增加一次取消机会)\n确认取消?",
+                        new OnItemClickListener() {
+                            @Override
+                            public void onItemClick(Object o, int position) {
+                                doCancelOrder();
+                            }
+                        });
+            }
+        };
+
+        refreshButtonsState(getButtonTypeFromOrderType(mCurrentOrderType));
+    }
+
+    private void doCancelOrder(){
+        RequestManager.get().execute(new RParentCancelOrders(App.getUser().getToken(), mPagerAdapter.getItem(mSelectedPage).getSelectedOrderIds()),
+                new RequestListener<Integer>() {
                     @Override
                     public void onSuccess(RequestBase request, Integer result) {
-                        if(null != mPagerAdapter.getItem(mSelectedPage)){
+                        toast("取消成功");
+
+                        if (null != mPagerAdapter.getItem(mSelectedPage)) {
                             mPagerAdapter.getItem(mSelectedPage).updateData();
                         }
 
                         App.getUser().setBadRecord(result);
                         App.getUser().save2Cache();
 
-                        DialogUtils.makeConfirmDialog(mContext, "警告", "您只有两次取消订单的机会,\n超过两次之后您将不能再取消订单\n(完成6次订单可增加一次取消机会)",
-                                new OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(Object o, int position) {
-                                        redirectToActivity(mContext, MyOrderActivity.class);
-                                    }
-                                });
+                        redirectToActivity(mContext, MyOrderActivity.class);
                     }
 
                     @Override
@@ -206,21 +217,15 @@ public class MyOrderActivity extends BaseActivity {
                         toast(errorMsg);
                     }
                 });
-                mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
-                refreshButtonsState(getButtonTypeFromOrderType(mCurrentOrderType));
-            }
-        };
-
-        refreshButtonsState(getButtonTypeFromOrderType(mCurrentOrderType));
     }
 
-    private boolean validateOrders(List<BriefOrder> orders){
-        if(orders.size() == 0){
+    private boolean validateOrders(List<BriefOrder> orders) {
+        if (orders.size() == 0) {
             toast("请选择要修改的订单");
             return false;
         }
 
-        String tag= orders.get(0).getTag();
+        String tag = orders.get(0).getTag();
 
         for (BriefOrder order :
                 orders) {
@@ -229,7 +234,7 @@ public class MyOrderActivity extends BaseActivity {
                 return false;
             }
 
-            if(!App.getUser().get_id().equals(order.getParent())){
+            if (!App.getUser().get_id().equals(order.getParent())) {
                 toast("您只能修改自己是家长的订单");
                 return false;
             }
@@ -241,13 +246,13 @@ public class MyOrderActivity extends BaseActivity {
     /**
      * 根据 Order 的 type 来获取按钮的显示状态
      */
-    private int getButtonTypeFromOrderType(int orderType){
-        if(!App.getUser().isParent()){
+    private int getButtonTypeFromOrderType(int orderType) {
+        if (!App.getUser().isParent()) {
             return BUTTON_TYPE_NONE;
         }
 
-        if(orderType == Constants.Identifier.ORDER_RESERVATION ||
-                orderType == Constants.Identifier.ORDER_TO_DO){
+        if (orderType == Constants.Identifier.ORDER_RESERVATION ||
+                orderType == Constants.Identifier.ORDER_TO_DO) {
             return BUTTON_TYPE_BOTH;
         }
 
@@ -257,13 +262,14 @@ public class MyOrderActivity extends BaseActivity {
     /**
      * 更换当前页面状态（编辑状态还是普通状态）
      */
-    private void changePageState(){
-        if(mPagerAdapter.getItem(mSelectedPage).getState() == Constants.Identifier.STATE_NORMAL){
+    private void changePageState() {
+        if (mPagerAdapter.getItem(mSelectedPage).getState() == Constants.Identifier.STATE_NORMAL) {
             mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_EDIT);
-        }else{
+        } else {
             mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
         }
     }
+
     /**
      * 根据当前显示订单类型修改底部按钮显示
      *
@@ -305,14 +311,14 @@ public class MyOrderActivity extends BaseActivity {
         }
     }
 
-    public void onBackClick(View view){
+    public void onBackClick(View view) {
         redirectToActivity(mContext, MainActivity.class);
         finish();
     }
 
     @Override
     public void onBackPressed() {
-        if(null != mPagerAdapter.getItem(mSelectedPage) && mPagerAdapter.getItem(mSelectedPage).getState() == Constants.Identifier.STATE_EDIT){
+        if (null != mPagerAdapter.getItem(mSelectedPage) && mPagerAdapter.getItem(mSelectedPage).getState() == Constants.Identifier.STATE_EDIT) {
             mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
             refreshButtonsState(BUTTON_TYPE_BOTH);
             return;

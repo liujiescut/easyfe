@@ -15,7 +15,6 @@ public class BriefOrder extends BaseEntity{
     private String orderNumber = "";
     private int time = 0;
     private float price = 0;
-    private float addPrice = 0;
     private float subsidy = 0;
     private int type = 0;
     private int state = 0;
@@ -23,15 +22,7 @@ public class BriefOrder extends BaseEntity{
     private boolean selected = false;     //取消跟修改操作是否被选中
 
     public float getTotalPrice(){
-        return subsidy + (price + addPrice) * ((float) time / 60);
-    }
-
-    public float getAddPrice() {
-        return addPrice;
-    }
-
-    public void setAddPrice(float addPrice) {
-        this.addPrice = addPrice;
+        return subsidy + price * ((float) time / 60);
     }
 
     public float getSubsidy() {

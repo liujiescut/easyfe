@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bigkoo.alertview.OnItemClickListener;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
@@ -62,15 +61,15 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
     @Override
     protected void initData() {
         Intent intent = getIntent();
-        if(null != intent){
+        if (null != intent) {
             Bundle extras = intent.getExtras();
             if (null != extras) {
                 mOrder = (Order) extras.getSerializable(Constants.Key.ORDER);
                 mOrderType = extras.getInt(Constants.Key.ORDER_TYPE, Constants.Identifier.ORDER_RESERVATION);
-            }else{
+            } else {
                 mOrder = new Order();
             }
-        }else{
+        } else {
             mOrder = new Order();
         }
     }
@@ -102,7 +101,7 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
         mTeacherInfoContainer = OtherUtils.findViewById(this, R.id.r_or_c_order_layout_teacher_info);
 
         mTeacherNameTextView = OtherUtils.findViewById(this, R.id.item_search_result_tv_teacher);
-        ((View)OtherUtils.findViewById(this, R.id.item_search_result_tv_price)).setVisibility(View.GONE);
+        ((View) OtherUtils.findViewById(this, R.id.item_search_result_tv_price)).setVisibility(View.GONE);
         mTeacherInfoTextView = OtherUtils.findViewById(this, R.id.item_search_result_tv_content);
         mTeacherAvatarImageView = OtherUtils.findViewById(this, R.id.item_search_result_civ_avatar);
 
@@ -112,8 +111,9 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
     }
 
 
-    public void onCancelOrderClick(View view){
-        if(App.getUser().getBadRecord() >= Constants.DefaultValue.MAX_BAD_RECORD){
+    public void onCancelOrderClick(View view) {
+        //Todo 判断有没有修改,然后取消做相应判断
+        if (App.getUser().getBadRecord() >= Constants.DefaultValue.MAX_BAD_RECORD) {
             DialogUtils.makeConfirmDialog(mContext, "警告", "您已经取消过订单两次,\n不能再取消订单了呦\n(完成6次订单可增加一次取消机会)");
             return;
         }
@@ -122,17 +122,11 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
                 new RequestListener<Integer>() {
                     @Override
                     public void onSuccess(RequestBase request, Integer badRecord) {
-
+                        toast("取消成功");
                         App.getUser().setBadRecord(badRecord);
                         App.getUser().save2Cache();
 
-                        DialogUtils.makeConfirmDialog(mContext, "警告", "您只有两次取消订单的机会,\n超过两次之后您将不能再取消订单\n(完成6次订单可增加一次取消机会)",
-                                new OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(Object o, int position) {
-                                        redirectToActivity(mContext, MyOrderActivity.class);
-                                    }
-                                });
+                        redirectToActivity(mContext, MyOrderActivity.class);
                     }
 
                     @Override
@@ -142,7 +136,7 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
                 });
     }
 
-    public void onConfirmOrderClick(View view){
+    public void onConfirmOrderClick(View view) {
         RequestManager.get().execute(new RTeacherComfirmOrder(App.getUser().getToken(), mOrder.get_id()),
                 new RequestListener<JSONObject>() {
                     @Override
@@ -163,7 +157,7 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
                 });
     }
 
-    private void updateView(){
+    private void updateView() {
         mGradeTextView.setText(String.format("%s", mOrder.getGrade()));
         mCourseTextView.setText(mOrder.getCourse());
         mDateTextView.setText(String.format("%s %s",
@@ -174,25 +168,25 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
         mTipTextView.setText(String.format("%.2f 元", mOrder.getSubsidy()));
         mTotalPriceTextView.setText(String.format("%.2f 元", mOrder.getTotalPrice()));
 
-        if(mOrderType == Constants.Identifier.ORDER_COMPLETED){
+        if (mOrderType == Constants.Identifier.ORDER_COMPLETED) {
             mNumContainer.setVisibility(View.VISIBLE);
             mOrderNumTextView.setText(mOrder.getOrderNumber());
             mInsuranceNumTextView.setText(mOrder.getInsurance().getInsuranceNumber());
-            ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("已完成订单");
-        }else{
-            ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("已预订订单");
+            ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("已完成订单");
+        } else {
+            ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("已预订订单");
         }
 
-        if(isTeacher()){
+        if (isTeacher()) {
             mParentNameTextView.setText(mOrder.getParent().getName());
             mParentGenderTextView.setText(mOrder.getParent().getGender() == Constants.Identifier.MALE ? "男" : "女");
             mStudentGenderTextView.setText(mOrder.getParent().getParentMessage().getChildGender() == Constants.Identifier.MALE ? "男" : "女");
             mStudentAgeTextView.setText(String.format("%d", mOrder.getChildAge()));
 
-            if(mOrderType == Constants.Identifier.ORDER_COMPLETED){
+            if (mOrderType == Constants.Identifier.ORDER_COMPLETED) {
                 mOperationButtonsContainer.setVisibility(View.GONE);
             }
-        }else{
+        } else {
             mParentInfoContainer.setVisibility(View.GONE);
             mStudentInfoContainer.setVisibility(View.GONE);
             mOperationButtonsContainer.setVisibility(View.GONE);
@@ -203,20 +197,20 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
             mTeacherInfoTextView.setText(Order.getBaseInfo(mOrder));
             ImageUtils.displayImage(mOrder.getTeacher().getAvatar(), mTeacherAvatarImageView);
 
-            if(mOrderType == Constants.Identifier.ORDER_COMPLETED){
+            if (mOrderType == Constants.Identifier.ORDER_COMPLETED) {
                 mWaitTeacherApplyTextView.setVisibility(View.GONE);
             }
         }
     }
 
-    public void onInsuranceClick(View view){
+    public void onInsuranceClick(View view) {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "关于保险");
         bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.about_us_content));
         redirectToActivity(mContext, ShowTextActivity.class, bundle);
     }
 
-    public void onBackClick(View view){
+    public void onBackClick(View view) {
         redirectToActivity(mContext, MyOrderActivity.class);
         finish();
     }
@@ -226,7 +220,7 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
         onBackClick(null);
     }
 
-    private boolean isTeacher(){
+    private boolean isTeacher() {
         return mOrder.getTeacher().get_id().equals(App.getUser().get_id());
     }
 }

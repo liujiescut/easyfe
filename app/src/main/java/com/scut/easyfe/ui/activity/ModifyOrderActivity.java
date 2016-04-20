@@ -88,6 +88,9 @@ public class ModifyOrderActivity extends BaseActivity {
         mDatePicker.setCyclic(false);
 
         exampleOrder = mOrders.get(0);
+        mDate = exampleOrder.getTeachTime().getDate();
+        mPeriod = exampleOrder.getTeachTime().getTime();
+        mTeachTime = exampleOrder.getTime();
 
         mDateTextView = OtherUtils.findViewById(this, R.id.modify_order_tv_date);
         mTimeTextView = OtherUtils.findViewById(this, R.id.modify_order_tv_time);
@@ -116,6 +119,7 @@ public class ModifyOrderActivity extends BaseActivity {
                     String.format("%s %s",
                             TimeUtils.getTime(TimeUtils.getDateFromString(exampleOrder.getTeachTime().getDate()), "EEEE") ,
                             exampleOrder.getTeachTime().getChineseTime()));
+            mWeek = TimeUtils.getWeekIntFromString(exampleOrder.getTeachTime().getDate());
         }
     }
 
