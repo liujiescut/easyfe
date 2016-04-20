@@ -19,7 +19,7 @@ import java.util.List;
  * 家长取消订单接口
  * Created by gz on 16/4/17.
  */
-public class RParentCancelOrders extends RequestBase<JSONObject>{
+public class RParentCancelOrders extends RequestBase<Integer>{
     private String mToken = "";
     private List<String> mOrders = new ArrayList<>();
 
@@ -47,8 +47,8 @@ public class RParentCancelOrders extends RequestBase<JSONObject>{
     }
 
     @Override
-    public JSONObject parseResultAsObject(JSONObject jsonObject) throws IOException, JSONException {
-        return null;
+    public Integer parseResultAsObject(JSONObject jsonObject) throws IOException, JSONException {
+        return jsonObject.optInt("badRecord");
     }
 
     @Override

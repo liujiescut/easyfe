@@ -19,6 +19,7 @@ import com.scut.easyfe.ui.activity.ToDoOrderActivity;
 import com.scut.easyfe.ui.adapter.MyOrderAdapter;
 import com.scut.easyfe.ui.base.BaseRefreshFragment;
 import com.scut.easyfe.utils.DensityUtil;
+import com.scut.easyfe.utils.OtherUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,11 +96,16 @@ public class MyOrderFragment extends BaseRefreshFragment {
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if(OtherUtils.isFastDoubleClick())
         if(position <= 0){
             return;
         }
 
         if(mState == Constants.Identifier.STATE_EDIT){
+            return;
+        }
+
+        if(mOrderType == Constants.Identifier.ORDER_INVALID){
             return;
         }
 

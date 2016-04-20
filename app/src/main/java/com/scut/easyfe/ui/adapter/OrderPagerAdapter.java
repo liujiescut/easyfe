@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class OrderPagerAdapter extends FragmentPagerAdapter {
 
-    ArrayList<MyOrderFragment> fragments;
+    ArrayList<MyOrderFragment> fragments = new ArrayList<>();
     private  int[] mTitles;
     private  int[] mTypes;
 

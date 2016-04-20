@@ -37,7 +37,9 @@ public class RMultiBook extends RequestBase<List<Order>>{
     @Override
     public JSONObject getJsonParams() throws JSONException {
         JSONObject params = new JSONObject();
-        params.put("token", mCondition.getToken());
+        if(mCondition.getToken().length() != 0) {
+            params.put("token", mCondition.getToken());
+        }
         params.put("course", mCondition.getCourse());
         params.put("grade", mCondition.getGrade());
         params.put("time", mCondition.getTime());
@@ -45,6 +47,7 @@ public class RMultiBook extends RequestBase<List<Order>>{
         params.put("childGender", mCondition.getChildGender());
         params.put("multiBookTime", mCondition.getMultiBookTime().getMultiBookConditionJson());
         params.put("score", mCondition.getScore());
+        params.put("teacherName", mCondition.getTeacherName());
 
         JSONArray priceArray = new JSONArray();
         for (JSONArray price :

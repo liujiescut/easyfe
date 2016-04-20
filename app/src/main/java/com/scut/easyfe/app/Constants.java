@@ -19,6 +19,7 @@ public class Constants {
     public class DefaultValue{
         public static final String DEFAULT_QINIU_URL = "http://7xrvd4.com1.z0.glb.clouddn.com/";            //七牛储存图片的地址
         public static final int DEFAULT_LOAD_COUNT = 15;
+        public static final int MAX_BAD_RECORD = 2;
     }
 
     public class URL{
@@ -59,6 +60,7 @@ public class Constants {
         public static final String URL_SINGLE_RESERVE = URL_BASE + "Book/Single";
         public static final String URL_MULTI_RESERVE = URL_BASE + "Book/Multi";
         public static final String URL_GET_TEACHER_DETAIL_INFO = URL_BASE + "Parent/Teacher/Data";
+        public static final String URL_COMMENT_TEACHER = URL_BASE + "Parent/Comment/Teacher";
     }
 
     /**

@@ -113,10 +113,19 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
 
 
     public void onCancelOrderClick(View view){
+        if(App.getUser().getBadRecord() >= Constants.DefaultValue.MAX_BAD_RECORD){
+            DialogUtils.makeConfirmDialog(mContext, "警告", "您已经取消过订单两次,\n不能再取消订单了呦\n(完成6次订单可增加一次取消机会)");
+            return;
+        }
+
         RequestManager.get().execute(new RTeacherCancelOrder(App.getUser().getToken(), mOrder.get_id()),
                 new RequestListener<Integer>() {
                     @Override
                     public void onSuccess(RequestBase request, Integer badRecord) {
+
+                        App.getUser().setBadRecord(badRecord);
+                        App.getUser().save2Cache();
+
                         DialogUtils.makeConfirmDialog(mContext, "警告", "您只有两次取消订单的机会,\n超过两次之后您将不能再取消订单\n(完成6次订单可增加一次取消机会)",
                                 new OnItemClickListener() {
                                     @Override

@@ -92,6 +92,8 @@ public class TeacherInfoActivity extends BaseActivity {
             mMultiReserveHintTextView.setVisibility(View.GONE);
             mMultiReserveTimesLinearLayout.setVisibility(View.GONE);
             mMultiReserveTimesTextView.setVisibility(View.GONE);
+
+            mScoreInfoTextView.setText(mOrder.getTeacher().getTeacherMessage().getScoreInfo());
         } else {
 
             ((TextView) OtherUtils.findViewById(this, R.id.item_search_result_tv_price)).setText(

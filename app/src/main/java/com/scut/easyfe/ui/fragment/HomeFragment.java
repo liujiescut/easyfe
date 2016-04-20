@@ -139,7 +139,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
      */
     private void onTeacherClick(View view){
         if(null != mActivity) {
-            if(!App.getUser().isTeacher()) {
+            if(!App.getUser(false).isTeacher()) {
                 Bundle bundle = new Bundle();
                 bundle.putInt(Constants.Key.TO_TEACHER_REGISTER_ONE_ACTIVITY_TYPE, Constants.Identifier.TYPE_REGISTER);
                 mActivity.redirectToActivity(mActivity, TeacherRegisterOneActivity.class);

@@ -44,7 +44,7 @@ public class Order extends BaseEntity {
     private int trafficTime = 0;
 
     public float getTotalPrice(){
-        return price * ((float)time / 60) + subsidy + addPrice;
+        return (price + addPrice) * ((float)time / 60) + subsidy + addPrice;
     }
 
     public float getOriginalPrice() {

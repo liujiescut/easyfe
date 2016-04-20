@@ -16,12 +16,21 @@ public class BaseBookCondition extends BaseEntity{
     private String token = "";
     private String course = "";
     private String grade = "";
+    private String teacherName = "";
     private int time = 120;     //授课时长
     private int childAge = 7;
     private int childGender = Constants.Identifier.FEMALE;
     private List<String> school = new ArrayList<>();
     private List<JSONArray> price = new ArrayList<>();             //[100, 200]表示匹配大于100，小于200的家教
     private int score = 0;                                      //最小家教评分
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
 
     public String getToken() {
         return token;

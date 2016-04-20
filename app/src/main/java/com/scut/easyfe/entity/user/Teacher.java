@@ -48,6 +48,9 @@ public class Teacher extends BaseEntity {
     //专业胜任程度
     float ability = 0f;
 
+    //准时程度
+    float punctualScore = 0f;
+
     //被评论次数
     private int commentTime = 0;
 
@@ -89,6 +92,27 @@ public class Teacher extends BaseEntity {
 
     //Todo 家教奖励相关字段
 
+    public String getScoreInfo(){
+        String scoreInfo = "";
+        scoreInfo += String.format("综合评分：%.1f\n", score);
+        scoreInfo += String.format("孩子喜欢程度：%.1f\n", childAccept);
+        scoreInfo += String.format("专业胜任程度：%.1f\n", ability);
+        scoreInfo += String.format("准时态度：%.1f", punctualScore);
+
+        return scoreInfo;
+    }
+
+    public float getPunctualScore() {
+        return punctualScore;
+    }
+
+    public void setPunctualScore(float punctualScore) {
+        this.punctualScore = punctualScore;
+    }
+
+    public void setLock(boolean lock) {
+        isLock = lock;
+    }
 
     public String getIdCard() {
         return idCard;

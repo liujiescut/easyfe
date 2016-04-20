@@ -11,6 +11,7 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.order.Order;
+import com.scut.easyfe.ui.activity.ParentRegisterActivity;
 import com.scut.easyfe.ui.activity.TeacherInfoActivity;
 import com.scut.easyfe.ui.adapter.SearchResultAdapter;
 import com.scut.easyfe.ui.base.BaseRefreshFragment;
@@ -77,6 +78,25 @@ public class SearchResultFragment extends BaseRefreshFragment {
         }
 
         final int index = position - 1;   //减1是为了减去HeaderView
+
+
+        if(!App.getUser(false).isParent()){
+            if(null == mActivity){
+                return;
+            }
+
+            DialogUtils.makeChooseDialog(mActivity, "提示", "只有家长才可以预约呦\n去注册?", new DialogUtils.OnChooseListener() {
+                @Override
+                public void onChoose(boolean sure) {
+                    if(sure && null != mActivity){
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(Constants.Key.TO_PARENT_REGISTER_ACTIVITY_TYPE, Constants.Identifier.TYPE_REGISTER);
+                        mActivity.redirectToActivity(mActivity, ParentRegisterActivity.class, bundle);
+                    }
+                }
+            });
+            return;
+        }
 
         if(mOrders.get(index).getTeacher().get_id().equals(App.getUser().get_id())){
             toast("您不能预约自己呦");

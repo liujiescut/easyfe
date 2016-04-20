@@ -189,4 +189,5 @@
     <string name="profile_hint">简介最多200字</string>
     <string name="confirm_modify">确认修改</string>
     <string name="teacher_name">家教姓名</string>
+    <string name="child_age">宝贝年龄</string>
 </resources>

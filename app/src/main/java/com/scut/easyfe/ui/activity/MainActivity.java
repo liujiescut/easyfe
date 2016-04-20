@@ -46,7 +46,7 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-        if (App.getUser().hasLogin()) {
+        if (App.getUser(false).hasLogin()) {
             mNameTextView.setText(App.getUser().getName());
             ImageUtils.displayImage(App.getUser().getAvatar(), mAvatarImageView);
         } else {
@@ -54,7 +54,7 @@ public class MainActivity extends BaseActivity {
             mAvatarImageView.setImageResource(R.mipmap.default_avatar);
         }
 
-        boolean isTeacher = App.getUser().isTeacher();
+        boolean isTeacher = App.getUser(false).isTeacher();
         mLeftDrawer.findViewById(R.id.left_drawer_tv_wallet).setVisibility(isTeacher ? View.VISIBLE : View.GONE);
         mLeftDrawer.findViewById(R.id.left_drawer_tv_divider_wallet).setVisibility(isTeacher ? View.VISIBLE : View.GONE);
         mLeftDrawer.findViewById(R.id.left_drawer_tv_special_order).setVisibility(isTeacher ? View.VISIBLE : View.GONE);
@@ -108,8 +108,8 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        if (App.getUser().getToken().length() != 0) {
-            RequestManager.get().execute(new RUpdateUser(App.getUser().getToken()), new RequestListener<User>() {
+        if (App.getUser(false).getToken().length() != 0) {
+            RequestManager.get().execute(new RUpdateUser(App.getUser(false).getToken()), new RequestListener<User>() {
                 @Override
                 public void onSuccess(RequestBase request, User result) {
                     App.setUser(result);
@@ -145,7 +145,9 @@ public class MainActivity extends BaseActivity {
      * 点击我的订单
      */
     public void onMyOrderClick(View view) {
-        redirectToActivity(mContext, MyOrderActivity.class);
+        if(App.getUser().hasLogin()) {
+            redirectToActivity(mContext, MyOrderActivity.class);
+        }
     }
 
     /**
@@ -207,7 +209,9 @@ public class MainActivity extends BaseActivity {
      * 点击消息中心
      */
     public void onMessageCenterClick(View view) {
-        redirectToActivity(mContext, MessageCenterActivity.class);
+        if(App.getUser().hasLogin()) {
+            redirectToActivity(mContext, MessageCenterActivity.class);
+        }
     }
 
     /**

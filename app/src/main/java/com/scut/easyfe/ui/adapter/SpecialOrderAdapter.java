@@ -75,7 +75,7 @@ public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
         holder.reserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!App.getUser().isParent()){
+                if(!App.getUser(false).isParent()){
                     if(null == mContextReference.get()){
                         return;
                     }

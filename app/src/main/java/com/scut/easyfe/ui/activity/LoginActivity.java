@@ -74,7 +74,13 @@ public class LoginActivity extends BaseActivity {
      * @param view 被点击视图
      */
     public void onBackClick(View view) {
+        redirectToActivity(mContext, MainActivity.class);
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        onBackClick(null);
     }
 
     /**

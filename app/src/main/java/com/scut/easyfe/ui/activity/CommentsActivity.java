@@ -15,7 +15,7 @@ import com.scut.easyfe.entity.test.ToSelectItem;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
-import com.scut.easyfe.network.request.order.RGetTeacherComment;
+import com.scut.easyfe.network.request.user.parent.RGetTeacherComment;
 import com.scut.easyfe.ui.adapter.SelectItemAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.DensityUtil;
@@ -24,7 +24,6 @@ import com.scut.easyfe.utils.TimeUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.IdentityHashMap;
 import java.util.List;
 
 public class CommentsActivity extends BaseActivity {

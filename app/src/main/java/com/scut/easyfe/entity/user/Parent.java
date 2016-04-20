@@ -17,8 +17,18 @@ public class Parent extends BaseEntity{
     //孩子性别
     private int childGender = Constants.Identifier.FEMALE;
 
+    private int childAge = 10;
+
     //Todo 奖励相关
 
+
+    public int getChildAge() {
+        return childAge;
+    }
+
+    public void setChildAge(int childAge) {
+        this.childAge = childAge;
+    }
 
     public int getBookCount() {
         return bookCount;

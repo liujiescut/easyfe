@@ -149,7 +149,7 @@
         android:textSize="@dimen/text_size_normal" />
 
     <EditText
-        android:id="@+id/to_do_order_tv_comments"
+        android:id="@+id/evaluation_et_content"
         style="@style/text_normal_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

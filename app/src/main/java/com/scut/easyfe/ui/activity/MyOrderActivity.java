@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.bigkoo.alertview.OnItemClickListener;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
@@ -17,6 +18,7 @@ import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.request.user.parent.RParentCancelOrders;
 import com.scut.easyfe.ui.adapter.OrderPagerAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
+import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
 import org.json.JSONObject;
@@ -69,6 +71,7 @@ public class MyOrderActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+
         ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("我的订单");
 
         mBtnLinearLayout = OtherUtils.findViewById(this, R.id.my_order_ll_buttons);
@@ -95,6 +98,7 @@ public class MyOrderActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
+
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -172,14 +176,29 @@ public class MyOrderActivity extends BaseActivity {
                     return;
                 }
 
+                if(App.getUser().getBadRecord() >= Constants.DefaultValue.MAX_BAD_RECORD){
+                    DialogUtils.makeConfirmDialog(mContext, "警告", "您已经取消过订单两次,\n不能再取消订单了呦\n(完成6次订单可增加一次取消机会)");
+                    return;
+                }
+
                 RequestManager.get().execute(new RParentCancelOrders(App.getUser().getToken(), mPagerAdapter.getItem(mSelectedPage).getSelectedOrderIds()),
-                        new RequestListener<JSONObject>() {
+                        new RequestListener<Integer>() {
                     @Override
-                    public void onSuccess(RequestBase request, JSONObject result) {
-                        toast(result.optString("message"));
+                    public void onSuccess(RequestBase request, Integer result) {
                         if(null != mPagerAdapter.getItem(mSelectedPage)){
                             mPagerAdapter.getItem(mSelectedPage).updateData();
                         }
+
+                        App.getUser().setBadRecord(result);
+                        App.getUser().save2Cache();
+
+                        DialogUtils.makeConfirmDialog(mContext, "警告", "您只有两次取消订单的机会,\n超过两次之后您将不能再取消订单\n(完成6次订单可增加一次取消机会)",
+                                new OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(Object o, int position) {
+                                        redirectToActivity(mContext, MyOrderActivity.class);
+                                    }
+                                });
                     }
 
                     @Override
@@ -293,6 +312,12 @@ public class MyOrderActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
+        if(null != mPagerAdapter.getItem(mSelectedPage) && mPagerAdapter.getItem(mSelectedPage).getState() == Constants.Identifier.STATE_EDIT){
+            mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
+            refreshButtonsState(BUTTON_TYPE_BOTH);
+            return;
+        }
+
         onBackClick(null);
     }
 }

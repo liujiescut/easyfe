@@ -109,7 +109,7 @@ public class BookActivity extends BaseActivity {
             }
         }
 
-        mUser = App.getUser();
+        mUser = App.getUser(false);
 
         mSchoolItems = new ArrayList<>();
         mPriceItems = new ArrayList<>();
@@ -469,21 +469,7 @@ public class BookActivity extends BaseActivity {
         }
 
         startLoading("筛选中");
-        if(!mUser.isParent()){
-            DialogUtils.makeChooseDialog(mContext, "提示", "只有家长才可以预约呦\n去注册?", new DialogUtils.OnChooseListener() {
-                @Override
-                public void onChoose(boolean sure) {
-                    if(sure){
-                        Bundle bundle = new Bundle();
-                        bundle.putInt(Constants.Key.TO_PARENT_REGISTER_ACTIVITY_TYPE, Constants.Identifier.TYPE_REGISTER);
-                        redirectToActivity(mContext, ParentRegisterActivity.class, bundle);
-                    }
-                }
-            });
-            return;
-        }
 
-        //Todo 家教姓名条件的加入
         if(mReserveType == Constants.Identifier.RESERVE_SINGLE){
             final SingleBookCondition condition = getSingleBookCondition();
             if(null == condition){
@@ -594,12 +580,16 @@ public class BookActivity extends BaseActivity {
      * @param condition  预约条件
      */
     private void getBaseCondition(BaseBookCondition condition){
-        condition.setToken(App.getUser().getToken());
+        condition.setToken(App.getUser(false).getToken());
         condition.setCourse(mCourseTextView.getText().toString());
         condition.setGrade(mGradeTextView.getText().toString());
         condition.setChildGender(mChildGender);
         condition.setChildAge(mChildAge);
         condition.setTime(mTeachTime);
+
+        if(mTeacherNameEditText.getText().toString().length() != 0){
+            condition.setTeacherName(mTeacherNameEditText.getText().toString());
+        }
 
 
         for(ToSelectItem school : mSchoolItems){

@@ -123,6 +123,25 @@
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
+            android:text="@string/child_age" />
+
+        <TextView
+            android:id="@+id/parent_register_tv_child_age"
+            style="@style/text_editable_style"
+            android:layout_weight="3"
+            android:gravity="start|center_vertical"
+            android:drawableRight="@mipmap/icon_right_arrow_padding"
+            android:text="10岁"
+            android:onClick="onChildAgeClick" />
+    </LinearLayout>
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        >
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="1"
             android:text="@string/child_grade" />
 
         <TextView

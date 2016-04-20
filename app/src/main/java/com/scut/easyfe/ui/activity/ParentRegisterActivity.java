@@ -48,12 +48,14 @@ public class ParentRegisterActivity extends BaseActivity {
     private TextView mParentGenderTextView;         //家长性别
     private TextView mAddressTextView;              //家庭地址
     private TextView mChildGenderTextView;          //宝贝性别
+    private TextView mChildAgeTextView;             //宝贝年龄
     private TextView mChildGradeTextView;           //宝贝年级
     private TextView mHasAccountHintTextView;       //已经有账号时的提示信息
     private TextView mRegisterTextView;             //已经有账号时的提示信息
 
     private int mParentGender = Constants.Identifier.FEMALE;   //家长选择的性别
     private int mChildGender = Constants.Identifier.FEMALE;    //宝贝的性别
+    private int mChildAge = 10;                                //孩子年龄默认为10
 
     private double mLatitude = -1d;    //定位所在的纬度
     private double mLongitude = -1d;   //定位所在的经度
@@ -109,6 +111,7 @@ public class ParentRegisterActivity extends BaseActivity {
         mParentGenderTextView = OtherUtils.findViewById(this, R.id.parent_register_tv_parent_gender);
         mParentGenderTextView = OtherUtils.findViewById(this, R.id.parent_register_tv_parent_gender);
         mChildGenderTextView = OtherUtils.findViewById(this, R.id.parent_register_tv_child_gender);
+        mChildAgeTextView = OtherUtils.findViewById(this, R.id.parent_register_tv_child_age);
         mChildGradeTextView = OtherUtils.findViewById(this, R.id.parent_register_tv_child_grade);
         mAddressTextView = OtherUtils.findViewById(this, R.id.parent_register_tv_address);
         mRegisterTextView = OtherUtils.findViewById(this, R.id.parent_register_tv_submit);
@@ -269,6 +272,25 @@ public class ParentRegisterActivity extends BaseActivity {
         mSinglePicker.show();
     }
 
+    public void onChildAgeClick(View view){
+        OtherUtils.hideSoftInputWindow(mChildAgeTextView.getWindowToken());
+        if (mSinglePicker.isShowing()) {
+            mSinglePicker.dismiss();
+            return;
+        }
+        mSinglePicker.setTitle("选择宝贝年龄");
+        mSinglePicker.setPicker(Constants.Data.ageList);
+        mSinglePicker.setCyclic(false);
+        mSinglePicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                mChildAge = options1 + 1;
+                mChildAgeTextView.setText(String.format("%s 岁", Constants.Data.ageList.get(options1)));
+            }
+        });
+        mSinglePicker.show();
+    }
+
     /**
      * @param view 被点击视图
      */
@@ -344,6 +366,7 @@ public class ParentRegisterActivity extends BaseActivity {
         Parent parentMsg = new Parent();
         parentMsg.setChildGender(mChildGender);
         parentMsg.setChildGrade(mChildGradeTextView.getText().toString());
+        parentMsg.setChildAge(mChildAge);
         mUser.setParentMessage(parentMsg);
 
         Address address = new Address();
