@@ -98,6 +98,7 @@
 
     <TextView
         style="@style/main_left_drawer_item"
+        android:onClick="onInviteRewardClick"
         android:text="@string/main_left_drawer_invite" />
 
     <View style="@style/main_left_drawer_divider" />

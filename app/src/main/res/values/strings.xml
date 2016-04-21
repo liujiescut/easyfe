@@ -190,4 +190,5 @@
     <string name="confirm_modify">确认修改</string>
     <string name="teacher_name">家教姓名</string>
     <string name="child_age">宝贝年龄</string>
+    <string name="invite_reward_hint">长按复制专属您的邀请链接，分享给小伙伴获取更多奖励</string>
 </resources>

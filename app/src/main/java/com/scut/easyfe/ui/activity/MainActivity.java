@@ -180,21 +180,21 @@ public class MainActivity extends BaseActivity {
      * 点击我的钱包
      */
     public void onPocketClick(View view) {
-        MapUtils.getDurationFromPosition(23.097653270780476, 113.34697650222962, 23.03, 113.345, "广州市", new MapUtils.GetDurationCallback() {
-            @Override
-            public void onSuccess(int durationSeconds) {
-                toast(durationSeconds + "");
-            }
-
-            @Override
-            public void onFailed(String errorMsg) {
-
-            }
-        });
-//        if(!App.getUser().isTeacher()){
-//            return;
-//        }
-//        redirectToActivity(mContext, WalletActivity.class);
+//        MapUtils.getDurationFromPosition(23.097653270780476, 113.34697650222962, 23.03, 113.345, "广州市", new MapUtils.GetDurationCallback() {
+//            @Override
+//            public void onSuccess(int durationSeconds) {
+//                toast(durationSeconds + "");
+//            }
+//
+//            @Override
+//            public void onFailed(String errorMsg) {
+//
+//            }
+//        });
+        if(!App.getUser().isTeacher()){
+            return;
+        }
+        redirectToActivity(mContext, WalletActivity.class);
     }
 
     /**
@@ -223,6 +223,15 @@ public class MainActivity extends BaseActivity {
     public void onMessageCenterClick(View view) {
         if(App.getUser().hasLogin()) {
             redirectToActivity(mContext, MessageCenterActivity.class);
+        }
+    }
+
+    /**
+     * 点击邀请有奖
+     */
+    public void onInviteRewardClick(View view) {
+        if(App.getUser().hasLogin()) {
+            redirectToActivity(mContext, InviteRewardActivity.class);
         }
     }
 

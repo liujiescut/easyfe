@@ -38,4 +38,6 @@
 
     <color name="search_result_tip_bg">#88FFE4B3</color>
 
+    <color name="invite_reward_theme_color">#24252A</color>
+    <color name="invite_reward_text_color">#EBC581</color>
 </resources>

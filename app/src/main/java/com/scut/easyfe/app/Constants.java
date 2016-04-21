@@ -14,10 +14,12 @@ public class Constants {
         public static final boolean ISDEBUG = true;      //是否在debug模式，可以设置一些只有debug才会有的东西
         public static final boolean ISLOG = true;        //是否显示log
         public static final boolean ISSHOWTOAST = true;  //是否显示使用LogUtil.toast出来的东西
+        public static final boolean TO_MARKET = false;   //当分享时应用（例如wechat）不存在，是否跳转到应用市场
     }
 
     public class DefaultValue{
         public static final String DEFAULT_QINIU_URL = "http://7xrvd4.com1.z0.glb.clouddn.com/";            //七牛储存图片的地址
+        public static final String DEFAULT_SHARE_LINK = "www.baidu.com";
         public static final int DEFAULT_LOAD_COUNT = 15;
         public static final int MAX_BAD_RECORD = 2;
     }
@@ -162,6 +164,15 @@ public class Constants {
     }
 
     public static class Data {
+        //Todo 换换换
+        public static final String WECHAT_APP_ID = "wx9b7ee5f6471184da";                            //微信分享的APP_ID
+        public static final String WEIBO_APP_KEY = "2747468016";                                    //微博分享
+        public static final String QQ_APP_ID = "1105349762";
+
+        public static final String WECHAT_PACKAGE_NAME = "com.tencent.mm";                          //第三方应用包名
+        public static final String WEIBO_PACKAGE_NAME = "com.sina.weibo";
+        public static final String QQ_PACKAGE_NAME = "com.tencent.mobileqq";
+
         public static final String DEFAULT_QN_TOKEN = "R2Rq9_dBXtrL6wqLwA8_GC6EZNR9JU06xaGegd19:mKzKD3gB-mkdQpjt1BVtBAZmNYw=:eyJzY29wZSI6ImVhc3lmZSIsImRlYWRsaW5lIjoxNDg0OTIxMjY4fQ==";
 
 

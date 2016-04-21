@@ -54,6 +54,34 @@
             android:enabled="true"
             android:process=":remote" />
 
+        <!-- 新浪微博需要 -->
+        <service
+            android:name="com.sina.weibo.sdk.net.DownloadService"
+            android:exported="false">
+        </service>
+
+        <activity
+            android:name="com.umeng.socialize.editorpage.ShareActivity"
+            android:theme="@style/Theme.UMDefault"
+            android:excludeFromRecents="true" />
+
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent100424468" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <activity
             android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait"
@@ -104,15 +132,17 @@
         <activity android:name=".ui.activity.CallbackActivity" />
         <activity android:name=".ui.activity.SpecialOrderActivity" />
         <activity android:name=".ui.activity.ConfirmOrderActivity" />
-        <activity android:name=".ui.activity.BookActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity
+            android:name=".ui.activity.BookActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".ui.activity.SearchResultActivity" />
         <activity android:name=".ui.activity.TeacherInfoActivity" />
         <activity android:name=".ui.activity.CommentsActivity" />
         <activity android:name=".ui.activity.ReservedOrCompletedOrderActivity" />
         <activity android:name=".ui.activity.ToDoOrderActivity" />
         <activity android:name=".ui.activity.EvaluationActivity" />
-        <activity android:name=".ui.activity.ModifyOrderActivity"></activity>
+        <activity android:name=".ui.activity.ModifyOrderActivity" />
+        <activity android:name=".ui.activity.InviteRewardActivity"></activity>
     </application>
 
 </manifest>

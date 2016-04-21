@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.scut.easyfe.ui.activity.InviteRewardActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/invite_reward_theme_color"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <include layout="@layout/titlebar" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="86dp"
+            android:layout_margin="@dimen/layout_margin_large"
+            android:src="@mipmap/icon_detail_info" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="52dp"
+            android:src="@mipmap/invite_partner" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/layout_padding_small"
+            android:text="家长邀请朋友找家教，Ta得 600元，您得 100元。\n家教老师邀请朋友，最高可得 100元^-^\n这么高的福利还不赶紧分享起来\nY^O^Y"
+            android:textColor="#E5BA6E" />
+
+        <LinearLayout
+            android:id="@+id/titlebar_ll_home_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layout_margin_normal"
+            android:background="@drawable/shape_invite_type_bg"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/invite_reward_tv_teacher"
+                android:layout_width="128dp"
+                android:layout_height="30dp"
+                android:layout_margin="1dp"
+                android:background="@drawable/shape_invite_type_selected"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onInviteTeacherClick"
+                android:text="邀请家长"
+                android:textColor="@color/invite_reward_theme_color" />
+
+            <TextView
+                android:id="@+id/invite_reward_tv_parent"
+                android:layout_width="128dp"
+                android:layout_height="30dp"
+                android:layout_margin="1dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onInviteParentClick"
+                android:text="邀请家教"
+                android:textColor="@color/invite_reward_text_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layout_margin_normal"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3" />
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:onClick="shareToQQ"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:src="@mipmap/icon_invite_qq" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:gravity="center"
+                    android:text="QQ"
+                    android:textColor="@color/invite_reward_text_color" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:onClick="shareToWechat"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:src="@mipmap/icon_invite_wechat" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:gravity="center"
+                    android:text="微信"
+                    android:textColor="@color/invite_reward_text_color" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:onClick="shareToQQArea"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:src="@mipmap/icon_invite_qq_area" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:gravity="center"
+                    android:text="QQ空间"
+                    android:textColor="@color/invite_reward_text_color" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:onClick="shareToFriends"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:src="@mipmap/icon_invite_friends" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:gravity="center"
+                    android:text="朋友圈"
+                    android:textColor="@color/invite_reward_text_color" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:onClick="shareToWeibo"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:src="@mipmap/icon_invite_weibo" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:gravity="center"
+                    android:text="新浪微博"
+                    android:textColor="@color/invite_reward_text_color" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/invite_reward_tv_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="46dp"
+            android:layout_marginRight="46dp"
+            android:layout_marginTop="@dimen/layout_margin_normal"
+            android:background="#432D0E"
+            android:gravity="center"
+            android:clickable="true"
+            android:padding="@dimen/layout_padding_small"
+            android:text="http://invite.jjy.com/Rywobd0r"
+            android:textColor="@color/invite_reward_text_color" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layout_margin_small"
+            android:background="@null"
+            android:gravity="center"
+            android:text="@string/invite_reward_hint"
+            android:textColor="#B98542" />
+
+        <TextView
+            android:id="@+id/invite_reward_tv_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layout_margin_small"
+            android:background="@null"
+            android:gravity="center"
+            android:text="活动说明"
+            android:clickable="true"
+            android:textColor="#B98542" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/invite_reward_ll_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal"
+        android:background="#F6C986"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#553D26"/>
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@mipmap/icon_invite_down"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/layout_padding_tiny"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size_small"
+            android:textColor="#212D31"
+            android:text="活动说明"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/layout_margin_normal"
+            android:textSize="@dimen/text_size_tiny"
+            android:textColor="#331B0C"
+            android:text="1. 新用户注册家长并登录APP即获得价值600元现金券；\n\n2. 每一位您推荐的新伙伴注册家教并完成两次订单后，您即获得5元现金红包奖励。\n\n3. 每一位您推荐的新伙伴注册家长并完成两次订单后，您即获得价值100元现金券或者5元现金红包奖励\n\n4. 优升学教育对该活动保持最终解释权。"/>
+    </LinearLayout>
+</RelativeLayout>
