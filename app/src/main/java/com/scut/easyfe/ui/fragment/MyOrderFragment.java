@@ -160,8 +160,6 @@ public class MyOrderFragment extends BaseRefreshFragment {
      */
     public void updateData(){
         if(null != mAdapter) {
-            mOrders.clear();
-            mAdapter.notifyDataSetChanged();
             onRefreshData();
         }
     }

@@ -93,7 +93,6 @@ public class TeacherInfoActivity extends BaseActivity {
             mMultiReserveTimesLinearLayout.setVisibility(View.GONE);
             mMultiReserveTimesTextView.setVisibility(View.GONE);
 
-            mScoreInfoTextView.setText(mOrder.getTeacher().getTeacherMessage().getScoreInfo());
         } else {
 
             ((TextView) OtherUtils.findViewById(this, R.id.item_search_result_tv_price)).setText(
@@ -129,6 +128,7 @@ public class TeacherInfoActivity extends BaseActivity {
         mPriceTextView.setText(priceString);
         mNameTextView.setText(mOrder.getTeacher().getName());
         mBaseInfoTextView.setText(Order.getBaseInfo(mOrder));
+        mScoreInfoTextView.setText(mOrder.getTeacher().getTeacherMessage().getScoreInfo());
 
         ImageUtils.displayImage(mOrder.getTeacher().getAvatar(), mAvatarImageView);
 

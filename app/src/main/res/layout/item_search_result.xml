@@ -28,13 +28,15 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical|left"
                 android:clickable="false"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:padding="@dimen/layout_padding_small"
                 tools:text="黄老师" />
 
             <TextView
                 android:id="@+id/item_search_result_tv_price"
                 style="@style/text_normal_style"
-                android:layout_weight="2"
+                android:layout_weight="3"
                 android:gravity="center_vertical|right"
                 android:clickable="false"
                 android:padding="@dimen/layout_padding_small"

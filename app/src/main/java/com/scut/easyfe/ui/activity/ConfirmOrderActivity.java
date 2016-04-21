@@ -108,6 +108,9 @@ public class ConfirmOrderActivity extends BaseActivity {
                 mTeachDateTextView.setText(String.format("%s %s",
                         TimeUtils.getTime(TimeUtils.getDateFromString(mOrder.getTeachTime().getDate()), "yyyy年MM月dd日(EEEE)"),
                         mOrder.getTeachTime().getChineseTime()));
+                if (mOrder.getSubsidy() != 0) {
+                    DialogUtils.makeConfirmDialog(mContext, null, getString(R.string.add_tip_info));
+                }
                 break;
 
             case Constants.Identifier.CONFIRM_ORDER_MULTI_RESERVE:

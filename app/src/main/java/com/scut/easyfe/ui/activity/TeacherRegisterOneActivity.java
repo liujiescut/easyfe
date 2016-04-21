@@ -14,12 +14,14 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.Address;
+import com.scut.easyfe.entity.ChildGrade;
 import com.scut.easyfe.entity.School;
 import com.scut.easyfe.entity.user.Teacher;
 import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.info.RGetChildGrade;
 import com.scut.easyfe.network.request.info.RGetSchool;
 import com.scut.easyfe.network.request.user.RUserInfoModify;
 import com.scut.easyfe.ui.base.BaseActivity;
@@ -84,7 +86,10 @@ public class TeacherRegisterOneActivity extends BaseActivity {
     private List<School> mSchools = new ArrayList<>();
     private ArrayList<String> mSchoolNames = new ArrayList<>();
     private ArrayList<String> mProfessionNames = new ArrayList<>();
-    private boolean isLoadingDialogDismissByUser = true;
+    private boolean mGetSchoolSuccess = false;
+    private boolean mGetGradeSuccess = false;
+    private ArrayList<String> mStates = new ArrayList<>();
+    private ArrayList<ArrayList<String>> mGrades = new ArrayList<>();
 
     @Override
     protected void onResume() {
@@ -224,11 +229,11 @@ public class TeacherRegisterOneActivity extends BaseActivity {
 
     @Override
     protected void fetchData() {
-        if(mFromType == Constants.Identifier.TYPE_REGISTER) {
+        if (mFromType == Constants.Identifier.TYPE_REGISTER) {
             startLoading("加载数据中", new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialog) {
-                    if (isLoadingDialogDismissByUser) {
+                    if (!(mGetSchoolSuccess && mGetGradeSuccess)) {
                         toast("加载数据失败");
                         finish();
                     }
@@ -253,8 +258,38 @@ public class TeacherRegisterOneActivity extends BaseActivity {
                         mProfessionTextView.setText(mProfessionNames.get(0));
                     }
 
-                    isLoadingDialogDismissByUser = false;
+                    mGetSchoolSuccess = true;
+                    if (mGetGradeSuccess) {
+                        stopLoading();
+                    }
+                }
+
+                @Override
+                public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                    toast(errorMsg);
                     stopLoading();
+                }
+            });
+
+            RequestManager.get().execute(new RGetChildGrade(), new RequestListener<List<ChildGrade>>() {
+                @Override
+                public void onSuccess(RequestBase request, List<ChildGrade> result) {
+                    for (ChildGrade childGrade :
+                            result) {
+                        mStates.add(childGrade.getName());
+                        ArrayList<String> tempGrades = new ArrayList<>();
+                        tempGrades.addAll(childGrade.getGrade());
+                        mGrades.add(tempGrades);
+                    }
+
+                    if (mStates.size() > 0) {
+                        mChildGradeTextView.setText(String.format("%s %s", mStates.get(0), mGrades.get(0).get(0)));
+                    }
+
+                    mGetGradeSuccess = true;
+                    if (mGetSchoolSuccess) {
+                        stopLoading();
+                    }
                 }
 
                 @Override
@@ -265,7 +300,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
             });
         }
 
-        if(null == mUser.getPosition().getAddress() || mUser.getPosition().getAddress().length() == 0) {
+        if (null == mUser.getPosition().getAddress() || mUser.getPosition().getAddress().length() == 0) {
 
             MapUtils.getLocation(new MapUtils.LocationCallback() {
                 @Override
@@ -282,7 +317,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
                     LogUtils.i(Constants.Tag.MAP_TAG, "定位失败");
                 }
             });
-        }else {
+        } else {
             mLatitude = mUser.getPosition().getLatitude();
             mLongitude = mUser.getPosition().getLongitude();
             mAddress = mUser.getPosition().getAddress();
@@ -323,6 +358,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
     /**
      * 点击选择性别
      */
+
     public void onTeacherGenderClick(View view) {
         hidePickerIfShowing();
 
@@ -402,7 +438,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
     public void onProfessionClick(View view) {
         hidePickerIfShowing();
 
-        mSinglePicker.setTitle("选择您的专业");
+        mSinglePicker.setTitle("选择您的年级");
         mSinglePicker.setPicker(mProfessionNames);
         mSinglePicker.setSelectOptions(0);
         mSinglePicker.setCyclic(false);
@@ -510,7 +546,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
         redirectToActivity(this, TeacherRegisterTwoActivity.class, extras);
     }
 
-    private void getBaseUserInfo(){
+    private void getBaseUserInfo() {
         if (null == mUser) {
             mUser = new User();
         }
@@ -582,7 +618,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
         mUser.getTeacherMessage().setTeachCount(mHadTeachChildTextView.getText().toString());
         mUser.getTeacherMessage().setHadTeach(mHadTeachTimeTextView.getText().toString());
 
-        if(mUser.getType() == Constants.Identifier.USER_TP){
+        if (mUser.getType() == Constants.Identifier.USER_TP) {
             mUser.getParentMessage().setChildGrade(mChildGradeTextView.getText().toString());
             mUser.getParentMessage().setChildGender(mChildGender);
         }
@@ -624,15 +660,15 @@ public class TeacherRegisterOneActivity extends BaseActivity {
         hidePickerIfShowing();
 
         mDoublePicker.setTitle("选择宝贝年级");
-        mDoublePicker.setPicker(Constants.Data.studentStateList, Constants.Data.studentGradeList, true);
+        mDoublePicker.setPicker(mStates, mGrades, true);
         mDoublePicker.setSelectOptions(0, 0);
         mDoublePicker.setCyclic(false);
         mDoublePicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 mChildGradeTextView.setText(String.format("%s %s",
-                        Constants.Data.studentStateList.get(options1),
-                        Constants.Data.studentGradeList.get(options1).get(option2)));
+                        mStates.get(options1),
+                        mGrades.get(options1).get(option2)));
             }
         });
         mDoublePicker.show();

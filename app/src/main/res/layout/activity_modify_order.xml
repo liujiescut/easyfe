@@ -16,6 +16,7 @@
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
+            android:clickable="false"
             android:text="@string/course_teacher" />
 
         <TextView
@@ -23,7 +24,6 @@
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:gravity="start|center_vertical"
-            android:onClick="onTeacherNameClick"
             tools:text="林老师"
             />
     </LinearLayout>

@@ -21,6 +21,7 @@ import com.scut.easyfe.ui.base.BaseFragment;
 import com.scut.easyfe.ui.customView.CircleImageView;
 import com.scut.easyfe.ui.fragment.HomeFragment;
 import com.scut.easyfe.utils.ImageUtils;
+import com.scut.easyfe.utils.MapUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
 import org.json.JSONObject;
@@ -179,10 +180,21 @@ public class MainActivity extends BaseActivity {
      * 点击我的钱包
      */
     public void onPocketClick(View view) {
-        if(!App.getUser().isTeacher()){
-            return;
-        }
-        redirectToActivity(mContext, WalletActivity.class);
+        MapUtils.getDurationFromPosition(23.097653270780476, 113.34697650222962, 23.03, 113.345, "广州市", new MapUtils.GetDurationCallback() {
+            @Override
+            public void onSuccess(int durationSeconds) {
+                toast(durationSeconds + "");
+            }
+
+            @Override
+            public void onFailed(String errorMsg) {
+
+            }
+        });
+//        if(!App.getUser().isTeacher()){
+//            return;
+//        }
+//        redirectToActivity(mContext, WalletActivity.class);
     }
 
     /**

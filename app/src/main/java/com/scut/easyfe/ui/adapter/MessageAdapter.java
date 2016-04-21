@@ -58,7 +58,7 @@ public class MessageAdapter extends BaseAdapter{
         }
 
         holder.sender.setText(mMessages.get(position).getSenderName());
-        holder.date.setText(TimeUtils.getTime(mMessages.get(position).getTimestamp(), "yyyy-MM-dd HH: mm"));
+        holder.date.setText(TimeUtils.getTime(mMessages.get(position).getTimestamp(), "yyyy-MM-dd  HH:mm"));
         holder.content.setText(mMessages.get(position).getContent());
         return convertView;
     }

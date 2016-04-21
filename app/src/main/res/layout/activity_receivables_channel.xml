@@ -28,6 +28,7 @@
             style="@style/text_editable_style"
             android:layout_weight="2"
             android:gravity="start|center_vertical"
+            android:maxLength="25"
             android:paddingLeft="@dimen/layout_padding_small"
              />
     </LinearLayout>
@@ -46,6 +47,7 @@
             style="@style/text_editable_style"
             android:layout_weight="2"
             android:gravity="start|center_vertical"
+            android:maxLength="25"
             android:paddingLeft="@dimen/layout_padding_small"
             />
     </LinearLayout>
@@ -84,6 +86,7 @@
             style="@style/text_editable_style"
             android:layout_weight="2"
             android:gravity="start|center_vertical"
+            android:maxLength="25"
             android:paddingLeft="@dimen/layout_padding_small"
             android:inputType="number"
             />

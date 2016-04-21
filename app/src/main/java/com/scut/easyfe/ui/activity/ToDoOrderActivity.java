@@ -50,14 +50,14 @@ public class ToDoOrderActivity extends BaseActivity {
     @Override
     protected void initData() {
         Intent intent = getIntent();
-        if(null != intent){
+        if (null != intent) {
             Bundle extras = intent.getExtras();
             if (null != extras) {
                 mOrder = (Order) extras.getSerializable(Constants.Key.ORDER);
-            }else{
+            } else {
                 mOrder = new Order();
             }
-        }else{
+        } else {
             mOrder = new Order();
         }
     }
@@ -65,7 +65,7 @@ public class ToDoOrderActivity extends BaseActivity {
     @Override
     protected void initView() {
 
-        ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("待执行订单");
+        ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("待执行订单");
 
         mNameTextView = OtherUtils.findViewById(this, R.id.to_do_order_tv_name);
         mNameLabelTextView = OtherUtils.findViewById(this, R.id.to_do_order_tv_name_label);
@@ -94,7 +94,7 @@ public class ToDoOrderActivity extends BaseActivity {
         updateView();
     }
 
-    private void updateView(){
+    private void updateView() {
         mOrderNumTextView.setText(mOrder.getOrderNumber());
         mInsuranceNumTextView.setText(mOrder.getInsurance().getInsuranceNumber());
 
@@ -106,20 +106,20 @@ public class ToDoOrderActivity extends BaseActivity {
         mTimeTextView.setText(TimeUtils.getTimeFromMinute(mOrder.getTime()));
         mPriceTextView.setText(String.format("%.2f", mOrder.getPrice()));
         mTipTextView.setText(String.format("%.2f", mOrder.getSubsidy()));
-        mTotalPriceTextView.setText(String.format("%.2f", mOrder.getPrice() + mOrder.getSubsidy()));
+        mTotalPriceTextView.setText(String.format("%.2f", mOrder.getTotalPrice()));
         mWarningTextView.setText("我就是温馨提示喽");
 
-        if(isTeacher()){
+        if (isTeacher()) {
             mNameTextView.setText(mOrder.getParent().getName());
             mPhoneTextView.setText(mOrder.getParent().getPhone());
             mParentAddressTextView.setText(mOrder.getParent().getPosition().getAddress());
 
             mStudentAgeTextView.setText(String.format("%d", mOrder.getChildAge()));
             mStudentGenderTextView.setText(mOrder.getChildGender() == Constants.Identifier.MALE ? "男" : "女");
-        }else {
+        } else {
             mNameLabelTextView.setText("家教姓名");
             mNameTextView.setText(mOrder.getTeacher().getName());
-            mNameTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,R.mipmap.icon_right_arrow_padding,0);
+            mNameTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.mipmap.icon_right_arrow_padding, 0);
             mPhoneTextView.setText(mOrder.getTeacher().getPhone());
             mParentAddressContainer.setVisibility(View.GONE);
             mStudentInfoContainer.setVisibility(View.GONE);
@@ -140,23 +140,27 @@ public class ToDoOrderActivity extends BaseActivity {
     }
 
     public void onTeacherNameClick(View view) {
-            RequestManager.get().execute(new RGetTeacherInfo(App.getUser().getToken(), mOrder.getTeacher().get_id()), new RequestListener<Order>() {
-                @Override
-                public void onSuccess(RequestBase request, Order result) {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt(Constants.Key.TO_TEACHER_INFO_ACTIVITY_TYPE, Constants.Identifier.TYPE_SEE_TEACHER_INFO);
-                    bundle.putSerializable(Constants.Key.ORDER, result);
-                    redirectToActivity(mContext, TeacherInfoActivity.class, bundle);
-                }
+        if(App.getUser().isTeacher()){
+            return;
+        }
 
-                @Override
-                public void onFailed(RequestBase request, int errorCode, String errorMsg) {
-                    toast(errorMsg);
-                }
-            });
+        RequestManager.get().execute(new RGetTeacherInfo(App.getUser().getToken(), mOrder.getTeacher().get_id()), new RequestListener<Order>() {
+            @Override
+            public void onSuccess(RequestBase request, Order result) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(Constants.Key.TO_TEACHER_INFO_ACTIVITY_TYPE, Constants.Identifier.TYPE_SEE_TEACHER_INFO);
+                bundle.putSerializable(Constants.Key.ORDER, result);
+                redirectToActivity(mContext, TeacherInfoActivity.class, bundle);
+            }
+
+            @Override
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                toast(errorMsg);
+            }
+        });
     }
 
-    public void onBackClick(View view){
+    public void onBackClick(View view) {
         redirectToActivity(mContext, MyOrderActivity.class);
         finish();
     }
@@ -166,7 +170,7 @@ public class ToDoOrderActivity extends BaseActivity {
         onBackClick(null);
     }
 
-    private boolean isTeacher(){
+    private boolean isTeacher() {
         return App.getUser().get_id().equals(mOrder.getTeacher().get_id());
     }
 }
