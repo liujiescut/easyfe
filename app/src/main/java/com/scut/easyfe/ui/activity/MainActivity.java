@@ -21,6 +21,7 @@ import com.scut.easyfe.ui.base.BaseFragment;
 import com.scut.easyfe.ui.customView.CircleImageView;
 import com.scut.easyfe.ui.fragment.HomeFragment;
 import com.scut.easyfe.utils.ImageUtils;
+import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.MapUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
@@ -211,6 +212,12 @@ public class MainActivity extends BaseActivity {
      */
     public void onSpreadClick(View view) {
         if (!App.getUser().isTeacher()) {
+            return;
+        }
+
+        LogUtils.i("liujie", App.getUser().getTeacherMessage().isIsCheck() + "");
+        if(!App.getUser().getTeacherMessage().isIsCheck()){
+            toast("您的信息还在审核中\n审核之后才可以发布订单喔");
             return;
         }
 

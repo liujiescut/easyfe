@@ -87,6 +87,9 @@ public class Teacher extends BaseEntity {
     //超过交通时间，收的交通补贴
     private int subsidy = 5;
 
+    //是否已经通过审核
+    private boolean isCheck = false;
+
     //天使计划
     private AngelPlan angelPlan = new AngelPlan();
 
@@ -100,6 +103,14 @@ public class Teacher extends BaseEntity {
         scoreInfo += String.format("准时态度：%.1f", punctualScore);
 
         return scoreInfo;
+    }
+
+    public boolean isIsCheck() {
+        return isCheck;
+    }
+
+    public void setIsCheck(boolean check) {
+        isCheck = check;
     }
 
     public float getPunctualScore() {

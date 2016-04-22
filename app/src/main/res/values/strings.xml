@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">easyfe</string>
+    <string name="app_name">优升学教育</string>
     <string name="main_title">首页</string>
     <string name="main_left_drawer_login">登录/注册</string>
     <string name="main_left_drawer_level">用户级别</string>
