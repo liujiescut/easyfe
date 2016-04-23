@@ -3,6 +3,9 @@ package com.scut.easyfe.ui.activity;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
@@ -11,12 +14,15 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.ui.base.BaseActivity;
+import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 import com.sina.weibo.sdk.api.ImageObject;
 import com.sina.weibo.sdk.api.TextObject;
@@ -24,7 +30,21 @@ import com.sina.weibo.sdk.api.WeiboMessage;
 import com.sina.weibo.sdk.api.share.IWeiboShareAPI;
 import com.sina.weibo.sdk.api.share.SendMessageToWeiboRequest;
 import com.sina.weibo.sdk.api.share.WeiboShareSDK;
+import com.tencent.connect.share.QQShare;
+import com.tencent.connect.share.QzoneShare;
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXImageObject;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.media.Constant;
+
+import java.io.File;
 
 public class InviteRewardActivity extends BaseActivity {
     private TextView mInviteParentTextView;
@@ -34,6 +54,11 @@ public class InviteRewardActivity extends BaseActivity {
     private TextView mShareLinkTextView;
 
     private IWeiboShareAPI mWeiboShareApi = null;
+    private IWXAPI mWechatShareApi;
+    private Tencent mTencent;
+
+
+    private TencentShareUIListener tencentShareUIListener = new TencentShareUIListener();
 
     @Override
     protected void setLayoutView() {
@@ -44,10 +69,14 @@ public class InviteRewardActivity extends BaseActivity {
     protected void initData() {
         mWeiboShareApi = WeiboShareSDK.createWeiboAPI(this.getApplicationContext(), Constants.Data.WEIBO_APP_KEY);
         mWeiboShareApi.registerApp(); // 将应用注册到微博客户端
+        mWechatShareApi = WXAPIFactory.createWXAPI(this.getApplicationContext(), Constants.Data.WECHAT_APP_ID, true);
+        mWechatShareApi.registerApp(Constants.Data.WECHAT_APP_ID);
+        mTencent = Tencent.createInstance(Constants.Data.QQ_APP_ID, this.getApplicationContext());
     }
 
     @Override
     protected void initView() {
+        ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("邀请有奖");
         mInviteParentTextView = OtherUtils.findViewById(this, R.id.invite_reward_tv_parent);
         mInviteTeacherTextView = OtherUtils.findViewById(this, R.id.invite_reward_tv_teacher);
         mActivityDescriptionTextView = OtherUtils.findViewById(this, R.id.invite_reward_tv_description);
@@ -106,19 +135,98 @@ public class InviteRewardActivity extends BaseActivity {
     }
 
     public void shareToQQ(View view) {
-        toast("分享");
+        doShareToQQ(false);
+    }
+
+    public void shareToQzone(View view) {
+        //Todo test 应用通过审核
+        doShareToQQ(true);
+    }
+
+    private void doShareToQQ(boolean toQzone) {
+        if (!OtherUtils.isAppInstalled(this, Constants.Data.QQ_PACKAGE_NAME, Constants.Config.TO_MARKET)) {
+            toast("QQ未安装");
+            finish();
+            return;
+        }
+
+//        if (bitmap != null) {
+//            File file = ImageUtils.saveBitmapToFile(bitmap, "temp.jpg");
+//            if (null != file && file.exists()) {
+//                LogUtils.i("code image filePath : " + file.getAbsolutePath());
+//                LogUtils.i("code image filePath : " + file.getPath());
+//                Bundle bundle = new Bundle();
+//                bundle.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_IMAGE);
+//                bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, file.getAbsolutePath());
+//                mTencent.shareToQQ(this, bundle, tencentShareUIListener);
+//            } else {
+//                showToast("QQ分享失败");
+//            }
+//        } else {
+        Bundle bundle = new Bundle();
+//        bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, mRoom.getAvatar());
+        bundle.putString(QQShare.SHARE_TO_QQ_TARGET_URL, Constants.DefaultValue.DEFAULT_SHARE_LINK);
+        bundle.putString(QQShare.SHARE_TO_QQ_TITLE, getString(R.string.app_name));
+        bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, getString(R.string.share_details));
+        bundle.putString(QQShare.SHARE_TO_QQ_APP_NAME, "back to" + Constants.Config.APP_NAME);
+        bundle.putString(QQShare.SHARE_TO_QQ_SITE, Constants.Config.APP_NAME + Constants.Data.QQ_APP_ID);
+
+        if (toQzone) {
+            bundle.putInt(QzoneShare.SHARE_TO_QZONE_KEY_TYPE, QzoneShare.SHARE_TO_QZONE_TYPE_IMAGE_TEXT);
+            mTencent.shareToQzone(this, bundle, tencentShareUIListener);
+        } else {
+            mTencent.shareToQQ(this, bundle, tencentShareUIListener);
+        }
+//        }
     }
 
     public void shareToWechat(View view) {
-        toast("分享");
-    }
-
-    public void shareToQQArea(View view) {
-        toast("分享");
+        doShareToWechat(false);
     }
 
     public void shareToFriends(View view) {
-        toast("分享");
+        doShareToWechat(true);
+    }
+
+    /**
+     * 分享到微信
+     *
+     * @param toFriends 是否为朋友圈
+     */
+    private void doShareToWechat(boolean toFriends) {
+        /**
+         * wechat
+         * 先判断软件是否安装
+         */
+        if (!OtherUtils.isAppInstalled(this, Constants.Data.WECHAT_PACKAGE_NAME, Constants.Config.TO_MARKET)) {
+            toast("微信未安装");
+            finish();
+            return;
+        }
+        WXMediaMessage msg = new WXMediaMessage();
+
+        String url = Constants.DefaultValue.DEFAULT_SHARE_LINK;
+        WXWebpageObject webPageObject = new WXWebpageObject();
+        webPageObject.webpageUrl = url;
+        msg = new WXMediaMessage(webPageObject);
+        msg.title = getString(R.string.app_name);
+        msg.description = getString(R.string.share_details);
+
+//        if (android.os.Build.VERSION.SDK_INT > 12 && roomAvatarBitmap.getByteCount() < 57600)
+//            msg.setThumbImage(roomAvatarBitmap);
+//        else {
+//            msg.setThumbImage(Bitmap.createScaledBitmap(roomAvatarBitmap, 120, 120, true));
+//        }
+
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = String.valueOf(System.currentTimeMillis());
+        req.message = msg;
+
+        req.scene = toFriends ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
+
+        if (!mWechatShareApi.sendReq(req)) {
+            toast("分享失败");
+        }
     }
 
     public void shareToWeibo(View view) {
@@ -159,13 +267,13 @@ public class InviteRewardActivity extends BaseActivity {
 
         boolean flag_weibo = mWeiboShareApi.sendRequest(InviteRewardActivity.this, request);
 
-        try {
-            synchronized (mWeiboShareApi) {
-                mWeiboShareApi.wait(5000);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            synchronized (mWeiboShareApi) {
+//                mWeiboShareApi.wait(5000);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         if (!flag_weibo) {
             toast("分享失败");
@@ -180,5 +288,26 @@ public class InviteRewardActivity extends BaseActivity {
 
     public void onBackClick(View view) {
         finish();
+    }
+
+    /**
+     * qq分享回调
+     */
+    static class TencentShareUIListener implements IUiListener {
+
+        @Override
+        public void onComplete(Object o) {
+            Toast.makeText(App.get(), "分享成功", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onError(UiError uiError) {
+            Toast.makeText(App.get(), "分享失败", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancel() {
+
+        }
     }
 }

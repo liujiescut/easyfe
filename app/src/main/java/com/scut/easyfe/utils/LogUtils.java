@@ -96,13 +96,13 @@ public class LogUtils {
     }
 
     public static void toastError(Context context, String msg) {
-        if (Constants.Config.ISSHOWTOAST) {
+        if (Constants.Config.IS_SHOW_TOAST) {
             Toast.makeText(context, "操作失败 :" + msg, Toast.LENGTH_SHORT).show();
         }
     }
 
     public static void toast(Context context, String msg) {
-        if (Constants.Config.ISSHOWTOAST) {
+        if (Constants.Config.IS_SHOW_TOAST) {
             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
         }
     }

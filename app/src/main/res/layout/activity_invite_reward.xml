@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="86dp"
             android:layout_margin="@dimen/layout_margin_large"
-            android:src="@mipmap/icon_detail_info" />
+            android:src="@mipmap/logo_no_bg" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -138,7 +138,7 @@
                 android:layout_marginRight="3dp"
                 android:layout_weight="1"
                 android:clickable="true"
-                android:onClick="shareToQQArea"
+                android:onClick="shareToQzone"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 

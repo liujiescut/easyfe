@@ -27,7 +27,7 @@ public class Order extends BaseEntity {
     private String course = "";          //课程
     private String grade = "";           //孩子年级
     private float price = 0f;            //单价
-    private float originalPrice = 0f;     //原价(特价订单用到)
+    private float originalPrice = 0f;    //原价(特价订单用到)
     private int childAge = 0;            //孩子年龄
     private int childGender = Constants.Identifier.FEMALE; //孩子性别
     private String cancelPerson = "";    //订单状态为4才有的字段，“teacher”表示是教师取消订单，“parent”表示家长取消
