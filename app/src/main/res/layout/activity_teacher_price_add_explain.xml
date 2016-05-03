@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/shape_app_bg"
+    tools:context=".ui.activity.reward.InviteRewardInfoActivity">
+    <include
+        layout="@layout/titlebar"/>
+    <TextView
+        android:id="@+id/teacher_course_reward_tv_explain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_explain_color"
+        android:padding="@dimen/layout_padding_small"
+        android:layout_marginTop="@dimen/layout_margin_small"
+        android:text="@string/teacher_price_add_explain_1"
+        android:lineSpacingMultiplier="1.1"
+        android:clickable="true"
+        android:textSize="@dimen/text_size_normal"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/text_area_bg"/>
+    <TextView
+        android:id="@+id/teacher_price_add_tv_explain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_explain_color"
+        android:padding="@dimen/layout_padding_small"
+        android:textSize="@dimen/text_size_medium"
+        android:lineSpacingMultiplier="1.2"
+        android:text="@string/teacher_price_add_explain_2"
+        />
+
+</LinearLayout>

@@ -1,0 +1,21 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/shape_app_bg">
+    <include
+        layout="@layout/titlebar"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_explain_color"
+        android:padding="@dimen/layout_padding_normal"
+        android:textSize="@dimen/text_size_normal"
+        android:text="@string/parent_course_reward"
+        />
+
+    <ListView
+        android:id="@+id/parent_course_reward_lv_rewards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

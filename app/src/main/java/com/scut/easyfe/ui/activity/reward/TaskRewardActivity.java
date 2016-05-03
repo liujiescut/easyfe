@@ -54,7 +54,9 @@ public class TaskRewardActivity extends BaseActivity {
      * 点击家教任务 完成课时单价增加奖励
      */
     public void onTeacherCompleteOrderClick(View view){
-        finish();
+        if(App.getUser().hasLogin()){
+            redirectToActivity(mContext, TeacherCourseRewardActivity.class);
+        }
     }
 
     /**
@@ -70,6 +72,8 @@ public class TaskRewardActivity extends BaseActivity {
      * 点击家长任务 完成课时现金券及积分奖励
      */
     public void onParentCompleteOrderClick(View view){
-        finish();
+        if(App.getUser().hasLogin()){
+            redirectToActivity(mContext, ParentCourseRewardActivity.class);
+        }
     }
 }

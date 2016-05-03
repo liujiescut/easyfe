@@ -143,7 +143,10 @@
         <activity android:name=".ui.activity.InviteRewardActivity" />
         <activity android:name=".ui.activity.reward.TaskRewardActivity" />
         <activity android:name=".ui.activity.reward.SpreadRewardActivity" />
-        <activity android:name=".ui.activity.reward.InviteRewardInfoActivity"></activity>
+        <activity android:name=".ui.activity.reward.InviteRewardInfoActivity" />
+        <activity android:name=".ui.activity.reward.ParentCourseRewardActivity" />
+        <activity android:name=".ui.activity.reward.TeacherCourseRewardActivity" />
+        <activity android:name=".ui.activity.reward.TeacherPriceAddExplainActivity"></activity>
     </application>
 
 </manifest>
