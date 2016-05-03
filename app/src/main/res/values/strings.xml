@@ -200,4 +200,7 @@
     <string name="get">领取</string>
     <string name="spread_reward_explain">内容说明：\n① 发布特价推广广告，被选中发布在主页上，可得10元现金奖励。\n② 如家教后家长下单20、30或50小时课时以上，除基本任务奖励外，每完成相应课时再分别给现金奖励。</string>
     <string name="spread_reward_state">特价推广奖励任务完成情况</string>
+    <string name="invite_reward_info_teacher_explain">内容说明：\n① 转发邀请其他家教老师，被邀请人成功完成 2 次订单，邀请人赠 5 元现金红包。（最多限 10 人）\n② 转发邀请家长，被邀请人成功完成 2 次为非邀请人的家教订单后，邀请人赠 5 元现金红包。（最多限 10 人）</string>
+    <string name="invite_reward_info_parent_explain">内容说明：\n转发邀请其他家长，被邀请人成功完成2次订单，邀请人获赠100元现金券。</string>
+    <string name="invite_reward_complete_state">邀请奖励任务完成情况</string>
 </resources>

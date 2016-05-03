@@ -5,16 +5,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/shape_app_bg"
-    tools:context="com.scut.easyfe.ui.activity.reward.SpreadRewardActivity">
+    tools:context=".ui.activity.reward.InviteRewardInfoActivity">
     <include
         layout="@layout/titlebar"/>
     <TextView
+        android:id="@+id/invite_reward_info_tv_explain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/text_explain_color"
         android:padding="@dimen/layout_padding_small"
         android:layout_marginTop="@dimen/layout_margin_small"
-        android:text="@string/spread_reward_explain"
+        android:text="@string/invite_reward_info_parent_explain"
         android:lineSpacingMultiplier="1.1"
         android:textSize="@dimen/text_size_normal"
         />
@@ -28,17 +29,11 @@
         android:textColor="@color/text_explain_color"
         android:padding="@dimen/layout_padding_normal"
         android:textSize="@dimen/text_size_normal"
-        android:text="@string/spread_reward_state"
+        android:text="@string/invite_reward_complete_state"
         />
 
-    <include
-        android:id="@+id/spread_reward_view_published_reward"
-        layout="@layout/item_reward"/>
-
     <ListView
-        android:id="@+id/spread_reward_lv_complete_time"
-        android:layout_marginTop="@dimen/layout_margin_small"
+        android:id="@+id/invite_reward_info_lv_rewards"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
 </LinearLayout>

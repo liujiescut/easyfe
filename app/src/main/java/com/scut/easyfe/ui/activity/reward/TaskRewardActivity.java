@@ -45,7 +45,9 @@ public class TaskRewardActivity extends BaseActivity {
      * 点击家教任务 邀请有奖
      */
     public void onTeacherInviteClick(View view){
-        finish();
+        if(App.getUser().hasLogin()){
+            redirectToActivity(mContext, InviteRewardInfoActivity.class);
+        }
     }
 
     /**
@@ -59,7 +61,9 @@ public class TaskRewardActivity extends BaseActivity {
      * 点击家长任务 邀请有奖
      */
     public void onParentInviteClick(View view){
-        finish();
+        if(App.getUser().hasLogin()){
+            redirectToActivity(mContext, InviteRewardInfoActivity.class);
+        }
     }
 
     /**

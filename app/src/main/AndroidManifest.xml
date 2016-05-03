@@ -142,7 +142,8 @@
         <activity android:name=".ui.activity.ModifyOrderActivity" />
         <activity android:name=".ui.activity.InviteRewardActivity" />
         <activity android:name=".ui.activity.reward.TaskRewardActivity" />
-        <activity android:name=".ui.activity.reward.SpreadRewardActivity"></activity>
+        <activity android:name=".ui.activity.reward.SpreadRewardActivity" />
+        <activity android:name=".ui.activity.reward.InviteRewardInfoActivity"></activity>
     </application>
 
 </manifest>
