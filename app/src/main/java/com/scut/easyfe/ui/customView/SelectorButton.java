@@ -49,6 +49,9 @@ public class SelectorButton extends TextView{
      * 初始化
      */
     private void init(){
+        mSelectedText = getText().toString();
+        mUnselectedText = getText().toString();
+
         setClickable(true);
         setOnClickListener(new OnClickListener() {
             @Override
@@ -126,7 +129,7 @@ public class SelectorButton extends TextView{
     /**
      * 设置未选中状态文字颜色
      */
-    public void setUnselectTextColor(@ColorRes int mUnselectedTextColor) {
+    public void setUnselectedTextColor(@ColorRes int mUnselectedTextColor) {
         this.mUnselectedTextColor = mUnselectedTextColor;
     }
 

@@ -92,6 +92,7 @@
 
     <TextView
         style="@style/main_left_drawer_item"
+        android:onClick="onTaskRewardClick"
         android:text="@string/main_left_drawer_task" />
 
     <View style="@style/main_left_drawer_divider" />

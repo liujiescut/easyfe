@@ -203,12 +203,11 @@ public class InviteRewardActivity extends BaseActivity {
             finish();
             return;
         }
-        WXMediaMessage msg = new WXMediaMessage();
 
         String url = Constants.DefaultValue.DEFAULT_SHARE_LINK;
         WXWebpageObject webPageObject = new WXWebpageObject();
         webPageObject.webpageUrl = url;
-        msg = new WXMediaMessage(webPageObject);
+        WXMediaMessage msg = new WXMediaMessage(webPageObject);
         msg.title = getString(R.string.app_name);
         msg.description = getString(R.string.share_details);
 

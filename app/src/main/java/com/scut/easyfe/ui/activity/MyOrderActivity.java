@@ -169,8 +169,10 @@ public class MyOrderActivity extends BaseActivity {
         mDoCancelListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mPagerAdapter.getItem(mSelectedPage).getSelectedOrderIds().size() == 0) {
-                    toast("请选择要取消的订单");
+                mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
+                refreshButtonsState(getButtonTypeFromOrderType(mCurrentOrderType));
+
+                if (!validateOrders(mPagerAdapter.getItem(mSelectedPage).getSelectedOrders())) {
                     return;
                 }
 
@@ -178,9 +180,6 @@ public class MyOrderActivity extends BaseActivity {
                     DialogUtils.makeConfirmDialog(mContext, "警告", "您已经取消过订单两次,\n不能再取消订单了呦\n(完成6次订单可增加一次取消机会)");
                     return;
                 }
-
-                mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
-                refreshButtonsState(getButtonTypeFromOrderType(mCurrentOrderType));
 
                 DialogUtils.makeConfirmDialog(mContext, "提醒", "取消订单将会产生一次不良记录\n不良记录超过两次将不能再取消订单\n(完成6次订单可增加一次取消机会)\n确认取消?",
                         new OnItemClickListener() {

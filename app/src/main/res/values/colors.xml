@@ -28,6 +28,7 @@
     <color name="text_area_text_color_alpha">#33A7A7A7</color>
 
     <color name="text_hint_color">#B2B2B2</color>
+    <color name="text_explain_color">#9B9B9B</color>
     <color name="light_gray">#eAeAeA</color>
     <color name="darker_grey">#c8c8c8</color>
 

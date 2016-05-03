@@ -192,4 +192,12 @@
     <string name="child_age">宝贝年龄</string>
     <string name="invite_reward_hint">长按复制专属您的邀请链接，分享给小伙伴获取更多奖励</string>
     <string name="share_details">邀请有奖</string>
+    <string name="teacher_task">家教任务</string>
+    <string name="spread_reward">特价推广奖励</string>
+    <string name="invite_reward">邀请奖励</string>
+    <string name="complete_course_reward">完成课时单价增加奖励</string>
+    <string name="parent_task">家长任务</string>
+    <string name="get">领取</string>
+    <string name="spread_reward_explain">内容说明：\n① 发布特价推广广告，被选中发布在主页上，可得10元现金奖励。\n② 如家教后家长下单20、30或50小时课时以上，除基本任务奖励外，每完成相应课时再分别给现金奖励。</string>
+    <string name="spread_reward_state">特价推广奖励任务完成情况</string>
 </resources>
