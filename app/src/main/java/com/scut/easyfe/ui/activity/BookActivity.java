@@ -173,10 +173,11 @@ public class BookActivity extends BaseActivity {
         mSinglePicker.setCancelable(true);
 
         mTimePicker = new MyTimePicker(this);
+        mTimePicker.setToShowTime(Constants.Data.teachTimeHourList, Constants.Data.teachTimeMinuteList);
 
         Calendar calendar = Calendar.getInstance();
         mDatePicker = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);
-        mDatePicker.setRange(calendar.get(Calendar.YEAR) - 100, calendar.get(Calendar.YEAR)); //控制时间范围
+        mDatePicker.setRange(calendar.get(Calendar.YEAR), calendar.get(Calendar.YEAR) + 2); //控制时间范围
         mDatePicker.setTime(new Date());
         mDatePicker.setCyclic(false);
 
@@ -194,7 +195,7 @@ public class BookActivity extends BaseActivity {
 
         if(mReserveType == Constants.Identifier.RESERVE_MULTI){
             mTeachDateLabelTextView.setText("每周授课时间");
-            mTeachTimeLabelTextView.setText("最短授课时长");
+            mTeachTimeLabelTextView.setText(getResources().getString(R.string.teach_time_length));
             mTeachDateTextView.setText("星期日 上午");
         }else {
             mTeachDateTextView.setText(String.format("%s %s", TimeUtils.getTime(new Date(), "yyyy年MM月dd日(EEEE)"), "上午"));

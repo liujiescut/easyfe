@@ -26,6 +26,15 @@
             android:textColor="@color/title_text_color"
             android:textSize="20sp"
             />
+        <ImageView
+            android:id="@+id/main_iv_present"
+            android:layout_width="@dimen/titlebar_height_dp"
+            android:layout_height="@dimen/titlebar_height_dp"
+            android:padding="12dp"
+            android:src="@mipmap/icon_present"
+            android:onClick="onPresentClick"
+            android:layout_alignParentRight="true"
+            />
     </RelativeLayout>
 
     <FrameLayout

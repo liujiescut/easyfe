@@ -82,11 +82,12 @@ public class PublishSpreadActivity extends BaseActivity {
         mPriceTextView = OtherUtils.findViewById(this, R.id.publish_spread_price);
 
         mTimePicker = new MyTimePicker(this);
+        mTimePicker.setToShowTime(Constants.Data.teachTimeHourList, Constants.Data.teachTimeMinuteList);
         mPicker = new OptionsPickerView<>(mContext);
 
         Calendar calendar = Calendar.getInstance();
         mDatePicker = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);
-        mDatePicker.setRange(calendar.get(Calendar.YEAR) - 100, calendar.get(Calendar.YEAR)); //控制时间范围
+        mDatePicker.setRange(calendar.get(Calendar.YEAR), calendar.get(Calendar.YEAR) + 2); //控制时间范围
         mDatePicker.setTime(new Date());
         mDatePicker.setCyclic(false);
 

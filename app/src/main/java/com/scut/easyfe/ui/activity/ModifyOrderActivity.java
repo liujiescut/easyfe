@@ -77,13 +77,15 @@ public class ModifyOrderActivity extends BaseActivity {
         }
 
         mTimePicker = new MyTimePicker(this);
+        mTimePicker.setToShowTime(Constants.Data.teachTimeHourList, Constants.Data.teachTimeMinuteList);
+
 
         mSinglePicker = new OptionsPickerView<>(this);
         mSinglePicker.setCancelable(true);
 
         Calendar calendar = Calendar.getInstance();
         mDatePicker = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);
-        mDatePicker.setRange(calendar.get(Calendar.YEAR), calendar.get(Calendar.YEAR) + 1); //控制时间范围
+        mDatePicker.setRange(calendar.get(Calendar.YEAR), calendar.get(Calendar.YEAR) + 2); //控制时间范围
         mDatePicker.setTime(new Date());
         mDatePicker.setCyclic(false);
 

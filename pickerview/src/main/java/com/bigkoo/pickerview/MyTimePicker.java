@@ -2,6 +2,8 @@ package com.bigkoo.pickerview;
 
 import android.content.Context;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 /**
@@ -94,6 +96,19 @@ public class MyTimePicker {
          * @param minute  选中分钟
          */
         void onPick(int hour, int minute);
+    }
+
+    /**
+     * 设置可选的时间
+     * @param hours    可选的小时
+     * @param minutes  可选的分钟
+     */
+    public void setToShowTime(@NotNull ArrayList<Integer> hours, @NotNull ArrayList<ArrayList<Integer>> minutes) {
+        mHours.clear();
+        mMinutes.clear();
+        mHours.addAll(hours);
+        mMinutes.addAll(minutes);
+        mPicker.setPicker(mHours, mMinutes, false);
     }
 
 }

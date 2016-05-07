@@ -33,7 +33,7 @@
     <string name="parent_register_submit">提交注册</string>
     <string name="female">女</string>
     <string name="male">男</string>
-    <string name="address_info">轻按定位图标即可拖动图标定位</string>
+    <string name="address_info">轻按定位图标一秒后即可拖动图标定位</string>
     <string name="current_position">当前位置</string>
     <string name="sure">确定</string>
     <string name="birthday">出生年月日</string>
@@ -144,7 +144,6 @@
     <string name="teach_week">授课周数</string>
     <string name="week_price">每周价格</string>
     <string name="select">筛选</string>
-    <string name="min_teach_time_1">最短授课时长</string>
     <string name="teach_student_age">被授课对象年龄</string>
     <string name="teach_student_gender">被授课对象性别</string>
     <string name="search_teacher">搜索家教</string>
@@ -208,4 +207,5 @@
     <string name="teacher_course_reward_explain">内容说明：\n单一课程达到一定课时后，相应的报酬单价增加。\n完成课时单价增加标准请点击这里 查看详情。</string>
     <string name="teacher_price_add_explain_1">在自有定价上每小时可获得报酬按照以下固定金额与比例计算的孰高值增加,四舍五入取整</string>
     <string name="teacher_price_add_explain_2" formatted = "false">• 完成50个小时课程并且三项得分在4.8分以上，无家长投诉，可增加单价固定金额 3元 或增加单价比例 8% \n • 完成100个小时课程并且三项得分在4.8分以上，无家长投诉，可增加单价固定金额 4元 或增加单价比例 10% \n • 完成200个小时课程并且三项得分在4.8分以上，无家长投诉 ，可增加单价固定金额 6元 或增加单价比例 15%\n • 完成300个小时课程并且三项得分在4.8分以上，无家长投诉，可增加单价固定金额 8元 或增加单价比例 20% \n • 完成500个小时课程并且三项得分在4.8分以上，无家长投诉，可增加单价固定金额 12元 或增加单价比例 30%</string>
+    <string name="teach_course_info">价格确定后不能修改，如1个月内均未能接到订单，可联系客服修改价格，也可进行特价推广立马接单哟</string>
 </resources>

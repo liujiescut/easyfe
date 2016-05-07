@@ -259,6 +259,7 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
     public void onMinTeachTimeClick(View view) {
         mPickTimeType = PICK_TIME_MIN_COURSE_TIME;
         OtherUtils.hideSoftInputWindow(mMinTeachTimeTextView.getWindowToken());
+        mTimePicker.setToShowTime(Constants.Data.teachTimeHourList, Constants.Data.teachTimeMinuteList);
         mTimePicker.setTitle("最短课时");
         mTimePicker.show();
     }
@@ -269,6 +270,7 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
     public void onTrafficTimeClick(View view) {
         mPickTimeType = PICK_TIME_TRAFFIC;
         OtherUtils.hideSoftInputWindow(mMinTeachTimeTextView.getWindowToken());
+        mTimePicker.setToShowTime(Constants.Data.trafficTimeHourList, Constants.Data.trafficTimeMinuteList);
         mTimePicker.setTitle("能接受的交通时间");
         mTimePicker.show();
     }
@@ -279,6 +281,7 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
     public void onMaxTrafficTimeClick(View view) {
         mPickTimeType = PICK_TIME_MAX_TRAFFIC;
         OtherUtils.hideSoftInputWindow(mMinTeachTimeTextView.getWindowToken());
+        mTimePicker.setToShowTime(Constants.Data.trafficTimeHourList, Constants.Data.trafficTimeMinuteList);
         mTimePicker.setTitle("能接受的最大交通时间");
         mTimePicker.show();
     }

@@ -14,6 +14,7 @@ import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.entity.user.TeacherInfo;
 import com.scut.easyfe.ui.activity.ConfirmOrderActivity;
 import com.scut.easyfe.ui.activity.LoginActivity;
+import com.scut.easyfe.ui.activity.ParentRegisterActivity;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.ui.base.BaseListViewScrollStateAdapter;
 import com.scut.easyfe.utils.DialogUtils;
@@ -93,7 +94,7 @@ public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
                                 }
 
                                 BaseActivity activity = (BaseActivity) mContextReference.get();
-                                activity.redirectToActivity(activity, LoginActivity.class);
+                                activity.redirectToActivity(activity, ParentRegisterActivity.class);
                             }
                         }
                     });

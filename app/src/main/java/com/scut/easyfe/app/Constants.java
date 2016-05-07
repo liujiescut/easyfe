@@ -181,6 +181,11 @@ public class Constants {
         public static final String DEFAULT_QN_TOKEN = "R2Rq9_dBXtrL6wqLwA8_GC6EZNR9JU06xaGegd19:mKzKD3gB-mkdQpjt1BVtBAZmNYw=:eyJzY29wZSI6ImVhc3lmZSIsImRlYWRsaW5lIjoxNDg0OTIxMjY4fQ==";
 
 
+
+        public static final ArrayList<Integer> teachTimeHourList = new ArrayList<>();               //授课时间之小时
+        public static final ArrayList<ArrayList<Integer>> teachTimeMinuteList = new ArrayList<>();  //授课时间之分钟
+        public static final ArrayList<Integer> trafficTimeHourList = new ArrayList<>();               //授课时间之小时
+        public static final ArrayList<ArrayList<Integer>> trafficTimeMinuteList = new ArrayList<>();  //授课时间之分钟
         public static final ArrayList<String> genderList = new ArrayList<>();                       //可选性别
         public static final ArrayList<String> schoolList = new ArrayList<>();                       //可选性别
         public static final ArrayList<String> professionList = new ArrayList<>();                   //可选的专业
@@ -198,6 +203,32 @@ public class Constants {
 
         static {
 
+            teachTimeHourList.add(0);
+            teachTimeHourList.add(1);
+            teachTimeHourList.add(2);
+            teachTimeHourList.add(3);
+
+            for (int i = 0; i < teachTimeHourList.size(); i++) {
+                ArrayList<Integer> teachTimeMinutes = new ArrayList<>();
+                teachTimeMinutes.add(0);
+                teachTimeMinutes.add(30);
+                teachTimeMinuteList.add(teachTimeMinutes);
+            }
+
+            trafficTimeHourList.add(0);
+            trafficTimeHourList.add(1);
+            trafficTimeHourList.add(2);
+
+            for (int i = 0; i < trafficTimeHourList.size(); i++) {
+                ArrayList<Integer> trafficTimeMinutes = new ArrayList<>();
+                trafficTimeMinutes.add(0);
+                trafficTimeMinutes.add(10);
+                trafficTimeMinutes.add(20);
+                trafficTimeMinutes.add(30);
+                trafficTimeMinutes.add(40);
+                trafficTimeMinutes.add(50);
+                trafficTimeMinuteList.add(trafficTimeMinutes);
+            }
 
             mBankNameList.add("工商银行");
             mBankNameList.add("建设银行");
@@ -363,7 +394,7 @@ public class Constants {
             weekList.add("星期五");
             weekList.add("星期六");
 
-            for (int i = 1; i < 100; i++) {
+            for (int i = 2; i <= 20; i++) {
                 ageList.add(i + "");
             }
 

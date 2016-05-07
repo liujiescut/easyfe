@@ -244,6 +244,14 @@ public class MainActivity extends BaseActivity {
             DialogUtils.makeConfirmDialog(mContext, null, "亲，您需要先注册/登陆哦\n\n ^-^");
         }
     }
+
+    /**
+     * 点击任务奖励
+     */
+    public void onPresentClick(View view) {
+        onTaskRewardClick(view);
+    }
+
     /**
      * 点击邀请有奖
      */

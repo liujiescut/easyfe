@@ -98,7 +98,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
-                    android:text="@string/min_teach_time_1"
+                    android:text="@string/teach_time_length"
                     android:paddingLeft="0dp"
                     android:paddingRight="0dp"
                     android:id="@+id/book_tv_time_label" />
