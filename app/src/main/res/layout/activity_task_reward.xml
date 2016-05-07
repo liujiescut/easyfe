@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activity.reward.TaskRewardActivity">
+
+    <include layout="@layout/titlebar" />
+
+    <LinearLayout
+        android:id="@+id/task_reward_ll_teacher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="@dimen/layout_padding_small"
+            android:text="@string/teacher_task"
+            android:textColor="@color/text_hint_color"
+            android:textSize="@dimen/text_size_small" />
+
+        <LinearLayout
+            style="@style/ll_container_normal_style"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/task_reward_tv_teacher_spread"
+                style="@style/text_normal_style"
+                android:drawableRight="@mipmap/icon_right_arrow_padding"
+                android:gravity="start|center_vertical"
+                android:onClick="onTeacherSpreadClick"
+                android:text="@string/spread_reward" />
+        </LinearLayout>
+        <LinearLayout
+            style="@style/ll_container_normal_style"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/task_reward_tv_teacher_invite"
+                style="@style/text_normal_style"
+                android:drawableRight="@mipmap/icon_right_arrow_padding"
+                android:gravity="start|center_vertical"
+                android:onClick="onTeacherInviteClick"
+                android:text="@string/invite_reward" />
+        </LinearLayout>
+        <LinearLayout
+            style="@style/ll_container_normal_style"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/task_reward_tv_teacher_complete_order"
+                style="@style/text_normal_style"
+                android:drawableRight="@mipmap/icon_right_arrow_padding"
+                android:gravity="start|center_vertical"
+                android:onClick="onTeacherCompleteOrderClick"
+                android:text="@string/complete_course_reward" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/task_reward_ll_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="@dimen/layout_padding_small"
+            android:text="@string/parent_task"
+            android:textColor="@color/text_hint_color"
+            android:textSize="@dimen/text_size_small" />
+
+        <LinearLayout
+            style="@style/ll_container_normal_style"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/task_reward_tv_parent_invite"
+                style="@style/text_normal_style"
+                android:drawableRight="@mipmap/icon_right_arrow_padding"
+                android:gravity="start|center_vertical"
+                android:onClick="onParentInviteClick"
+                android:text="@string/invite_reward" />
+        </LinearLayout>
+        <LinearLayout
+            style="@style/ll_container_normal_style"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/task_reward_tv_parent_complete_order"
+                style="@style/text_normal_style"
+                android:drawableRight="@mipmap/icon_right_arrow_padding"
+                android:gravity="start|center_vertical"
+                android:onClick="onParentCompleteOrderClick"
+                android:text="@string/complete_course_reward" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

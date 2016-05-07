@@ -192,4 +192,20 @@
     <string name="child_age">宝贝年龄</string>
     <string name="invite_reward_hint">长按复制专属您的邀请链接，分享给小伙伴获取更多奖励</string>
     <string name="share_details">邀请有奖</string>
+    <string name="teacher_task">家教任务</string>
+    <string name="spread_reward">特价推广奖励</string>
+    <string name="invite_reward">邀请奖励</string>
+    <string name="complete_course_reward">完成课时单价增加奖励</string>
+    <string name="parent_task">家长任务</string>
+    <string name="get">领取</string>
+    <string name="spread_reward_explain">内容说明：\n① 发布特价推广广告，被选中发布在主页上，可得10元现金奖励。\n② 如家教后家长下单20、30或50小时课时以上，除基本任务奖励外，每完成相应课时再分别给现金奖励。</string>
+    <string name="spread_reward_state">特价推广奖励任务完成情况</string>
+    <string name="invite_reward_info_teacher_explain">内容说明：\n① 转发邀请其他家教老师，被邀请人成功完成 2 次订单，邀请人赠 5 元现金红包。（最多限 10 人）\n② 转发邀请家长，被邀请人成功完成 2 次为非邀请人的家教订单后，邀请人赠 5 元现金红包。（最多限 10 人）</string>
+    <string name="invite_reward_info_parent_explain">内容说明：\n转发邀请其他家长，被邀请人成功完成2次订单，邀请人获赠100元现金券。</string>
+    <string name="invite_reward_complete_state">邀请奖励任务完成情况</string>
+    <string name="parent_course_reward">完成课时现金券及积分奖励任务完成情况</string>
+    <string name="teacher_course_reward_state">完成课时单价增加奖励任务完成情况</string>
+    <string name="teacher_course_reward_explain">内容说明：\n单一课程达到一定课时后，相应的报酬单价增加。\n完成课时单价增加标准请点击这里 查看详情。</string>
+    <string name="teacher_price_add_explain_1">在自有定价上每小时可获得报酬按照以下固定金额与比例计算的孰高值增加,四舍五入取整</string>
+    <string name="teacher_price_add_explain_2" formatted = "false">• 完成50个小时课程并且三项得分在4.8分以上，无家长投诉，可增加单价固定金额 3元 或增加单价比例 8% \n • 完成100个小时课程并且三项得分在4.8分以上，无家长投诉，可增加单价固定金额 4元 或增加单价比例 10% \n • 完成200个小时课程并且三项得分在4.8分以上，无家长投诉 ，可增加单价固定金额 6元 或增加单价比例 15%\n • 完成300个小时课程并且三项得分在4.8分以上，无家长投诉，可增加单价固定金额 8元 或增加单价比例 20% \n • 完成500个小时课程并且三项得分在4.8分以上，无家长投诉，可增加单价固定金额 12元 或增加单价比例 30%</string>
 </resources>

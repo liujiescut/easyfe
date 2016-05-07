@@ -16,13 +16,14 @@ import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.request.RGetOnlineParams;
 import com.scut.easyfe.network.request.authentication.RUpdateUser;
+import com.scut.easyfe.ui.activity.reward.TaskRewardActivity;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.ui.base.BaseFragment;
 import com.scut.easyfe.ui.customView.CircleImageView;
 import com.scut.easyfe.ui.fragment.HomeFragment;
+import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.ImageUtils;
 import com.scut.easyfe.utils.LogUtils;
-import com.scut.easyfe.utils.MapUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
 import org.json.JSONObject;
@@ -233,6 +234,16 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 点击任务奖励
+     */
+    public void onTaskRewardClick(View view) {
+        if(App.getUser(false).hasLogin()) {
+            redirectToActivity(mContext, TaskRewardActivity.class);
+        }else{
+            DialogUtils.makeConfirmDialog(mContext, null, "亲，您需要先注册/登陆哦\n\n ^-^");
+        }
+    }
     /**
      * 点击邀请有奖
      */

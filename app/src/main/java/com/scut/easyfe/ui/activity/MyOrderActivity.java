@@ -169,8 +169,10 @@ public class MyOrderActivity extends BaseActivity {
         mDoCancelListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mPagerAdapter.getItem(mSelectedPage).getSelectedOrderIds().size() == 0) {
-                    toast("请选择要取消的订单");
+                mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
+                refreshButtonsState(getButtonTypeFromOrderType(mCurrentOrderType));
+
+                if (!validateOrders(mPagerAdapter.getItem(mSelectedPage).getSelectedOrders())) {
                     return;
                 }
 

@@ -3,8 +3,6 @@ package com.scut.easyfe.ui.activity;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -22,9 +20,7 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.ui.base.BaseActivity;
-import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
-import com.sina.weibo.sdk.api.ImageObject;
 import com.sina.weibo.sdk.api.TextObject;
 import com.sina.weibo.sdk.api.WeiboMessage;
 import com.sina.weibo.sdk.api.share.IWeiboShareAPI;
@@ -33,7 +29,6 @@ import com.sina.weibo.sdk.api.share.WeiboShareSDK;
 import com.tencent.connect.share.QQShare;
 import com.tencent.connect.share.QzoneShare;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
-import com.tencent.mm.sdk.modelmsg.WXImageObject;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -42,9 +37,8 @@ import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.media.Constant;
 
-import java.io.File;
+import java.util.ArrayList;
 
 public class InviteRewardActivity extends BaseActivity {
     private TextView mInviteParentTextView;
@@ -134,16 +128,17 @@ public class InviteRewardActivity extends BaseActivity {
         mInviteTeacherTextView.setTextColor(getResources().getColor(R.color.invite_reward_theme_color));
     }
 
-    public void shareToQQ(View view) {
-        doShareToQQ(false);
-    }
-
     public void shareToQzone(View view) {
-        //Todo test 应用通过审核
-        doShareToQQ(true);
+        Bundle params = new Bundle();
+        //分享类型
+        params.putString(QzoneShare.SHARE_TO_QQ_TITLE, getString(R.string.app_name));
+        params.putString(QzoneShare.SHARE_TO_QQ_SUMMARY, getString(R.string.share_details));
+        params.putString(QzoneShare.SHARE_TO_QQ_TARGET_URL, Constants.DefaultValue.DEFAULT_SHARE_LINK);
+        params.putStringArrayList(QzoneShare.SHARE_TO_QQ_IMAGE_URL, new ArrayList<String>());  //这行不能删,不然空间SDK会出Bug
+        mTencent.shareToQzone(this, params, tencentShareUIListener);
     }
 
-    private void doShareToQQ(boolean toQzone) {
+    public void shareToQQ(View view) {
         if (!OtherUtils.isAppInstalled(this, Constants.Data.QQ_PACKAGE_NAME, Constants.Config.TO_MARKET)) {
             toast("QQ未安装");
             finish();
@@ -170,14 +165,8 @@ public class InviteRewardActivity extends BaseActivity {
         bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, getString(R.string.share_details));
         bundle.putString(QQShare.SHARE_TO_QQ_APP_NAME, "back to" + Constants.Config.APP_NAME);
         bundle.putString(QQShare.SHARE_TO_QQ_SITE, Constants.Config.APP_NAME + Constants.Data.QQ_APP_ID);
-
-        if (toQzone) {
-            bundle.putInt(QzoneShare.SHARE_TO_QZONE_KEY_TYPE, QzoneShare.SHARE_TO_QZONE_TYPE_IMAGE_TEXT);
-            mTencent.shareToQzone(this, bundle, tencentShareUIListener);
-        } else {
-            mTencent.shareToQQ(this, bundle, tencentShareUIListener);
-        }
-//        }
+        bundle.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
+        mTencent.shareToQQ(this, bundle, tencentShareUIListener);
     }
 
     public void shareToWechat(View view) {
@@ -203,12 +192,11 @@ public class InviteRewardActivity extends BaseActivity {
             finish();
             return;
         }
-        WXMediaMessage msg = new WXMediaMessage();
 
         String url = Constants.DefaultValue.DEFAULT_SHARE_LINK;
         WXWebpageObject webPageObject = new WXWebpageObject();
         webPageObject.webpageUrl = url;
-        msg = new WXMediaMessage(webPageObject);
+        WXMediaMessage msg = new WXMediaMessage(webPageObject);
         msg.title = getString(R.string.app_name);
         msg.description = getString(R.string.share_details);
 
@@ -267,13 +255,13 @@ public class InviteRewardActivity extends BaseActivity {
 
         boolean flag_weibo = mWeiboShareApi.sendRequest(InviteRewardActivity.this, request);
 
-//        try {
-//            synchronized (mWeiboShareApi) {
-//                mWeiboShareApi.wait(5000);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            synchronized (mWeiboShareApi) {
+                mWeiboShareApi.wait(5000);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (!flag_weibo) {
             toast("分享失败");

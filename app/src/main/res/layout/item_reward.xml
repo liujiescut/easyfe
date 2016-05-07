@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:background="@drawable/shape_reward_bg">
+    <TextView
+        android:id="@+id/item_reward_tv_text"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:textColor="@color/text_area_text_color"
+        android:textSize="@dimen/text_size_small"
+        android:padding="@dimen/layout_padding_small"
+        android:lineSpacingMultiplier="1.2"
+        tools:text="已邀请手机号码：188 1234 5678\n已完成订单次数：1次 / 2次\n现金奖励：5 元"
+        android:layout_weight="1"/>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_vertical"
+        android:background="@color/text_area_bg"/>
+
+    <com.scut.easyfe.ui.customView.SelectorButton
+        android:id="@+id/item_reward_sb_get"
+        android:layout_width="64dp"
+        android:layout_height="26dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:text="领取"
+        android:layout_margin="@dimen/layout_margin_small"/>
+
+</LinearLayout>

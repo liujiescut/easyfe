@@ -39,7 +39,7 @@
         <!-- 百度地图 -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="rIugtSvYwq830m0aeXlGyBQ7" />
+            android:value="5XzSkHUsp0eCm2eIE7gbkTzCVlz4MiV0" />
 
         <!-- 友盟 -->
         <meta-data
@@ -57,31 +57,29 @@
         <!-- 新浪微博需要 -->
         <service
             android:name="com.sina.weibo.sdk.net.DownloadService"
-            android:exported="false">
-        </service>
+            android:exported="false" />
 
         <activity
             android:name="com.umeng.socialize.editorpage.ShareActivity"
-            android:theme="@style/Theme.UMDefault"
-            android:excludeFromRecents="true" />
-
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.UMDefault" />
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
-            android:noHistory="true" >
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="tencent1105349762" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
         <activity
             android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait"
@@ -142,7 +140,13 @@
         <activity android:name=".ui.activity.ToDoOrderActivity" />
         <activity android:name=".ui.activity.EvaluationActivity" />
         <activity android:name=".ui.activity.ModifyOrderActivity" />
-        <activity android:name=".ui.activity.InviteRewardActivity"></activity>
+        <activity android:name=".ui.activity.InviteRewardActivity" />
+        <activity android:name=".ui.activity.reward.TaskRewardActivity" />
+        <activity android:name=".ui.activity.reward.SpreadRewardActivity" />
+        <activity android:name=".ui.activity.reward.InviteRewardInfoActivity" />
+        <activity android:name=".ui.activity.reward.ParentCourseRewardActivity" />
+        <activity android:name=".ui.activity.reward.TeacherCourseRewardActivity" />
+        <activity android:name=".ui.activity.reward.TeacherPriceAddExplainActivity"></activity>
     </application>
 
 </manifest>
