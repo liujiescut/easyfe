@@ -214,6 +214,7 @@ public class PublishSpreadActivity extends BaseActivity {
         }
 
         mPicker.setPicker(mGrade);
+        mPicker.setCyclic(false);
         mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {

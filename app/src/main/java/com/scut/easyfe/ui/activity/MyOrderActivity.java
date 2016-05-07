@@ -182,11 +182,13 @@ public class MyOrderActivity extends BaseActivity {
                 mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
                 refreshButtonsState(getButtonTypeFromOrderType(mCurrentOrderType));
 
-                DialogUtils.makeConfirmDialog(mContext, "提醒", "取消订单将会产生一次不良记录\n不良记录超过两次将不能再取消订单\n(完成6次订单可增加一次取消机会)\n确认取消?",
-                        new OnItemClickListener() {
+                DialogUtils.makeChooseDialog(mContext, "提醒", "取消订单将会产生一次不良记录\n不良记录超过两次将不能再取消订单\n(完成6次订单可增加一次取消机会)\n确认取消?",
+                        new DialogUtils.OnChooseListener() {
                             @Override
-                            public void onItemClick(Object o, int position) {
-                                doCancelOrder();
+                            public void onChoose(boolean sure) {
+                                if(sure){
+                                    doCancelOrder();
+                                }
                             }
                         });
             }
