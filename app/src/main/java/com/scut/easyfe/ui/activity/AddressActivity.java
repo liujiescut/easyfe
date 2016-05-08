@@ -185,7 +185,7 @@ public class AddressActivity extends BaseActivity {
     }
 
     public void onRightClick(View view){
-        if(mAddress != null && mLatitude != -1 && mLongitude != -1){
+        if(mAddress != null && mAddress.length() != 0 && mLatitude != -1 && mLongitude != -1){
             toast("选择位置成功");
             Intent intent = getIntent();
             intent.putExtra(Constants.Key.ADDRESS, mAddress);

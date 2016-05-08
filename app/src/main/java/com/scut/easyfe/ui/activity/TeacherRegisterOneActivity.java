@@ -125,7 +125,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
 
         Calendar calendar = Calendar.getInstance();
         mTimePicker = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);
-        mTimePicker.setRange(calendar.get(Calendar.YEAR), calendar.get(Calendar.YEAR) + 2); //控制时间范围
+        mTimePicker.setRange(calendar.get(Calendar.YEAR) - 100, calendar.get(Calendar.YEAR)); //控制时间范围
         mTimePicker.setTime(new Date());
         mTimePicker.setCyclic(false);
         mTimePicker.setCancelable(true);

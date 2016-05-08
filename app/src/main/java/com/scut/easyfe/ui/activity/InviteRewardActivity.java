@@ -51,6 +51,11 @@ public class InviteRewardActivity extends BaseActivity {
     private IWXAPI mWechatShareApi;
     private Tencent mTencent;
 
+    private final String mShareUserKey = "uid=";
+    private final String mInviteParentLink = Constants.DefaultValue.DEFAULT_SHARE_LINK + mShareUserKey + App.getUser().get_id() + "parent";
+    private final String mInviteTeacherLink = Constants.DefaultValue.DEFAULT_SHARE_LINK + mShareUserKey + App.getUser().get_id() + "teacher";
+    private String mShareLink = mInviteParentLink;
+
 
     private TencentShareUIListener tencentShareUIListener = new TencentShareUIListener();
 
@@ -91,6 +96,15 @@ public class InviteRewardActivity extends BaseActivity {
 
         mActivityDescriptionTextView.setText(builder);
         mActivityDescriptionTextView.setMovementMethod(LinkMovementMethod.getInstance());
+
+        if(App.getUser().isParent()){
+            onInviteParentClick(null);
+        }else{
+            onInviteTeacherClick(null);
+        }
+
+        mShareLink = App.getUser().isParent() ? mInviteParentLink : mInviteTeacherLink;
+        mShareLinkTextView.setText(mShareLink);
     }
 
     @Override
@@ -119,6 +133,9 @@ public class InviteRewardActivity extends BaseActivity {
         mInviteParentTextView.setBackgroundResource(R.drawable.shape_invite_type_selected);
         mInviteTeacherTextView.setTextColor(getResources().getColor(R.color.invite_reward_text_color));
         mInviteParentTextView.setTextColor(getResources().getColor(R.color.invite_reward_theme_color));
+
+        mShareLink = mInviteParentLink;
+        mShareLinkTextView.setText(mShareLink);
     }
 
     public void onInviteTeacherClick(View view) {
@@ -126,6 +143,9 @@ public class InviteRewardActivity extends BaseActivity {
         mInviteTeacherTextView.setBackgroundResource(R.drawable.shape_invite_type_selected);
         mInviteParentTextView.setTextColor(getResources().getColor(R.color.invite_reward_text_color));
         mInviteTeacherTextView.setTextColor(getResources().getColor(R.color.invite_reward_theme_color));
+
+        mShareLink = mInviteTeacherLink;
+        mShareLinkTextView.setText(mShareLink);
     }
 
     public void shareToQzone(View view) {

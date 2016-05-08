@@ -20,7 +20,7 @@ public class Constants {
 
     public class DefaultValue{
         public static final String DEFAULT_QINIU_URL = "http://7xrvd4.com1.z0.glb.clouddn.com/";            //七牛储存图片的地址
-        public static final String DEFAULT_SHARE_LINK = "http://blog.csdn.net/ljyangscut";
+        public static final String DEFAULT_SHARE_LINK = "http://blog.csdn.net/ljyangscut/";
         public static final int DEFAULT_LOAD_COUNT = 15;
         public static final int MAX_BAD_RECORD = 2;
     }

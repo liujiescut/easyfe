@@ -15,9 +15,9 @@
         <include layout="@layout/titlebar" />
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="86dp"
             android:layout_height="86dp"
-            android:layout_margin="@dimen/layout_margin_large"
+            android:layout_marginTop="20dp"
             android:src="@mipmap/logo_no_bg" />
 
         <ImageView
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:padding="@dimen/layout_padding_small"
-            android:text="家长邀请朋友找家教，Ta得 600元，您得 100元。\n家教老师邀请朋友，最高可得 100元^-^\n这么高的福利还不赶紧分享起来\nY^O^Y"
+            android:text="@string/invite_reward_explain"
             android:textColor="#E5BA6E" />
 
         <LinearLayout
@@ -43,25 +43,25 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/invite_reward_tv_teacher"
+                android:id="@+id/invite_reward_tv_parent"
                 android:layout_width="128dp"
                 android:layout_height="30dp"
                 android:layout_margin="1dp"
                 android:background="@drawable/shape_invite_type_selected"
                 android:clickable="true"
                 android:gravity="center"
-                android:onClick="onInviteTeacherClick"
+                android:onClick="onInviteParentClick"
                 android:text="邀请家长"
                 android:textColor="@color/invite_reward_theme_color" />
 
             <TextView
-                android:id="@+id/invite_reward_tv_parent"
+                android:id="@+id/invite_reward_tv_teacher"
                 android:layout_width="128dp"
                 android:layout_height="30dp"
                 android:layout_margin="1dp"
                 android:clickable="true"
                 android:gravity="center"
-                android:onClick="onInviteParentClick"
+                android:onClick="onInviteTeacherClick"
                 android:text="邀请家教"
                 android:textColor="@color/invite_reward_text_color" />
         </LinearLayout>
