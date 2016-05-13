@@ -177,14 +177,14 @@ public class MyOrderActivity extends BaseActivity {
                 }
 
                 if (App.getUser().getBadRecord() >= Constants.DefaultValue.MAX_BAD_RECORD) {
-                    DialogUtils.makeConfirmDialog(mContext, "警告", "您已经取消过订单两次,\n不能再取消订单了呦\n(完成6次订单可增加一次取消机会)");
+                    DialogUtils.makeConfirmDialog(mContext, "温馨提示", "您已经取消过订单两次,\n不能再取消订单了呦\n(完成6次订单可增加一次取消机会)");
                     return;
                 }
 
                 mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
                 refreshButtonsState(getButtonTypeFromOrderType(mCurrentOrderType));
 
-                DialogUtils.makeChooseDialog(mContext, "提醒", "取消订单将会产生一次不良记录\n不良记录超过两次将不能再取消订单\n(完成6次订单可增加一次取消机会)\n确认取消?",
+                DialogUtils.makeChooseDialog(mContext, "温馨提示", "取消订单将会产生一次不良记录\n不良记录超过两次将不能再取消订单\n(完成6次订单可增加一次取消机会)\n确认取消?",
                         new DialogUtils.OnChooseListener() {
                             @Override
                             public void onChoose(boolean sure) {

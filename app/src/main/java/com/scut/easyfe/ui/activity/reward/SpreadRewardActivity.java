@@ -1,10 +1,10 @@
 package com.scut.easyfe.ui.activity.reward;
 
+import android.content.DialogInterface;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.utils.L;
 import com.scut.easyfe.R;
 import com.scut.easyfe.entity.reward.BaseReward;
 import com.scut.easyfe.entity.reward.TeacherCompleteSpreadReward;
@@ -25,8 +25,9 @@ public class SpreadRewardActivity extends BaseActivity {
     private SelectorButton mPublishSpreadRewardSelectorButton;
     private ListView mCompleteRewardListView;
     private RewardAdapter mAdapter;
-    private ArrayList<BaseReward> rewards = new ArrayList<>();
+    private ArrayList<BaseReward> mRewards = new ArrayList<>();
     private boolean mIsLoadingClosedByUser = true;
+    private BaseReward mPublishReward;
 
     @Override
     protected void setLayoutView() {
@@ -41,23 +42,61 @@ public class SpreadRewardActivity extends BaseActivity {
         mPublishSpreadRewardSelectorButton = OtherUtils.findViewById(mPublishSpreadRewardView, R.id.item_reward_sb_get);
         mCompleteRewardListView = OtherUtils.findViewById(this, R.id.spread_reward_lv_complete_time);
 
-        mAdapter = new RewardAdapter(mContext, rewards);
+        mAdapter = new RewardAdapter(mContext, mRewards);
         mCompleteRewardListView.setAdapter(mAdapter);
+
+        mPublishSpreadRewardSelectorButton.setSelectedTextColor(R.color.text_area_bg);
+        mPublishSpreadRewardSelectorButton.setSelectedDrawable(R.drawable.shape_reward_selected);
+        mPublishSpreadRewardSelectorButton.setUnselectedTextColor(R.color.theme_color);
+        mPublishSpreadRewardSelectorButton.setUnselectDrawable(R.drawable.shape_reward_unselected);
+    }
+
+    @Override
+    protected void initListener() {
+        mPublishSpreadRewardSelectorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(OtherUtils.isFastDoubleClick()){
+                    return;
+                }
+
+                toast("领取");
+            }
+        });
     }
 
     @Override
     protected void fetchData() {
-        startLoading("加载数据中");
+        startLoading("加载数据中", new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if(mIsLoadingClosedByUser){
+                    finish();
+                }
+            }
+        });
 
         RequestManager.get().execute(new GetSpreadRewardList(), new RequestListener<List<TeacherCompleteSpreadReward>>() {
             @Override
             public void onSuccess(RequestBase request, List<TeacherCompleteSpreadReward> result) {
+                mRewards.addAll(result);
+                mAdapter.notifyDataSetChanged();
 
+                if(mRewards.size() >= 1){
+                    mPublishReward = mRewards.get(0);
+                    mRewards.remove(0);
+                    mPublishSpreadRewardTextView.setText(mPublishReward.getAsString());
+                    mPublishSpreadRewardSelectorButton.setSelected(mPublishReward.isReceivable());
+                }
+                mIsLoadingClosedByUser = false;
+                stopLoading();
             }
 
             @Override
             public void onFailed(RequestBase request, int errorCode, String errorMsg) {
-
+                toast(errorMsg);
+                mIsLoadingClosedByUser = false;
+                stopLoading();
             }
         });
     }

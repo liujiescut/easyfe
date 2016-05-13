@@ -74,7 +74,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ((TextView) OtherUtils.findViewById(this, R.id.main_tv_title)).setText("优升学教育");
+        ((TextView) OtherUtils.findViewById(this, R.id.main_tv_title)).setText(R.string.app_name);
         mDrawerLayout = OtherUtils.findViewById(this, R.id.drawer_layout);
         mLeftDrawer = OtherUtils.findViewById(this, R.id.drawer);
         mAvatarImageView = OtherUtils.findViewById(this, R.id.left_drawer_civ_avatar);

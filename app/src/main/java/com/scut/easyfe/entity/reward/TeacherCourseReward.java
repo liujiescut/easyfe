@@ -30,7 +30,6 @@ public class TeacherCourseReward extends BaseReward{
             rewards.add(reward);
         }
 
-        rewards.get(0).setReceivable(true);
 
         return rewards;
     }

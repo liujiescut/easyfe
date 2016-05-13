@@ -90,6 +90,7 @@ public class Constants {
         public static final String SHOW_TEXT_ACTIVITY_TITLE =  "show_text_activity_title";
         public static final String SHOW_TEXT_ACTIVITY_CONTENT =  "show_text_activity_content";
         public static final String CALLBACK_TYPE =  "callback_type";
+        public static final String CALLBACK_HINT_TEXT =  "callback_hint_text";
         public static final String CONFIRM_ORDER_TYPE =  "confirm_order_type";
         public static final String ORDER =  "order";
         public static final String ORDERS =  "orders";

@@ -11,7 +11,9 @@ import com.scut.easyfe.entity.BaseEntity;
 public abstract class BaseReward extends BaseEntity{
     private String _id = "";
 
-    private boolean receivable = false;
+    private boolean canGet = false;
+
+    private int count = 0;
 
     /**
      * 将奖励以文本形式显示出来(不同的奖励显示形式自定义)
@@ -28,10 +30,22 @@ public abstract class BaseReward extends BaseEntity{
     }
 
     public boolean isReceivable() {
-        return receivable;
+        return canGet || count > 0;
     }
 
-    public void setReceivable(boolean receivable) {
-        this.receivable = receivable;
+    public boolean isCanGet() {
+        return canGet;
+    }
+
+    public void setCanGet(boolean canGet) {
+        this.canGet = canGet;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

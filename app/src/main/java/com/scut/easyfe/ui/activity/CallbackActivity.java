@@ -23,6 +23,7 @@ import org.json.JSONObject;
 public class CallbackActivity extends BaseActivity {
 
     private int mCallbackType= Constants.Identifier.CALLBACK_APP;
+    private String mHintText = "";
     private EditText mContentEditText;
     @Override
     protected void setLayoutView() {
@@ -36,6 +37,7 @@ public class CallbackActivity extends BaseActivity {
             Bundle extras = intent.getExtras();
             if(null != extras){
                 mCallbackType = extras.getInt(Constants.Key.CALLBACK_TYPE, Constants.Identifier.CALLBACK_APP);
+                mHintText = extras.getString(Constants.Key.CALLBACK_HINT_TEXT, "");
             }
         }
     }
@@ -47,6 +49,7 @@ public class CallbackActivity extends BaseActivity {
         ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_right)).setText("提交");
 
         mContentEditText = OtherUtils.findViewById(this, R.id.callback_et_content);
+        mContentEditText.setHint(mHintText);
     }
 
     public void onBackClick(View view){

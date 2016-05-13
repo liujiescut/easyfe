@@ -105,6 +105,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         if(null != mActivity) {
             Bundle bundle = new Bundle();
             bundle.putInt(Constants.Key.CALLBACK_TYPE, Constants.Identifier.CALLBACK_NEED);
+            bundle.putString(Constants.Key.CALLBACK_HINT_TEXT, getResources().getString(R.string.home_report_callback_hint));
             mActivity.redirectToActivity(mActivity, CallbackActivity.class, bundle);
         }
     }

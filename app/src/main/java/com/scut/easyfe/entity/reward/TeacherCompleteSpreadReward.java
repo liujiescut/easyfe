@@ -16,7 +16,6 @@ import java.util.ArrayList;
 public class TeacherCompleteSpreadReward extends BaseReward{
     private String detail = "";
     private float money = 0f;
-    private int count = 0;
 
 //    public static ArrayList<BaseReward> getTestRewards(){
 //        ArrayList<BaseReward> rewards = new ArrayList<>();
@@ -62,11 +61,4 @@ public class TeacherCompleteSpreadReward extends BaseReward{
         this.money = money;
     }
 
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
 }

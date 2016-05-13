@@ -85,6 +85,7 @@ public class BookActivity extends BaseActivity {
     private int mReserveType = Constants.Identifier.RESERVE_MULTI;
 
     private String mDateStringToShow = "";
+    private String mPeriodStringToShow = "";
 
     private User mUser;
     private String mDate = TimeUtils.getTime(new Date(), "yyyy-MM-dd");
@@ -265,6 +266,8 @@ public class BookActivity extends BaseActivity {
                     return;
                 }
 
+                mPeriod = "";
+                mPeriodStringToShow = "";
                 showPeriodSelectView();
             }
         });
@@ -318,19 +321,19 @@ public class BookActivity extends BaseActivity {
             @Override
             public void onItemClick(Object o, int position) {
                 if (position == 0) {
-                    mDateStringToShow += " 上午";
+                    mPeriodStringToShow += " 上午";
                     mPeriod = "morning";
                 } else if (position == 1) {
-                    mDateStringToShow += " 下午";
+                    mPeriodStringToShow += " 下午";
                     mPeriod = "afternoon";
                 } else if (position == 2) {
-                    mDateStringToShow += " 晚上";
+                    mPeriodStringToShow += " 晚上";
                     mPeriod = "evening";
                 } else {
-                    mDateStringToShow = "";
+                    mPeriodStringToShow = "";
                     mPeriod = "";
                 }
-                mTeachDateTextView.setText(mDateStringToShow);
+                mTeachDateTextView.setText(mDateStringToShow + mPeriodStringToShow);
             }
         }).show();
     }
