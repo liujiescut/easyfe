@@ -64,6 +64,8 @@ public class Constants {
         public static final String URL_MULTI_RESERVE = URL_BASE + "Book/Multi";
         public static final String URL_GET_TEACHER_DETAIL_INFO = URL_BASE + "Parent/Teacher/Data";
         public static final String URL_COMMENT_TEACHER = URL_BASE + "Parent/Comment/Teacher";
+
+        public static final String URL_GET_TEACHER_SPREAD_REWARD = "http://121.42.37.233/Reward/Discount";
     }
 
     /**

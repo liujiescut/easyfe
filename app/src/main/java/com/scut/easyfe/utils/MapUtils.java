@@ -2,6 +2,7 @@ package com.scut.easyfe.utils;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -138,6 +139,11 @@ public class MapUtils {
     public synchronized static void getDurationFromPosition(double startLatitude, double startLongitude,
                                                             double endLatitude, double endLongitude, String city,
                                                             final GetDurationCallback callback) {
+        if(null == city || city.length() == 0){
+            Toast.makeText(App.get().getApplicationContext(), "获取公交时间失败", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         getRoutePlanSearch().setOnGetRoutePlanResultListener(new OnGetRoutePlanResultListener() {
             @Override
             public void onGetWalkingRouteResult(WalkingRouteResult walkingRouteResult) {

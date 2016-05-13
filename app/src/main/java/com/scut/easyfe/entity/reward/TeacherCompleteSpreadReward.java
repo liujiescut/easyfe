@@ -14,27 +14,28 @@ import java.util.ArrayList;
  * Created by jay on 16/5/3.
  */
 public class TeacherCompleteSpreadReward extends BaseReward{
-    private String description = "";
+    private String detail = "";
     private float money = 0f;
+    private int count = 0;
 
-    public static ArrayList<BaseReward> getTestRewards(){
-        ArrayList<BaseReward> rewards = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            TeacherCompleteSpreadReward reward = new TeacherCompleteSpreadReward();
-            reward.setDescription("完成"+ (i * 10 + 10) + " 小时课时");
-            reward.setMoney(i * 10 + 10);
-            rewards.add(reward);
-        }
-
-        rewards.get(0).setReceivable(true);
-
-        return rewards;
-    }
+//    public static ArrayList<BaseReward> getTestRewards(){
+//        ArrayList<BaseReward> rewards = new ArrayList<>();
+//        for (int i = 0; i < 3; i++) {
+//            TeacherCompleteSpreadReward reward = new TeacherCompleteSpreadReward();
+//            reward.setDetail("完成"+ (i * 10 + 10) + " 小时课时");
+//            reward.setMoney(i * 10 + 10);
+//            rewards.add(reward);
+//        }
+//
+//        rewards.get(0).setReceivable(true);
+//
+//        return rewards;
+//    }
 
     @Override
     public SpannableStringBuilder getAsString() {
         String content = "";
-        content += description;
+        content += detail;
         content += "\n";
         content += "现金奖励: ";
 
@@ -45,12 +46,12 @@ public class TeacherCompleteSpreadReward extends BaseReward{
         return builder;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDetail() {
+        return detail;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 
     public float getMoney() {
@@ -59,5 +60,13 @@ public class TeacherCompleteSpreadReward extends BaseReward{
 
     public void setMoney(float money) {
         this.money = money;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }
