@@ -125,7 +125,6 @@
                     style="@style/text_editable_style"
                     android:layout_weight="3"
                     android:gravity="start|center_vertical"
-                    android:inputType="phone"
                     tools:text="441481123456789098" />
             </LinearLayout>
 

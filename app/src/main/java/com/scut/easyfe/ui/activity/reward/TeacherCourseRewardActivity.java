@@ -48,7 +48,7 @@ public class TeacherCourseRewardActivity extends BaseActivity {
         mExplainTextView.setText(builder);
         mExplainTextView.setMovementMethod(LinkMovementMethod.getInstance());
 
-        mAdapter = new RewardAdapter(mContext, TeacherCourseReward.getTestRewards());
+//        mAdapter = new RewardAdapter(mContext, TeacherCourseReward.getTestRewards());
         mRewardListView.setAdapter(mAdapter);
     }
 

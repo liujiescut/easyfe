@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.scut.easyfe.R;
 import com.scut.easyfe.entity.reward.BaseReward;
+import com.scut.easyfe.entity.reward.TeacherCompleteSpreadReward;
 import com.scut.easyfe.ui.customView.SelectorButton;
 import com.scut.easyfe.utils.OtherUtils;
 
@@ -20,7 +21,7 @@ import java.util.ArrayList;
  * 问题的Adapter
  * Created by jay on 16/3/29.
  */
-public class RewardAdapter extends BaseAdapter{
+public abstract class RewardAdapter extends BaseAdapter{
     private ArrayList<BaseReward> mRewords;
     private WeakReference<Context> mContextReference;
 
@@ -72,7 +73,20 @@ public class RewardAdapter extends BaseAdapter{
                         return;
                     }
 
-                    Toast.makeText(mContextReference.get(), "领取成功", Toast.LENGTH_LONG).show();
+                    onGetRewardClick(mRewords.get(position), new OnGetRewardListener() {
+                        @Override
+                        public void onResult(boolean success) {
+                            if(success){
+                                if(mRewords.get(position) instanceof TeacherCompleteSpreadReward) {
+                                    mRewords.get(position).setCount(mRewords.get(position).getCount() - 1);
+                                }else{
+                                    mRewords.get(position).setCanGet(false);
+                                }
+
+                                holder.get.setIsSelected(!mRewords.get(position).isReceivable());
+                            }
+                        }
+                    });
                 }
             });
 
@@ -98,6 +112,12 @@ public class RewardAdapter extends BaseAdapter{
             get.setUnselectedTextColor(R.color.theme_color);
             get.setUnselectDrawable(R.drawable.shape_reward_unselected);
         }
+    }
+
+    protected abstract void onGetRewardClick(BaseReward baseReward, OnGetRewardListener listener);
+
+    public interface OnGetRewardListener{
+        void onResult(boolean success);
     }
 
 }

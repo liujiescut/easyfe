@@ -10,7 +10,7 @@ import com.scut.easyfe.app.App;
 import java.util.ArrayList;
 
 /**
- * 教师完成特价订单课室奖励
+ * 特价订单奖励
  * Created by jay on 16/5/3.
  */
 public class TeacherCompleteSpreadReward extends BaseReward{
@@ -43,6 +43,11 @@ public class TeacherCompleteSpreadReward extends BaseReward{
         SpannableStringBuilder builder = new SpannableStringBuilder(content);
         builder.setSpan(new ForegroundColorSpan(App.get().getResources().getColor(R.color.theme_color)), start, content.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return builder;
+    }
+
+    @Override
+    public boolean isReceivable() {
+        return getCount() > 0;
     }
 
     public String getDetail() {

@@ -45,6 +45,12 @@ public class TeacherCourseReward extends BaseReward{
         return new SpannableStringBuilder(content);
     }
 
+    @Override
+    public boolean isReceivable() {
+        //Todo
+        return false;
+    }
+
     public int getTime() {
         return time;
     }

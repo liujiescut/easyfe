@@ -65,7 +65,10 @@ public class Constants {
         public static final String URL_GET_TEACHER_DETAIL_INFO = URL_BASE + "Parent/Teacher/Data";
         public static final String URL_COMMENT_TEACHER = URL_BASE + "Parent/Comment/Teacher";
 
-        public static final String URL_GET_TEACHER_SPREAD_REWARD = "http://121.42.37.233/Reward/Discount";
+        public static final String URL_GET_SPREAD_REWARD_LIST = URL_BASE + "Reward/Discount";
+        public static final String URL_GET_SPREAD_REWARD =URL_BASE + "Reward/Discount";
+        public static final String URL_GET_TEACHER_INVITE_REWARD_LIST = URL_BASE + "Reward/Invite/Teacher";
+        public static final String URL_GET_TEACHER_INVITE_REWARD = URL_BASE + "Reward/Invite/Teacher";
     }
 
     /**

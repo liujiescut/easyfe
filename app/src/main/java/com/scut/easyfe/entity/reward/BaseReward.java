@@ -11,9 +11,13 @@ import com.scut.easyfe.entity.BaseEntity;
 public abstract class BaseReward extends BaseEntity{
     private String _id = "";
 
-    private boolean canGet = false;
+    protected boolean canGet = false;
 
-    private int count = 0;
+    /**
+     * 特价订单奖励中代表可领取的次数
+     * 邀请有奖中代表被邀请人完成订单的次数
+     */
+    protected int count = 0;
 
     /**
      * 将奖励以文本形式显示出来(不同的奖励显示形式自定义)
@@ -21,16 +25,17 @@ public abstract class BaseReward extends BaseEntity{
      */
     public abstract SpannableStringBuilder getAsString();
 
+    /**
+     * 是否可以领取
+     */
+    public abstract boolean isReceivable();
+
     public String get_id() {
         return _id;
     }
 
     public void set_id(String _id) {
         this._id = _id;
-    }
-
-    public boolean isReceivable() {
-        return canGet || count > 0;
     }
 
     public boolean isCanGet() {

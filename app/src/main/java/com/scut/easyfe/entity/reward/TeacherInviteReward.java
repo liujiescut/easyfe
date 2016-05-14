@@ -14,32 +14,30 @@ import java.util.ArrayList;
  * Created by jay on 16/5/3.
  */
 public class TeacherInviteReward extends BaseReward{
-    private String inviteePhone = "";
+    private String phone = "";
     private int totalCount = 2;
-    private int completeCount = 0;
     private float money = 0f;
 
-    public static ArrayList<BaseReward> getTestRewards(){
-        ArrayList<BaseReward> rewards = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            TeacherInviteReward reward = new TeacherInviteReward();
-            reward.setInviteePhone("1881411111" + i);
-            reward.setTotalCount(2);
-            reward.setCompleteCount(i);
-            reward.setMoney(5);
-            rewards.add(reward);
-        }
-
-        return rewards;
-    }
+//    public static ArrayList<BaseReward> getTestRewards(){
+//        ArrayList<BaseReward> rewards = new ArrayList<>();
+//        for (int i = 0; i < 3; i++) {
+//            TeacherInviteReward reward = new TeacherInviteReward();
+//            reward.setPhone("1881411111" + i);
+//            reward.setTotalCount(2);
+//            reward.setMoney(5);
+//            rewards.add(reward);
+//        }
+//
+//        return rewards;
+//    }
 
     @Override
     public SpannableStringBuilder getAsString() {
         String content = "已邀请手机号码: ";
-        content += inviteePhone;
+        content += phone;
         content += "\n";
         content += "已完成订单次数: ";
-        content += String.format("%d次 / %d次", completeCount, totalCount);
+        content += String.format("%d次 / %d次", count, totalCount);
         content += "\n";
         content += "现金奖励: ";
 
@@ -50,12 +48,17 @@ public class TeacherInviteReward extends BaseReward{
         return builder;
     }
 
-    public String getInviteePhone() {
-        return inviteePhone;
+    @Override
+    public boolean isReceivable() {
+        return isCanGet() && count >= 2;
     }
 
-    public void setInviteePhone(String inviteePhone) {
-        this.inviteePhone = inviteePhone;
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public int getTotalCount() {
@@ -64,14 +67,6 @@ public class TeacherInviteReward extends BaseReward{
 
     public void setTotalCount(int totalCount) {
         this.totalCount = totalCount;
-    }
-
-    public int getCompleteCount() {
-        return completeCount;
-    }
-
-    public void setCompleteCount(int completeCount) {
-        this.completeCount = completeCount;
     }
 
     public float getMoney() {

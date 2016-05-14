@@ -51,6 +51,12 @@ public class ParentInviteReward extends BaseReward{
         return builder;
     }
 
+    @Override
+    public boolean isReceivable() {
+        //Todo
+        return false;
+    }
+
     public String getInviteePhone() {
         return inviteePhone;
     }

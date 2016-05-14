@@ -57,6 +57,12 @@ public class ParentCourseReward extends BaseReward{
         return builder;
     }
 
+    @Override
+    public boolean isReceivable() {
+        //Todo
+        return false;
+    }
+
 
     public int getTime() {
         return time;

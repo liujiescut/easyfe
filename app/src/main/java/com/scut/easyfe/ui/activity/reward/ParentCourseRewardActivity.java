@@ -27,7 +27,7 @@ public class ParentCourseRewardActivity extends BaseActivity {
         ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("完成课时现金券及积分奖励");
         mRecordListView = OtherUtils.findViewById(this, R.id.parent_course_reward_lv_rewards);
 
-        mAdapter = new RewardAdapter(mContext, ParentCourseReward.getTestRewards());
+//        mAdapter = new RewardAdapter(mContext, ParentCourseReward.getTestRewards());
         mRecordListView.setAdapter(mAdapter);
     }
     
