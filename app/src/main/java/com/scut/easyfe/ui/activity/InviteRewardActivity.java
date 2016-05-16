@@ -51,9 +51,9 @@ public class InviteRewardActivity extends BaseActivity {
     private IWXAPI mWechatShareApi;
     private Tencent mTencent;
 
-    private final String mShareUserKey = "uid=";
-    private final String mInviteParentLink = Constants.DefaultValue.DEFAULT_SHARE_LINK + mShareUserKey + App.getUser().get_id() + "parent";
-    private final String mInviteTeacherLink = Constants.DefaultValue.DEFAULT_SHARE_LINK + mShareUserKey + App.getUser().get_id() + "teacher";
+    private final String mShareUserKey = "inviterId=";
+    private final String mInviteParentLink = Constants.DefaultValue.DEFAULT_SHARE_LINK_INVITE_PARENT + mShareUserKey + App.getUser().get_id();
+    private final String mInviteTeacherLink = Constants.DefaultValue.DEFAULT_SHARE_LINK_INVITE_TEACHER + mShareUserKey + App.getUser().get_id();
     private String mShareLink = mInviteParentLink;
 
 
@@ -153,7 +153,7 @@ public class InviteRewardActivity extends BaseActivity {
         //分享类型
         params.putString(QzoneShare.SHARE_TO_QQ_TITLE, getString(R.string.app_name));
         params.putString(QzoneShare.SHARE_TO_QQ_SUMMARY, getString(R.string.share_details));
-        params.putString(QzoneShare.SHARE_TO_QQ_TARGET_URL, Constants.DefaultValue.DEFAULT_SHARE_LINK);
+        params.putString(QzoneShare.SHARE_TO_QQ_TARGET_URL, mShareLink);
         params.putStringArrayList(QzoneShare.SHARE_TO_QQ_IMAGE_URL, new ArrayList<String>());  //这行不能删,不然空间SDK会出Bug
         mTencent.shareToQzone(this, params, tencentShareUIListener);
     }
@@ -180,7 +180,7 @@ public class InviteRewardActivity extends BaseActivity {
 //        } else {
         Bundle bundle = new Bundle();
 //        bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, mRoom.getAvatar());
-        bundle.putString(QQShare.SHARE_TO_QQ_TARGET_URL, Constants.DefaultValue.DEFAULT_SHARE_LINK);
+        bundle.putString(QQShare.SHARE_TO_QQ_TARGET_URL, mShareLink);
         bundle.putString(QQShare.SHARE_TO_QQ_TITLE, getString(R.string.app_name));
         bundle.putString(QQShare.SHARE_TO_QQ_SUMMARY, getString(R.string.share_details));
         bundle.putString(QQShare.SHARE_TO_QQ_APP_NAME, "back to" + Constants.Config.APP_NAME);
@@ -213,7 +213,7 @@ public class InviteRewardActivity extends BaseActivity {
             return;
         }
 
-        String url = Constants.DefaultValue.DEFAULT_SHARE_LINK;
+        String url = mShareLink;
         WXWebpageObject webPageObject = new WXWebpageObject();
         webPageObject.webpageUrl = url;
         WXMediaMessage msg = new WXMediaMessage(webPageObject);
@@ -264,7 +264,7 @@ public class InviteRewardActivity extends BaseActivity {
 //            weiboMessage.mediaObject = shareText;
 //        }
 
-        String text = Constants.DefaultValue.DEFAULT_SHARE_LINK;
+        String text = mShareLink;
         TextObject shareText = new TextObject();
         shareText.text = text;
         weiboMessage.mediaObject = shareText;

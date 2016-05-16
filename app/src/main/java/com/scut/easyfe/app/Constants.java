@@ -20,7 +20,8 @@ public class Constants {
 
     public class DefaultValue{
         public static final String DEFAULT_QINIU_URL = "http://7xrvd4.com1.z0.glb.clouddn.com/";            //七牛储存图片的地址
-        public static final String DEFAULT_SHARE_LINK = "http://blog.csdn.net/ljyangscut/";
+        public static final String DEFAULT_SHARE_LINK_INVITE_PARENT = "http://www.cadena.cn:3000/invite_parent.html?";
+        public static final String DEFAULT_SHARE_LINK_INVITE_TEACHER = "http://www.cadena.cn:3000/invite_teacher.html?";
         public static final int DEFAULT_LOAD_COUNT = 15;
         public static final int MAX_BAD_RECORD = 2;
     }
@@ -52,6 +53,7 @@ public class Constants {
         public static final String URL_TEACHER_CANCEL_ORDERS = URL_BASE + "Teacher/Cancel/Order";
 
         public static final String URL_WALLET_INFO = URL_BASE + "Money/Wallet";
+        public static final String URL_GET_MY_TICKET = URL_BASE + "Parent/Coupon";
         public static final String URL_WALLET_WITHDRAW = URL_BASE + "Money/Withdraw";
 
         public static final String URL_PARENT_REGISTER = URL_BASE + "Authentication/SignUp/Parent";
