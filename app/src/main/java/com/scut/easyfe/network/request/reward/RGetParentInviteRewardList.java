@@ -22,7 +22,7 @@ import java.util.List;
  *  获取邀请奖励的列表（家长）
  * Created by jay on 16/5/12.
  */
-public class GetParentInviteRewardList extends RequestBase<List<ParentInviteReward>>{
+public class RGetParentInviteRewardList extends RequestBase<List<ParentInviteReward>>{
     @Override
     public String getUrl() {
         return Constants.URL.URL_GET_PARENT_INVITE_REWARD_LIST;

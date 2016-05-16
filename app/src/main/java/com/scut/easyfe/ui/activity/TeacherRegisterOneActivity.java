@@ -151,9 +151,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
         mDoModifyTextView = OtherUtils.findViewById(this, R.id.base_info_tv_modify);
 
         mBirthdayTextView.setText(TimeUtils.getTime(calendar.getTime(), "yyyy 年 MM 月 dd 日"));
-        mSchoolTextView.setText(Constants.Data.schoolList.get(0));
         mGradeTextView.setText(Constants.Data.teacherGradeList.get(0));
-        mProfessionTextView.setText(Constants.Data.professionList.get(0));
         mHadTeachChildTextView.setText(Constants.Data.hasTeachChildCountRangeList.get(0));
         mHadTeachTimeTextView.setText(Constants.Data.hasTeachChildTimeRangeList.get(0));
 

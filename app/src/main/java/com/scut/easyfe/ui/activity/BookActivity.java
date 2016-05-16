@@ -19,6 +19,7 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.Course;
+import com.scut.easyfe.entity.School;
 import com.scut.easyfe.entity.book.BaseBookCondition;
 import com.scut.easyfe.entity.book.MultiBookCondition;
 import com.scut.easyfe.entity.book.SingleBookCondition;
@@ -31,9 +32,9 @@ import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.request.book.RMultiBook;
 import com.scut.easyfe.network.request.info.RGetCourse;
 import com.scut.easyfe.network.request.book.RSingleBook;
+import com.scut.easyfe.network.request.info.RGetSchool;
 import com.scut.easyfe.ui.adapter.SelectItemAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
-import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.ListViewUtil;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
@@ -71,6 +72,8 @@ public class BookActivity extends BaseActivity {
     ArrayList<ToSelectItem> mPriceItems;
     ArrayList<ToSelectItem> mScoreItems;
 
+    private SelectItemAdapter mSchoolAdapter;
+
     private OptionsPickerView<String> mSinglePicker;
     private MyTimePicker mTimePicker;
     private TimePickerView mDatePicker;
@@ -80,7 +83,8 @@ public class BookActivity extends BaseActivity {
     private static ArrayList<String> mCourseNames = new ArrayList<>();
     private int mSelectedCoursePosition = -1;
 
-    private boolean mISLoadingCloseByUser = true;
+    private boolean mGetCourseSuccess = false;
+    private boolean mGetSchoolSuccess = false;
 
     private int mReserveType = Constants.Identifier.RESERVE_MULTI;
 
@@ -115,11 +119,6 @@ public class BookActivity extends BaseActivity {
         mSchoolItems = new ArrayList<>();
         mPriceItems = new ArrayList<>();
         mScoreItems = new ArrayList<>();
-
-        for (String school :
-                Constants.Data.schoolList) {
-            mSchoolItems.add(new ToSelectItem(school, false));
-        }
 
         mScoreItems.add(new ToSelectItem("6 分以上", false, "6"));
         mScoreItems.add(new ToSelectItem("8 分以上", false, "8"));
@@ -161,10 +160,10 @@ public class BookActivity extends BaseActivity {
         mScoreListView = OtherUtils.findViewById(this, R.id.book_lv_score);
         mContainerScrollView = OtherUtils.findViewById(this, R.id.book_sv_container);
 
-        mSchoolListView.setAdapter(new SelectItemAdapter(this, mSchoolItems));
+        mSchoolAdapter = new SelectItemAdapter(this, mSchoolItems);
+        mSchoolListView.setAdapter(mSchoolAdapter);
         mPriceListView.setAdapter(new SelectItemAdapter(this, mPriceItems));
         mScoreListView.setAdapter(new SelectItemAdapter(this, mScoreItems));
-        ListViewUtil.setListViewHeightBasedOnChildren(mSchoolListView);
         ListViewUtil.setListViewHeightBasedOnChildren(mPriceListView);
         ListViewUtil.setListViewHeightBasedOnChildren(mScoreListView);
 
@@ -181,10 +180,6 @@ public class BookActivity extends BaseActivity {
         mDatePicker.setRange(calendar.get(Calendar.YEAR), calendar.get(Calendar.YEAR) + 2); //控制时间范围
         mDatePicker.setTime(new Date());
         mDatePicker.setCyclic(false);
-
-        mGradeTextView.setText(String.format("%s %s",
-                Constants.Data.studentStateList.get(0),
-                Constants.Data.studentGradeList.get(0).get(0)));
 
         mTeachTimeTextView.setText("2 小时 0 分钟");
 
@@ -274,7 +269,7 @@ public class BookActivity extends BaseActivity {
         startLoading("加载数据中", new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                if (mISLoadingCloseByUser) {
+                if (! (mGetCourseSuccess && mGetSchoolSuccess)) {
                     toast("数据加载失败");
                     finish();
                 }
@@ -299,15 +294,43 @@ public class BookActivity extends BaseActivity {
                     mGradeTextView.setText(mGrade.get(0));
                 }
 
-                mISLoadingCloseByUser = false;
-                stopLoading();
+                mGetCourseSuccess = true;
+                if(mGetSchoolSuccess) {
+                    stopLoading();
+                }
             }
 
             @Override
             public void onFailed(RequestBase request, int errorCode, String errorMsg) {
-
+                toast(errorMsg);
+                stopLoading();
             }
         });
+
+        RequestManager.get().execute(new RGetSchool(), new RequestListener<List<School>>() {
+            @Override
+            public void onSuccess(RequestBase request, List<School> result) {
+                mSchoolItems.clear();
+                for (School school :
+                        result) {
+                    mSchoolItems.add(new ToSelectItem(school.getSchool(), false));
+                }
+                mSchoolAdapter.notifyDataSetChanged();
+                ListViewUtil.setListViewHeightBasedOnChildren(mSchoolListView);
+
+                mGetSchoolSuccess = true;
+                if (mGetCourseSuccess) {
+                    stopLoading();
+                }
+            }
+
+            @Override
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                toast(errorMsg);
+                stopLoading();
+            }
+        });
+
     }
 
     private void showPeriodSelectView(){

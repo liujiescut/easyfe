@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.entity.reward.BaseReward;
@@ -14,12 +13,10 @@ import com.scut.easyfe.entity.reward.TeacherInviteReward;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
-import com.scut.easyfe.network.kjFrame.http.JsonRequest;
-import com.scut.easyfe.network.request.reward.GetParentInviteReward;
-import com.scut.easyfe.network.request.reward.GetParentInviteRewardList;
-import com.scut.easyfe.network.request.reward.GetSpreadReward;
-import com.scut.easyfe.network.request.reward.GetTeacherInviteReward;
-import com.scut.easyfe.network.request.reward.GetTeacherInviteRewardList;
+import com.scut.easyfe.network.request.reward.RGetParentInviteReward;
+import com.scut.easyfe.network.request.reward.RGetParentInviteRewardList;
+import com.scut.easyfe.network.request.reward.RGetTeacherInviteReward;
+import com.scut.easyfe.network.request.reward.RGetTeacherInviteRewardList;
 import com.scut.easyfe.ui.adapter.RewardAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.OtherUtils;
@@ -63,7 +60,7 @@ public class InviteRewardInfoActivity extends BaseActivity {
                     }
 
                     ParentInviteReward reward = (ParentInviteReward)baseReward;
-                    RequestManager.get().execute(new GetParentInviteReward(reward.getPhone()), new RequestListener<JSONObject>() {
+                    RequestManager.get().execute(new RGetParentInviteReward(reward.getPhone()), new RequestListener<JSONObject>() {
                         @Override
                         public void onSuccess(RequestBase request, JSONObject result) {
                             listener.onResult(true);
@@ -83,7 +80,7 @@ public class InviteRewardInfoActivity extends BaseActivity {
                     }
 
                     TeacherInviteReward reward = (TeacherInviteReward)baseReward;
-                    RequestManager.get().execute(new GetTeacherInviteReward(reward.getPhone()), new RequestListener<JSONObject>() {
+                    RequestManager.get().execute(new RGetTeacherInviteReward(reward.getPhone()), new RequestListener<JSONObject>() {
                         @Override
                         public void onSuccess(RequestBase request, JSONObject result) {
                             listener.onResult(true);
@@ -115,7 +112,7 @@ public class InviteRewardInfoActivity extends BaseActivity {
         });
 
         if(App.getUser().isParent()) {
-            RequestManager.get().execute(new GetParentInviteRewardList(), new RequestListener<List<ParentInviteReward>>() {
+            RequestManager.get().execute(new RGetParentInviteRewardList(), new RequestListener<List<ParentInviteReward>>() {
                 @Override
                 public void onSuccess(RequestBase request, List<ParentInviteReward> result) {
                     mRewards.clear();
@@ -134,7 +131,7 @@ public class InviteRewardInfoActivity extends BaseActivity {
             });
 
         }else {
-            RequestManager.get().execute(new GetTeacherInviteRewardList(), new RequestListener<List<TeacherInviteReward>>() {
+            RequestManager.get().execute(new RGetTeacherInviteRewardList(), new RequestListener<List<TeacherInviteReward>>() {
                 @Override
                 public void onSuccess(RequestBase request, List<TeacherInviteReward> result) {
                     mRewards.clear();

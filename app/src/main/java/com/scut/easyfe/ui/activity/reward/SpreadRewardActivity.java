@@ -11,8 +11,8 @@ import com.scut.easyfe.entity.reward.TeacherCompleteSpreadReward;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
-import com.scut.easyfe.network.request.reward.GetSpreadReward;
-import com.scut.easyfe.network.request.reward.GetSpreadRewardList;
+import com.scut.easyfe.network.request.reward.RGetSpreadReward;
+import com.scut.easyfe.network.request.reward.RGetSpreadRewardList;
 import com.scut.easyfe.ui.adapter.RewardAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.ui.customView.SelectorButton;
@@ -52,7 +52,7 @@ public class SpreadRewardActivity extends BaseActivity {
                     return;
                 }
 
-                RequestManager.get().execute(new GetSpreadReward(baseReward.get_id()), new RequestListener<JSONObject>() {
+                RequestManager.get().execute(new RGetSpreadReward(baseReward.get_id()), new RequestListener<JSONObject>() {
                     @Override
                     public void onSuccess(RequestBase request, JSONObject result) {
                         listener.onResult(true);
@@ -85,7 +85,7 @@ public class SpreadRewardActivity extends BaseActivity {
                     return;
                 }
 
-                RequestManager.get().execute(new GetSpreadReward(mPublishReward.get_id()), new RequestListener<JSONObject>() {
+                RequestManager.get().execute(new RGetSpreadReward(mPublishReward.get_id()), new RequestListener<JSONObject>() {
                     @Override
                     public void onSuccess(RequestBase request, JSONObject result) {
                         mPublishReward.setCount(mPublishReward.getCount() - 1);
@@ -113,7 +113,7 @@ public class SpreadRewardActivity extends BaseActivity {
             }
         });
 
-        RequestManager.get().execute(new GetSpreadRewardList(), new RequestListener<List<TeacherCompleteSpreadReward>>() {
+        RequestManager.get().execute(new RGetSpreadRewardList(), new RequestListener<List<TeacherCompleteSpreadReward>>() {
             @Override
             public void onSuccess(RequestBase request, List<TeacherCompleteSpreadReward> result) {
                 mRewards.addAll(result);

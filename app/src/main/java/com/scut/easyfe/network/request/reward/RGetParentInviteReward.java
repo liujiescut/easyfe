@@ -14,19 +14,19 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 /**
- * 领取邀请有奖奖励（家教）
+ * 领取邀请有奖奖励（家长）
  * Created by Jayme on 16/5/14.
  */
-public class GetTeacherInviteReward extends RequestBase<JSONObject>{
+public class RGetParentInviteReward extends RequestBase<JSONObject>{
     private String mPhone;
 
-    public GetTeacherInviteReward(@NonNull String mPhone) {
+    public RGetParentInviteReward(@NonNull String mPhone) {
         this.mPhone = mPhone;
     }
 
     @Override
     public String getUrl() {
-        return Constants.URL.URL_GET_TEACHER_INVITE_REWARD;
+        return Constants.URL.URL_GET_PARENT_INVITE_REWARD;
     }
 
     @Override

@@ -14,26 +14,26 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 /**
- * 领取邀请有奖奖励（家长）
- * Created by Jayme on 16/5/14.
+ * 领取特价推广奖励
+ * Created by gz on 16/5/14.
  */
-public class GetParentInviteReward extends RequestBase<JSONObject>{
-    private String mPhone;
+public class RGetSpreadReward extends RequestBase<JSONObject>{
+    private String mRewardId;
 
-    public GetParentInviteReward(@NonNull String mPhone) {
-        this.mPhone = mPhone;
+    public RGetSpreadReward(@NonNull String rewardId) {
+        this.mRewardId = rewardId;
     }
 
     @Override
     public String getUrl() {
-        return Constants.URL.URL_GET_PARENT_INVITE_REWARD;
+        return Constants.URL.URL_GET_SPREAD_REWARD;
     }
 
     @Override
     public JSONObject getJsonParams() throws JSONException {
         JSONObject params = new JSONObject();
         params.put("token", App.getUser().getToken());
-        params.put("phone", mPhone);
+        params.put("rewardId", mRewardId);
         return params;
     }
 

@@ -1,10 +1,5 @@
 package com.scut.easyfe.ui.activity;
 
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,8 +11,6 @@ import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.OtherUtils;
-
-import java.util.ArrayList;
 
 /**
  * 收款渠道页面
@@ -55,7 +48,7 @@ public class ReceivablesChannelActivity extends BaseActivity {
         ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("家教注册 - 收款渠道");
 
         mPicker = new OptionsPickerView<>(mContext);
-        mPicker.setPicker(Constants.Data.mBankNameList);
+        mPicker.setPicker(Constants.Data.bankNameList);
         mPicker.setCyclic(false);
 
         mAlipayEditText = OtherUtils.findViewById(this, R.id.receivables_channel_et_alipay);
@@ -76,7 +69,7 @@ public class ReceivablesChannelActivity extends BaseActivity {
         mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
-                mBankNameTextView.setText(Constants.Data.mBankNameList.get(options1));
+                mBankNameTextView.setText(Constants.Data.bankNameList.get(options1));
             }
         });
     }

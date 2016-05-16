@@ -66,7 +66,7 @@ public class WalletActivity extends BaseActivity {
         mCardNumTextView = OtherUtils.findViewById(this, R.id.wallet_tv_card_num);
 
         mPicker = new OptionsPickerView<>(mContext);
-        mPicker.setPicker(Constants.Data.mBankNameList);
+        mPicker.setPicker(Constants.Data.bankNameList);
         mPicker.setCyclic(false);
 
         if(!App.getUser().isParent()){
@@ -79,7 +79,7 @@ public class WalletActivity extends BaseActivity {
         mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
-                mBankNameTextView.setText(Constants.Data.mBankNameList.get(options1));
+                mBankNameTextView.setText(Constants.Data.bankNameList.get(options1));
             }
         });
     }

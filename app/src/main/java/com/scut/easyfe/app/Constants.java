@@ -197,18 +197,13 @@ public class Constants {
         public static final ArrayList<Integer> trafficTimeHourList = new ArrayList<>();               //授课时间之小时
         public static final ArrayList<ArrayList<Integer>> trafficTimeMinuteList = new ArrayList<>();  //授课时间之分钟
         public static final ArrayList<String> genderList = new ArrayList<>();                       //可选性别
-        public static final ArrayList<String> schoolList = new ArrayList<>();                       //可选性别
-        public static final ArrayList<String> professionList = new ArrayList<>();                   //可选的专业
-        public static final ArrayList<ArrayList<String>> courseGradeList = new ArrayList<>();
-        public static final ArrayList<String> studentStateList = new ArrayList<>();                 //可选的年级一级分类
-        public static final ArrayList<ArrayList<String>> studentGradeList = new ArrayList<>();      //可选的年级二级分类
         public static final ArrayList<String> teacherGradeList = new ArrayList<>();                 //家教的年级列表
         public static final ArrayList<String> weekList = new ArrayList<>();
         public static final ArrayList<String> ageList = new ArrayList<>();
         public static final ArrayList<String> scoreRangeList = new ArrayList<>();
         public static final ArrayList<String> hasTeachChildCountRangeList = new ArrayList<>();
         public static final ArrayList<String> hasTeachChildTimeRangeList = new ArrayList<>();
-        public static ArrayList<String> mBankNameList = new ArrayList<>();
+        public static ArrayList<String> bankNameList = new ArrayList<>();
 
         static {
 
@@ -239,142 +234,25 @@ public class Constants {
                 trafficTimeMinuteList.add(trafficTimeMinutes);
             }
 
-            mBankNameList.add("工商银行");
-            mBankNameList.add("建设银行");
-            mBankNameList.add("中国银行");
-            mBankNameList.add("农业银行");
-            mBankNameList.add("交通银行");
-            mBankNameList.add("招商银行");
-            mBankNameList.add("邮政储蓄银行");
-            mBankNameList.add("光大银行");
-            mBankNameList.add("民生银行");
-            mBankNameList.add("平安银行");
-            mBankNameList.add("浦发银行");
-            mBankNameList.add("中信银行");
-            mBankNameList.add("兴业银行");
-            mBankNameList.add("华夏银行");
-            mBankNameList.add("北京银行");
-            mBankNameList.add("上海银行");
-
-            schoolList.add("华南理工大学");
-            schoolList.add("中山大学");
-            schoolList.add("暨南大学");
-            schoolList.add("华南师范大学");
-            schoolList.add("华南农业大学");
-            schoolList.add("南方医科大学");
-            schoolList.add("广东工业大学");
-            schoolList.add("广东外语外贸大学");
-            schoolList.add("广州大学");
-            schoolList.add("广州中医药大学");
-            schoolList.add("广东财经大学");
-            schoolList.add("其他大学");
+            bankNameList.add("工商银行");
+            bankNameList.add("建设银行");
+            bankNameList.add("中国银行");
+            bankNameList.add("农业银行");
+            bankNameList.add("交通银行");
+            bankNameList.add("招商银行");
+            bankNameList.add("邮政储蓄银行");
+            bankNameList.add("光大银行");
+            bankNameList.add("民生银行");
+            bankNameList.add("平安银行");
+            bankNameList.add("浦发银行");
+            bankNameList.add("中信银行");
+            bankNameList.add("兴业银行");
+            bankNameList.add("华夏银行");
+            bankNameList.add("北京银行");
+            bankNameList.add("上海银行");
 
             genderList.add("女");
             genderList.add("男");
-
-            professionList.add("数学");
-            professionList.add("英语");
-            professionList.add("国际学院内设专业(英文授课)");
-            professionList.add("物理类");
-            professionList.add("化学类");
-            professionList.add("生物学类");
-            professionList.add("师范专业(包括教育学)");
-            professionList.add("心理学");
-            professionList.add("管理类");
-            professionList.add("经济类");
-            professionList.add("外语系(英语专业以外)");
-            professionList.add("建筑类");
-            professionList.add("法学");
-            professionList.add("新闻");
-            professionList.add("中文");
-            professionList.add("政治");
-            professionList.add("历史");
-            professionList.add("地质地理");
-            professionList.add("医学/药学");
-            professionList.add("社会学类");
-            professionList.add("农林专业");
-            professionList.add("体育");
-            professionList.add("艺术");
-            professionList.add("计算机");
-            professionList.add("电子信息科学");
-            professionList.add("自然类科学");
-            professionList.add("其他");
-
-            ArrayList<String> mathCourseGradeOne = new ArrayList<>();
-            ArrayList<String> mathCourseGradeTwo = new ArrayList<>();
-            ArrayList<String> mathCourseGradeThree = new ArrayList<>();
-            ArrayList<String> englishCourseGrade = new ArrayList<>();
-            ArrayList<String> physicalCourseGrade = new ArrayList<>();
-            ArrayList<String> chemistryCourseGrade = new ArrayList<>();
-            ArrayList<String> biologicalCourseGrade = new ArrayList<>();
-            ArrayList<String> chineseCourseGrade = new ArrayList<>();
-            ArrayList<String> primaryGeneralCourseGrade = new ArrayList<>();
-
-
-            chineseCourseGrade.add("一年级至三年级");
-            chineseCourseGrade.add("四年级");
-            chineseCourseGrade.add("五年级");
-            chineseCourseGrade.add("六年级");
-
-            mathCourseGradeOne.addAll(chineseCourseGrade);
-            mathCourseGradeOne.add("初一");
-            mathCourseGradeOne.add("初二");
-            mathCourseGradeOne.add("初三");
-
-            mathCourseGradeTwo.add("高一");
-            mathCourseGradeTwo.add("高二");
-            mathCourseGradeTwo.add("高三");
-
-            mathCourseGradeThree.addAll(mathCourseGradeTwo);
-
-            englishCourseGrade.addAll(mathCourseGradeOne);
-            englishCourseGrade.addAll(mathCourseGradeTwo);
-
-            physicalCourseGrade.add("初一");
-            physicalCourseGrade.add("初二");
-            physicalCourseGrade.add("初三");
-            physicalCourseGrade.addAll(mathCourseGradeTwo);
-
-            chemistryCourseGrade.addAll(physicalCourseGrade);
-
-            biologicalCourseGrade.addAll(physicalCourseGrade);
-
-            primaryGeneralCourseGrade.addAll(chineseCourseGrade);
-
-            courseGradeList.add(mathCourseGradeOne);
-            courseGradeList.add(mathCourseGradeTwo);
-            courseGradeList.add(mathCourseGradeThree);
-            courseGradeList.add(englishCourseGrade);
-            courseGradeList.add(physicalCourseGrade);
-            courseGradeList.add(chemistryCourseGrade);
-            courseGradeList.add(biologicalCourseGrade);
-            courseGradeList.add(chineseCourseGrade);
-            courseGradeList.add(primaryGeneralCourseGrade);
-
-            studentStateList.add("小学");
-            studentStateList.add("初中");
-            studentStateList.add("高中");
-
-            ArrayList<String> primaryStateGrade = new ArrayList<>();
-            ArrayList<String> middleStateGrade = new ArrayList<>();
-            ArrayList<String> highStateGrade = new ArrayList<>();
-
-            primaryStateGrade.add("一年级至三年级");
-            primaryStateGrade.add("四年级");
-            primaryStateGrade.add("五年级");
-            primaryStateGrade.add("六年级");
-
-            middleStateGrade.add("初一");
-            middleStateGrade.add("初二");
-            middleStateGrade.add("初三");
-
-            highStateGrade.add("高一");
-            highStateGrade.add("高二");
-            highStateGrade.add("高三");
-
-            studentGradeList.add(primaryStateGrade);
-            studentGradeList.add(middleStateGrade);
-            studentGradeList.add(highStateGrade);
 
             teacherGradeList.add("大一");
             teacherGradeList.add("大二");
