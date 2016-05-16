@@ -58,8 +58,8 @@ public class MainActivity extends BaseActivity {
         }
 
         boolean isTeacher = App.getUser(false).isTeacher();
-        mLeftDrawer.findViewById(R.id.left_drawer_tv_wallet).setVisibility(isTeacher ? View.VISIBLE : View.GONE);
-        mLeftDrawer.findViewById(R.id.left_drawer_tv_divider_wallet).setVisibility(isTeacher ? View.VISIBLE : View.GONE);
+//        mLeftDrawer.findViewById(R.id.left_drawer_tv_wallet).setVisibility(isTeacher ? View.VISIBLE : View.GONE);
+//        mLeftDrawer.findViewById(R.id.left_drawer_tv_divider_wallet).setVisibility(isTeacher ? View.VISIBLE : View.GONE);
         mLeftDrawer.findViewById(R.id.left_drawer_tv_special_order).setVisibility(isTeacher ? View.VISIBLE : View.GONE);
         mLeftDrawer.findViewById(R.id.left_drawer_tv_divider_special_order).setVisibility(isTeacher ? View.VISIBLE : View.GONE);
         mLeftDrawer.findViewById(R.id.left_drawer_tv_teacher_info).setVisibility(isTeacher ? View.VISIBLE : View.GONE);
@@ -193,9 +193,6 @@ public class MainActivity extends BaseActivity {
 //
 //            }
 //        });
-        if(!App.getUser().isTeacher()){
-            return;
-        }
         redirectToActivity(mContext, WalletActivity.class);
     }
 

@@ -5,13 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.activity.WalletActivity">
-    <include
-        layout="@layout/titlebar"/>
+
+    <include layout="@layout/titlebar" />
 
     <LinearLayout
-        android:layout_marginTop="@dimen/layout_margin_small"
         style="@style/ll_container_normal_style"
-        >
+        android:layout_marginTop="@dimen/layout_margin_small">
 
         <TextView
             style="@style/text_normal_style"
@@ -23,38 +22,37 @@
             android:id="@+id/wallet_tv_account_balance"
             style="@style/text_normal_style"
             android:layout_weight="2.2"
-            android:textSize="@dimen/text_size_large"
-            android:textColor="@color/theme_color"
             android:gravity="start|center_vertical"
-            tools:text="666 元"
-            />
+            android:textColor="@color/theme_color"
+            android:textSize="@dimen/text_size_large"
+            tools:text="666 元" />
+
         <RelativeLayout
             android:layout_width="0dip"
             android:layout_height="match_parent"
+            android:layout_weight="0.8"
             android:background="@color/text_area_bg_inner"
             android:gravity="center"
-            android:onClick="onWithdrawClick"
-            android:layout_weight="0.8">
+            android:onClick="onWithdrawClick">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/selector_wallet_withdraw"
-                android:textSize="@dimen/text_size_small"
-                android:singleLine="true"
-                android:paddingTop="2dp"
+                android:clickable="true"
+                android:onClick="onWithdrawClick"
                 android:paddingBottom="2dp"
                 android:paddingLeft="@dimen/layout_padding_normal"
                 android:paddingRight="@dimen/layout_padding_normal"
-                android:clickable="true"
-                android:onClick="onWithdrawClick"
+                android:paddingTop="2dp"
+                android:singleLine="true"
+                android:text="@string/withdraw"
                 android:textColor="@color/theme_color"
-                android:text="@string/withdraw" />
+                android:textSize="@dimen/text_size_small" />
         </RelativeLayout>
     </LinearLayout>
 
-    <LinearLayout
-        style="@style/ll_container_normal_style"
-        >
+    <LinearLayout style="@style/ll_container_normal_style">
 
         <TextView
             style="@style/text_normal_style"
@@ -66,15 +64,12 @@
             android:id="@+id/wallet_tv_has_withdraw_count"
             style="@style/text_normal_style"
             android:layout_weight="3"
-            android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
-            tools:text="2333 元"
-             />
+            android:textSize="@dimen/text_size_medium"
+            tools:text="2333 元" />
     </LinearLayout>
 
-    <LinearLayout
-        style="@style/ll_container_normal_style"
-        >
+    <LinearLayout style="@style/ll_container_normal_style">
 
         <TextView
             style="@style/text_normal_style"
@@ -86,16 +81,14 @@
             android:id="@+id/wallet_tv_withdrawing_count"
             style="@style/text_normal_style"
             android:layout_weight="3"
-            android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
-            tools:text="2333 元"
-             />
+            android:textSize="@dimen/text_size_medium"
+            tools:text="2333 元" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="@dimen/layout_margin_small"
         style="@style/ll_container_normal_style"
-        >
+        android:layout_marginTop="@dimen/layout_margin_small">
 
         <TextView
             style="@style/text_normal_style"
@@ -107,16 +100,13 @@
             android:id="@+id/wallet_tv_alipay"
             style="@style/text_normal_style"
             android:layout_weight="3"
-            android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
-            tools:text="123456789"
             android:onClick="onAlipayAccountClick"
-            />
+            android:textSize="@dimen/text_size_medium"
+            tools:text="123456789" />
     </LinearLayout>
 
-    <LinearLayout
-        style="@style/ll_container_normal_style"
-        >
+    <LinearLayout style="@style/ll_container_normal_style">
 
         <TextView
             style="@style/text_normal_style"
@@ -128,17 +118,15 @@
             android:id="@+id/wallet_tv_wechat"
             style="@style/text_normal_style"
             android:layout_weight="3"
-            android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
-            tools:text="123456789"
             android:onClick="onWechatAccountClick"
-            />
+            android:textSize="@dimen/text_size_medium"
+            tools:text="123456789" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="@dimen/layout_margin_small"
         style="@style/ll_container_normal_style"
-        >
+        android:layout_marginTop="@dimen/layout_margin_small">
 
         <TextView
             style="@style/text_normal_style"
@@ -150,16 +138,13 @@
             android:id="@+id/wallet_tv_bank_name"
             style="@style/text_normal_style"
             android:layout_weight="3"
-            android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
             android:onClick="onBankNameClick"
-            tools:text="中国银行"
-             />
+            android:textSize="@dimen/text_size_medium"
+            tools:text="中国银行" />
     </LinearLayout>
 
-    <LinearLayout
-        style="@style/ll_container_normal_style"
-        >
+    <LinearLayout style="@style/ll_container_normal_style">
 
         <TextView
             style="@style/text_normal_style"
@@ -171,11 +156,27 @@
             android:id="@+id/wallet_tv_card_num"
             style="@style/text_normal_style"
             android:layout_weight="3"
-            android:textSize="@dimen/text_size_medium"
             android:gravity="start|center_vertical"
             android:onClick="onCardNumClick"
-            tools:text="123456789"
-             />
+            android:textSize="@dimen/text_size_medium"
+            tools:text="123456789" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/wallet_ll_my_tickets"
+        style="@style/ll_container_normal_style"
+        android:layout_marginTop="@dimen/layout_margin_small">
+        <TextView
+            style="@style/text_normal_style"
+            android:onClick="onMyTicketClick"
+            android:layout_weight="3"
+            android:gravity="start|center_vertical"
+            android:textColor="@color/theme_color"
+            android:textSize="@dimen/text_size_medium"
+            android:drawableRight="@mipmap/icon_right_arrow_padding"
+            android:padding="@dimen/layout_padding_small"
+            android:text="@string/my_ticket" />
     </LinearLayout>
 
 </LinearLayout>

@@ -68,6 +68,10 @@ public class WalletActivity extends BaseActivity {
         mPicker = new OptionsPickerView<>(mContext);
         mPicker.setPicker(Constants.Data.mBankNameList);
         mPicker.setCyclic(false);
+
+        if(!App.getUser().isParent()){
+            ((View)OtherUtils.findViewById(this, R.id.wallet_ll_my_tickets)).setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -110,7 +114,9 @@ public class WalletActivity extends BaseActivity {
 
             @Override
             public void onFailed(RequestBase request, int errorCode, String errorMsg) {
-
+                toast(errorMsg);
+                mIsLoadingDismissByUser = false;
+                stopLoading();
             }
         });
     }
@@ -298,5 +304,12 @@ public class WalletActivity extends BaseActivity {
                 }
             }).show();
         }
+    }
+
+    /**
+     * 点击我的优惠券
+     */
+    public void onMyTicketClick(View view){
+        redirectToActivity(this, TicketActivity.class);
     }
 }
