@@ -269,14 +269,14 @@
                     <!--tools:text="@string/price_example" />-->
             <!--</LinearLayout>-->
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="@dimen/layout_padding_small"
-                android:text="@string/teacher_register_step_two_info_3"
-                android:textColor="@color/text_hint_color"
-                android:textSize="@dimen/text_size_tiny" />
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:padding="@dimen/layout_padding_small"-->
+                <!--android:text="@string/teacher_register_step_two_info_3"-->
+                <!--android:textColor="@color/text_hint_color"-->
+                <!--android:textSize="@dimen/text_size_tiny" />-->
 
             <TextView
                 android:id="@+id/teacher_register_two_tv_submit"

@@ -458,7 +458,7 @@ public class BookActivity extends BaseActivity {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 mStudentAgeTextView.setText(Constants.Data.ageList.get(options1));
-                mChildAge = options1;
+                mChildAge = Integer.parseInt(Constants.Data.ageList.get(options1));
             }
         });
         mSinglePicker.show();

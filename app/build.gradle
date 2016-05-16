@@ -1,14 +1,20 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        jay {
+            keyAlias '123456789'
+            keyPassword 'jaykey'
+            storeFile file('/Users/jay/workplace/as/key/jay.jks')
+            storePassword 'jaykey'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion '23.0.1'
-
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
     }
-
     defaultConfig {
         applicationId "com.scut.easyfe"
         minSdkVersion 17
@@ -20,14 +26,17 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.jay
+        }
+        debug {
+            signingConfig signingConfigs.jay
         }
     }
-
     useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:support-v4:23.2.1'
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.android.support:design:23.2.1'

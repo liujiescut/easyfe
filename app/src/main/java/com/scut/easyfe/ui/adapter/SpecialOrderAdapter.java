@@ -70,7 +70,7 @@ public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
         }
 
         holder.teacherName.setText(mOrders.get(position).getTeacher().getName());
-        holder.price.setText(String.format("%.2f 元/小时", mOrders.get(position).getTotalPrice() - mOrders.get(position).getSubsidy()));
+        holder.price.setText(String.format("%.2f 元/小时", mOrders.get(position).getPrice()));
         holder.contentUp.setText(getContentUp(position));
         holder.contentDown.setText(getContentDown(position));
         holder.reserve.setOnClickListener(new View.OnClickListener() {

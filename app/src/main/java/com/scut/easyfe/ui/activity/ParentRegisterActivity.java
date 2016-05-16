@@ -145,6 +145,7 @@ public class ParentRegisterActivity extends BaseActivity {
         mParentPasswordEditText.setText(mUser.getPassword());
         mChildGenderTextView.setText(mUser.getParentMessage().getChildGender() == Constants.Identifier.MALE ? R.string.male : R.string.female);
         mChildGradeTextView.setText(mUser.getParentMessage().getChildGrade());
+        mChildAgeTextView.setText(String.format("%s 岁", mUser.getParentMessage().getChildAge()));
         mAddressTextView.setText(mUser.getPosition().getAddress());
     }
 
@@ -200,8 +201,10 @@ public class ParentRegisterActivity extends BaseActivity {
                 if (mStates.size() > 0) {
                     mDoublePicker.setPicker(mStates, mGrades, true);
                     mDoublePicker.setCyclic(false);
-                    mDoublePicker.setSelectOptions(0, 0);
-                    mChildGradeTextView.setText(String.format("%s %s", mStates.get(0), mGrades.get(0).get(0)));
+                    if(mFromType == Constants.Identifier.TYPE_REGISTER) {
+                        mDoublePicker.setSelectOptions(0, 0);
+                        mChildGradeTextView.setText(String.format("%s %s", mStates.get(0), mGrades.get(0).get(0)));
+                    }
                 }
 
                 mGetGradeSuccess = true;
