@@ -93,8 +93,6 @@ public class Teacher extends BaseEntity {
     //天使计划
     private AngelPlan angelPlan = new AngelPlan();
 
-    //Todo 家教奖励相关字段
-
     public String getScoreInfo(){
         String scoreInfo = "";
         scoreInfo += String.format("综合评分：%.1f\n", score);

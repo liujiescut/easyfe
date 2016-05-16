@@ -19,9 +19,6 @@ public class Parent extends BaseEntity{
 
     private int childAge = 10;
 
-    //Todo 奖励相关
-
-
     public int getChildAge() {
         return childAge;
     }

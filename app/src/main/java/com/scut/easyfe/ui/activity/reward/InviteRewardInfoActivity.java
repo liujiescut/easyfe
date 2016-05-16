@@ -15,6 +15,8 @@ import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.kjFrame.http.JsonRequest;
+import com.scut.easyfe.network.request.reward.GetParentInviteReward;
+import com.scut.easyfe.network.request.reward.GetParentInviteRewardList;
 import com.scut.easyfe.network.request.reward.GetSpreadReward;
 import com.scut.easyfe.network.request.reward.GetTeacherInviteReward;
 import com.scut.easyfe.network.request.reward.GetTeacherInviteRewardList;
@@ -54,8 +56,26 @@ public class InviteRewardInfoActivity extends BaseActivity {
         mAdapter = new RewardAdapter(mContext, mRewards) {
             @Override
             protected void onGetRewardClick(BaseReward baseReward, final OnGetRewardListener listener) {
+
                 if(App.getUser().isParent()){
-                    //todo 家长邀请有奖
+                    if (!baseReward.isReceivable() || !(baseReward instanceof ParentInviteReward)) {
+                        return;
+                    }
+
+                    ParentInviteReward reward = (ParentInviteReward)baseReward;
+                    RequestManager.get().execute(new GetParentInviteReward(reward.getPhone()), new RequestListener<JSONObject>() {
+                        @Override
+                        public void onSuccess(RequestBase request, JSONObject result) {
+                            listener.onResult(true);
+                            toast("领取成功");
+                        }
+
+                        @Override
+                        public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                            listener.onResult(false);
+                            toast(errorMsg);
+                        }
+                    });
 
                 }else{
                     if (!baseReward.isReceivable() || !(baseReward instanceof TeacherInviteReward)) {
@@ -95,7 +115,24 @@ public class InviteRewardInfoActivity extends BaseActivity {
         });
 
         if(App.getUser().isParent()) {
-        //todo 家长邀请有奖
+            RequestManager.get().execute(new GetParentInviteRewardList(), new RequestListener<List<ParentInviteReward>>() {
+                @Override
+                public void onSuccess(RequestBase request, List<ParentInviteReward> result) {
+                    mRewards.clear();
+                    mRewards.addAll(result);
+                    mAdapter.notifyDataSetChanged();
+
+                    mIsLoadingCloseByUser = false;
+                    stopLoading();
+                }
+
+                @Override
+                public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                    mIsLoadingCloseByUser = false;
+                    stopLoading();
+                }
+            });
+
         }else {
             RequestManager.get().execute(new GetTeacherInviteRewardList(), new RequestListener<List<TeacherInviteReward>>() {
                 @Override

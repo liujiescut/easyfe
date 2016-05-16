@@ -183,91 +183,91 @@
                     android:text="@string/fill_message" />
             </LinearLayout>
 
-            <LinearLayout style="@style/ll_container_normal_style">
+            <!--<LinearLayout style="@style/ll_container_normal_style">-->
 
-                <TextView
-                    style="@style/text_normal_style"
-                    android:layout_marginRight="@dimen/container_stoke_width"
-                    android:layout_weight="1"
-                    android:drawableRight="@mipmap/icon_detail_question_padding"
-                    android:onClick="onAngleDetailClick"
-                    android:text="@string/angel_plan" />
+                <!--<TextView-->
+                    <!--style="@style/text_normal_style"-->
+                    <!--android:layout_marginRight="@dimen/container_stoke_width"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:drawableRight="@mipmap/icon_detail_question_padding"-->
+                    <!--android:onClick="onAngleDetailClick"-->
+                    <!--android:text="@string/angel_plan" />-->
 
-                <TextView
-                    android:id="@+id/teacher_register_two_tv_angel"
-                    style="@style/text_editable_style"
-                    android:layout_weight="1"
-                    android:drawableRight="@mipmap/icon_right_arrow_padding"
-                    android:gravity="start|center_vertical"
-                    android:onClick="onAnglePlaneClick"
-                    android:text="@string/no" />
-            </LinearLayout>
+                <!--<TextView-->
+                    <!--android:id="@+id/teacher_register_two_tv_angel"-->
+                    <!--style="@style/text_editable_style"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:drawableRight="@mipmap/icon_right_arrow_padding"-->
+                    <!--android:gravity="start|center_vertical"-->
+                    <!--android:onClick="onAnglePlaneClick"-->
+                    <!--android:text="@string/no" />-->
+            <!--</LinearLayout>-->
 
-            <LinearLayout
-                android:id="@+id/teacher_register_two_ll_angel_boy_age"
-                style="@style/ll_container_normal_style"
-                android:visibility="gone"
-                tools:visibility="visible">
+            <!--<LinearLayout-->
+                <!--android:id="@+id/teacher_register_two_ll_angel_boy_age"-->
+                <!--style="@style/ll_container_normal_style"-->
+                <!--android:visibility="gone"-->
+                <!--tools:visibility="visible">-->
 
-                <TextView
-                    style="@style/text_normal_style"
-                    android:layout_marginRight="@dimen/container_stoke_width"
-                    android:layout_weight="1"
-                    android:text="@string/angel_plan_boy_age" />
+                <!--<TextView-->
+                    <!--style="@style/text_normal_style"-->
+                    <!--android:layout_marginRight="@dimen/container_stoke_width"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:text="@string/angel_plan_boy_age" />-->
 
-                <TextView
-                    android:id="@+id/teacher_register_two_tv_angel_boy_age"
-                    style="@style/text_editable_style"
-                    android:layout_weight="1"
-                    android:drawableRight="@mipmap/icon_right_arrow_padding"
-                    android:gravity="start|center_vertical"
-                    android:onClick="onMaleAgeClick"
-                    android:text="@string/deny" />
-            </LinearLayout>
+                <!--<TextView-->
+                    <!--android:id="@+id/teacher_register_two_tv_angel_boy_age"-->
+                    <!--style="@style/text_editable_style"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:drawableRight="@mipmap/icon_right_arrow_padding"-->
+                    <!--android:gravity="start|center_vertical"-->
+                    <!--android:onClick="onMaleAgeClick"-->
+                    <!--android:text="@string/deny" />-->
+            <!--</LinearLayout>-->
 
-            <LinearLayout
-                android:id="@+id/teacher_register_two_ll_angel_girl_age"
-                style="@style/ll_container_normal_style"
-                android:visibility="gone"
-                tools:visibility="visible">
+            <!--<LinearLayout-->
+                <!--android:id="@+id/teacher_register_two_ll_angel_girl_age"-->
+                <!--style="@style/ll_container_normal_style"-->
+                <!--android:visibility="gone"-->
+                <!--tools:visibility="visible">-->
 
-                <TextView
-                    style="@style/text_normal_style"
-                    android:layout_marginRight="@dimen/container_stoke_width"
-                    android:layout_weight="1"
-                    android:text="@string/angel_plane_girl_age" />
+                <!--<TextView-->
+                    <!--style="@style/text_normal_style"-->
+                    <!--android:layout_marginRight="@dimen/container_stoke_width"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:text="@string/angel_plane_girl_age" />-->
 
-                <TextView
-                    android:id="@+id/teacher_register_two_tv_angel_girl_age"
-                    style="@style/text_editable_style"
-                    android:layout_weight="1"
-                    android:drawableRight="@mipmap/icon_right_arrow_padding"
-                    android:gravity="start|center_vertical"
-                    android:onClick="onFemaleAgeClick"
-                    android:text="@string/deny" />
-            </LinearLayout>
+                <!--<TextView-->
+                    <!--android:id="@+id/teacher_register_two_tv_angel_girl_age"-->
+                    <!--style="@style/text_editable_style"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:drawableRight="@mipmap/icon_right_arrow_padding"-->
+                    <!--android:gravity="start|center_vertical"-->
+                    <!--android:onClick="onFemaleAgeClick"-->
+                    <!--android:text="@string/deny" />-->
+            <!--</LinearLayout>-->
 
-            <LinearLayout
-                android:id="@+id/teacher_register_two_ll_angel_price"
-                style="@style/ll_container_normal_style"
-                android:visibility="gone"
-                tools:visibility="visible">
+            <!--<LinearLayout-->
+                <!--android:id="@+id/teacher_register_two_ll_angel_price"-->
+                <!--style="@style/ll_container_normal_style"-->
+                <!--android:visibility="gone"-->
+                <!--tools:visibility="visible">-->
 
-                <TextView
-                    style="@style/text_normal_style"
-                    android:layout_marginRight="@dimen/container_stoke_width"
-                    android:layout_weight="1"
-                    android:text="@string/angel_plan_price" />
+                <!--<TextView-->
+                    <!--style="@style/text_normal_style"-->
+                    <!--android:layout_marginRight="@dimen/container_stoke_width"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:text="@string/angel_plan_price" />-->
 
-                <TextView
-                    android:id="@+id/teacher_register_two_tv_angel_price"
-                    style="@style/text_editable_style"
-                    android:layout_weight="1"
-                    android:drawableRight="@mipmap/icon_right_arrow_padding"
-                    android:gravity="start|center_vertical"
-                    android:onClick="onAnglePriceClick"
-                    tools:text="@string/price_example" />
-            </LinearLayout>
+                <!--<TextView-->
+                    <!--android:id="@+id/teacher_register_two_tv_angel_price"-->
+                    <!--style="@style/text_editable_style"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:drawableRight="@mipmap/icon_right_arrow_padding"-->
+                    <!--android:gravity="start|center_vertical"-->
+                    <!--android:onClick="onAnglePriceClick"-->
+                    <!--tools:text="@string/price_example" />-->
+            <!--</LinearLayout>-->
 
             <TextView
                 android:layout_width="match_parent"

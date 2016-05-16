@@ -14,7 +14,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 /**
- * 领取邀请有奖奖励（家教）
+ * 领取邀请有奖奖励（家长）
  * Created by Jayme on 16/5/14.
  */
 public class GetParentInviteReward extends RequestBase<JSONObject>{
@@ -26,7 +26,7 @@ public class GetParentInviteReward extends RequestBase<JSONObject>{
 
     @Override
     public String getUrl() {
-        return Constants.URL.URL_GET_TEACHER_INVITE_REWARD;
+        return Constants.URL.URL_GET_PARENT_INVITE_REWARD;
     }
 
     @Override

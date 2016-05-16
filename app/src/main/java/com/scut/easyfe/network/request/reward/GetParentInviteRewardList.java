@@ -3,6 +3,7 @@ package com.scut.easyfe.network.request.reward;
 import com.fasterxml.jackson.databind.JavaType;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.entity.reward.ParentInviteReward;
 import com.scut.easyfe.entity.reward.TeacherInviteReward;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.kjFrame.http.HttpParams;
@@ -18,13 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 获取特价推广奖励的列表
+ *  获取邀请奖励的列表（家长）
  * Created by jay on 16/5/12.
  */
-public class GetParentInviteRewardList extends RequestBase<List<TeacherInviteReward>>{
+public class GetParentInviteRewardList extends RequestBase<List<ParentInviteReward>>{
     @Override
     public String getUrl() {
-        return Constants.URL.URL_GET_TEACHER_INVITE_REWARD_LIST;
+        return Constants.URL.URL_GET_PARENT_INVITE_REWARD_LIST;
     }
 
     @Override
@@ -40,18 +41,18 @@ public class GetParentInviteRewardList extends RequestBase<List<TeacherInviteRew
     }
 
     @Override
-    public List<TeacherInviteReward> parseResultAsObject(JSONObject jsonObject)
+    public List<ParentInviteReward> parseResultAsObject(JSONObject jsonObject)
             throws IOException, JSONException {
-        List<TeacherInviteReward> result = new ArrayList<>();
-        JavaType javaType = mObjectMapper.getTypeFactory().constructParametricType(List.class, TeacherInviteReward.class);
+        List<ParentInviteReward> result = new ArrayList<>();
+        JavaType javaType = mObjectMapper.getTypeFactory().constructParametricType(List.class, ParentInviteReward.class);
         try {
             JSONArray rewards = jsonObject.optJSONArray("list");
             if(null != rewards){
-                /** 将返回的地址JsonArray转化为List<TeacherInviteReward> */
+                /** 将返回的地址JsonArray转化为List<ParentInviteReward> */
                 result = mObjectMapper.readValue(rewards.toString(), javaType);
             }
         } catch (IOException e) {
-            LogUtils.i("Json转换为List<TeacherInviteReward>失败!");
+            LogUtils.i("Json转换为List<ParentInviteReward>失败!");
             e.printStackTrace();
         }
 

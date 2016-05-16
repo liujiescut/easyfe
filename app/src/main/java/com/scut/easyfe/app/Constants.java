@@ -69,6 +69,8 @@ public class Constants {
         public static final String URL_GET_SPREAD_REWARD =URL_BASE + "Reward/Discount";
         public static final String URL_GET_TEACHER_INVITE_REWARD_LIST = URL_BASE + "Reward/Invite/Teacher";
         public static final String URL_GET_TEACHER_INVITE_REWARD = URL_BASE + "Reward/Invite/Teacher";
+        public static final String URL_GET_PARENT_INVITE_REWARD_LIST = URL_BASE + "Reward/Invite/Parent";
+        public static final String URL_GET_PARENT_INVITE_REWARD = URL_BASE + "Reward/Invite/Parent";
     }
 
     /**

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 获取特价推广奖励的列表
+ * 获取邀请奖励的列表（家教）
  * Created by jay on 16/5/12.
  */
 public class GetTeacherInviteRewardList extends RequestBase<List<TeacherInviteReward>>{

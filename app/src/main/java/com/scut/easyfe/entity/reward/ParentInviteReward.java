@@ -7,40 +7,38 @@ import android.text.style.ForegroundColorSpan;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 
-import java.util.ArrayList;
-
 /**
  * 家长的邀请奖励
  * Created by jay on 16/5/3.
  */
 public class ParentInviteReward extends BaseReward{
-    private String inviteePhone = "";
-    private int totalCount = 2;
-    private int completeCount = 0;
+    private String phone = "";
+    private int canGetCount = 2;   //达到可以领取的次数
     private float money = 0f;
 
-    public static ArrayList<BaseReward> getTestRewards(){
-        ArrayList<BaseReward> rewards = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            ParentInviteReward reward = new ParentInviteReward();
-            reward.setInviteePhone("1881411111" + i);
-            reward.setTotalCount(2);
-            reward.setCompleteCount(i);
-            reward.setMoney(5);
-            rewards.add(reward);
-        }
 
-
-        return rewards;
-    }
+//    public static ArrayList<BaseReward> getTestRewards(){
+//        ArrayList<BaseReward> rewards = new ArrayList<>();
+//        for (int i = 0; i < 3; i++) {
+//            ParentInviteReward reward = new ParentInviteReward();
+//            reward.setInviteePhone("1881411111" + i);
+//            reward.setTotalCount(2);
+//            reward.setCompleteCount(i);
+//            reward.setMoney(5);
+//            rewards.add(reward);
+//        }
+//
+//
+//        return rewards;
+//    }
 
     @Override
     public SpannableStringBuilder getAsString() {
         String content = "已邀请手机号码: ";
-        content += inviteePhone;
+        content += phone;
         content += "\n";
         content += "已完成订单次数: ";
-        content += String.format("%d次 / %d次", completeCount, totalCount);
+        content += String.format("%d次 / %d次", count, canGetCount);
         content += "\n";
         content += "现金券奖励: ";
 
@@ -53,32 +51,23 @@ public class ParentInviteReward extends BaseReward{
 
     @Override
     public boolean isReceivable() {
-        //Todo
-        return false;
+        return canGet && count >= canGetCount;
     }
 
-    public String getInviteePhone() {
-        return inviteePhone;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setInviteePhone(String inviteePhone) {
-        this.inviteePhone = inviteePhone;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public int getTotalCount() {
-        return totalCount;
+    public int getCanGetCount() {
+        return canGetCount;
     }
 
-    public void setTotalCount(int totalCount) {
-        this.totalCount = totalCount;
-    }
-
-    public int getCompleteCount() {
-        return completeCount;
-    }
-
-    public void setCompleteCount(int completeCount) {
-        this.completeCount = completeCount;
+    public void setCanGetCount(int canGetCount) {
+        this.canGetCount = canGetCount;
     }
 
     public float getMoney() {
