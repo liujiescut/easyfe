@@ -41,6 +41,8 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void initView() {
         ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("登录注册");
+        ((TextView) OtherUtils.findViewById(this, R.id.login_tv_service_hint)).setText(String.format("如忘记密码，请联系客服电话：%s", App.getServicePhone()));
+
         mPhoneEditText = OtherUtils.findViewById(this, R.id.login_et_phone);
         mPasswordEditText = OtherUtils.findViewById(this, R.id.login_et_password);
         mAgreeLicenseTextView = OtherUtils.findViewById(this, R.id.login_tv_agree_license);

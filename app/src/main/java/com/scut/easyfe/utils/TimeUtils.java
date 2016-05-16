@@ -77,7 +77,7 @@ public class TimeUtils {
      * 将0-6的数字转换为星期几
      */
     public static String getWeekStringFromInt(@IntRange(from = 0, to = 6) int weekDay){
-        return Constants.Data.weekList.get(weekDay);
+        return (weekDay < 0 || weekDay > 6) ? "" : Constants.Data.weekList.get(weekDay);
     }
 
     public static int getWeekIntFromString(String weekString){

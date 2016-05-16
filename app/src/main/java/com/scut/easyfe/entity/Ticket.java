@@ -55,7 +55,7 @@ public class Ticket extends BaseEntity{
         StringBuilder sb = new StringBuilder();
         for (Integer week :
                 weekday) {
-            sb.append(TimeUtils.getWeekStringFromInt(week - 1 ));
+            sb.append(TimeUtils.getWeekStringFromInt(week - 1));
             sb.append("、");
         }
 
