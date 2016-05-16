@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
+    android:layout_height="wrap_content"
+    android:minHeight="72dp"
     android:background="@drawable/shape_reward_bg">
     <TextView
         android:id="@+id/item_ticket_tv_text"
         android:layout_width="0dip"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:textColor="@color/text_area_text_color"
         android:textSize="@dimen/text_size_small"
@@ -19,7 +20,7 @@
 
     <View
         android:layout_width="1dp"
-        android:layout_height="80dp"
+        android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:background="@color/text_area_bg"/>
 

@@ -21,7 +21,7 @@ public class Ticket extends BaseEntity{
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("适用年级: ");
-        sb.append(grade);
+        sb.append(getGradeString());
         sb.append("\n");
         sb.append("适用时间: ");
         sb.append(getWeekDayString());
@@ -38,22 +38,32 @@ public class Ticket extends BaseEntity{
             sb.append(TimeUtils.getTime(new Date(deadline), "yyyy-MM-dd"));
         }
 
-        return super.toString();
+        return sb.toString();
+    }
+
+    private String getGradeString(){
+        StringBuilder sb = new StringBuilder();
+        for (String item :
+                grade) {
+            sb.append(item);
+            sb.append("、");
+        }
+        return sb.toString();
     }
 
     private String getWeekDayString(){
         StringBuilder sb = new StringBuilder();
         for (Integer week :
                 weekday) {
-            sb.append(TimeUtils.getWeekStringFromInt(week));
-            sb.append(" ");
+            sb.append(TimeUtils.getWeekStringFromInt(week - 1 ));
+            sb.append("、");
         }
 
         return sb.toString();
     }
 
     private String getConstraint(){
-        return String.format("授课时间超过 %d小时 可用", time);
+        return String.format("授课时间超过%d小时可用", time);
     }
 
     public String getTag() {

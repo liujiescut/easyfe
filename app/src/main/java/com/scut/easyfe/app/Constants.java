@@ -199,7 +199,6 @@ public class Constants {
         public static final ArrayList<String> genderList = new ArrayList<>();                       //可选性别
         public static final ArrayList<String> schoolList = new ArrayList<>();                       //可选性别
         public static final ArrayList<String> professionList = new ArrayList<>();                   //可选的专业
-        public static final ArrayList<String> courseList = new ArrayList<>();                       //可选的课程
         public static final ArrayList<ArrayList<String>> courseGradeList = new ArrayList<>();
         public static final ArrayList<String> studentStateList = new ArrayList<>();                 //可选的年级一级分类
         public static final ArrayList<ArrayList<String>> studentGradeList = new ArrayList<>();      //可选的年级二级分类
@@ -268,6 +267,7 @@ public class Constants {
             schoolList.add("广州大学");
             schoolList.add("广州中医药大学");
             schoolList.add("广东财经大学");
+            schoolList.add("其他大学");
 
             genderList.add("女");
             genderList.add("男");
@@ -299,16 +299,6 @@ public class Constants {
             professionList.add("电子信息科学");
             professionList.add("自然类科学");
             professionList.add("其他");
-
-            courseList.add("数学(非高中)");
-            courseList.add("数学(文科)");
-            courseList.add("数学(理科)");
-            courseList.add("英语");
-            courseList.add("物理");
-            courseList.add("化学");
-            courseList.add("生物");
-            courseList.add("语文");
-            courseList.add("小学全科");
 
             ArrayList<String> mathCourseGradeOne = new ArrayList<>();
             ArrayList<String> mathCourseGradeTwo = new ArrayList<>();

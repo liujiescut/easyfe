@@ -186,10 +186,6 @@ public class BookActivity extends BaseActivity {
                 Constants.Data.studentStateList.get(0),
                 Constants.Data.studentGradeList.get(0).get(0)));
 
-        mCourseTextView.setText(String.format("%s(%s)",
-                Constants.Data.courseList.get(0),
-                Constants.Data.courseGradeList.get(0).get(0)));
-
         mTeachTimeTextView.setText("2 小时 0 分钟");
 
         mStudentAgeTextView.setText(String.format("%d", mChildAge));

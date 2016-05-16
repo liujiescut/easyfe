@@ -210,5 +210,5 @@
     <string name="teach_course_info">价格确定后不能修改，如1个月内均未能接到订单，可联系客服修改价格，也可进行特价推广立马接单哟</string>
     <string name="invite_reward_explain">家长邀请朋友找家教，Ta得 600元，您得 100元。\n家教老师邀请朋友，最高可得 100元^-^\n这么高的福利还不赶紧分享起来\nY^O^Y</string>
     <string name="home_report_callback_hint">您也可以直接联系我们哟，“横拉-联系我们”有我们具体的联系方式哈。^-^</string>
-    <string name="my_ticket">我的优惠券</string>
+    <string name="my_ticket">我的现金券</string>
 </resources>
