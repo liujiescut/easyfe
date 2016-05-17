@@ -12,10 +12,13 @@ import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.order.RPayOrder;
 import com.scut.easyfe.network.request.user.parent.RGetTeacherInfo;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.OtherUtils;
 import com.scut.easyfe.utils.TimeUtils;
+
+import org.json.JSONObject;
 
 public class ToDoOrderActivity extends BaseActivity {
 
@@ -129,7 +132,27 @@ public class ToDoOrderActivity extends BaseActivity {
     }
 
     public void onPayClick(View view) {
-        toast("发起支付");
+        if (OtherUtils.isFastDoubleClick()) {
+            return;
+        }
+
+        RequestManager.get().execute(new RPayOrder(mOrder.get_id()), new RequestListener<JSONObject>() {
+            @Override
+            public void onSuccess(RequestBase request, JSONObject result) {
+                toast(result.optString("message"));
+                mOrder.setState(Constants.Identifier.ORDER_COMPLETED);
+
+                Bundle bundle = new Bundle();
+                bundle.putInt(Constants.Key.ORDER_TYPE, Constants.Identifier.ORDER_COMPLETED);
+                bundle.putSerializable(Constants.Key.ORDER, mOrder);
+                redirectToActivity(mContext, EvaluationActivity.class, bundle);
+            }
+
+            @Override
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                toast(errorMsg);
+            }
+        });
     }
 
     public void onInsuranceClick(View view) {
@@ -140,7 +163,7 @@ public class ToDoOrderActivity extends BaseActivity {
     }
 
     public void onTeacherNameClick(View view) {
-        if(App.getUser().isTeacher()){
+        if (App.getUser().isTeacher()) {
             return;
         }
 
