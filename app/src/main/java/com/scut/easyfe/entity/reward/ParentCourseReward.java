@@ -13,23 +13,35 @@ import java.util.ArrayList;
  * 完成课时现金券及积分奖励
  * Created by jay on 16/5/3.
  */
-public class ParentCourseReward extends BaseReward{
+public class ParentCourseReward extends BaseReward {
     private int time = 0;
-    private float money = 0f;
-    private float integral = 0f;
 
-    public static ArrayList<BaseReward> getTestRewards(){
-        ArrayList<BaseReward> rewards = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
-            ParentCourseReward reward = new ParentCourseReward();
-            reward.setTime(10 + 20 * i);
-            reward.setMoney(i * 10 + 10);
-            reward.setIntegral(i + 1);
-            rewards.add(reward);
-        }
-
-        return rewards;
+    public float getMoney() {
+        return money;
     }
+
+    public void setMoney(float money) {
+        this.money = money;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    public float getScore() {
+        return score;
+    }
+
+    public void setScore(float score) {
+        this.score = score;
+    }
+
+    private float money = 0f;
+    private float score = 0f;
 
     @Override
     public SpannableStringBuilder getAsString() {
@@ -45,7 +57,7 @@ public class ParentCourseReward extends BaseReward{
         content += "\n";
         content += "积分奖励: ";
         int start2 = content.length();
-        String integralReward = String.format("%.0f 分", integral);
+        String integralReward = String.format("%.0f 分", score);
         content += integralReward;
 
         SpannableStringBuilder builder = new SpannableStringBuilder(content);
@@ -59,32 +71,6 @@ public class ParentCourseReward extends BaseReward{
 
     @Override
     public boolean isReceivable() {
-        //Todo
-        return false;
-    }
-
-
-    public int getTime() {
-        return time;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
-    }
-
-    public float getMoney() {
-        return money;
-    }
-
-    public void setMoney(float money) {
-        this.money = money;
-    }
-
-    public float getIntegral() {
-        return integral;
-    }
-
-    public void setIntegral(float integral) {
-        this.integral = integral;
+        return canGet;
     }
 }
