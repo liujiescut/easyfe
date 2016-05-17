@@ -185,7 +185,6 @@ public class Constants {
     }
 
     public static class Data {
-        //Todo 换换换
         public static final String WECHAT_APP_ID = "wx9b7ee5f6471184da";                            //微信分享的APP_ID
         public static final String WEIBO_APP_KEY = "1033545693";                                    //微博分享
         public static final String QQ_APP_ID = "1105349762";

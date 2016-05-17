@@ -1,14 +1,6 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        easyfe {
-            storeFile file('/Users/jay/workplace/as/key/jay.jks')
-            keyAlias '123456789'
-            keyPassword 'jaykey'
-            storePassword 'jaykey'
-        }
-    }
     compileSdkVersion 23
     buildToolsVersion '23.0.1'
     packagingOptions {
@@ -21,16 +13,11 @@ android {
         targetSdkVersion 22
         versionCode 160416
         versionName "1.0"
-        signingConfig signingConfigs.easyfe
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.easyfe
-        }
-        debug {
-            signingConfig signingConfigs.easyfe
         }
     }
     useLibrary 'org.apache.http.legacy'
