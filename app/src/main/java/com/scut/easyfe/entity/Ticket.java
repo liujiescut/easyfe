@@ -11,8 +11,8 @@ import java.util.Date;
  */
 public class Ticket extends BaseEntity{
     private String tag = "";                            //表示是否为同一种优惠券
-    ArrayList<String> grade = new ArrayList<>();        //适用于小学一二年级
-    ArrayList<Integer> weekday = new ArrayList<>();     //适用周一到周日，分别对应1~7
+    String grade = "";                                  //适用年级
+    String weekday = "";                                //适用时间
     private int time = 0;                               //当课时大于两个小时才可以使用
     private int money = 0;                              //可以优惠10元
     private long deadline = 0l;                         //时间戳，优惠券过期时间
@@ -21,10 +21,10 @@ public class Ticket extends BaseEntity{
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("适用年级: ");
-        sb.append(getGradeString());
+        sb.append(grade);
         sb.append("\n");
         sb.append("适用时间: ");
-        sb.append(getWeekDayString());
+        sb.append(weekday);
 
         if(time != 0) {
             sb.append("\n");
@@ -41,25 +41,20 @@ public class Ticket extends BaseEntity{
         return sb.toString();
     }
 
-    private String getGradeString(){
-        StringBuilder sb = new StringBuilder();
-        for (String item :
-                grade) {
-            sb.append(item);
-            sb.append("、");
-        }
-        return sb.toString();
+    public String getGrade() {
+        return grade;
     }
 
-    private String getWeekDayString(){
-        StringBuilder sb = new StringBuilder();
-        for (Integer week :
-                weekday) {
-            sb.append(TimeUtils.getWeekStringFromInt(week - 1));
-            sb.append("、");
-        }
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
 
-        return sb.toString();
+    public String getWeekday() {
+        return weekday;
+    }
+
+    public void setWeekday(String weekday) {
+        this.weekday = weekday;
     }
 
     private String getConstraint(){
@@ -72,22 +67,6 @@ public class Ticket extends BaseEntity{
 
     public void setTag(String tag) {
         this.tag = tag;
-    }
-
-    public ArrayList<String> getGrade() {
-        return grade;
-    }
-
-    public void setGrade(ArrayList<String> grade) {
-        this.grade = grade;
-    }
-
-    public ArrayList<Integer> getWeekday() {
-        return weekday;
-    }
-
-    public void setWeekday(ArrayList<Integer> weekday) {
-        this.weekday = weekday;
     }
 
     public int getTime() {
