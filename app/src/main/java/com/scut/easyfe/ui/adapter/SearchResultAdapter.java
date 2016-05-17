@@ -62,7 +62,7 @@ public class SearchResultAdapter extends BaseListViewScrollStateAdapter {
         }
 
         holder.teacherName.setText(mOrders.get(position).getTeacher().getName());
-        holder.price.setText(String.format("%.2f 元/小时", mOrders.get(position).getPrice()));
+        holder.price.setText(String.format("%.2f 元/小时", mOrders.get(position).getPerPrice()));
         holder.content.setText(Order.getBaseInfo(mOrders.get(position)));
         ImageUtils.displayImage(mOrders.get(position).getTeacher().getAvatar(), holder.avatar);
 

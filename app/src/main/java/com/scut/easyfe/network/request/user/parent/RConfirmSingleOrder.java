@@ -40,7 +40,7 @@ public class RConfirmSingleOrder extends RequestBase<JSONObject>{
         params.put("course", mOrder.getCourse());
         params.put("teachTime", mOrder.getTeachTime().getTeachTimeJson());
         params.put("time", mOrder.getTime());
-        params.put("price", mOrder.getPrice());
+        params.put("price", mOrder.getPerPrice());
         params.put("subsidy", mOrder.getSubsidy());
         params.put("childAge", mOrder.getChildAge());
         params.put("childGender", mOrder.getChildGender());

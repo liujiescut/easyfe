@@ -106,7 +106,7 @@
                 android:drawableRight="@mipmap/icon_right_arrow_padding"
                 android:gravity="start|center_vertical"
                 android:onClick="onParentCompleteOrderClick"
-                android:text="@string/complete_course_reward" />
+                android:text="@string/parent_complete_course_reward" />
         </LinearLayout>
 
     </LinearLayout>

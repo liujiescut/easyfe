@@ -38,13 +38,16 @@ public class Order extends BaseEntity {
     private ParentInfo parent = new ParentInfo();
     private Insurance insurance = new Insurance();
     private float subsidy = 5;     //超过交通时间，收的交通补贴
-    private int addPrice = 0;
+    private float addPrice = 0;
     private List<Comment> comments = new ArrayList<>();
 
     private int trafficTime = 0;
 
+    public float getPerPrice(){
+        return price + addPrice;
+    }
     public float getTotalPrice(){
-        return (price + addPrice) * ((float)time / 60) + subsidy + addPrice;
+        return (price + addPrice) * ((float)time / 60) + subsidy;
     }
 
     public float getOriginalPrice() {
@@ -66,11 +69,11 @@ public class Order extends BaseEntity {
         return content;
     }
 
-    public int getAddPrice() {
+    public float getAddPrice() {
         return addPrice;
     }
 
-    public void setAddPrice(int addPrice) {
+    public void setAddPrice(float addPrice) {
         this.addPrice = addPrice;
     }
 

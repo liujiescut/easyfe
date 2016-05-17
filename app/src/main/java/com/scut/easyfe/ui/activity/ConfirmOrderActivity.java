@@ -91,7 +91,7 @@ public class ConfirmOrderActivity extends BaseActivity {
         mTeachGradeTextView.setText(String.format("%s", mOrder.getGrade()));
         mTeachCourseTextView.setText(mOrder.getCourse());
         mTeachTimeTextView.setText(TimeUtils.getTimeFromMinute(mOrder.getTime()));
-        mTeachPriceTextView.setText(String.format("%.2f 元", mOrder.getPrice()));
+        mTeachPriceTextView.setText(String.format("%.2f 元", mOrder.getPerPrice()));
         mTeachTipTextView.setText(String.format("%.2f 元", mOrder.getSubsidy()));
         mTeachTotalPriceTextView.setText(String.format("%.2f 元", mOrder.getTotalPrice()));
 

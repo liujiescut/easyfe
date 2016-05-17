@@ -118,10 +118,10 @@ public class TeacherInfoActivity extends BaseActivity {
     }
 
     private void showTeacherInfo() {
-        String priceString = String.format("%.2f 元/小时", mOrder.getPrice());
+        String priceString = String.format("%.2f 元/小时", mOrder.getPerPrice());
         if (mOrder.getSubsidy() != 0) {
             mPriceTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.mipmap.icon_detail_question_small, 0);
-            priceString = String.format("%.2f 元/小时", mOrder.getPrice());
+            priceString = String.format("%.2f 元/小时", mOrder.getPerPrice());
             priceString += String.format("(不包含交通补贴%.2f元)", mOrder.getSubsidy());
         }
 

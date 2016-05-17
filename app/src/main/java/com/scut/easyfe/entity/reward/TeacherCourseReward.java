@@ -14,25 +14,23 @@ import java.util.ArrayList;
  * Created by jay on 16/5/3.
  */
 public class TeacherCourseReward extends BaseReward{
-    private int time = 0;
-    private float addPrice = 0f;
+    private int finishTime = 0;
     private String grade = "";
     private String course = "";
 
 
-    public static ArrayList<BaseReward> getTestRewards(){
-        ArrayList<BaseReward> rewards = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            TeacherCourseReward reward = new TeacherCourseReward();
-            reward.setTime(10 + 20 * i);
-            reward.setGrade("大学三年级");
-            reward.setCourse("软件需求分析");
-            rewards.add(reward);
-        }
-
-
-        return rewards;
-    }
+//    public static ArrayList<BaseReward> getTestRewards(){
+//        ArrayList<BaseReward> rewards = new ArrayList<>();
+//        for (int i = 0; i < 8; i++) {
+//            TeacherCourseReward reward = new TeacherCourseReward();
+//            reward.setGrade("大学三年级");
+//            reward.setCourse("软件需求分析");
+//            rewards.add(reward);
+//        }
+//
+//
+//        return rewards;
+//    }
 
     @Override
     public SpannableStringBuilder getAsString() {
@@ -40,31 +38,22 @@ public class TeacherCourseReward extends BaseReward{
         content += grade + course;
         content += "\n";
         content += "已完成课时: ";
-        content += String.format("%d 小时", time);
+        content += String.format("%d 小时", finishTime);
 
         return new SpannableStringBuilder(content);
     }
 
     @Override
     public boolean isReceivable() {
-        //Todo
-        return false;
+        return canGet;
     }
 
-    public int getTime() {
-        return time;
+    public int getFinishTime() {
+        return finishTime;
     }
 
-    public void setTime(int time) {
-        this.time = time;
-    }
-
-    public float getAddPrice() {
-        return addPrice;
-    }
-
-    public void setAddPrice(float addPrice) {
-        this.addPrice = addPrice;
+    public void setFinishTime(int finishTime) {
+        this.finishTime = finishTime;
     }
 
     public String getGrade() {
