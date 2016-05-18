@@ -25,7 +25,7 @@ public class ActivityManagerUtils {
     }
 
     public Activity getTopActivity() {
-        return activityList.get(activityList.size() - 1);
+        return activityList.size() == 0 ? null : activityList.get(activityList.size() - 1);
     }
 
     public void addActivity(Activity ac) {
