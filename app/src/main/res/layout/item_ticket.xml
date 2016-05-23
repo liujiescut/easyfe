@@ -13,7 +13,7 @@
         android:gravity="center_vertical"
         android:textColor="@color/text_area_text_color"
         android:textSize="@dimen/text_size_small"
-        android:padding="@dimen/layout_padding_small"
+        android:layout_margin="@dimen/layout_padding_small"
         android:lineSpacingMultiplier="1.2"
         tools:text="已邀请手机号码：188 1234 5678\n已完成订单次数：1次 / 2次\n现金奖励：5 元"
         android:layout_weight="1"/>
@@ -26,11 +26,11 @@
 
     <TextView
         android:id="@+id/item_ticket_tv_money"
-        android:layout_width="64dp"
-        android:layout_height="26dp"
+        android:layout_width="72dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:gravity="center"
-        tools:text="5 元"
+        tools:text="5 元 x 3"
         android:textColor="@color/theme_color"
         android:textSize="@dimen/text_size_large"
         android:layout_margin="@dimen/layout_margin_small"/>

@@ -16,6 +16,7 @@ public class Ticket extends BaseEntity{
     private int time = 0;                               //当课时大于两个小时才可以使用
     private int money = 0;                              //可以优惠10元
     private long deadline = 0l;                         //时间戳，优惠券过期时间
+    private int count = 0;
 
     @Override
     public String toString() {
@@ -39,6 +40,27 @@ public class Ticket extends BaseEntity{
         }
 
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o instanceof Ticket) {
+            return tag.equals(((Ticket)o).getTag());
+        }
+
+        return super.equals(o);
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void addCount(){
+        ++count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     public String getGrade() {

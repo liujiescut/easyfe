@@ -1,20 +1,58 @@
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawer_layout"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="false"
-    >
+    android:layout_height="match_parent">
 
-    <!--主界面内容-->
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false">
 
-    <include
-        android:id="@+id/main_page"
-        layout="@layout/main_page"/>
+        <!--主界面内容-->
 
-    <!--侧边菜单-->
+        <include
+            android:id="@+id/main_page"
+            layout="@layout/main_page" />
 
-    <include android:id="@+id/drawer"
-        layout="@layout/left_drawer"/>
+        <!--侧边菜单-->
 
-</android.support.v4.widget.DrawerLayout>
+        <include
+            android:id="@+id/drawer"
+            layout="@layout/left_drawer" />
+
+    </android.support.v4.widget.DrawerLayout>
+
+    <RelativeLayout
+        android:id="@+id/main_rl_advertisement"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:onClick="onCloseAdvertiseClick"
+        android:clickable="true"
+        android:background="#88000000">
+        <ImageView
+            android:id="@+id/main_iv_advertisement_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onAdvertiseClick"
+            android:clickable="true"
+            android:layout_centerInParent="true"
+            android:paddingLeft="@dimen/layout_padding_large"
+            android:paddingRight="@dimen/layout_padding_large"
+            android:paddingTop="64dp"
+            android:paddingBottom="64dp"
+            android:src="@mipmap/image_splash_2"/>
+        <ImageView
+            android:id="@+id/main_iv_close_advertisement"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:onClick="onCloseAdvertiseClick"
+            android:clickable="true"
+            android:padding="@dimen/layout_padding_small"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="@dimen/layout_margin_small"
+            android:layout_marginTop="@dimen/layout_margin_small"
+            android:src="@mipmap/icon_close"/>
+    </RelativeLayout>
+
+</RelativeLayout>

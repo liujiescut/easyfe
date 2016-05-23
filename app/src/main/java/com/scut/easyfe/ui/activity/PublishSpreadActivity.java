@@ -59,8 +59,8 @@ public class PublishSpreadActivity extends BaseActivity {
     private int mSelectedCoursePosition = -1;
     private Date mTeachDate = null;
     private String mPeriod = "";
-    private int mTeachTime = 0;
-    private long mPrice = 0;
+    private int mTeachTime = 60;
+    private long mPrice = 1;
 
 
     private boolean mISLoadingCloseByUser = true;
@@ -97,10 +97,8 @@ public class PublishSpreadActivity extends BaseActivity {
         mDateString += " 上午";
         mDateTextView.setText(mDateString);
 
-        mTeachTime = 120;
         mTimeTextView.setText(TimeUtils.getTimeFromMinute(mTeachTime));
 
-        mPrice = 100;
         mPriceTextView.setText(String.format("%d 元/小时", mPrice));
     }
 

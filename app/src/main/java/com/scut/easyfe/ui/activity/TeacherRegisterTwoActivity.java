@@ -41,7 +41,7 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
     private TextView mMaxTrafficTextView;           //能接受最长交通时间
     private TextView mSubsidyTextView;              //交通补贴
     private TextView mTeachableCourseTextView;      //可教授课程
-//    private TextView mJoinAngleTextView;            //是否加入天使计划
+    //    private TextView mJoinAngleTextView;            //是否加入天使计划
 //    private TextView mAngleBoyAgeTextView;          //能接受男孩最大年龄
 //    private TextView mAngleGirlAgeTextView;         //能接受女孩最大年龄
 //    private TextView mAnglePriceTextView;           //天使计划价格
@@ -53,7 +53,7 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
     private ToggleButton mWorkOrNotToggle;
 
 
-//    private boolean mJoinAngelPlan = false;         //是否加入天使计划
+    //    private boolean mJoinAngelPlan = false;         //是否加入天使计划
     private int mMinCourseTime = 120;               //最短课时(分钟)
     private int mTrafficTime = 120;                 //可接受交通时间(分钟)
     private int mMaxTrafficTime = 180;              //可接受最长交通时间(分钟)
@@ -154,9 +154,9 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
 
         if (!mIsRegister) {
             mWorkOrNotLinearLayout.setVisibility(View.VISIBLE);
-            if(mUser.getTeacherMessage().isLock() ) {
+            if (mUser.getTeacherMessage().isLock()) {
                 mWorkOrNotToggle.toggleOff();
-            } else{
+            } else {
                 mWorkOrNotToggle.toggleOn();
             }
 
@@ -200,8 +200,12 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
                         break;
 
                     case PICK_TIME_MAX_TRAFFIC:
-                        mMaxTrafficTextView.setText(timeString);
-                        mMaxTrafficTime = timeInt;
+                        if (timeInt < mTrafficTime) {
+                            toast("亲，“能接受的最长交通时间（超出部分收取交通补贴）”应大于“能接受的交通时间（无交通补贴）”");
+                        } else {
+                            mMaxTrafficTextView.setText(timeString);
+                            mMaxTrafficTime = timeInt;
+                        }
                         break;
 
                     case PICK_TIME_MIN_COURSE_TIME:
@@ -447,6 +451,11 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
         if (user.getTeacherMessage().getAngelPlan().isJoin() &&
                 user.getTeacherMessage().getAngelPlan().getPrice() == 0) {
             toast("请输入天使计划价格");
+            return false;
+        }
+
+        if (mMaxTrafficTime < mTrafficTime) {
+            toast("亲，“能接受的最长交通时间（超出部分收取交通补贴）”应大于“能接受的交通时间（无交通补贴）”");
             return false;
         }
 

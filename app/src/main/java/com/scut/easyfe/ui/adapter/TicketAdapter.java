@@ -62,7 +62,7 @@ public class TicketAdapter extends BaseAdapter{
         }
 
         holder.detail.setText(mTickets.get(position).toString());
-        holder.money.setText(String.format("%d 元", mTickets.get(position).getMoney()));
+        holder.money.setText(String.format("%d 元 x %d", mTickets.get(position).getMoney(), mTickets.get(position).getCount()));
 
         return convertView;
     }

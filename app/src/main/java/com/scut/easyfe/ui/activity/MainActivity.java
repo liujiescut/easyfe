@@ -3,7 +3,9 @@ package com.scut.easyfe.ui.activity;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +43,9 @@ public class MainActivity extends BaseActivity {
     private DrawerLayout mDrawerLayout;
     private LinearLayout mLeftDrawer;
     private CircleImageView mAvatarImageView;
+    private RelativeLayout mAdvertiseRelativeLayout;
+    private ImageView mAdvertiseImage;
+    private ImageView mCloseAdvertiseImage;
     private TextView mNameTextView;
     private Map<Integer, BaseFragment> mFragments = new HashMap<>();
     private HomeFragment mHomeFragment;
@@ -65,6 +70,9 @@ public class MainActivity extends BaseActivity {
         mLeftDrawer.findViewById(R.id.left_drawer_tv_teacher_info).setVisibility(isTeacher ? View.VISIBLE : View.GONE);
         mLeftDrawer.findViewById(R.id.left_drawer_tv_divider_teacher_info).setVisibility(isTeacher ? View.VISIBLE : View.GONE);
 
+        mAdvertiseRelativeLayout = OtherUtils.findViewById(this, R.id.main_rl_advertisement);
+        mAdvertiseImage = OtherUtils.findViewById(this, R.id.main_iv_advertisement_image);
+        mCloseAdvertiseImage = OtherUtils.findViewById(this, R.id.main_iv_close_advertisement);
     }
 
     @Override
@@ -270,5 +278,13 @@ public class MainActivity extends BaseActivity {
      */
     public void onMoreClick(View view) {
         redirectToActivity(mContext, MoreActivity.class);
+    }
+
+    public void onCloseAdvertiseClick(View view){
+        mAdvertiseRelativeLayout.setVisibility(View.GONE);
+    }
+
+    public void onAdvertiseClick(View view){
+        onCloseAdvertiseClick(view);
     }
 }

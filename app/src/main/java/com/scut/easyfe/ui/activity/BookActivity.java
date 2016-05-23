@@ -422,6 +422,8 @@ public class BookActivity extends BaseActivity {
                         return;
                     }
 
+                    mPeriod = "";
+                    mPeriodStringToShow = "";
                     showPeriodSelectView();
                 }
             });

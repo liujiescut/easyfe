@@ -50,6 +50,23 @@
             android:layout_weight="1"
             android:gravity="left|center_vertical"
             android:paddingLeft="@dimen/layout_padding_normal"
+            android:text="@string/wechat_subscription"/>
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_weight="3"
+            android:gravity="end|center_vertical"
+            android:text="easyFamilyEducation"
+            android:paddingRight="@dimen/layout_padding_normal"
+            android:textSize="@dimen/text_size_medium" />
+    </LinearLayout>
+    <LinearLayout style="@style/ll_container_normal_style">
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/layout_padding_normal"
             android:text="@string/email"/>
 
         <TextView

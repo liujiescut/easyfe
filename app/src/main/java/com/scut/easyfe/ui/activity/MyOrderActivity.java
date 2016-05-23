@@ -12,6 +12,7 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.order.BriefOrder;
+import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
@@ -175,31 +176,31 @@ public class MyOrderActivity extends BaseActivity {
                 if (!validateOrders(mPagerAdapter.getItem(mSelectedPage).getSelectedOrders())) {
                     return;
                 }
+                if(mCurrentOrderType == Constants.Identifier.ORDER_TO_DO || isOrdersModify(mPagerAdapter.getItem(mSelectedPage).getSelectedOrders())) {
+                    if (App.getUser().getBadRecord() >= Constants.DefaultValue.MAX_BAD_RECORD) {
+                        DialogUtils.makeConfirmDialog(mContext, "温馨提示", "您已经取消过订单两次,\n不能再取消订单了呦\n(完成6次订单可增加一次取消机会)");
+                        return;
+                    }
 
-                if (App.getUser().getBadRecord() >= Constants.DefaultValue.MAX_BAD_RECORD) {
-                    DialogUtils.makeConfirmDialog(mContext, "温馨提示", "您已经取消过订单两次,\n不能再取消订单了呦\n(完成6次订单可增加一次取消机会)");
-                    return;
-                }
-
-                mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
-                refreshButtonsState(getButtonTypeFromOrderType(mCurrentOrderType));
-
-                DialogUtils.makeChooseDialog(mContext, "温馨提示", "取消订单将会产生一次不良记录\n不良记录超过两次将不能再取消订单\n(完成6次订单可增加一次取消机会)\n确认取消?",
-                        new DialogUtils.OnChooseListener() {
-                            @Override
-                            public void onChoose(boolean sure) {
-                                if(sure){
-                                    doCancelOrder();
+                    DialogUtils.makeChooseDialog(mContext, "温馨提示", "取消订单将会产生一次不良记录\n不良记录超过两次将不能再取消订单\n(完成6次订单可增加一次取消机会)\n确认取消?",
+                            new DialogUtils.OnChooseListener() {
+                                @Override
+                                public void onChoose(boolean sure) {
+                                    if (sure) {
+                                        doCancelOrder();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }else{
+                    doCancelOrder();
+                }
             }
         };
 
         refreshButtonsState(getButtonTypeFromOrderType(mCurrentOrderType));
     }
 
-    private void doCancelOrder(){
+    private void doCancelOrder() {
         RequestManager.get().execute(new RParentCancelOrders(App.getUser().getToken(), mPagerAdapter.getItem(mSelectedPage).getSelectedOrderIds()),
                 new RequestListener<Integer>() {
                     @Override
@@ -221,6 +222,16 @@ public class MyOrderActivity extends BaseActivity {
                         toast(errorMsg);
                     }
                 });
+    }
+
+    private boolean isOrdersModify(List<BriefOrder> orders) {
+        for (BriefOrder order :
+                orders) {
+            if (order.getState() == Constants.Identifier.ORDER_MODIFIED_WAILT_CONFIRM) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean validateOrders(List<BriefOrder> orders) {

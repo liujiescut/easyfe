@@ -21,7 +21,7 @@ import java.util.List;
  * 获取我的优惠券(家长)
  * Created by jay on 16/4/7.
  */
-public class RGetMyTicket extends RequestBase<List<Ticket>>{
+public class RGetMyTicket extends RequestBase<List<Ticket>> {
     private String mToken = "";
 
     @Override
@@ -47,7 +47,7 @@ public class RGetMyTicket extends RequestBase<List<Ticket>>{
         JavaType javaType = mObjectMapper.getTypeFactory().constructParametricType(List.class, Ticket.class);
         try {
             JSONArray tickets = jsonObject.optJSONArray("list");
-            if(null != tickets){
+            if (null != tickets) {
                 /** 将返回的地址JsonArray转化为List<Ticket> */
                 result = mObjectMapper.readValue(tickets.toString(), javaType);
             }
@@ -56,7 +56,24 @@ public class RGetMyTicket extends RequestBase<List<Ticket>>{
             e.printStackTrace();
         }
 
-        return result;
+        return getTicketWithCount(result);
+    }
+
+    private List<Ticket> getTicketWithCount(List<Ticket> tickets) {
+        List<Ticket> uniqueTickets = new ArrayList<>();
+
+        for (Ticket ticket :
+                tickets) {
+            if (uniqueTickets.contains(ticket)) {
+                int index = uniqueTickets.indexOf(ticket);
+                uniqueTickets.get(index).addCount();
+
+            } else {
+                ticket.setCount(1);
+                uniqueTickets.add(ticket);
+            }
+        }
+        return uniqueTickets;
     }
 
     @Override
