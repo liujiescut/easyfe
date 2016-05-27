@@ -131,7 +131,7 @@ public class BookActivity extends BaseActivity {
             mPriceItems.add(new ToSelectItem("100 - 120", false, new JSONArray("[100,120]")));
             mPriceItems.add(new ToSelectItem("120 - 140", false, new JSONArray("[120,140]")));
             mPriceItems.add(new ToSelectItem("140 - 160", false, new JSONArray("[140,160]")));
-            mPriceItems.add(new ToSelectItem("160 - 180", false, new JSONArray("[160,180]")));
+            mPriceItems.add(new ToSelectItem("160以上", false, new JSONArray("[160," + Integer.MAX_VALUE + "]")));
         } catch (JSONException e) {
             e.printStackTrace();
         }

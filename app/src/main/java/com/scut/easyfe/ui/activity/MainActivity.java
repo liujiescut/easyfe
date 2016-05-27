@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
@@ -28,6 +29,8 @@ import com.scut.easyfe.utils.ImageUtils;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -45,7 +48,6 @@ public class MainActivity extends BaseActivity {
     private CircleImageView mAvatarImageView;
     private RelativeLayout mAdvertiseRelativeLayout;
     private ImageView mAdvertiseImage;
-    private ImageView mCloseAdvertiseImage;
     private TextView mNameTextView;
     private Map<Integer, BaseFragment> mFragments = new HashMap<>();
     private HomeFragment mHomeFragment;
@@ -72,7 +74,6 @@ public class MainActivity extends BaseActivity {
 
         mAdvertiseRelativeLayout = OtherUtils.findViewById(this, R.id.main_rl_advertisement);
         mAdvertiseImage = OtherUtils.findViewById(this, R.id.main_iv_advertisement_image);
-        mCloseAdvertiseImage = OtherUtils.findViewById(this, R.id.main_iv_close_advertisement);
     }
 
     @Override
@@ -110,6 +111,17 @@ public class MainActivity extends BaseActivity {
 
                 App.setQNToken(result.optString("qnToken"));
                 App.setServicePhone(result.optString("phone"));
+
+                try {
+                    JSONArray advertises = result.optJSONArray("guideMap");
+                    if (advertises != null && advertises.length() > 0) {
+                        String image = advertises.getJSONObject(0).optString("image");
+                        String link = advertises.getJSONObject(0).optString("url");
+                        ImageLoader.getInstance().displayImage(image, mAdvertiseImage);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 stopLoading();
             }
 
@@ -156,7 +168,7 @@ public class MainActivity extends BaseActivity {
      * 点击我的订单
      */
     public void onMyOrderClick(View view) {
-        if(App.getUser().hasLogin()) {
+        if (App.getUser().hasLogin()) {
             redirectToActivity(mContext, MyOrderActivity.class);
         }
     }
@@ -173,8 +185,8 @@ public class MainActivity extends BaseActivity {
                 bundle.putInt(Constants.Key.TO_PARENT_REGISTER_ACTIVITY_TYPE, Constants.Identifier.TYPE_MODIFY);
                 redirectToActivity(mContext, ParentRegisterActivity.class, bundle);
 
-            } else if(App.getUser().getType() == Constants.Identifier.USER_TEACHER ||
-                    App.getUser().getType() == Constants.Identifier.USER_TP){
+            } else if (App.getUser().getType() == Constants.Identifier.USER_TEACHER ||
+                    App.getUser().getType() == Constants.Identifier.USER_TP) {
                 Bundle bundle = new Bundle();
                 bundle.putInt(Constants.Key.TO_TEACHER_REGISTER_ONE_ACTIVITY_TYPE, Constants.Identifier.TYPE_MODIFY);
                 redirectToActivity(mContext, TeacherRegisterOneActivity.class, bundle);
@@ -222,7 +234,7 @@ public class MainActivity extends BaseActivity {
         }
 
         LogUtils.i("liujie", App.getUser().getTeacherMessage().isIsCheck() + "");
-        if(!App.getUser().getTeacherMessage().isIsCheck()){
+        if (!App.getUser().getTeacherMessage().isIsCheck()) {
             toast("您的信息还在审核中\n审核之后才可以发布订单喔");
             return;
         }
@@ -234,7 +246,7 @@ public class MainActivity extends BaseActivity {
      * 点击消息中心
      */
     public void onMessageCenterClick(View view) {
-        if(App.getUser().hasLogin()) {
+        if (App.getUser().hasLogin()) {
             redirectToActivity(mContext, MessageCenterActivity.class);
         }
     }
@@ -243,9 +255,9 @@ public class MainActivity extends BaseActivity {
      * 点击任务奖励
      */
     public void onTaskRewardClick(View view) {
-        if(App.getUser(false).hasLogin()) {
+        if (App.getUser(false).hasLogin()) {
             redirectToActivity(mContext, TaskRewardActivity.class);
-        }else{
+        } else {
             DialogUtils.makeConfirmDialog(mContext, null, "亲，您需要先注册/登陆哦\n\n ^-^");
         }
     }
@@ -261,7 +273,7 @@ public class MainActivity extends BaseActivity {
      * 点击邀请有奖
      */
     public void onInviteRewardClick(View view) {
-        if(App.getUser().hasLogin()) {
+        if (App.getUser().hasLogin()) {
             redirectToActivity(mContext, InviteRewardActivity.class);
         }
     }
@@ -280,11 +292,11 @@ public class MainActivity extends BaseActivity {
         redirectToActivity(mContext, MoreActivity.class);
     }
 
-    public void onCloseAdvertiseClick(View view){
+    public void onCloseAdvertiseClick(View view) {
         mAdvertiseRelativeLayout.setVisibility(View.GONE);
     }
 
-    public void onAdvertiseClick(View view){
+    public void onAdvertiseClick(View view) {
         onCloseAdvertiseClick(view);
     }
 }

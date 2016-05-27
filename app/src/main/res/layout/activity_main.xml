@@ -40,7 +40,7 @@
             android:paddingRight="@dimen/layout_padding_large"
             android:paddingTop="64dp"
             android:paddingBottom="64dp"
-            android:src="@mipmap/image_splash_2"/>
+            />
         <ImageView
             android:id="@+id/main_iv_close_advertisement"
             android:layout_width="46dp"

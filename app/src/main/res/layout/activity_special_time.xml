@@ -136,8 +136,8 @@
                 android:maxLength="50"
                 android:hint="@string/special_time_hint"
                 android:textColorHint="#A7A7A7"
-                android:maxHeight="80dp"
-                android:minHeight="80dp" />
+                android:maxHeight="100dp"
+                android:minHeight="100dp" />
 
             <TextView
                 android:layout_width="match_parent"

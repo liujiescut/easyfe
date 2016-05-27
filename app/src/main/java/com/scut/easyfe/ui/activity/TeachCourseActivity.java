@@ -238,8 +238,22 @@ public class TeachCourseActivity extends BaseActivity {
         addTeachableCourseItem(courseName, mGradeName, price, true);
     }
 
-    private void addTeachableCourseItem(String courseName, String mGradeName, float price, boolean updateUser) {
-        int itemViewId = courseName.hashCode() * mGradeName.hashCode() + mGradeName.hashCode();
+    /**
+     * 返回短String对应的唯一Int
+     */
+    private int getIntFromString(String s){
+        char [] chars = new char[s.length()];
+        s.getChars(0, s.length(), chars, 0);
+        int result = 0;
+        for (int i = 0; i < chars.length; i++) {
+            result += chars[i] * Math.pow(2, i);
+        }
+
+        return result;
+    }
+
+    private void addTeachableCourseItem(String courseName, String gradeName, float price, boolean updateUser) {
+        int itemViewId = getIntFromString(courseName + gradeName);
         View itemView = mGradeLinearLayout.findViewById(itemViewId);
         if (null == itemView) {
             itemView = getLayoutInflater().inflate(R.layout.item_course_price, null);
@@ -247,12 +261,12 @@ public class TeachCourseActivity extends BaseActivity {
             mGradeLinearLayout.addView(itemView);
         }
 
-        TeachableCourse teachableCourse = new TeachableCourse(itemViewId, courseName, mGradeName, price);
+        TeachableCourse teachableCourse = new TeachableCourse(itemViewId, courseName, gradeName, price);
         if (!mTeachableCourses.contains(teachableCourse)) {
             mTeachableCourses.add(teachableCourse);
         }
-        ((TextView) itemView.findViewById(R.id.item_course_price_tv_state)).setText(Course.getStateFromGrade(mGradeName));
-        ((TextView) itemView.findViewById(R.id.item_course_price_tv_grade)).setText(Course.getGradeFromGrade(mGradeName));
+        ((TextView) itemView.findViewById(R.id.item_course_price_tv_state)).setText(Course.getStateFromGrade(gradeName));
+        ((TextView) itemView.findViewById(R.id.item_course_price_tv_grade)).setText(Course.getGradeFromGrade(gradeName));
         final TextView priceTextView = ((TextView) itemView.findViewById(R.id.item_course_price_tv_price));
         priceTextView.setText(String.format("%.0f 元/小时", price));
         itemView.setTag(teachableCourse);

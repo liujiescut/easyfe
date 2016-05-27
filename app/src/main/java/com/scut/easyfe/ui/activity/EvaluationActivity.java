@@ -14,8 +14,10 @@ import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.order.RGetCashTicket;
 import com.scut.easyfe.network.request.user.parent.RCommentTeacher;
 import com.scut.easyfe.ui.base.BaseActivity;
+import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
 import org.json.JSONObject;
@@ -28,6 +30,7 @@ public class EvaluationActivity extends BaseActivity {
     private ProperRatingBar mOnTimeRatingBar;
     private EditText mContentEditText;
     private Order mOrder = new Order();
+    private boolean mHasGetCashTicket = false;
 
     @Override
     protected void setLayoutView() {
@@ -67,18 +70,25 @@ public class EvaluationActivity extends BaseActivity {
             return;
         }
 
+        if(!mHasGetCashTicket){
+            //Todo
+        }
+
+        startLoading("领取中");
         RequestManager.get().execute(new RCommentTeacher(App.getUser().getToken(), mOrder.get_id(),
                 mContentEditText.getText().toString(), mAbilityRatingBar.getRating(),
                 mOnTimeRatingBar.getRating(), mChildLikeRatingBar.getRating()), new RequestListener<JSONObject>() {
             @Override
             public void onSuccess(RequestBase request, JSONObject result) {
                 toast(result.optString("message"));
+                stopLoading();
                 redirectToActivity(mContext, MainActivity.class);
             }
 
             @Override
             public void onFailed(RequestBase request, int errorCode, String errorMsg) {
                 toast(errorMsg);
+                stopLoading();
             }
         });
     }
@@ -90,6 +100,19 @@ public class EvaluationActivity extends BaseActivity {
     }
 
     public void onMoneyTicketClick(View view) {
+        startLoading("领取中");
+        RequestManager.get().execute(new RGetCashTicket(mOrder.get_id()), new RequestListener<JSONObject>() {
+            @Override
+            public void onSuccess(RequestBase request, JSONObject result) {
+                toast(result.optString("message"));
+                stopLoading();
+                mHasGetCashTicket = true;
+            }
 
+            @Override
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                stopLoading();
+            }
+        });
     }
 }
