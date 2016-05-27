@@ -32,6 +32,7 @@ public class Order extends BaseEntity {
     private int childGender = Constants.Identifier.FEMALE; //孩子性别
     private String cancelPerson = "";    //订单状态为4才有的字段，“teacher”表示是教师取消订单，“parent”表示家长取消
     private boolean hadComment = false;  //是否已经评价
+    private boolean hadGetCoupon = false;//是否已经领取现金券
     private long completedTime = 0;      //订单完成时间
     private TeachTime teachTime = new TeachTime();
     private TeacherInfo teacher = new TeacherInfo();
@@ -42,6 +43,14 @@ public class Order extends BaseEntity {
     private List<Comment> comments = new ArrayList<>();
 
     private int trafficTime = 0;
+
+    public boolean isHadGetCoupon() {
+        return hadGetCoupon;
+    }
+
+    public void setHadGetCoupon(boolean hadGetCoupon) {
+        this.hadGetCoupon = hadGetCoupon;
+    }
 
     public float getPerPrice(){
         return price + addPrice;

@@ -43,7 +43,7 @@ public class EvaluationActivity extends BaseActivity {
         if (intent != null) {
             Bundle extras = intent.getExtras();
             if (extras != null) {
-                mOrder = (Order)extras.getSerializable(Constants.Key.ORDER);
+                mOrder = (Order) extras.getSerializable(Constants.Key.ORDER);
             }
         }
     }
@@ -70,11 +70,26 @@ public class EvaluationActivity extends BaseActivity {
             return;
         }
 
-        if(!mHasGetCashTicket){
-            //Todo
-        }
+        if (!mOrder.isHadGetCoupon()) {
+            DialogUtils.makeChooseDialog(mContext, "提示", "您可以先领优惠券哟，提交评价后订单完成将无法再领取优惠券咯^^\n确认提交?", new DialogUtils.OnChooseListener() {
+                @Override
+                public void onChoose(boolean sure) {
+                    if (!sure) {
+                        return;
+                    }
 
-        startLoading("领取中");
+                    submitComment();
+                }
+            });
+
+        } else{
+
+            submitComment();
+        }
+    }
+
+    private void submitComment(){
+        startLoading("提交评价中");
         RequestManager.get().execute(new RCommentTeacher(App.getUser().getToken(), mOrder.get_id(),
                 mContentEditText.getText().toString(), mAbilityRatingBar.getRating(),
                 mOnTimeRatingBar.getRating(), mChildLikeRatingBar.getRating()), new RequestListener<JSONObject>() {
@@ -111,6 +126,7 @@ public class EvaluationActivity extends BaseActivity {
 
             @Override
             public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                toast(errorMsg);
                 stopLoading();
             }
         });

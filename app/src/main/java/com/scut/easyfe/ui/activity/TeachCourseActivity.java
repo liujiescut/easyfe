@@ -228,7 +228,7 @@ public class TeachCourseActivity extends BaseActivity {
 
             @Override
             public void onFailed(RequestBase request, int errorCode, String errorMsg) {
-
+                toast(errorMsg);
             }
         });
 
