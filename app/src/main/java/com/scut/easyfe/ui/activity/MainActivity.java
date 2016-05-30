@@ -33,7 +33,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,6 +53,10 @@ public class MainActivity extends BaseActivity {
     private TextView mNameTextView;
     private Map<Integer, BaseFragment> mFragments = new HashMap<>();
     private HomeFragment mHomeFragment;
+
+    private String mAdvertiseLink = "";
+    private List<String> mGuideMapImages = new ArrayList<>();
+    private List<String> mGuideMapLinks = new ArrayList<>();
 
     @Override
     protected void onResume() {
@@ -112,16 +118,33 @@ public class MainActivity extends BaseActivity {
                 App.setQNToken(result.optString("qnToken"));
                 App.setServicePhone(result.optString("phone"));
 
-                try {
-                    JSONArray advertises = result.optJSONArray("guideMap");
-                    if (advertises != null && advertises.length() > 0) {
-                        String image = advertises.getJSONObject(0).optString("image");
-                        String link = advertises.getJSONObject(0).optString("url");
+                JSONObject advertise = result.optJSONObject("advertise");
+                if (advertise != null) {
+                    String image = advertise.optString("image");
+                    mAdvertiseLink = advertise.optString("link");
+                    if (image != null && image.length() != 0) {
                         ImageLoader.getInstance().displayImage(image, mAdvertiseImage);
+
+                    } else {
+                        onCloseAdvertiseClick(null);
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+
+                } else {
+                    onCloseAdvertiseClick(null);
                 }
+
+                JSONArray guideMap = result.optJSONArray("guideMap");
+                if (guideMap != null) {
+                    for (int i = 0; i < guideMap.length(); i++) {
+                        try {
+                            mGuideMapImages.add(guideMap.getJSONObject(i).optString("image"));
+                            mGuideMapImages.add(guideMap.getJSONObject(i).optString("link"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
                 stopLoading();
             }
 

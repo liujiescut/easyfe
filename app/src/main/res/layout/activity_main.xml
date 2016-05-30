@@ -32,7 +32,7 @@
         <ImageView
             android:id="@+id/main_iv_advertisement_image"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:onClick="onAdvertiseClick"
             android:clickable="true"
             android:layout_centerInParent="true"

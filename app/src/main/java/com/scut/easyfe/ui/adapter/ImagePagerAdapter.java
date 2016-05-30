@@ -7,13 +7,14 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.scut.easyfe.app.App;
 
 import java.util.List;
 
-public class ImagePagerAdapter extends PagerAdapter {
+public class ImagePagerAdapter<T> extends PagerAdapter {
 
-    private List<Integer> mImageResourceIds;
+    private List<T> mImageResourceIds;
     private OnItemClickListener mListener = new OnItemClickListener() {
         @Override
         public void onItemClick(int position) {
@@ -21,7 +22,7 @@ public class ImagePagerAdapter extends PagerAdapter {
         }
     };
 
-    public ImagePagerAdapter(List<Integer> imageResourceIds) {
+    public ImagePagerAdapter(List<T> imageResourceIds) {
         this.mImageResourceIds = imageResourceIds;
     }
 
@@ -47,7 +48,11 @@ public class ImagePagerAdapter extends PagerAdapter {
         imageView.setBackgroundColor(App.get().getResources().getColor(android.R.color.white));
         imageView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT));
-        imageView.setImageResource(mImageResourceIds.get(position));
+        if(mImageResourceIds.get(position) instanceof Integer) {
+            imageView.setImageResource((Integer) mImageResourceIds.get(position));
+        }else if(mImageResourceIds.get(position) instanceof String){
+//            ImageLoader.getInstance().
+        }
         container.addView(imageView);
 
         imageView.setOnClickListener(new View.OnClickListener() {

@@ -37,6 +37,9 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
     private CircleIndicator mAdvertiseIndicator;
     private ImagePagerAdapter mAdvertisePagerAdapter;
 
+    /** 展示页所用图片的 ID 们 */
+    List<Integer> imageResourceIds = new ArrayList<>();
+
     @Override
     protected void setLayoutRes() {
         layoutRes = R.layout.fragment_home;
@@ -53,13 +56,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         mAdvertiseViewPager = OtherUtils.findViewById(v, R.id.home_vp_advertise);
         mAdvertiseIndicator = OtherUtils.findViewById(v, R.id.home_indicator_advertise);
 
-        /** 展示页所用图片的 ID 们 */
-        List<Integer> imageResourceIds = new ArrayList<>();
-
-        imageResourceIds.add(R.mipmap.image_splash_1);
-        imageResourceIds.add(R.mipmap.image_splash_2);
-        imageResourceIds.add(R.mipmap.image_splash_3);
-
         mAdvertisePagerAdapter = new ImagePagerAdapter(imageResourceIds);
 
         mAdvertiseViewPager.setAdapter(mAdvertisePagerAdapter);
@@ -70,8 +66,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
     }
 
     private void initAdvertiseHeight(){
-        int height = 4;
-        int width = 7;
+        int height = 9;
+        int width = 16;
         int widthPx = OtherUtils.getScreenWidth(mActivity);
         int heightPx = widthPx * height / width;
 
