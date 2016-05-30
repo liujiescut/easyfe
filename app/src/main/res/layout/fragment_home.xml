@@ -1,20 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/shape_app_bg"
     android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/home_rl_advertise_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.scut.easyfe.ui.customView.ScrollableViewPager
+            android:id="@+id/home_vp_advertise"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:gravity="center">
+
+            <com.scut.easyfe.ui.customView.CircleIndicator
+                android:id="@+id/home_indicator_advertise"
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                app:ci_height="3dp"
+                app:ci_width="3dp" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/home_main_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="@dimen/home_fragment_text_padding"
         android:text="特价推广"
         android:textColor="@color/theme_color"
-        android:textSize="48dp"
-        />
+        android:padding="@dimen/layout_padding_large"
+        android:textSize="48dp" />
 
     <TextView
         android:id="@+id/home_second_text"
@@ -30,9 +58,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="@dimen/home_fragment_text_padding"
         android:text="(每周7点跟新第二天特价单)"
         android:textColor="@color/theme_color"
+        android:padding="@dimen/layout_padding_large"
         android:textSize="20dp" />
 
     <View
@@ -54,15 +82,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/layout_padding_normal"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/layout_padding_normal">
 
         <FrameLayout
             android:id="@+id/home_book_multi"
             android:layout_width="@dimen/main_icon_outer_size"
             android:layout_height="@dimen/main_icon_outer_size"
-            android:layout_marginLeft="@dimen/layout_margin_large"
-            >
+            android:layout_marginLeft="@dimen/layout_margin_large">
 
             <View
                 android:layout_width="match_parent"
@@ -75,15 +102,16 @@
                 android:layout_gravity="center"
                 android:background="@mipmap/icon_book_times" />
         </FrameLayout>
+
         <View
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
+
         <FrameLayout
             android:id="@+id/home_book_once"
             android:layout_width="@dimen/main_icon_outer_size"
-            android:layout_height="@dimen/main_icon_outer_size"
-            >
+            android:layout_height="@dimen/main_icon_outer_size">
 
             <View
                 android:layout_width="match_parent"
@@ -96,16 +124,17 @@
                 android:layout_gravity="center"
                 android:background="@mipmap/icon_book_once" />
         </FrameLayout>
+
         <View
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
+
         <FrameLayout
             android:id="@+id/home_teacher"
             android:layout_width="@dimen/main_icon_outer_size"
             android:layout_height="@dimen/main_icon_outer_size"
-            android:layout_marginRight="@dimen/layout_margin_large"
-            >
+            android:layout_marginRight="@dimen/layout_margin_large">
 
             <View
                 android:layout_width="match_parent"
@@ -119,36 +148,40 @@
                 android:background="@mipmap/icon_teacher" />
         </FrameLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/layout_padding_normal"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/layout_padding_normal">
+
         <TextView
             android:id="@+id/home_book_multi_text"
             android:layout_width="@dimen/main_icon_outer_size"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/layout_margin_large"
             android:gravity="center"
-            android:textColor="@color/theme_color"
-            android:text="@string/home_multi_book_text"/>
+            android:text="@string/home_multi_book_text"
+            android:textColor="@color/theme_color" />
+
         <View
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/home_book_once_text"
             android:layout_width="@dimen/main_icon_outer_size"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textColor="@color/theme_color"
+            android:text="@string/home_once_book_text"
 
-            android:text="@string/home_once_book_text"/>
+            android:textColor="@color/theme_color" />
+
         <View
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/home_teacher_text"
@@ -156,9 +189,9 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/layout_margin_large"
             android:gravity="center"
-            android:textColor="@color/theme_color"
+            android:text="@string/home_teacher_text"
 
-            android:text="@string/home_teacher_text"/>
+            android:textColor="@color/theme_color" />
     </LinearLayout>
 
 </LinearLayout>

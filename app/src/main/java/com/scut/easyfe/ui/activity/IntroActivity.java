@@ -1,14 +1,7 @@
 package com.scut.easyfe.ui.activity;
 
-import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-
 import com.scut.easyfe.R;
+import com.scut.easyfe.ui.adapter.ImagePagerAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.ui.customView.CircleIndicator;
 import com.scut.easyfe.ui.customView.ScrollableViewPager;
@@ -18,14 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Lex Luther
- *         <p>
- *         第一次运行程序时的介绍和展示
+ * 第一次运行程序时的介绍和展示
  */
 public class IntroActivity extends BaseActivity {
     private ScrollableViewPager mViewPager;
     private CircleIndicator mIndicator;
-    private IntroPagerAdapter mIntroPagerAdapter;
+    private ImagePagerAdapter mIntroPagerAdapter;
 
     @Override
     protected void setLayoutView() {
@@ -45,67 +36,28 @@ public class IntroActivity extends BaseActivity {
         imageResourceIds.add(R.mipmap.image_splash_2);
         imageResourceIds.add(R.mipmap.image_splash_3);
 
-        mIntroPagerAdapter = new IntroPagerAdapter(imageResourceIds);
+        mIntroPagerAdapter = new ImagePagerAdapter(imageResourceIds);
 
         mViewPager.setAdapter(mIntroPagerAdapter);
 //        mViewPager.setPageTransformer(true,new DepthPageTransformer());
         mIndicator.setViewPager(mViewPager);
     }
 
+    @Override
+    protected void initListener() {
+        mIntroPagerAdapter.setOnItemClickListener(new ImagePagerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                if(position == mIntroPagerAdapter.getCount() - 1){
+                    enter();
+                }
+            }
+        });
+    }
+
     public void enter() {
         redirectToActivity(this, MainActivity.class);
         finish();
-    }
-
-    private class IntroPagerAdapter extends PagerAdapter {
-
-        private List<Integer> mImageResourceIds;
-
-        public IntroPagerAdapter(List<Integer> imageResourceIds) {
-            this.mImageResourceIds = imageResourceIds;
-        }
-
-        @Override
-        public int getCount() {
-            return mImageResourceIds.size();
-        }
-
-        public int getFinalPosition() {
-            return getCount() - 1;
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-
-            ImageView imageView = new ImageView(container.getContext());
-            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            imageView.setBackgroundColor(getResources().getColor(android.R.color.white));
-            imageView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-                    FrameLayout.LayoutParams.MATCH_PARENT));
-            imageView.setImageResource(mImageResourceIds.get(position));
-            container.addView(imageView);
-
-            if(position == getCount() - 1) {
-                imageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        enter();
-                    }
-                });
-            }
-
-            return imageView;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
-        }
     }
 
     @Override

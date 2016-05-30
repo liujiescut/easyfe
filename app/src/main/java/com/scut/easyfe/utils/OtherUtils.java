@@ -12,7 +12,9 @@ import android.os.IBinder;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.scut.easyfe.app.App;
@@ -60,6 +62,14 @@ public class OtherUtils {
     public static <T> T findViewById(@NonNull Dialog dialog, @IdRes int id) {
         return (T) dialog.findViewById(id);
     }
+
+    public static int getScreenWidth(Context context) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        WindowManager manager = (WindowManager) context.getSystemService(context.WINDOW_SERVICE);
+        manager.getDefaultDisplay().getMetrics(metrics);
+        return metrics.widthPixels;
+    }
+
 
     /**
      * 关闭软键盘

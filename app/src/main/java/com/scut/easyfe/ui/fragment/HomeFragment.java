@@ -2,6 +2,8 @@ package com.scut.easyfe.ui.fragment;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.scut.easyfe.R;
@@ -12,8 +14,14 @@ import com.scut.easyfe.ui.activity.BookActivity;
 import com.scut.easyfe.ui.activity.SpecialOrderActivity;
 import com.scut.easyfe.ui.activity.TeacherRegisterOneActivity;
 import com.scut.easyfe.ui.activity.TeacherRegisterTwoActivity;
+import com.scut.easyfe.ui.adapter.ImagePagerAdapter;
 import com.scut.easyfe.ui.base.BaseFragment;
+import com.scut.easyfe.ui.customView.CircleIndicator;
+import com.scut.easyfe.ui.customView.ScrollableViewPager;
 import com.scut.easyfe.utils.OtherUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 主页Fragment
@@ -24,6 +32,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
     private TextView mLineTwoTextView;
     private TextView mLineThreeTextView;
     private TextView mHintTextView;
+    private RelativeLayout mAdvertiseRelativeLayout;
+    private ScrollableViewPager mAdvertiseViewPager;
+    private CircleIndicator mAdvertiseIndicator;
+    private ImagePagerAdapter mAdvertisePagerAdapter;
+
     @Override
     protected void setLayoutRes() {
         layoutRes = R.layout.fragment_home;
@@ -35,6 +48,37 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         mLineTwoTextView = OtherUtils.findViewById(v, R.id.home_second_text);
         mLineThreeTextView = OtherUtils.findViewById(v, R.id.home_third_text);
         mHintTextView = OtherUtils.findViewById(v, R.id.home_need_report);
+
+        mAdvertiseRelativeLayout = OtherUtils.findViewById(v, R.id.home_rl_advertise_container);
+        mAdvertiseViewPager = OtherUtils.findViewById(v, R.id.home_vp_advertise);
+        mAdvertiseIndicator = OtherUtils.findViewById(v, R.id.home_indicator_advertise);
+
+        /** 展示页所用图片的 ID 们 */
+        List<Integer> imageResourceIds = new ArrayList<>();
+
+        imageResourceIds.add(R.mipmap.image_splash_1);
+        imageResourceIds.add(R.mipmap.image_splash_2);
+        imageResourceIds.add(R.mipmap.image_splash_3);
+
+        mAdvertisePagerAdapter = new ImagePagerAdapter(imageResourceIds);
+
+        mAdvertiseViewPager.setAdapter(mAdvertisePagerAdapter);
+//        mAdvertiseViewPager.setPageTransformer(true,new DepthPageTransformer());
+        mAdvertiseIndicator.setViewPager(mAdvertiseViewPager);
+
+        initAdvertiseHeight();
+    }
+
+    private void initAdvertiseHeight(){
+        int height = 4;
+        int width = 7;
+        int widthPx = OtherUtils.getScreenWidth(mActivity);
+        int heightPx = widthPx * height / width;
+
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mAdvertiseRelativeLayout.getLayoutParams();
+        params.width = widthPx;
+        params.height = heightPx;
+        mAdvertiseRelativeLayout.setLayoutParams(params);
     }
 
     @Override
@@ -51,6 +95,14 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         v.findViewById(R.id.home_book_once_text).setOnClickListener(this);
         v.findViewById(R.id.home_teacher).setOnClickListener(this);
         v.findViewById(R.id.home_teacher_text).setOnClickListener(this);
+
+        mAdvertisePagerAdapter.setOnItemClickListener(new ImagePagerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                toast(position + "");
+            }
+        });
+
     }
 
     @Override
