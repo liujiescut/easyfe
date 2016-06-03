@@ -138,10 +138,19 @@ public class MainActivity extends BaseActivity {
                     for (int i = 0; i < guideMap.length(); i++) {
                         try {
                             mGuideMapImages.add(guideMap.getJSONObject(i).optString("image"));
-                            mGuideMapImages.add(guideMap.getJSONObject(i).optString("link"));
+                            mGuideMapLinks.add(guideMap.getJSONObject(i).optString("link"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                    }
+                }
+
+                if (mHomeFragment != null) {
+                    if(0 == mGuideMapImages.size()){
+
+                    }else{
+                        mHomeFragment.setAdvertiseImages(mGuideMapImages);
+                        mHomeFragment.notifyAdvertiseChange();
                     }
                 }
 

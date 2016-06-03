@@ -51,7 +51,7 @@ public class ImagePagerAdapter<T> extends PagerAdapter {
         if(mImageResourceIds.get(position) instanceof Integer) {
             imageView.setImageResource((Integer) mImageResourceIds.get(position));
         }else if(mImageResourceIds.get(position) instanceof String){
-//            ImageLoader.getInstance().
+            ImageLoader.getInstance().displayImage((String)mImageResourceIds.get(position), imageView);
         }
         container.addView(imageView);
 

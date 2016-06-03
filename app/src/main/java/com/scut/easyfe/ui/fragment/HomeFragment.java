@@ -35,10 +35,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
     private RelativeLayout mAdvertiseRelativeLayout;
     private ScrollableViewPager mAdvertiseViewPager;
     private CircleIndicator mAdvertiseIndicator;
-    private ImagePagerAdapter mAdvertisePagerAdapter;
-
-    /** 展示页所用图片的 ID 们 */
-    List<Integer> imageResourceIds = new ArrayList<>();
+    private ImagePagerAdapter<String> mAdvertisePagerAdapter;
+    private List<String> mAdvertiseImages = new ArrayList<>();
 
     @Override
     protected void setLayoutRes() {
@@ -56,7 +54,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         mAdvertiseViewPager = OtherUtils.findViewById(v, R.id.home_vp_advertise);
         mAdvertiseIndicator = OtherUtils.findViewById(v, R.id.home_indicator_advertise);
 
-        mAdvertisePagerAdapter = new ImagePagerAdapter(imageResourceIds);
+        mAdvertisePagerAdapter = new ImagePagerAdapter<>(mAdvertiseImages);
 
         mAdvertiseViewPager.setAdapter(mAdvertisePagerAdapter);
 //        mAdvertiseViewPager.setPageTransformer(true,new DepthPageTransformer());
@@ -100,6 +98,24 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
             }
         });
 
+    }
+
+    public void setAdvertiseImages(List<String> images){
+        if (images == null) {
+            return;
+        }
+
+        mAdvertiseImages.clear();
+        mAdvertiseImages.addAll(images);
+    }
+
+    public void notifyAdvertiseChange(){
+        if (mAdvertisePagerAdapter == null) {
+            return;
+        }
+
+        mAdvertisePagerAdapter.notifyDataSetChanged();
+        mAdvertiseIndicator.setViewPager(mAdvertiseViewPager);
     }
 
     @Override
