@@ -217,4 +217,5 @@
     <string name="home_need_not_found">预约不到点这里</string>
     <string name="profession_guide_price">专业辅导单位价格</string>
     <string name="cash_ticket">现金券</string>
+    <string name="profession_guide_state">专业辅导情况</string>
 </resources>

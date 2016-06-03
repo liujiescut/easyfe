@@ -92,7 +92,44 @@
                 android:layout_height="@dimen/layout_margin_small"
                 android:background="@color/transparent" />
 
-            <include layout="@layout/order_base_info" />
+            <!--<include layout="@layout/order_base_info" -->
+                <!--/>-->
+
+            <LinearLayout
+                android:id="@+id/to_do_order_ll_profession_guide_incomplete"
+                style="@style/ll_container_normal_style"
+                >
+
+                <TextView
+                    style="@style/text_normal_style"
+                    android:layout_marginRight="@dimen/container_stoke_width"
+                    android:layout_weight="2"
+                    android:drawableRight="@mipmap/icon_detail_question_padding"
+                    android:paddingLeft="@dimen/layout_padding_tiny"
+                    android:paddingRight="@dimen/layout_padding_tiny"
+                    android:onClick="onProfessionGuideClick"
+                    android:text="@string/profession_guide_state" />
+
+                <TextView
+                    android:id="@+id/to_do_order_tv_incomplete_info"
+                    style="@style/text_normal_style"
+                    android:layout_weight="3"
+                    android:gravity="start|center_vertical"
+                    tools:text="250 元/小时"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/to_do_order_ll_profession_guide_complete"
+                style="@style/text_normal_style"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/text_area_height"
+                android:drawableRight="@mipmap/icon_right_arrow_padding"
+                android:gravity="start|center_vertical"
+                android:text="@string/profession_guide_state"
+                />
+
+
 
             <TextView
                 style="@style/text_normal_style"

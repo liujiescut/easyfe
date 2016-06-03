@@ -106,6 +106,29 @@
         <TextView
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="2"
+            android:drawableRight="@mipmap/icon_detail_question_padding"
+            android:paddingLeft="@dimen/layout_padding_tiny"
+            android:paddingRight="@dimen/layout_padding_tiny"
+            android:onClick="onProfessionGuideClick"
+            android:text="@string/profession_guide_price" />
+
+        <TextView
+            android:id="@+id/order_base_info_tv_profession_guide_price"
+            style="@style/text_normal_style"
+            android:layout_weight="3"
+            android:gravity="start|center_vertical"
+            tools:text="250 元/小时"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        >
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
             android:text="@string/traffic_tip" />
 
@@ -117,6 +140,27 @@
             tools:text="50 元"
             />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/order_base_info_ll_ticket"
+        style="@style/ll_container_normal_style"
+        >
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="1"
+            android:text="@string/cash_ticket" />
+
+        <TextView
+            android:id="@+id/order_base_info_tv_ticket"
+            style="@style/text_normal_style"
+            android:layout_weight="3"
+            android:gravity="start|center_vertical"
+            tools:text="减 50 元"
+            />
+    </LinearLayout>
+
     <LinearLayout
         style="@style/ll_container_normal_style"
         >
