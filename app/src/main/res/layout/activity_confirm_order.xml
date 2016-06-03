@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.activity.WalletActivity">
+    >
     <include
         layout="@layout/titlebar"/>
 
@@ -137,7 +137,7 @@
         <TextView
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:text="@string/teach_price" />
 
         <TextView
@@ -154,10 +154,46 @@
         >
 
         <TextView
+            style="@style/text_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="2"
+            android:drawableRight="@mipmap/icon_detail_question_padding"
+            android:paddingLeft="@dimen/layout_padding_tiny"
+            android:paddingRight="@dimen/layout_padding_tiny"
+            android:onClick="onProfessionGuideClick"
+            android:text="@string/profession_guide_price" />
+
+        <TextView
+            android:id="@+id/confirm_order_tv_profession_guide_price"
+            style="@style/text_normal_style"
+            android:layout_weight="2"
+            android:gravity="start|center_vertical"
+            tools:text="250 元/小时"
+            />
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="0dip"
+            android:gravity="center_vertical"
+            android:background="@color/text_area_bg_inner"
+            android:layout_height="match_parent">
+        <CheckBox
+            android:id="@+id/confirm_order_cb_profession_guide"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:checked="true"
+            android:layout_gravity="center_vertical"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        >
+
+        <TextView
             android:id="@+id/confirm_order_tv_tip_label"
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:text="@string/traffic_tip" />
 
         <TextView
@@ -168,6 +204,27 @@
             tools:text="50 元"
             />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/confirm_order_ll_ticket"
+        style="@style/ll_container_normal_style"
+        >
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="2"
+            android:text="@string/cash_ticket" />
+
+        <TextView
+            android:id="@+id/confirm_order_tv_ticket"
+            style="@style/text_normal_style"
+            android:layout_weight="3"
+            android:gravity="start|center_vertical"
+            tools:text="减 50 元"
+            />
+    </LinearLayout>
+
     <LinearLayout
         style="@style/ll_container_normal_style"
         android:layout_marginTop="@dimen/layout_margin_small"

@@ -3,6 +3,8 @@ package com.scut.easyfe.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -46,6 +48,11 @@ public class ConfirmOrderActivity extends BaseActivity {
     private TextView mTeachTotalPriceLabelTextView;
     private LinearLayout mWeekLinearLayout;
 
+    private TextView mProfessionGuidePriceTextView;
+    private TextView mTicketTextView;
+    private LinearLayout mTicketLinearLayout;
+    private CheckBox mProfessionGuideCheckBox;
+
     private Order mOrder;
     private int mTeachWeek = 0; //多次预约时预约多少次
 
@@ -87,6 +94,11 @@ public class ConfirmOrderActivity extends BaseActivity {
         mTeachTotalPriceTextView = OtherUtils.findViewById(this, R.id.confirm_order_tv_total_price);
         mTeachTotalPriceLabelTextView = OtherUtils.findViewById(this, R.id.confirm_order_tv_total_price_label);
 
+        mProfessionGuidePriceTextView = OtherUtils.findViewById(this, R.id.confirm_order_tv_profession_guide_price);
+        mProfessionGuideCheckBox = OtherUtils.findViewById(this, R.id.confirm_order_cb_profession_guide);
+        mTicketLinearLayout = OtherUtils.findViewById(this, R.id.confirm_order_ll_ticket);
+        mTicketTextView = OtherUtils.findViewById(this, R.id.confirm_order_tv_ticket);
+
         mTeacherTextView.setText(mOrder.getTeacher().getName());
         mTeachGradeTextView.setText(String.format("%s", mOrder.getGrade()));
         mTeachCourseTextView.setText(mOrder.getCourse());
@@ -98,7 +110,25 @@ public class ConfirmOrderActivity extends BaseActivity {
         initOtherViews();
     }
 
+    @Override
+    protected void initListener() {
+        mProfessionGuideCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mTicketLinearLayout.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+            }
+        });
+    }
+
+    @Override
+    protected void fetchData() {
+        //Todo 获取可用优惠券
+
+    }
+
     private void initOtherViews(){
+        //Todo 初始化Ticket、ProfessionGuidePrice
+
         String title = "";
         switch (mConfirmOrderType){
             case Constants.Identifier.CONFIRM_ORDER_SPECIAL:
@@ -221,6 +251,13 @@ public class ConfirmOrderActivity extends BaseActivity {
                         redirectToActivity(mContext, MyOrderActivity.class);
                     }
                 });
+    }
+
+    public void onProfessionGuideClick(View view){
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "专业辅导");
+        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.user_protocol_content));
+        redirectToActivity(mContext, ShowTextActivity.class, bundle);
     }
 
     public void onBackClick(View view){

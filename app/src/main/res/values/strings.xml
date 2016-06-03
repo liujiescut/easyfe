@@ -215,4 +215,6 @@
     <string name="parent_complete_course_reward">完成课时现金券及积分奖励</string>
     <string name="home_vip_activity">会员活动</string>
     <string name="home_need_not_found">预约不到点这里</string>
+    <string name="profession_guide_price">专业辅导单位价格</string>
+    <string name="cash_ticket">现金券</string>
 </resources>
