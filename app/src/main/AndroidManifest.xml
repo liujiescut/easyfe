@@ -150,7 +150,8 @@
         <activity android:name=".ui.activity.reward.ParentCourseRewardActivity" />
         <activity android:name=".ui.activity.reward.TeacherCourseRewardActivity" />
         <activity android:name=".ui.activity.reward.TeacherPriceAddExplainActivity" />
-        <activity android:name=".ui.activity.TicketActivity"></activity>
+        <activity android:name=".ui.activity.TicketActivity" />
+        <activity android:name=".ui.activity.WebActivity"></activity>
     </application>
 
 </manifest>

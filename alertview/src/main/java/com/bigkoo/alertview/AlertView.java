@@ -197,7 +197,7 @@ public class AlertView {
                 if (i != 0){
                     //添加上按钮之间的分割线
                     View divier = new View(context);
-                    divier.setBackgroundColor(context.getResources().getColor(R.color.bgColor_divier));
+                    divier.setBackgroundColor(context.getResources().getColor(R.color.bg_color_divider));
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int)context.getResources().getDimension(R.dimen.size_divier), LinearLayout.LayoutParams.MATCH_PARENT);
                     loAlertButtons.addView(divier,params);
                 }

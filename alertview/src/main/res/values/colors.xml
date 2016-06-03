@@ -12,7 +12,7 @@
     <color name="textColor_alert_msg">#666666</color>
     <color name="textColor_actionsheet_msg">#8f8f8f</color>
     <!--线条颜色-->
-    <color name="bgColor_divier">#d7d7db</color>
+    <color name="bg_color_divider">#d7d7db</color>
     <!--取消按钮颜色-->
     <color name="textColor_alert_button_cancel">#007aff</color>
     <!--确认按钮颜色-->

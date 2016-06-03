@@ -119,6 +119,8 @@ public class Constants {
         public static final String IS_FIRST_IN_SPECIAL_TIME_ACTIVITY  = "is_fist_time_in_special_activity";
         public static final String QN_TOKEN = "qn_token";
         public static final String TEACHER_ID = "teacher_id";
+        public static final String WEB_TITLE = "web_title";
+        public static final String WEB_URL = "web_url";
 
         public static final String CHAT_OR_CIRCLE = "chat_or_circle";
         public static final String SHARE_FLAG = "flag";

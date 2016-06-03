@@ -149,7 +149,7 @@ public class MainActivity extends BaseActivity {
                     if(0 == mGuideMapImages.size()){
 
                     }else{
-                        mHomeFragment.setAdvertiseImages(mGuideMapImages);
+                        mHomeFragment.setAdvertiseImages(mGuideMapImages, mGuideMapLinks);
                         mHomeFragment.notifyAdvertiseChange();
                     }
                 }
@@ -329,6 +329,12 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onAdvertiseClick(View view) {
+        if(null != mAdvertiseLink && mAdvertiseLink.length() != 0) {
+            Bundle bundle = new Bundle();
+            bundle.putString(Constants.Key.WEB_TITLE, "推广");
+            bundle.putString(Constants.Key.WEB_URL, mAdvertiseLink);
+            redirectToActivity(this, WebActivity.class, bundle);
+        }
         onCloseAdvertiseClick(view);
     }
 }

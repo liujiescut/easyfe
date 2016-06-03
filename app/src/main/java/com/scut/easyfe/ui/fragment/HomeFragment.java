@@ -14,6 +14,7 @@ import com.scut.easyfe.ui.activity.BookActivity;
 import com.scut.easyfe.ui.activity.SpecialOrderActivity;
 import com.scut.easyfe.ui.activity.TeacherRegisterOneActivity;
 import com.scut.easyfe.ui.activity.TeacherRegisterTwoActivity;
+import com.scut.easyfe.ui.activity.WebActivity;
 import com.scut.easyfe.ui.adapter.ImagePagerAdapter;
 import com.scut.easyfe.ui.base.BaseFragment;
 import com.scut.easyfe.ui.customView.CircleIndicator;
@@ -37,6 +38,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
     private CircleIndicator mAdvertiseIndicator;
     private ImagePagerAdapter<String> mAdvertisePagerAdapter;
     private List<String> mAdvertiseImages = new ArrayList<>();
+    private List<String> mAdvertiseUrls = new ArrayList<>();
 
     @Override
     protected void setLayoutRes() {
@@ -94,19 +96,27 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         mAdvertisePagerAdapter.setOnItemClickListener(new ImagePagerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                toast(position + "");
+                if(null != mActivity && position >= 0 && position < mAdvertiseUrls.size()){
+                    Bundle bundle = new Bundle();
+                    bundle.putString(Constants.Key.WEB_TITLE, "会员活动");
+                    bundle.putString(Constants.Key.WEB_URL, mAdvertiseUrls.get(position));
+                    mActivity.redirectToActivity(mActivity, WebActivity.class, bundle);
+                }
             }
         });
 
     }
 
-    public void setAdvertiseImages(List<String> images){
-        if (images == null) {
-            return;
+    public void setAdvertiseImages(List<String> images, List<String> links){
+        if (links != null) {
+            mAdvertiseUrls.clear();
+            mAdvertiseUrls.addAll(links);
         }
 
-        mAdvertiseImages.clear();
-        mAdvertiseImages.addAll(images);
+        if (images != null) {
+            mAdvertiseImages.clear();
+            mAdvertiseImages.addAll(images);
+        }
     }
 
     public void notifyAdvertiseChange(){
