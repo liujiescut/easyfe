@@ -83,7 +83,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         v.findViewById(R.id.home_main_text).setOnClickListener(this);
         v.findViewById(R.id.home_second_text).setOnClickListener(this);
         v.findViewById(R.id.home_third_text).setOnClickListener(this);
-        v.findViewById(R.id.home_vertical_divider).setOnClickListener(this);
+        v.findViewById(R.id.home_vertical_divider_bottom).setOnClickListener(this);
+        v.findViewById(R.id.home_vertical_divider_up).setOnClickListener(this);
         v.findViewById(R.id.home_need_report).setOnClickListener(this);
         v.findViewById(R.id.home_book_multi).setOnClickListener(this);
         v.findViewById(R.id.home_book_multi_text).setOnClickListener(this);
@@ -107,7 +108,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
             case R.id.home_main_text:
             case R.id.home_second_text:
             case R.id.home_third_text:
-            case R.id.home_vertical_divider:
+            case R.id.home_vertical_divider_bottom:
+            case R.id.home_vertical_divider_up:
                 onSpecialOrderClick(v);
                 break;
 

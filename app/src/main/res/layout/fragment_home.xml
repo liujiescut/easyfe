@@ -10,7 +10,7 @@
     <RelativeLayout
         android:id="@+id/home_rl_advertise_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="168dp">
 
         <com.scut.easyfe.ui.customView.ScrollableViewPager
             android:id="@+id/home_vp_advertise"
@@ -34,15 +34,22 @@
 
     </RelativeLayout>
 
+    <View
+        android:id="@+id/home_vertical_divider_up"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" />
+
+
     <TextView
         android:id="@+id/home_main_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="特价推广"
-        android:textColor="@color/theme_color"
         android:padding="@dimen/layout_padding_large"
-        android:textSize="48dp" />
+        android:text="特价推广呦"
+        android:textColor="@color/theme_color"
+        android:textSize="36dp" />
 
     <TextView
         android:id="@+id/home_second_text"
@@ -51,33 +58,52 @@
         android:gravity="center"
         android:text="低至1元/小时"
         android:textColor="@color/theme_color"
-        android:textSize="36dp" />
+        android:textSize="26dp" />
 
     <TextView
         android:id="@+id/home_third_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:padding="@dimen/layout_padding_large"
         android:text="(每周7点跟新第二天特价单)"
         android:textColor="@color/theme_color"
-        android:padding="@dimen/layout_padding_large"
-        android:textSize="20dp" />
+        android:textSize="18dp" />
 
     <View
-        android:id="@+id/home_vertical_divider"
+        android:id="@+id/home_vertical_divider_bottom"
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1" />
 
-    <TextView
-        android:id="@+id/home_need_report"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/theme_color_light"
-        android:gravity="center"
-        android:padding="@dimen/layout_padding_normal"
-        android:text="预约不到想要的? 点这里"
-        android:textSize="@dimen/text_size_large" />
+        android:background="@color/white_a_alpha"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/home_tv_vip_activity"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/theme_color"
+            android:padding="@dimen/layout_padding_normal"
+            android:text="@string/home_vip_activity"
+            android:textSize="@dimen/text_size_large" />
+
+        <TextView
+            android:id="@+id/home_need_report"
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/theme_color"
+            android:padding="@dimen/layout_padding_normal"
+            android:text="@string/home_need_not_found"
+            android:textSize="@dimen/text_size_large" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

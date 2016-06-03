@@ -41,4 +41,7 @@
 
     <color name="invite_reward_theme_color">#24252A</color>
     <color name="invite_reward_text_color">#EBC581</color>
+
+    <color name="white_a">#fafafa</color>
+    <color name="white_a_alpha">#88fafafa</color>
 </resources>
