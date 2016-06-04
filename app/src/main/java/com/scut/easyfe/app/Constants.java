@@ -212,6 +212,7 @@ public class Constants {
         public static final ArrayList<String> hasTeachChildCountRangeList = new ArrayList<>();
         public static final ArrayList<String> hasTeachChildTimeRangeList = new ArrayList<>();
         public static ArrayList<String> bankNameList = new ArrayList<>();
+        public static ArrayList<String> professionTutorCourseList = new ArrayList<>();
 
         static {
 
@@ -300,6 +301,15 @@ public class Constants {
             hasTeachChildTimeRangeList.add("50-100小时");
             hasTeachChildTimeRangeList.add("100小时以上");
 
+            professionTutorCourseList.add("数学(初中)");
+            professionTutorCourseList.add("数学(高一)");
+            professionTutorCourseList.add("数学(高中文科)");
+            professionTutorCourseList.add("数学(高中理科)");
+            professionTutorCourseList.add("英语");
+            professionTutorCourseList.add("物理");
+            professionTutorCourseList.add("化学");
+            professionTutorCourseList.add("生物");
+            professionTutorCourseList.add("语文");
         }
     }
 

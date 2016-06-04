@@ -26,6 +26,7 @@
 
     <dimen name="titlebar_height_dp">50dp</dimen>
     <dimen name="text_area_height">40dp</dimen>
+    <dimen name="text_area_height_small">32dp</dimen>
 
     <dimen name="container_stoke_width">1dp</dimen>
     <dimen name="negative_container_stoke_width">-1dp</dimen>

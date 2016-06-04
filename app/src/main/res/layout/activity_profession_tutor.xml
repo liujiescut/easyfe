@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_app_bg"
+    android:orientation="vertical"
+    tools:context="com.scut.easyfe.ui.activity.ProfessionTutorActivity">
+
+    <include layout="@layout/titlebar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layout_margin_small"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/text_area_height"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/profession_tutor_tv_state_cee"
+                        style="@style/profession_tutor_state_style"
+                        android:drawableLeft="@mipmap/icon_gold_arrow_padding"
+                        android:text="高考" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/transparent" />
+
+                    <TextView
+                        android:id="@+id/profession_tutor_tv_state_hee"
+                        style="@style/profession_tutor_state_style"
+                        android:text="中考" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/transparent" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/text_area_height"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/profession_tutor_tv_state_high"
+                        style="@style/profession_tutor_state_style"
+                        android:text="高中" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/transparent" />
+
+                    <TextView
+                        android:id="@+id/profession_tutor_tv_state_middle"
+                        style="@style/profession_tutor_state_style"
+                        android:text="初中" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.scut.easyfe.ui.customView.FixedGridView
+                android:id="@+id/profession_tutor_gv_course"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layout_margin_small"
+                android:background="@color/white_a"
+                android:numColumns="3"
+                android:padding="@dimen/layout_padding_small" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/text_area_height"
+                android:layout_marginTop="@dimen/layout_margin_small"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/profession_tutor_tv_way_knowledge"
+                    style="@style/profession_tutor_state_style"
+                    android:drawableLeft="@mipmap/icon_gold_arrow_padding"
+                    android:text="针对性知识点补习" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/transparent" />
+
+                <TextView
+                    android:id="@+id/profession_tutor_tv_way_paper"
+                    style="@style/profession_tutor_state_style"
+                    android:text="复习模拟卷" />
+            </LinearLayout>
+
+            <include layout="@layout/profession_tutor_way_detail" />
+
+            <LinearLayout
+                style="@style/ll_container_normal_style"
+                android:layout_marginTop="@dimen/layout_margin_small">
+
+                <TextView
+                    style="@style/text_normal_style"
+                    android:layout_marginRight="@dimen/container_stoke_width"
+                    android:layout_weight="1"
+                    android:text="难易程度" />
+
+                <TextView
+                    android:id="@+id/profession_tutor_tv_difficulty"
+                    style="@style/text_editable_style"
+                    android:layout_weight="3"
+                    android:drawableRight="@mipmap/icon_right_arrow_padding"
+                    android:gravity="start|center_vertical" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/text_normal_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layout_margin_small"
+                android:gravity="left"
+                android:paddingBottom="@dimen/layout_padding_tiny"
+                android:paddingLeft="@dimen/layout_padding_small"
+                android:paddingTop="@dimen/layout_padding_tiny"
+                android:text="@string/warning_info" />
+
+            <TextView
+                android:id="@+id/to_do_order_tv_warning"
+                style="@style/text_normal_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_divider_height"
+                android:gravity="left"
+                android:padding="@dimen/layout_padding_small"
+                tools:text="1. 你好我是提示\n1. 你好我是提示1\n2. 你好你好我是提示1\n2. 你好你好我是提示1\n2. 你好" />
+
+            <TextView
+                android:id="@+id/profession_tutor_tv_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layout_margin_small"
+                android:background="@drawable/selector_main_left_drawer_item"
+                android:clickable="true"
+                android:gravity="center"
+                android:padding="@dimen/layout_padding_tiny"
+                android:text="@string/save_and_back"
+                android:textColor="@color/title_text_color"
+                android:visibility="gone"
+                tools:visibility="visible" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

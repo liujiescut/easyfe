@@ -102,4 +102,22 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
+    <style name="profession_tutor_state_style">
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/text_area_text_color</item>
+        <item name="android:padding">@dimen/layout_padding_small</item>
+        <item name="android:drawablePadding">-64px</item>
+        <item name="android:background">@color/white_a</item>
+    </style>
+
+    <style name="profession_tutor_knowledge_style" parent="profession_tutor_state_style">
+        <item name="android:padding">@dimen/layout_padding_tiny</item>
+        <item name="android:textSize">@dimen/text_size_tiny</item>
+    </style>
+
+
+
 </resources>

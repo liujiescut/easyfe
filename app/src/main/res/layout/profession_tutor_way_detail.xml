@@ -1,0 +1,185 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/profession_tutor_ll_according_knowledge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_small"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_area_height_small"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/profession_tutor_knowledge_style"
+                android:text="年级/一级知识点" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/transparent" />
+
+            <TextView
+                style="@style/profession_tutor_knowledge_style"
+                android:text="大章节/二级知识点" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/transparent" />
+
+            <TextView
+                style="@style/profession_tutor_knowledge_style"
+                android:text="小章节/三级知识点" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/transparent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_area_height_small"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/profession_tutor_tv_knowledge_1_1"
+                style="@style/profession_tutor_knowledge_style" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/transparent" />
+
+            <TextView
+                android:id="@+id/profession_tutor_tv_knowledge_1_2"
+                style="@style/profession_tutor_knowledge_style" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/transparent" />
+
+            <TextView
+                android:id="@+id/profession_tutor_tv_knowledge_1_3"
+                style="@style/profession_tutor_knowledge_style" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/transparent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_area_height_small"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/profession_tutor_tv_knowledge_2_1"
+                style="@style/profession_tutor_knowledge_style" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/transparent" />
+
+            <TextView
+                android:id="@+id/profession_tutor_tv_knowledge_2_2"
+                style="@style/profession_tutor_knowledge_style" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/transparent" />
+
+            <TextView
+                android:id="@+id/profession_tutor_tv_knowledge_2_3"
+                style="@style/profession_tutor_knowledge_style" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/transparent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_area_height_small"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/profession_tutor_tv_knowledge_3_1"
+                style="@style/profession_tutor_knowledge_style" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/transparent" />
+
+            <TextView
+                android:id="@+id/profession_tutor_tv_knowledge_3_2"
+                style="@style/profession_tutor_knowledge_style" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/transparent" />
+
+            <TextView
+                android:id="@+id/profession_tutor_tv_knowledge_3_3"
+                style="@style/profession_tutor_knowledge_style" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/profession_tutor_ll_according_paper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_small"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:orientation="vertical">
+
+        <LinearLayout style="@style/ll_container_normal_style">
+
+            <TextView
+                style="@style/text_normal_style"
+                android:layout_marginRight="@dimen/container_stoke_width"
+                android:layout_weight="1"
+                android:text="授课年级" />
+
+            <TextView
+                android:id="@+id/profession_tutor_tv_grade"
+                style="@style/text_editable_style"
+                android:layout_weight="3"
+                android:drawableRight="@mipmap/icon_right_arrow_padding"
+                android:gravity="start|center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/ll_container_normal_style">
+
+            <TextView
+                style="@style/text_normal_style"
+                android:layout_marginRight="@dimen/container_stoke_width"
+                android:layout_weight="1"
+                android:text="复习模拟卷" />
+
+            <TextView
+                android:id="@+id/profession_tutor_tv_paper"
+                style="@style/text_editable_style"
+                android:layout_weight="3"
+                android:drawableRight="@mipmap/icon_right_arrow_padding"
+                android:gravity="start|center_vertical" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
