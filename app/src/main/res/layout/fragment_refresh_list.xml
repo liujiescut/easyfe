@@ -50,8 +50,10 @@
             android:id="@+id/tv_tips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:textColor="@color/darker_grey"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size_medium"
             tools:text="暂时没有订单" />
 
     </LinearLayout>

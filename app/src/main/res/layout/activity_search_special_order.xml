@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    android:orientation="vertical"
+    tools:context="com.scut.easyfe.ui.activity.SearchSpecialOrderActivity">
+
+    <include layout="@layout/titlebar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_small"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout style="@style/ll_container_normal_style">
+
+                <TextView
+                    style="@style/text_normal_style"
+                    android:layout_marginRight="@dimen/container_stoke_width"
+                    android:layout_weight="1"
+                    android:text="@string/teach_course" />
+
+                <TextView
+                    android:id="@+id/publish_spread_course"
+                    style="@style/text_editable_style"
+                    android:layout_weight="3"
+                    android:drawableRight="@mipmap/icon_right_arrow_padding"
+                    android:gravity="start|center_vertical"
+                    android:onClick="onCourseClick"
+                    tools:text="软件需求分析" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/ll_container_normal_style">
+
+                <TextView
+                    style="@style/text_normal_style"
+                    android:layout_marginRight="@dimen/container_stoke_width"
+                    android:layout_weight="1"
+                    android:text="@string/teach_grade" />
+
+                <TextView
+                    android:id="@+id/publish_spread_grade"
+                    style="@style/text_editable_style"
+                    android:layout_weight="3"
+                    android:drawableRight="@mipmap/icon_right_arrow_padding"
+                    android:gravity="start|center_vertical"
+                    android:onClick="onGradeClick"
+                    tools:text="大学 三年级" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="45dp"
+            android:layout_height="80dp"
+            android:background="@drawable/selector_main_left_drawer_item"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="搜\n\n索"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:background="@null"
+        android:orientation="horizontal">
+        <View
+            android:layout_width="0dip"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/layout_margin_small"
+            android:background="@color/text_hint_color"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_hint_color"
+            android:padding="@dimen/layout_padding_tiny"
+            android:text="搜索结果"/>
+        <View
+            android:layout_width="0dip"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/layout_margin_small"
+            android:background="@color/text_hint_color"/>
+    </LinearLayout>
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <FrameLayout
+        android:id="@+id/search_spread_fl_container"
+        android:layout_width="match_parent"
+        android:background="@null"
+        android:layout_height="match_parent" />
+
+    <!--<TextView-->
+    <!--android:id="@+id/search_spread_tv_empty_tips"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@string/search_spread_empty_info"-->
+    <!--android:visibility="gone"-->
+    <!--android:textColor="@color/text_hint_color"/>-->
+    <!--</RelativeLayout>-->
+
+</LinearLayout>

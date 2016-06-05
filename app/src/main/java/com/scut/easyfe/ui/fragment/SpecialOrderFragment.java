@@ -3,6 +3,7 @@ package com.scut.easyfe.ui.fragment;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.scut.easyfe.R;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.network.RequestBase;
@@ -22,6 +23,9 @@ import java.util.List;
  */
 public class SpecialOrderFragment extends BaseRefreshFragment {
     private ArrayList<Order> mOrders = new ArrayList<>();
+    //是否显示的是搜索结果
+    private boolean mShowSearchResult = false;
+
     @Override
     protected void initView(View view) {
         super.initView(view);
@@ -43,7 +47,6 @@ public class SpecialOrderFragment extends BaseRefreshFragment {
     @Override
     protected void fetchData(View v) {
         loadData(0, Constants.DefaultValue.DEFAULT_LOAD_COUNT, false);
-
     }
 
     private void loadData(int skip, int limit, final boolean clear){
@@ -59,7 +62,13 @@ public class SpecialOrderFragment extends BaseRefreshFragment {
                 mAdapter.notifyDataSetChanged();
 
                 if(result.size() == 0){
-                    toast("没有更多数据可以加载");
+                    if(mShowSearchResult && mOrders.size() == 0){
+                        showTips(R.string.search_spread_empty_info);
+                    }else {
+                        toast("没有更多数据可以加载");
+                    }
+                }else {
+                    hideTips();
                 }
 
                 setIsLoading(false);
@@ -86,5 +95,9 @@ public class SpecialOrderFragment extends BaseRefreshFragment {
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+    }
+
+    public void setShowSearchResult(boolean mShowSearchResult) {
+        this.mShowSearchResult = mShowSearchResult;
     }
 }

@@ -193,8 +193,19 @@ public abstract class BaseRefreshFragment extends BaseFragment
      * @param message  显示的文本
      */
     protected void showTips(Drawable drawable, String message) {
+        mTipsArea.setVisibility(View.VISIBLE);
         mTipsImageView.setImageDrawable(drawable);
         mTipsTextView.setText(message);
+    }
+
+    protected void showTips(String message){
+        mTipsArea.setVisibility(View.VISIBLE);
+        mTipsImageView.setVisibility(View.GONE);
+        mTipsTextView.setText(message);
+    }
+
+    protected void showTips(int stringId){
+        showTips(getResources().getString(stringId));
     }
 
     protected void hideTips() {
