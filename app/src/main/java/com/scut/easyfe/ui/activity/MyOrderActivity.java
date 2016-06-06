@@ -338,18 +338,18 @@ public class MyOrderActivity extends BaseActivity {
 
     public void onSortByNameClick(View view) {
         mSortByNameImageView.setVisibility(View.VISIBLE);
-        mSortByTimeImageView.setVisibility(View.GONE);
+        mSortByTimeImageView.setVisibility(View.INVISIBLE);
         mSortByNameTextView.setTextColor(getResources().getColor(R.color.theme_color));
         mSortByTimeTextView.setTextColor(getResources().getColor(R.color.text_area_text_color));
     }
 
     public void onSortByTimeClick(View view) {
-        mSortByNameImageView.setVisibility(View.GONE);
+        mSortByNameImageView.setVisibility(View.INVISIBLE);
         mSortByTimeImageView.setVisibility(View.VISIBLE);
         mSortByNameTextView.setTextColor(getResources().getColor(R.color.text_area_text_color));
         mSortByTimeTextView.setTextColor(getResources().getColor(R.color.theme_color));
     }
-    
+
     public void onBackClick(View view) {
         redirectToActivity(mContext, MainActivity.class);
         finish();

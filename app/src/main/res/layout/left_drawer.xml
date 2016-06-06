@@ -58,6 +58,7 @@
 
         <TextView
             style="@style/main_left_drawer_item"
+            android:onClick="onLevelClick"
             android:text="@string/main_left_drawer_level" />
     </LinearLayout>
 

@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 /**
  * 程序主界面
@@ -197,6 +198,16 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
+     * 点击我的等级
+     * @param view 被点击View
+     */
+    public void onLevelClick(View view){
+        if(App.getUser().hasLogin()){
+            redirectToActivity(this, LevelActivity.class);
+        }
+    }
+
+    /**
      * 点击我的订单
      */
     public void onMyOrderClick(View view) {
@@ -234,17 +245,6 @@ public class MainActivity extends BaseActivity {
      * 点击我的钱包
      */
     public void onPocketClick(View view) {
-//        MapUtils.getDurationFromPosition(23.097653270780476, 113.34697650222962, 23.03, 113.345, "广州市", new MapUtils.GetDurationCallback() {
-//            @Override
-//            public void onSuccess(int durationSeconds) {
-//                toast(durationSeconds + "");
-//            }
-//
-//            @Override
-//            public void onFailed(String errorMsg) {
-//
-//            }
-//        });
         redirectToActivity(mContext, WalletActivity.class);
     }
 

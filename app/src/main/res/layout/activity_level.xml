@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_app_bg"
+    android:orientation="vertical"
+    tools:context="com.scut.easyfe.ui.activity.LevelActivity">
+
+    <include
+        layout="@layout/titlebar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/layout_padding_small"
+        android:gravity="center_vertical"
+        android:background="@null"
+        android:orientation="horizontal">
+        <View
+            android:layout_width="0dip"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/layout_margin_small"
+            android:background="@color/text_hint_color"/>
+
+        <TextView
+            android:id="@+id/level_tv_user_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_hint_color"
+            android:padding="@dimen/layout_padding_tiny"
+            android:text="家长等级"/>
+        <View
+            android:layout_width="0dip"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/layout_margin_small"
+            android:background="@color/text_hint_color"/>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        android:layout_height="42dp"
+        >
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="2"
+            android:gravity="left|center_vertical"
+            tools:text="家长等级"
+            android:clickable="false"
+            android:id="@+id/level_tv_level_label" />
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_weight="3"
+            android:textColor="@color/theme_color"
+            android:gravity="left|center_vertical"
+            tools:text="黑金卡会员"
+            android:id="@+id/level_tv_level" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        android:layout_height="42dp"
+        >
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="2"
+            android:clickable="false"
+            android:gravity="left|center_vertical"
+            android:text="已完成订单小时"
+            android:id="@+id/level_tv_compelete_time_label" />
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_weight="3"
+            android:gravity="left|center_vertical"
+            tools:text="1024 小时"
+            android:id="@+id/level_tv_complete_time" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        android:layout_height="42dp"
+        >
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="2"
+            android:clickable="false"
+            android:gravity="left|center_vertical"
+            tools:text="家长积分"
+            android:id="@+id/level_tv_score_label" />
+
+        <TextView
+            style="@style/text_normal_style"
+            android:layout_weight="3"
+            android:gravity="left|center_vertical"
+            tools:text="1024 分"
+            android:id="@+id/level_tv_score" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/layout_padding_normal"
+        android:text="@string/level_info"
+        android:textColor="@color/text_hint_color"
+        android:textSize="@dimen/text_size_small"
+        android:clickable="true"
+        android:onClick="onDetailClick" />
+
+
+
+</LinearLayout>

@@ -220,4 +220,5 @@
     <string name="profession_guide_state">专业辅导情况</string>
     <string name="save_and_back">保存并返回</string>
     <string name="search_spread_empty_info">亲，这个科目这个年级的特价订单已被预订完咯，\n您可以下周再来看看哟^^</string>
+    <string name="level_info"><u>不了解用户与积分规则？点击这里</u></string>
 </resources>
