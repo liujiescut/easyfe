@@ -9,10 +9,70 @@
 
     <include layout="@layout/titlebar" />
 
+    <LinearLayout
+        android:paddingTop="@dimen/layout_padding_small"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:onClick="onSortByTimeClick"
+            android:background="@color/text_area_bg_inner"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/my_order_iv_sort_time"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:padding="10dp"
+                android:src="@mipmap/icon_gold_right_solid_arrow"/>
+            <TextView
+                android:id="@+id/my_order_tv_sort_time"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/theme_color"
+                android:text="按时间排序"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/transparent"/>
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:background="@color/text_area_bg_inner"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:onClick="onSortByNameClick"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/my_order_iv_sort_name"
+                android:visibility="gone"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:padding="10dp"
+                android:src="@mipmap/icon_gold_right_solid_arrow"/>
+            <TextView
+                android:id="@+id/my_order_tv_sort_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/text_area_text_color"
+                android:text="按姓名排序"/>
+        </LinearLayout>
+    </LinearLayout>
+
     <com.astuetz.PagerSlidingTabStrip
         android:id="@+id/my_order_tabs"
         android:layout_width="match_parent"
         android:layout_height="36dip"
+        android:layout_marginTop="1dp"
         android:background="@color/text_area_bg_inner"/>
 
     <LinearLayout

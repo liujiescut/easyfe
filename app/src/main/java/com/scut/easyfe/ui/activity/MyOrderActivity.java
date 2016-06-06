@@ -3,6 +3,7 @@ package com.scut.easyfe.ui.activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -45,6 +46,11 @@ public class MyOrderActivity extends BaseActivity {
     private LinearLayout mBtnLinearLayout;
     private TextView mModifyTextView;
     private TextView mCancelTextView;
+    private TextView mSortByTimeTextView;
+    private ImageView mSortByTimeImageView;
+    private TextView mSortByNameTextView;
+    private ImageView mSortByNameImageView;
+
     private ViewPager mViewPager;
     private OrderPagerAdapter mPagerAdapter;
     private int mCurrentOrderType = Constants.Identifier.ORDER_TO_DO;
@@ -76,6 +82,10 @@ public class MyOrderActivity extends BaseActivity {
         mBtnLinearLayout = OtherUtils.findViewById(this, R.id.my_order_ll_buttons);
         mModifyTextView = OtherUtils.findViewById(this, R.id.my_order_tv_button_1);
         mCancelTextView = OtherUtils.findViewById(this, R.id.my_order_tv_button_2);
+        mSortByNameTextView = OtherUtils.findViewById(this, R.id.my_order_tv_sort_name);
+        mSortByTimeTextView = OtherUtils.findViewById(this, R.id.my_order_tv_sort_time);
+        mSortByNameImageView = OtherUtils.findViewById(this, R.id.my_order_iv_sort_name);
+        mSortByTimeImageView = OtherUtils.findViewById(this, R.id.my_order_iv_sort_time);
 
         mPagerAdapter = new OrderPagerAdapter(getSupportFragmentManager(), titles, types);
         mViewPager = (ViewPager) findViewById(R.id.my_order_viewpager);
@@ -326,6 +336,20 @@ public class MyOrderActivity extends BaseActivity {
         }
     }
 
+    public void onSortByNameClick(View view) {
+        mSortByNameImageView.setVisibility(View.VISIBLE);
+        mSortByTimeImageView.setVisibility(View.GONE);
+        mSortByNameTextView.setTextColor(getResources().getColor(R.color.theme_color));
+        mSortByTimeTextView.setTextColor(getResources().getColor(R.color.text_area_text_color));
+    }
+
+    public void onSortByTimeClick(View view) {
+        mSortByNameImageView.setVisibility(View.GONE);
+        mSortByTimeImageView.setVisibility(View.VISIBLE);
+        mSortByNameTextView.setTextColor(getResources().getColor(R.color.text_area_text_color));
+        mSortByTimeTextView.setTextColor(getResources().getColor(R.color.theme_color));
+    }
+    
     public void onBackClick(View view) {
         redirectToActivity(mContext, MainActivity.class);
         finish();
