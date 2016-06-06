@@ -274,7 +274,8 @@ public class User extends BaseEntity{
     }
 
     public boolean isTeacher(){
-        return type == Constants.Identifier.USER_TEACHER || type == Constants.Identifier.USER_TP;
+        return true;
+//        return type == Constants.Identifier.USER_TEACHER || type == Constants.Identifier.USER_TP;
     }
 
     public boolean isParent(){

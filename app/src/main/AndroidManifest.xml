@@ -154,7 +154,8 @@
         <activity android:name=".ui.activity.WebActivity" />
         <activity android:name=".ui.activity.ProfessionTutorActivity" />
         <activity android:name=".ui.activity.SearchSpecialOrderActivity" />
-        <activity android:name=".ui.activity.LevelActivity"></activity>
+        <activity android:name=".ui.activity.LevelActivity" />
+        <activity android:name=".ui.activity.ScoreProtocolActivity"></activity>
     </application>
 
 </manifest>

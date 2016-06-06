@@ -50,7 +50,7 @@ public class LevelActivity extends BaseActivity {
     }
 
     public void onDetailClick(View view){
-        toast("detail");
+        redirectToActivity(this, ScoreProtocolActivity.class);
     }
 
     public void onBackClick(View view){
