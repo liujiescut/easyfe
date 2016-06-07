@@ -2,7 +2,7 @@
     <string name="app_name">优升学家教</string>
     <string name="main_title">首页</string>
     <string name="main_left_drawer_login">登录/注册</string>
-    <string name="main_left_drawer_level">用户级别</string>
+    <string name="main_left_drawer_level">我的级别</string>
     <string name="main_left_drawer_orders">我的订单</string>
     <string name="main_left_drawer_pocket">我的钱包</string>
     <string name="main_left_drawer_fe_msg">家教信息维护</string>
@@ -221,4 +221,6 @@
     <string name="save_and_back">保存并返回</string>
     <string name="search_spread_empty_info">亲，这个科目这个年级的特价订单已被预订完咯，\n您可以下周再来看看哟^^</string>
     <string name="level_info"><u>不了解用户与积分规则？点击这里</u></string>
+    <string name="main_left_drawer_vip_activity">我的会员活动</string>
+    <string name="main_left_drawer_report">反馈报告</string>
 </resources>

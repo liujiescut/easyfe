@@ -113,6 +113,7 @@ public class Constants {
         public static final String TO_TEACHER_INFO_ACTIVITY_TYPE = "to_teacher_info_activity_type";
         public static final String TO_TEACHER_REGISTER_ONE_ACTIVITY_TYPE = "to_teacher_register_one_activity_type";
         public static final String TO_PARENT_REGISTER_ACTIVITY_TYPE = "to_parent_register_activity_type";
+        public static final String IS_MY_VIP_ACTIVITY = "is_my_vip_activity";
         public static final String TO_TEACH_TIME_ACTIVITY_TYPE = "to_teach_time_activity_type";
         public static final String TO_SPECIAL_TIME_ACTIVITY_TYPE = "to_special_time_activity_type";
         public static final String TO_TEACH_COURSE_ACTIVITY_TYPE = "to_special_time_activity_type";

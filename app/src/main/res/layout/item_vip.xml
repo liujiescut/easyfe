@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/text_area_bg"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+
+    <TextView
+        style="@style/my_order_item_style"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_area_height"
+        android:layout_weight="1"
+        android:clickable="false"
+        android:gravity="center_vertical|left"
+        android:padding="@dimen/layout_padding_small"
+        tools:text="我是活动标题"
+        android:id="@+id/item_vip_tv_title" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_divider_height"
+        android:background="@color/transparent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/text_area_bg_inner"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/item_vip_tv_detail"
+            style="@style/my_order_item_style"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="false"
+            android:gravity="center_vertical|left"
+            android:padding="@dimen/layout_padding_small"
+            tools:text="已家教的时长: 250小时\n综合评分: 58分" />
+
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/bg_color_divider" />
+
+        <LinearLayout
+            android:id="@+id/item_vip_ll_reserve"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/my_order_item_style"
+                android:layout_width="82dp"
+                android:layout_height="46dp"
+                android:background="@drawable/selector_spread_reserve"
+                tools:text="200 积分\n参加"
+                android:textColor="@color/theme_color"
+                android:layout_marginTop="@dimen/layout_margin_small"
+                android:textSize="@dimen/text_size_normal"
+                android:id="@+id/item_vip_tv_score" />
+            <View
+                android:layout_width="102dp"
+                android:layout_height="5dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:background="@color/transparent" />
+
+            <TextView
+                style="@style/my_order_item_style"
+                android:layout_width="82dp"
+                android:layout_height="46dp"
+                android:layout_marginBottom="@dimen/layout_margin_small"
+                android:background="@drawable/selector_spread_reserve"
+                tools:text="10 元\n参加"
+                android:textColor="@color/theme_color"
+                android:textSize="@dimen/text_size_normal"
+                android:id="@+id/item_vip_tv_money" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_divider_height"
+        android:background="@color/transparent" />
+
+
+    <TextView
+        style="@style/my_order_item_style"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/text_area_height"
+        android:layout_weight="1"
+        android:clickable="false"
+        android:gravity="center_vertical|left"
+        android:padding="@dimen/layout_padding_small"
+        tools:text="可预约呦"
+        android:id="@+id/item_vip_tv_reservable" />
+
+</LinearLayout>

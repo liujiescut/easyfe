@@ -78,6 +78,24 @@
         android:id="@+id/left_drawer_tv_wallet" />
 
     <View
+        style="@style/main_left_drawer_divider" />
+
+    <TextView
+        style="@style/main_left_drawer_item"
+        android:onClick="onMyVipActivityClick"
+        android:text="@string/main_left_drawer_vip_activity"
+        android:id="@+id/left_drawer_tv_vip_activity" />
+
+    <View
+        style="@style/main_left_drawer_divider" />
+
+    <TextView
+        style="@style/main_left_drawer_item"
+        android:onClick="onReportClick"
+        android:text="@string/main_left_drawer_report"
+        android:id="@+id/left_drawer_tv_report" />
+
+    <View
         android:id="@+id/left_drawer_tv_divider_wallet"
         style="@style/main_left_drawer_divider" />
 

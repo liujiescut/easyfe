@@ -89,8 +89,9 @@
         <LinearLayout
             android:id="@+id/home_ll_vip_activity"
             android:layout_width="0dip"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:clickable="true"
             android:orientation="horizontal"
             android:gravity="center">
 

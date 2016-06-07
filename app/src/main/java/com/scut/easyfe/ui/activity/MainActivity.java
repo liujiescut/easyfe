@@ -249,8 +249,25 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
-     * 点击家教信息维护
+     * 点击我的会员活动
      */
+    public void onMyVipActivityClick(View view) {
+        if (!App.getUser().hasLogin()) {
+            return;
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(Constants.Key.IS_MY_VIP_ACTIVITY, true);
+        redirectToActivity(this, VipActivity.class, bundle);
+    }
+
+    /**
+     * 点击反馈报告
+     */
+    public void onReportClick(View view){
+        //Todo
+    }
+
     public void onTeacherMsgManageClick(View view) {
         Bundle extras = new Bundle();
         extras.putBoolean(Constants.Key.IS_REGISTER, false);
@@ -265,7 +282,6 @@ public class MainActivity extends BaseActivity {
             return;
         }
 
-        LogUtils.i("liujie", App.getUser().getTeacherMessage().isIsCheck() + "");
         if (!App.getUser().getTeacherMessage().isIsCheck()) {
             toast("您的信息还在审核中\n审核之后才可以发布订单喔");
             return;

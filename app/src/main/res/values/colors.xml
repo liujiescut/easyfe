@@ -44,4 +44,6 @@
 
     <color name="white_a">#fafafa</color>
     <color name="white_a_alpha">#88fafafa</color>
+
+    <color name="vip_un_reservable">#D8D8D8</color>
 </resources>

@@ -87,6 +87,12 @@
             android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeAndFullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
         </activity>
         <activity
             android:name=".ui.activity.IntroActivity"
@@ -151,15 +157,11 @@
         <activity android:name=".ui.activity.SearchSpecialOrderActivity" />
         <activity android:name=".ui.activity.LevelActivity" />
         <activity android:name=".ui.activity.ScoreProtocolActivity" />
-        <activity android:name=".ui.activity.TeacherReportActivity"
+        <activity
+            android:name=".ui.activity.TeacherReportActivity"
             android:windowSoftInputMode="stateAlwaysHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
         </activity>
+        <activity android:name=".ui.activity.VipActivity"></activity>
     </application>
 
 </manifest>

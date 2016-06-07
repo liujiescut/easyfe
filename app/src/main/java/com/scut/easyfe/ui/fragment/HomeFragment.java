@@ -14,6 +14,7 @@ import com.scut.easyfe.ui.activity.BookActivity;
 import com.scut.easyfe.ui.activity.SpecialOrderActivity;
 import com.scut.easyfe.ui.activity.TeacherRegisterOneActivity;
 import com.scut.easyfe.ui.activity.TeacherRegisterTwoActivity;
+import com.scut.easyfe.ui.activity.VipActivity;
 import com.scut.easyfe.ui.activity.WebActivity;
 import com.scut.easyfe.ui.adapter.ImagePagerAdapter;
 import com.scut.easyfe.ui.base.BaseFragment;
@@ -92,6 +93,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         v.findViewById(R.id.home_book_once_text).setOnClickListener(this);
         v.findViewById(R.id.home_teacher).setOnClickListener(this);
         v.findViewById(R.id.home_teacher_text).setOnClickListener(this);
+        v.findViewById(R.id.home_ll_vip_activity).setOnClickListener(this);
 
         mAdvertisePagerAdapter.setOnItemClickListener(new ImagePagerAdapter.OnItemClickListener() {
             @Override
@@ -130,6 +132,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+        if(OtherUtils.isFastDoubleClick()){
+            return;
+        }
+
         switch (v.getId()){
             case R.id.home_main_text:
             case R.id.home_second_text:
@@ -141,6 +147,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
 
             case R.id.home_need_report:
                 onNeedReportClick(v);
+                break;
+
+            case R.id.home_ll_vip_activity:
+                onVipEventClick(v);
                 break;
 
             case R.id.home_book_multi:
@@ -171,6 +181,20 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         if(null != mActivity){
             mActivity.redirectToActivity(mActivity, SpecialOrderActivity.class);
         }
+    }
+
+    private void onVipEventClick(View view){
+        if (!App.getUser().hasLogin()) {
+            return;
+        }
+
+        if(mActivity == null){
+            return;
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(Constants.Key.IS_MY_VIP_ACTIVITY, false);
+        mActivity.redirectToActivity(mActivity, VipActivity.class, bundle);
     }
 
     /**
