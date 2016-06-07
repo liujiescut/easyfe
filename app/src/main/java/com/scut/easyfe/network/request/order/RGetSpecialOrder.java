@@ -20,12 +20,24 @@ import java.util.List;
  * 获取特价订单
  * Created by jay on 16/4/11.
  */
-public class RGetSpecialOrder extends RequestBase<List<Order>>{
+public class RGetSpecialOrder extends RequestBase<List<Order>> {
     private int mLimit = Constants.DefaultValue.DEFAULT_LOAD_COUNT;
     private int mSkip = -1;
+    private String mCourse = "";
+    private String mGrade = "";
 
     public RGetSpecialOrder(int mSkip) {
         this.mSkip = mSkip;
+    }
+
+    public RGetSpecialOrder(String course, String grade, int skip) {
+        this(course, grade, Constants.DefaultValue.DEFAULT_LOAD_COUNT, skip);
+    }
+
+    public RGetSpecialOrder(String course, String grade, int limit, int skip) {
+        this(limit, skip);
+        mCourse = course;
+        mGrade = grade;
     }
 
     public RGetSpecialOrder(int mLimit, int mSkip) {
@@ -48,6 +60,14 @@ public class RGetSpecialOrder extends RequestBase<List<Order>>{
         HttpParams params = new HttpParams();
         params.putQueryParams("skip", mSkip);
         params.putQueryParams("limit", mLimit);
+
+        if (null != mCourse && mCourse.length() != 0) {
+            params.putQueryParams("course", mCourse);
+        }
+
+        if (null != mGrade && mGrade.length() != 0) {
+            params.putQueryParams("grade", mGrade);
+        }
         return params;
     }
 
@@ -57,7 +77,7 @@ public class RGetSpecialOrder extends RequestBase<List<Order>>{
         JavaType javaType = mObjectMapper.getTypeFactory().constructParametricType(List.class, Order.class);
         try {
             JSONArray specialOrders = jsonObject.optJSONArray("orders");
-            if(null != specialOrders){
+            if (null != specialOrders) {
                 /** 将返回的地址JsonArray转化为List<Order> */
                 result = mObjectMapper.readValue(specialOrders.toString(), javaType);
             }

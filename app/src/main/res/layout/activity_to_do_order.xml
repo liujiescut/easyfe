@@ -92,8 +92,8 @@
                 android:layout_height="@dimen/layout_margin_small"
                 android:background="@color/transparent" />
 
-            <!--<include layout="@layout/order_base_info" -->
-                <!--/>-->
+            <include layout="@layout/order_base_info"
+                />
 
             <LinearLayout
                 android:id="@+id/to_do_order_ll_profession_guide_incomplete"

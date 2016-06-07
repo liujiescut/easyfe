@@ -237,7 +237,11 @@ public class PublishSpreadActivity extends BaseActivity {
                 mSelectedCoursePosition = options1;
                 mGrade = mCourses.get(mSelectedCoursePosition).getGrade();
                 mCourseTextView.setText(mCourseNames.get(mSelectedCoursePosition));
-                mGradeTextView.setText("");
+                if(mGrade.size() != 0){
+                    mGradeTextView.setText(mGrade.get(0));
+                }else {
+                    mGradeTextView.setText("");
+                }
             }
         });
         mPicker.show();

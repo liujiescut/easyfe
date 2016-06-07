@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_app_bg"
+    android:orientation="vertical"
+    tools:context="com.scut.easyfe.ui.activity.TeacherReportActivity">
+
+    <include layout="@layout/titlebar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layout_margin_small"
+                android:gravity="left|center_vertical"
+                android:padding="@dimen/layout_padding_small"
+                android:text="老师评语"
+                android:textColor="@color/theme_color"
+                android:textSize="@dimen/text_size_small" />
+
+            <EditText
+                android:id="@+id/special_time_et_remember_things"
+                style="@style/text_editable_style"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:gravity="start"
+                android:maxHeight="100dp"
+                android:maxLength="250"
+                android:minHeight="100dp"
+                android:padding="@dimen/layout_padding_small"
+                android:textColorHint="#A7A7A7" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_marginTop="@dimen/layout_margin_small"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dip"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/layout_margin_small"
+                    android:layout_weight="1"
+                    android:background="@color/text_hint_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/layout_padding_tiny"
+                    android:text="专业辅导情况"
+                    android:textColor="@color/text_hint_color" />
+
+                <View
+                    android:layout_width="0dip"
+                    android:layout_height="1dp"
+                    android:layout_marginRight="@dimen/layout_margin_small"
+                    android:layout_weight="1"
+                    android:background="@color/text_hint_color" />
+            </LinearLayout>
+
+            <include layout="@layout/profession_tutor_way_detail" />
+
+            <LinearLayout
+                style="@style/ll_container_normal_style"
+                android:layout_height="32dp">
+
+                <TextView
+                    android:id="@+id/teacher_report_tutor_1_detail"
+                    style="@style/text_normal_style"
+                    android:layout_marginRight="@dimen/container_stoke_width"
+                    android:layout_weight="1"
+                    android:drawableRight="@mipmap/icon_right_arrow_padding"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="@dimen/layout_padding_small"
+                    android:text="详情" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layout_margin_small"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dip"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/layout_margin_small"
+                    android:layout_weight="1"
+                    android:background="@color/text_hint_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/layout_padding_tiny"
+                    android:text="反馈"
+                    android:textColor="@color/text_hint_color" />
+
+                <View
+                    android:layout_width="0dip"
+                    android:layout_height="1dp"
+                    android:layout_marginRight="@dimen/layout_margin_small"
+                    android:layout_weight="1"
+                    android:background="@color/text_hint_color" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/ll_container_normal_style">
+
+                <TextView
+                    style="@style/text_normal_style"
+                    android:layout_marginRight="@dimen/container_stoke_width"
+                    android:layout_weight="1"
+                    android:text="正确率" />
+
+                <TextView
+                    android:id="@+id/teacher_report_tv_correct_rate"
+                    style="@style/text_editable_style"
+                    android:layout_weight="3"
+                    android:drawableRight="@mipmap/icon_right_arrow_padding"
+                    android:gravity="start|center_vertical" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_divider_height"
+                android:background="@color/text_area_bg_inner"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/text_normal_style"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:paddingBottom="@dimen/layout_padding_tiny"
+                    android:paddingLeft="@dimen/layout_padding_small"
+                    android:paddingTop="@dimen/layout_padding_tiny"
+                    android:text="学生本次积极性："
+                    android:textSize="@dimen/text_size_normal" />
+
+                <io.techery.properratingbar.ProperRatingBar
+                    android:id="@+id/teacher_report_prb_enthusiasm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    app:prb_clickable="true"
+                    app:prb_defaultRating="5"
+                    app:prb_tickNormalDrawable="@mipmap/ic_star_normal"
+                    app:prb_tickSelectedDrawable="@mipmap/ic_star_selected"
+                    app:prb_tickSpacing="0dp"
+                    app:prb_totalTicks="5" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_divider_height"
+                android:background="@color/text_area_bg_inner"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/text_normal_style"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:paddingBottom="@dimen/layout_padding_tiny"
+                    android:paddingLeft="@dimen/layout_padding_small"
+                    android:paddingTop="@dimen/layout_padding_tiny"
+                    android:text="学生本次吸收程度："
+                    android:textSize="@dimen/text_size_normal" />
+
+                <io.techery.properratingbar.ProperRatingBar
+                    android:id="@+id/teacher_report_prb_absorption_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    app:prb_clickable="true"
+                    app:prb_defaultRating="5"
+                    app:prb_tickNormalDrawable="@mipmap/ic_star_normal"
+                    app:prb_tickSelectedDrawable="@mipmap/ic_star_selected"
+                    app:prb_tickSpacing="0dp"
+                    app:prb_totalTicks="5" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layout_margin_small"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dip"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/layout_margin_small"
+                    android:layout_weight="1"
+                    android:background="@color/text_hint_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/layout_padding_tiny"
+                    android:text="下次专业辅导情况"
+                    android:textColor="@color/text_hint_color" />
+
+                <View
+                    android:layout_width="0dip"
+                    android:layout_height="1dp"
+                    android:layout_marginRight="@dimen/layout_margin_small"
+                    android:layout_weight="1"
+                    android:background="@color/text_hint_color" />
+            </LinearLayout>
+
+            <include layout="@layout/profession_tutor_way_detail" />
+
+            <LinearLayout
+                style="@style/ll_container_normal_style"
+                android:layout_height="32dp">
+
+                <TextView
+                    android:id="@+id/teacher_report_tutor_2_detail"
+                    style="@style/text_normal_style"
+                    android:layout_marginRight="@dimen/container_stoke_width"
+                    android:layout_weight="1"
+                    android:drawableRight="@mipmap/icon_right_arrow_padding"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="@dimen/layout_padding_small"
+                    android:text="详情" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/ll_container_normal_style"
+                android:layout_marginTop="@dimen/layout_margin_small">
+
+                <TextView
+                    style="@style/text_normal_style"
+                    android:layout_marginRight="@dimen/container_stoke_width"
+                    android:layout_weight="1"
+                    android:drawableRight="@mipmap/icon_right_arrow_padding"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="@dimen/layout_padding_small"
+                    android:text="订单详情" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/teacher_report_tv_commit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/layout_margin_small"
+                android:background="@drawable/selector_main_left_drawer_item"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onSubmitClick"
+                android:padding="@dimen/layout_padding_tiny"
+                android:text="@string/sure"
+                android:textColor="@color/title_text_color"
+                />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

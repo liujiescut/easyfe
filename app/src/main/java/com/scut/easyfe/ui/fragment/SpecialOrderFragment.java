@@ -13,6 +13,7 @@ import com.scut.easyfe.network.request.order.RGetSpecialOrder;
 import com.scut.easyfe.ui.adapter.SpecialOrderAdapter;
 import com.scut.easyfe.ui.base.BaseRefreshFragment;
 import com.scut.easyfe.utils.DensityUtil;
+import com.sina.weibo.sdk.api.share.BaseRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +24,11 @@ import java.util.List;
  */
 public class SpecialOrderFragment extends BaseRefreshFragment {
     private ArrayList<Order> mOrders = new ArrayList<>();
+
     //是否显示的是搜索结果
     private boolean mShowSearchResult = false;
+    private String mCourse = "";
+    private String mGrade = "";
 
     @Override
     protected void initView(View view) {
@@ -46,13 +50,21 @@ public class SpecialOrderFragment extends BaseRefreshFragment {
 
     @Override
     protected void fetchData(View v) {
-        loadData(0, Constants.DefaultValue.DEFAULT_LOAD_COUNT, false);
+        if(!mShowSearchResult) {
+            loadData(0, Constants.DefaultValue.DEFAULT_LOAD_COUNT, false);
+        }
     }
 
     private void loadData(int skip, int limit, final boolean clear){
         setIsLoading(true);
 
-        RequestManager.get().execute(new RGetSpecialOrder(limit, skip), new RequestListener<List<Order>>() {
+        RequestBase<List<Order>> request;
+        if(mShowSearchResult){
+            request = new RGetSpecialOrder(mCourse, mGrade, limit, skip);
+        }else{
+            request = new RGetSpecialOrder(limit, skip);
+        }
+        RequestManager.get().execute(request, new RequestListener<List<Order>>() {
             @Override
             public void onSuccess(RequestBase request, List<Order> result) {
                 if(clear){
@@ -99,5 +111,20 @@ public class SpecialOrderFragment extends BaseRefreshFragment {
 
     public void setShowSearchResult(boolean mShowSearchResult) {
         this.mShowSearchResult = mShowSearchResult;
+    }
+
+    public void setSearchCourse(String mCourse) {
+        this.mCourse = mCourse;
+    }
+
+    public void setSearchGrade(String mGrade) {
+        this.mGrade = mGrade;
+    }
+
+    /**
+     * 当被用作搜索页面时才可用这个Api
+     */
+    public void doSearch(){
+        loadData(0, Constants.DefaultValue.DEFAULT_LOAD_COUNT, true);
     }
 }
