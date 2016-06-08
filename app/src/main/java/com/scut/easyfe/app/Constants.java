@@ -39,7 +39,9 @@ public class Constants {
         public static final String URL_GET_MESSAGES = URL_BASE + "Share/Message";
         public static final String URL_GET_CHILD_GRADE = URL_BASE + "Share/Grade";
         public static final String URL_GET_COURSE = URL_BASE + "Share/Course";
+        public static final String URL_GET_TUTOR_COURSE = URL_BASE + "Share/Professional/Course";
         public static final String URL_GET_SCHOOL = URL_BASE + "Share/Education";
+        public static final String URL_GET_TUTOR_INFO = URL_BASE + "Share/Professional/Data";
         public static final String URL_CALLBACK = URL_BASE + "Share/Feedback";
         public static final String URL_ONLINE_PARAMS = URL_BASE + "Share/OnlineParams";
 

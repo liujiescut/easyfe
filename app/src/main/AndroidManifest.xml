@@ -87,12 +87,6 @@
             android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeAndFullScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
         </activity>
         <activity
             android:name=".ui.activity.IntroActivity"
@@ -153,7 +147,14 @@
         <activity android:name=".ui.activity.reward.TeacherPriceAddExplainActivity" />
         <activity android:name=".ui.activity.TicketActivity" />
         <activity android:name=".ui.activity.WebActivity" />
-        <activity android:name=".ui.activity.ProfessionTutorActivity" />
+        <activity android:name=".ui.activity.ProfessionTutorActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
         <activity android:name=".ui.activity.SearchSpecialOrderActivity" />
         <activity android:name=".ui.activity.LevelActivity" />
         <activity android:name=".ui.activity.ScoreProtocolActivity" />
