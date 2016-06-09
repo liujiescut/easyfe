@@ -41,7 +41,6 @@ public class RParentRegister extends RequestBase<User> {
             params.put("name", user.getName());
             params.put("gender", user.getGender());
             params.put("phone", user.getPhone());
-            params.put("password", user.getPassword());
             params.put("childGender", user.getParentMessage().getChildGender());
             params.put("childAge", user.getParentMessage().getChildAge());
             params.put("childGrade", user.getParentMessage().getChildGrade());

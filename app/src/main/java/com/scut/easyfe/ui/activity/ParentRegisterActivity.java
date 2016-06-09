@@ -20,6 +20,8 @@ import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.authentication.RCheckVerifyCode;
+import com.scut.easyfe.network.request.authentication.RGetSms;
 import com.scut.easyfe.network.request.authentication.RParentRegister;
 import com.scut.easyfe.network.request.info.RGetChildGrade;
 import com.scut.easyfe.network.request.user.RUserInfoModify;
@@ -257,8 +259,24 @@ public class ParentRegisterActivity extends BaseActivity {
     }
 
     public void onVerifyClick(View v){
-        toast("get verification");
+        String phone = mParentPhoneEditText.getText().toString();
+        if(phone.length() != 11){
+            toast("请输入有效手机号码");
+            return;
+        }
+
         showTimer();
+        RequestManager.get().execute(new RGetSms(phone), new RequestListener<JSONObject>() {
+            @Override
+            public void onSuccess(RequestBase request, JSONObject result) {
+                toast(result.optString("message"));
+            }
+
+            @Override
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                toast("发送验证码失败,请稍后重试");
+            }
+        });
     }
 
     /**
@@ -426,16 +444,16 @@ public class ParentRegisterActivity extends BaseActivity {
         }
 
         if (mFromType == Constants.Identifier.TYPE_REGISTER) {
-            RequestManager.get().execute(new RParentRegister(mUser), new RequestListener<User>() {
+            RequestManager.get().execute(
+                    new RCheckVerifyCode(mUser.getPhone(), mVerifyCodeEditText.getText().toString()),
+                    new RequestListener<JSONObject>() {
                 @Override
-                public void onSuccess(RequestBase request, User result) {
-                    toast("注册成功");
-                    mUser.set_id(result.get_id());
-                    mUser.setToken(result.getToken());
-                    mUser.setAvatar(result.getAvatar());
-                    mUser.setType(result.getType());
-                    App.setUser(mUser);
-                    redirectToActivity(mContext, MainActivity.class);
+                public void onSuccess(RequestBase request, JSONObject result) {
+                    if(result.optBoolean("auth", false)){
+                        doRegister();
+                    }else{
+                        toast("验证码错误");
+                    }
                 }
 
                 @Override
@@ -493,6 +511,26 @@ public class ParentRegisterActivity extends BaseActivity {
         }
 
         return true;
+    }
+
+    private void doRegister(){
+        RequestManager.get().execute(new RParentRegister(mUser), new RequestListener<User>() {
+            @Override
+            public void onSuccess(RequestBase request, User result) {
+                toast("注册成功");
+                mUser.set_id(result.get_id());
+                mUser.setToken(result.getToken());
+                mUser.setAvatar(result.getAvatar());
+                mUser.setType(result.getType());
+                App.setUser(mUser);
+                redirectToActivity(mContext, MainActivity.class);
+            }
+
+            @Override
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                toast(errorMsg);
+            }
+        });
     }
 
     @Override

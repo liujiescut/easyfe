@@ -19,10 +19,13 @@ import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.authentication.RGetSms;
 import com.scut.easyfe.network.request.authentication.RLogin;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
+
+import org.json.JSONObject;
 
 /**
  * 登录注册页面
@@ -170,8 +173,25 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void onVerifyClick(View v){
-        toast("get verification");
+        String phone = mPhoneEditText.getText().toString();
+
+        if(phone.length() != 11){
+            toast("请输入有效手机号码");
+            return;
+        }
+
         showTimer();
+        RequestManager.get().execute(new RGetSms(phone), new RequestListener<JSONObject>() {
+            @Override
+            public void onSuccess(RequestBase request, JSONObject result) {
+                toast(result.optString("message"));
+            }
+
+            @Override
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                toast("发送验证码失败,请稍后重试");
+            }
+        });
     }
 
     /**

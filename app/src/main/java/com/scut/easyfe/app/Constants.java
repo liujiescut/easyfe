@@ -31,6 +31,8 @@ public class Constants {
         public static final String URL_BASE = "http://121.42.37.233/";
 
         public static final String URL_LOGIN = URL_BASE + "Authentication/Login";
+        public static final String URL_GET_SMS = URL_BASE + "Authentication/Sms";
+        public static final String URL_CHECK_VERIFY_CODE = URL_BASE + "Authentication";
         public static final String URL_UPDATE_USER = URL_BASE + "user/data";
         public static final String URL_ORDERS = URL_BASE + "Order";
         public static final String URL_GET_ORDER_DETAIL = URL_BASE + "Order/Data";

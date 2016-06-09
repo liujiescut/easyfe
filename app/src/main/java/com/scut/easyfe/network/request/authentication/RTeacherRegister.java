@@ -34,7 +34,6 @@ public class RTeacherRegister extends RequestBase<JSONObject>{
         params.put("gender", mUser.getGender());
         params.put("birthday", mUser.getBirthday());
         params.put("phone", mUser.getPhone());
-        params.put("password", mUser.getPassword());
         params.put("position", mUser.getPosition().getAddressJson());
         params.put("business", mUser.getBusiness().getBusinessJson());
         params.put("teacherPrice", mUser.getTeacherMessage().getTeachCourseJsonArray());

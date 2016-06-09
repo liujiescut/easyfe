@@ -22,6 +22,8 @@ import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.authentication.RCheckVerifyCode;
+import com.scut.easyfe.network.request.authentication.RGetSms;
 import com.scut.easyfe.network.request.info.RGetChildGrade;
 import com.scut.easyfe.network.request.info.RGetSchool;
 import com.scut.easyfe.network.request.user.RUserInfoModify;
@@ -392,8 +394,24 @@ public class TeacherRegisterOneActivity extends BaseActivity {
     }
 
     public void onVerifyClick(View v){
-        toast("get verification");
+        String phone = mPhoneEditText.getText().toString();
+        if(phone.length() != 11){
+            toast("请输入有效手机号码");
+            return;
+        }
+
         showTimer();
+        RequestManager.get().execute(new RGetSms(phone), new RequestListener<JSONObject>() {
+            @Override
+            public void onSuccess(RequestBase request, JSONObject result) {
+                toast(result.optString("message"));
+            }
+
+            @Override
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                toast("发送验证码失败,请稍后重试");
+            }
+        });
     }
 
     /**
@@ -578,12 +596,28 @@ public class TeacherRegisterOneActivity extends BaseActivity {
             return;
         }
 
-        toast("保存成功");
-        App.setUser(mUser);
+        RequestManager.get().execute(
+                new RCheckVerifyCode(mUser.getPhone(), mVerifyCodeEditText.getText().toString()),
+                new RequestListener<JSONObject>() {
+                    @Override
+                    public void onSuccess(RequestBase request, JSONObject result) {
+                        if(result.optBoolean("auth", false)){
+                            toast("保存成功");
+                            App.setUser(mUser);
 
-        Bundle extras = new Bundle();
-        extras.putBoolean(Constants.Key.IS_REGISTER, true);
-        redirectToActivity(this, TeacherRegisterTwoActivity.class, extras);
+                            Bundle extras = new Bundle();
+                            extras.putBoolean(Constants.Key.IS_REGISTER, true);
+                            redirectToActivity(mContext, TeacherRegisterTwoActivity.class, extras);
+                        }else{
+                            toast("验证码错误");
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
     }
 
     private void getBaseUserInfo() {
