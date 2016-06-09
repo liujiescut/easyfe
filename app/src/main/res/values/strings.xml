@@ -223,4 +223,5 @@
     <string name="level_info"><u>不了解用户与积分规则？点击这里</u></string>
     <string name="main_left_drawer_vip_activity">我的会员活动</string>
     <string name="main_left_drawer_report">反馈报告</string>
+    <string name="verify_code">短信验证码</string>
 </resources>

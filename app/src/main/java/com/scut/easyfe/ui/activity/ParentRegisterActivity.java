@@ -3,8 +3,10 @@ package com.scut.easyfe.ui.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
@@ -30,6 +32,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 家长注册 跟 修改基本信息
@@ -42,17 +45,20 @@ public class ParentRegisterActivity extends BaseActivity {
     private OptionsPickerView<String> mDoublePicker;
     private OptionsPickerView<String> mSinglePicker;
 
+    private LinearLayout mVerifyLinearLayout;
     private EditText mParentNameEditText;           //家长姓名
     private EditText mParentPhoneEditText;          //家长手机
-    private EditText mParentPasswordEditText;       //家长密码
+    private EditText mVerifyCodeEditText;       //家长密码
     private TextView mParentGenderTextView;         //家长性别
     private TextView mAddressTextView;              //家庭地址
     private TextView mChildGenderTextView;          //宝贝性别
     private TextView mChildAgeTextView;             //宝贝年龄
     private TextView mChildGradeTextView;           //宝贝年级
     private TextView mHasAccountHintTextView;       //已经有账号时的提示信息
-    private TextView mRegisterTextView;             //已经有账号时的提示信息
+    private TextView mRegisterTextView;             //注册按钮
+    private TextView mGetVerifyCodeTextView;           //发送验证码按钮
 
+    private int mSecondLeft = Constants.Config.VERIFY_INTERVAL; //多少秒后可以再次发送验证码
     private int mParentGender = Constants.Identifier.FEMALE;   //家长选择的性别
     private int mChildGender = Constants.Identifier.FEMALE;    //宝贝的性别
     private int mChildAge = 10;                                //孩子年龄默认为10
@@ -105,9 +111,11 @@ public class ParentRegisterActivity extends BaseActivity {
         mDoublePicker.setCancelable(true);
         mSinglePicker.setCancelable(false);
 
+        mVerifyLinearLayout = OtherUtils.findViewById(this, R.id.parent_register_ll_verify);
         mParentNameEditText = OtherUtils.findViewById(this, R.id.parent_register_et_name);
         mParentPhoneEditText = OtherUtils.findViewById(this, R.id.parent_register_et_phone);
-        mParentPasswordEditText = OtherUtils.findViewById(this, R.id.parent_register_et_password);
+        mGetVerifyCodeTextView = OtherUtils.findViewById(this, R.id.parent_register_tv_verify);
+        mVerifyCodeEditText = OtherUtils.findViewById(this, R.id.parent_register_et_verify_code);
         mParentGenderTextView = OtherUtils.findViewById(this, R.id.parent_register_tv_parent_gender);
         mParentGenderTextView = OtherUtils.findViewById(this, R.id.parent_register_tv_parent_gender);
         mChildGenderTextView = OtherUtils.findViewById(this, R.id.parent_register_tv_child_gender);
@@ -127,6 +135,7 @@ public class ParentRegisterActivity extends BaseActivity {
         } else {
             ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("基本信息维护");
             mHasAccountHintTextView.setVisibility(View.GONE);
+            mVerifyLinearLayout.setVisibility(View.GONE);
             mRegisterTextView.setText("确认并保存");
             mParentNameEditText.setTextColor(mResources.getColor(R.color.text_area_text_color));
             mParentNameEditText.setEnabled(false);
@@ -135,14 +144,14 @@ public class ParentRegisterActivity extends BaseActivity {
             mParentGenderTextView.setEnabled(false);
             mParentPhoneEditText.setTextColor(mResources.getColor(R.color.text_area_text_color));
             mParentPhoneEditText.setEnabled(false);
-            mParentPasswordEditText.setTextColor(mResources.getColor(R.color.text_area_text_color));
-            mParentPasswordEditText.setEnabled(false);
+            mVerifyCodeEditText.setTextColor(mResources.getColor(R.color.text_area_text_color));
+            mVerifyCodeEditText.setEnabled(false);
         }
 
         mParentNameEditText.setText(mUser.getName());
         mParentGenderTextView.setText(mUser.getGender() == Constants.Identifier.MALE ? R.string.male : R.string.female);
         mParentPhoneEditText.setText(mUser.getPhone());
-        mParentPasswordEditText.setText(mUser.getPassword());
+        mVerifyCodeEditText.setText(mUser.getPassword());
         mChildGenderTextView.setText(mUser.getParentMessage().getChildGender() == Constants.Identifier.MALE ? R.string.male : R.string.female);
         mChildGradeTextView.setText(mUser.getParentMessage().getChildGrade());
         mChildAgeTextView.setText(String.format("%s 岁", mUser.getParentMessage().getChildAge()));
@@ -216,6 +225,40 @@ public class ParentRegisterActivity extends BaseActivity {
                 toast(errorMsg);
             }
         });
+    }
+
+    static Handler handler = new Handler();
+
+    /**
+     * 显示倒计时第二次获取验证码
+     */
+    private void showTimer() {
+        mGetVerifyCodeTextView.setClickable(false);
+        mGetVerifyCodeTextView.setBackgroundResource(R.drawable.shape_login_verify_unable);
+        mGetVerifyCodeTextView.setTextColor(getResources().getColor(R.color.text_area_bg));
+        mGetVerifyCodeTextView.setText(String.format(Locale.CHINA, "%d 秒后重试", mSecondLeft));
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mSecondLeft--;
+                if (mSecondLeft == 0) {
+                    mSecondLeft = Constants.Config.VERIFY_INTERVAL;
+                    mGetVerifyCodeTextView.setBackgroundResource(R.drawable.selector_spread_reserve);
+                    mGetVerifyCodeTextView.setTextColor(getResources().getColor(R.color.theme_color));
+                    mGetVerifyCodeTextView.setText("获取验证码");
+                    mGetVerifyCodeTextView.setClickable(true);
+                } else {
+                    mGetVerifyCodeTextView.setText(String.format(Locale.CHINA, "%d 秒后重试", mSecondLeft));
+                    handler.postDelayed(this, 1000);
+                }
+            }
+        }, 1000);
+
+    }
+
+    public void onVerifyClick(View v){
+        toast("get verification");
+        showTimer();
     }
 
     /**
@@ -364,7 +407,6 @@ public class ParentRegisterActivity extends BaseActivity {
         mUser.setName(mParentNameEditText.getText().toString());
         mUser.setGender(mParentGender);
         mUser.setPhone(mParentPhoneEditText.getText().toString());
-        mUser.setPassword(mParentPasswordEditText.getText().toString());
 
         Parent parentMsg = new Parent();
         parentMsg.setChildGender(mChildGender);
@@ -431,8 +473,8 @@ public class ParentRegisterActivity extends BaseActivity {
             return false;
         }
 
-        if (null == user.getPassword() || user.getPassword().length() == 0) {
-            toast("请输入密码");
+        if (mVerifyCodeEditText.getText().toString().length() != 6) {
+            toast("请输入有效验证码");
             return false;
         }
 

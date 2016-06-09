@@ -35,15 +35,38 @@
             style="@style/text_normal_style"
             android:layout_marginRight="1px"
             android:layout_weight="1"
-            android:text="@string/password" />
+            android:text="@string/verify_code" />
 
         <EditText
-            android:id="@+id/login_et_password"
+            android:id="@+id/login_et_verify_code"
             style="@style/text_editable_style"
-            android:layout_weight="3"
-            android:paddingLeft="@dimen/layout_padding_small"
+            android:layout_weight="1.8"
             android:gravity="start|center_vertical"
-            android:inputType="textPassword" />
+            android:maxLength="6"
+            android:inputType="number"
+            />
+        <RelativeLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:background="@color/text_area_bg_inner"
+            >
+        <TextView
+            android:id="@+id/login_tv_verify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获取验证码"
+            android:background="@drawable/selector_spread_reserve"
+            android:paddingTop="1dp"
+            android:clickable="true"
+            android:paddingBottom="1dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:onClick="onVerifyClick"
+            android:textColor="@color/theme_color"
+            />
+        </RelativeLayout>
     </LinearLayout>
 
     <TextView

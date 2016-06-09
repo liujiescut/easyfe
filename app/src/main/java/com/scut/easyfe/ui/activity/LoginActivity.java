@@ -1,6 +1,7 @@
 package com.scut.easyfe.ui.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
@@ -30,8 +31,12 @@ import com.scut.easyfe.utils.OtherUtils;
  */
 public class LoginActivity extends BaseActivity {
     private EditText mPhoneEditText;
-    private EditText mPasswordEditText;
+    private EditText mVerifyCodeEditText;
+    private TextView mVerifyCodeTextView;
     private TextView mAgreeLicenseTextView;
+
+    int secondLeft = Constants.Config.VERIFY_INTERVAL;
+
 
     @Override
     protected void setLayoutView() {
@@ -44,7 +49,8 @@ public class LoginActivity extends BaseActivity {
         ((TextView) OtherUtils.findViewById(this, R.id.login_tv_service_hint)).setText(String.format("如忘记密码，请联系客服电话：%s", App.getServicePhone()));
 
         mPhoneEditText = OtherUtils.findViewById(this, R.id.login_et_phone);
-        mPasswordEditText = OtherUtils.findViewById(this, R.id.login_et_password);
+        mVerifyCodeEditText = OtherUtils.findViewById(this, R.id.login_et_verify_code);
+        mVerifyCodeTextView = OtherUtils.findViewById(this, R.id.login_tv_verify);
         mAgreeLicenseTextView = OtherUtils.findViewById(this, R.id.login_tv_agree_license);
 
         SpannableStringBuilder builder = new SpannableStringBuilder("点击登录,即表示您已同意用户协议");
@@ -92,13 +98,13 @@ public class LoginActivity extends BaseActivity {
      */
     public void onLoginClick(View view) {
         String phone = mPhoneEditText.getText().toString();
-        String password = mPasswordEditText.getText().toString();
+        String verifyCode = mVerifyCodeEditText.getText().toString();
 
-        if (!validate(phone, password)) {
+        if (!validate(phone, verifyCode)) {
             return;
         }
 
-        RequestManager.get().execute(new RLogin(phone, password), new RequestListener<User>() {
+        RequestManager.get().execute(new RLogin(phone, verifyCode), new RequestListener<User>() {
             @Override
             public void onSuccess(RequestBase request, User user) {
                 user.set_id(user.get_id());
@@ -106,8 +112,6 @@ public class LoginActivity extends BaseActivity {
                 user.setName(user.getName());
                 user.setType(user.getType());
                 user.setAvatar(user.getAvatar());
-
-                //Todo: 返回level?
 
                 App.setUser(user);
                 toast("登录成功");
@@ -129,11 +133,45 @@ public class LoginActivity extends BaseActivity {
         }
 
         if (password == null || password.length() == 0) {
-            toast("密码不能为空");
+            toast("请输入验证码");
             return false;
         }
 
         return true;
+    }
+
+    static Handler handler = new Handler();
+
+    /**
+     * 显示倒计时第二次获取验证码
+     */
+    private void showTimer() {
+        mVerifyCodeTextView.setClickable(false);
+        mVerifyCodeTextView.setBackgroundResource(R.drawable.shape_login_verify_unable);
+        mVerifyCodeTextView.setTextColor(getResources().getColor(R.color.text_area_bg));
+        mVerifyCodeTextView.setText(secondLeft + " 秒后重试");
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                secondLeft--;
+                if (secondLeft == 0) {
+                    secondLeft = Constants.Config.VERIFY_INTERVAL;
+                    mVerifyCodeTextView.setBackgroundResource(R.drawable.selector_spread_reserve);
+                    mVerifyCodeTextView.setTextColor(getResources().getColor(R.color.theme_color));
+                    mVerifyCodeTextView.setText("获取验证码");
+                    mVerifyCodeTextView.setClickable(true);
+                } else {
+                    mVerifyCodeTextView.setText(secondLeft + " 秒后重试");
+                    handler.postDelayed(this, 1000);
+                }
+            }
+        }, 1000);
+
+    }
+
+    public void onVerifyClick(View v){
+        toast("get verification");
+        showTimer();
     }
 
     /**

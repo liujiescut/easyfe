@@ -3,6 +3,7 @@ package com.scut.easyfe.ui.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 注册第一步(基本信息) 跟 修改信息
@@ -46,7 +48,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
     public static final int REQUEST_CODE = 0;
     private EditText mNameEditText;         //姓名
     private EditText mPhoneEditText;        //手机
-    private EditText mPasswordEditText;     //密码
+    private EditText mVerifyCodeEditText;     //密码
     private EditText mIdCardEditText;       //身份证
     private TextView mGenderTextView;       //性别
     private TextView mBirthdayTextView;     //出生年月日
@@ -57,12 +59,14 @@ public class TeacherRegisterOneActivity extends BaseActivity {
     private TextView mHadTeachChildTextView;//已家教过孩子数量
     private TextView mHadTeachTimeTextView; //已家教时长
     private TextView mGoNextTextView;       //保存进入下一页
+    private TextView mGetVerifyCodeTextView;//获取验证码
 
     /**
      * 下面几项为修改信息时用到
      */
     private LinearLayout mChildGenderLinearLayout;     //宝贝性别所在LinearLayout
     private LinearLayout mChildGradeLinearLayout;      //宝贝年级所在LinearLayout
+    private LinearLayout mVerifyLinearLayout;      //宝贝年级所在LinearLayout
     private TextView mChildGenderTextView;             //宝贝性别
     private TextView mChildGradeTextView;              //宝贝年级
     private TextView mDoModifyTextView;                //确认保存修改
@@ -79,6 +83,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
     private TimePickerView mTimePicker;
 
     private int mFromType = Constants.Identifier.TYPE_REGISTER;   //到此页面的功能(注册还是修改信息)
+    private int mSecondLeft = Constants.Config.VERIFY_INTERVAL;   //多少秒后可再次发送验证码
 
     private User mUser;
     private Date mBirthday = new Date();
@@ -132,7 +137,9 @@ public class TeacherRegisterOneActivity extends BaseActivity {
 
         mNameEditText = OtherUtils.findViewById(this, R.id.teacher_register_one_et_name);
         mPhoneEditText = OtherUtils.findViewById(this, R.id.teacher_register_one_et_phone);
-        mPasswordEditText = OtherUtils.findViewById(this, R.id.teacher_register_one_et_password);
+        mVerifyCodeEditText = OtherUtils.findViewById(this, R.id.teacher_register_one_et_verify_code);
+        mGetVerifyCodeTextView = OtherUtils.findViewById(this, R.id.teacher_register_one_tv_verify);
+        mVerifyLinearLayout = OtherUtils.findViewById(this, R.id.teacher_register_one_ll_verify);
         mIdCardEditText = OtherUtils.findViewById(this, R.id.teacher_register_one_et_id_card);
         mBirthdayTextView = OtherUtils.findViewById(this, R.id.teacher_register_one_tv_birthday);
         mGenderTextView = OtherUtils.findViewById(this, R.id.teacher_register_one_tv_gender);
@@ -163,6 +170,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
             ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("家教注册-基本信息");
         } else {
             ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("基本信息维护");
+            mVerifyLinearLayout.setVisibility(View.GONE);
             mGoNextTextView.setVisibility(View.GONE);
             mDoModifyTextView.setVisibility(View.VISIBLE);
 
@@ -176,7 +184,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
             mGenderTextView.setTextColor(mResources.getColor(R.color.text_area_text_color));
             mBirthdayTextView.setTextColor(mResources.getColor(R.color.text_area_text_color));
             mPhoneEditText.setTextColor(mResources.getColor(R.color.text_area_text_color));
-            mPasswordEditText.setTextColor(mResources.getColor(R.color.text_area_text_color));
+            mVerifyCodeEditText.setTextColor(mResources.getColor(R.color.text_area_text_color));
             mIdCardEditText.setTextColor(mResources.getColor(R.color.text_area_text_color));
             mSchoolTextView.setTextColor(mResources.getColor(R.color.text_area_text_color));
             mGradeTextView.setTextColor(mResources.getColor(R.color.text_area_text_color));
@@ -185,7 +193,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
             mGradeTextView.setEnabled(false);
             mSchoolTextView.setEnabled(false);
             mIdCardEditText.setEnabled(false);
-            mPasswordEditText.setEnabled(false);
+            mVerifyCodeEditText.setEnabled(false);
             mPhoneEditText.setEnabled(false);
             mBirthdayTextView.setEnabled(false);
             mGenderTextView.setEnabled(false);
@@ -201,7 +209,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
         mGenderTextView.setText(mUser.getGender() == Constants.Identifier.MALE ? R.string.male : R.string.female);
         mBirthdayTextView.setText(TimeUtils.getTime(new Date(mUser.getBirthday()), "yyyy 年 MM 月 dd 日"));
         mPhoneEditText.setText(mUser.getPhone());
-        mPasswordEditText.setText(mUser.getPassword());
+        mVerifyCodeEditText.setText(mUser.getPassword());
         mIdCardEditText.setText(mUser.getTeacherMessage().getIdCard());
         if (mUser.getTeacherMessage().getSchool().length() != 0) {
             mSchoolTextView.setText(mUser.getTeacherMessage().getSchool());
@@ -353,10 +361,44 @@ public class TeacherRegisterOneActivity extends BaseActivity {
         }
     }
 
+
+    static Handler handler = new Handler();
+
+    /**
+     * 显示倒计时第二次获取验证码
+     */
+    private void showTimer() {
+        mGetVerifyCodeTextView.setClickable(false);
+        mGetVerifyCodeTextView.setBackgroundResource(R.drawable.shape_login_verify_unable);
+        mGetVerifyCodeTextView.setTextColor(getResources().getColor(R.color.text_area_bg));
+        mGetVerifyCodeTextView.setText(String.format(Locale.CHINA, "%d 秒后重试", mSecondLeft));
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mSecondLeft--;
+                if (mSecondLeft == 0) {
+                    mSecondLeft = Constants.Config.VERIFY_INTERVAL;
+                    mGetVerifyCodeTextView.setBackgroundResource(R.drawable.selector_spread_reserve);
+                    mGetVerifyCodeTextView.setTextColor(getResources().getColor(R.color.theme_color));
+                    mGetVerifyCodeTextView.setText("获取验证码");
+                    mGetVerifyCodeTextView.setClickable(true);
+                } else {
+                    mGetVerifyCodeTextView.setText(String.format(Locale.CHINA, "%d 秒后重试", mSecondLeft));
+                    handler.postDelayed(this, 1000);
+                }
+            }
+        }, 1000);
+
+    }
+
+    public void onVerifyClick(View v){
+        toast("get verification");
+        showTimer();
+    }
+
     /**
      * 点击选择性别
      */
-
     public void onTeacherGenderClick(View view) {
         hidePickerIfShowing();
 
@@ -553,7 +595,6 @@ public class TeacherRegisterOneActivity extends BaseActivity {
         mUser.setGender(mGender);
         mUser.setBirthday(mBirthday.getTime());
         mUser.setPhone(mPhoneEditText.getText().toString());
-        mUser.setPassword(mPasswordEditText.getText().toString());
 
         Teacher teacher = mUser.getTeacherMessage();
         teacher.setIdCard(mIdCardEditText.getText().toString());
@@ -583,8 +624,8 @@ public class TeacherRegisterOneActivity extends BaseActivity {
             return false;
         }
 
-        if (null == user.getPassword() || user.getPassword().length() == 0) {
-            toast("请输入密码");
+        if (mVerifyCodeEditText.getText().toString().length() != 6) {
+            toast("请输入有效验证码");
             return false;
         }
 

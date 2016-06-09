@@ -22,11 +22,11 @@ public class RLogin extends RequestBase<User> {
     //手机号
     private String mPhone = "";
     //密码
-    private String mPassword = "";
+    private String mCode = "";
 
-    public RLogin(@NonNull String mPhone, @NonNull String mPassword) {
+    public RLogin(@NonNull String mPhone, @NonNull String mCode) {
         this.mPhone = mPhone;
-        this.mPassword = mPassword;
+        this.mCode = mCode;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class RLogin extends RequestBase<User> {
     public HttpParams getQueryParams() {
         HttpParams params = new HttpParams();
         params.putQueryParams("phone", mPhone);
-        params.putQueryParams("password", mPassword);
+        params.putQueryParams("code", mCode);
         return params;
     }
 

@@ -42,7 +42,7 @@ public class RConfirmSpecialOrder extends RequestBase<JSONObject>{
         params.put("orderId", mOrderId);
         params.put("trafficTime", mTrafficTime);
         if(0 != mProfessionalTutor) {
-            params.put("professionalTutor", mProfessionalTutor);
+            params.put("professionalTutorPrice", mProfessionalTutor);
         }
         return params;
     }

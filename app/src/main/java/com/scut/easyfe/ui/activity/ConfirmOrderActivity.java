@@ -62,6 +62,7 @@ public class ConfirmOrderActivity extends BaseActivity {
     private Order mOrder;
     private int mTeachWeek = 0; //多次预约时预约多少次
     private int mTicketMoney = 0;
+    private String mTicketId = "";
 
     private boolean mIsLoadingCloseByUser = true;
 
@@ -175,6 +176,7 @@ public class ConfirmOrderActivity extends BaseActivity {
                                 toast(result.optString("message"));
                             } else {
                                 mTicketMoney = money;
+                                mTicketId = result.optString("id", "");
                             }
 
                             mOrder.setTicketMoney(mTicketMoney);
@@ -282,7 +284,7 @@ public class ConfirmOrderActivity extends BaseActivity {
                 break;
 
             case Constants.Identifier.CONFIRM_ORDER_SINGLE_RESERVE:
-                RequestManager.get().execute(new RConfirmSingleOrder(App.getUser().getToken(), mOrder), new RequestListener<JSONObject>() {
+                RequestManager.get().execute(new RConfirmSingleOrder(App.getUser().getToken(), mOrder, mTicketId), new RequestListener<JSONObject>() {
                     @Override
                     public void onSuccess(RequestBase request, JSONObject result) {
                         showDialog(mOrder.getTeacher().getName());
