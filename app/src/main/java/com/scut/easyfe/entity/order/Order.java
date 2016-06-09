@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 普通订单类(用在单双次预约结果解析并在预约流程中通用)
@@ -43,31 +44,16 @@ public class Order extends BaseEntity {
     private List<Comment> comments = new ArrayList<>();
     private float tutorPrice = 0f;      //专业辅导单位价格
     private float ticketMoney = 0f;     //可使用优惠券金额
+    private TutorDetail thisTeachDetail = new TutorDetail();   //本次专业辅导信息
+    private TutorDetail nextTeachDetail = new TutorDetail();   //下次专业辅导信息
 
     private int trafficTime = 0;
 
-    public float getTutorPrice() {
-        return tutorPrice;
-    }
-
-    public void setTutorPrice(float tutorPrice) {
-        this.tutorPrice = tutorPrice;
-    }
-
-    public float getTicketMoney() {
-        return ticketMoney;
-    }
-
-    public void setTicketMoney(float ticketMoney) {
-        this.ticketMoney = ticketMoney;
-    }
-
-    public boolean isHadGetCoupon() {
-        return hadGetCoupon;
-    }
-
-    public void setHadGetCoupon(boolean hadGetCoupon) {
-        this.hadGetCoupon = hadGetCoupon;
+    /**
+     * 是否需要显示专业辅导
+     */
+    public boolean isProfessionTutorShow(){
+        return grade.contains("初中") || grade.contains("高中");
     }
 
     public float getPerPrice(){
@@ -88,13 +74,38 @@ public class Order extends BaseEntity {
 
     public static String getBaseInfo(Order order){
         String content = "";
-        content += String.format("性别: %s\n", order.getTeacher().getGender() == Constants.Identifier.MALE ? "男" : "女");
-        content += String.format("年龄: %d\n", TimeUtils.getAgeFromBirthday(order.getTeacher().getBirthday()));
-        content += String.format("大学专业: %s %s\n", order.getTeacher().getTeacherMessage().getSchool(), order.getTeacher().getTeacherMessage().getProfession());
-        content += String.format("已家教过的孩子数量：%s\n", order.getTeacher().getTeacherMessage().getTeachCount());
-        content += String.format("已家教的时长：%s\n", order.getTeacher().getTeacherMessage().getHadTeach());
-        content += String.format("综合评分：%.2f", order.getTeacher().getTeacherMessage().getScore());
+        content += String.format(Locale.CHINA, "性别: %s\n", order.getTeacher().getGender() == Constants.Identifier.MALE ? "男" : "女");
+        content += String.format(Locale.CHINA, "年龄: %d\n", TimeUtils.getAgeFromBirthday(order.getTeacher().getBirthday()));
+        content += String.format(Locale.CHINA, "大学专业: %s %s\n", order.getTeacher().getTeacherMessage().getSchool(), order.getTeacher().getTeacherMessage().getProfession());
+        content += String.format(Locale.CHINA, "已家教过的孩子数量：%s\n", order.getTeacher().getTeacherMessage().getTeachCount());
+        content += String.format(Locale.CHINA, "已家教的时长：%s\n", order.getTeacher().getTeacherMessage().getHadTeach());
+        content += String.format(Locale.CHINA, "综合评分：%.2f", order.getTeacher().getTeacherMessage().getScore());
         return content;
+    }
+
+    public float getTutorPrice() {
+        return tutorPrice;
+    }
+
+    public void setTutorPrice(float tutorPrice) {
+        this.tutorPrice = tutorPrice;
+    }
+
+    public float getTicketMoney() {
+        return ticketMoney;
+    }
+
+
+    public void setTicketMoney(float ticketMoney) {
+        this.ticketMoney = ticketMoney;
+    }
+
+    public boolean isHadGetCoupon() {
+        return hadGetCoupon;
+    }
+
+    public void setHadGetCoupon(boolean hadGetCoupon) {
+        this.hadGetCoupon = hadGetCoupon;
     }
 
     public float getAddPrice() {
@@ -304,5 +315,97 @@ public class Order extends BaseEntity {
         public void set_id(String _id) {
             this._id = _id;
         }
+    }
+
+    /**
+     * 专业辅导信息
+     */
+    public class TutorDetail extends BaseEntity{
+        // 阶段: 高考, 中考, 高中, 初中
+        private String category = "";
+        // 课程: 地理...
+        private String course = "";
+        // 辅导方式: 针对知识点补习, 复习模拟卷  todo 应该为int
+        private String teachWay = "";
+        // 年级, 辅导方式为: 复习模拟卷
+        private String grade = "";
+        // 复习模拟卷
+        private String examPaper = "";
+        // 难度
+        private String easyLevel = "";   // todo 应该为String
+        // 知识点, 辅导方式为: 针对知识点补习时才有的字段
+        private List<String> knowledge = new ArrayList<>();
+
+        public String getCategory() {
+            return category;
+        }
+
+        public void setCategory(String category) {
+            this.category = category;
+        }
+
+        public String getCourse() {
+            return course;
+        }
+
+        public void setCourse(String course) {
+            this.course = course;
+        }
+
+        public String getTeachWay() {
+            return teachWay;
+        }
+
+        public void setTeachWay(String teachWay) {
+            this.teachWay = teachWay;
+        }
+
+        public String getGrade() {
+            return grade;
+        }
+
+        public void setGrade(String grade) {
+            this.grade = grade;
+        }
+
+        public String getExamPaper() {
+            return examPaper;
+        }
+
+        public void setExamPaper(String examPaper) {
+            this.examPaper = examPaper;
+        }
+
+        public String getEasyLevel() {
+            return easyLevel;
+        }
+
+        public void setEasyLevel(String easyLevel) {
+            this.easyLevel = easyLevel;
+        }
+
+        public List<String> getKnowledge() {
+            return knowledge;
+        }
+
+        public void setKnowledge(List<String> knowledge) {
+            this.knowledge = knowledge;
+        }
+    }
+
+    public TutorDetail getThisTeachDetail() {
+        return thisTeachDetail;
+    }
+
+    public void setThisTeachDetail(TutorDetail thisTeachDetail) {
+        this.thisTeachDetail = thisTeachDetail;
+    }
+
+    public TutorDetail getNextTeachDetail() {
+        return nextTeachDetail;
+    }
+
+    public void setNextTeachDetail(TutorDetail nextTeachDetail) {
+        this.nextTeachDetail = nextTeachDetail;
     }
 }

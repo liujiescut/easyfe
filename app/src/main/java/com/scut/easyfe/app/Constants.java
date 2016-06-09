@@ -55,6 +55,7 @@ public class Constants {
         public static final String URL_TEACHER_CANCEL_ORDERS = URL_BASE + "Teacher/Cancel/Order";
 
         public static final String URL_WALLET_INFO = URL_BASE + "Money/Wallet";
+        public static final String URL_GET_MATCH_TICKET = URL_BASE + "Parent/SuitableCoupon";
         public static final String URL_GET_MY_TICKET = URL_BASE + "Parent/Coupon";
         public static final String URL_WALLET_WITHDRAW = URL_BASE + "Money/Withdraw";
         public static final String URL_PAY_ORDER = URL_BASE + "Parent/Pay";

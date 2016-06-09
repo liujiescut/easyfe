@@ -19,12 +19,15 @@ import java.io.IOException;
 public class RConfirmSpecialOrder extends RequestBase<JSONObject>{
     private String mToken = "";
     private int mTrafficTime = 0;
+    private int mProfessionalTutor = 0;
     private String mOrderId = "";
 
-    public RConfirmSpecialOrder(@NonNull String token, @NonNull int trafficTime, @NonNull String orderId) {
+    public RConfirmSpecialOrder(@NonNull String token, @NonNull int trafficTime,
+                                @NonNull String orderId, @NonNull int professionalTutor) {
         this.mToken = token;
         this.mTrafficTime = trafficTime;
         this.mOrderId = orderId;
+        this.mProfessionalTutor = professionalTutor;
     }
 
     @Override
@@ -38,6 +41,9 @@ public class RConfirmSpecialOrder extends RequestBase<JSONObject>{
         params.put("token", mToken);
         params.put("orderId", mOrderId);
         params.put("trafficTime", mTrafficTime);
+        if(0 != mProfessionalTutor) {
+            params.put("professionalTutor", mProfessionalTutor);
+        }
         return params;
     }
 

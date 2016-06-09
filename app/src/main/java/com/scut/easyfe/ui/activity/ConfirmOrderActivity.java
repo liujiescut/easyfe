@@ -1,5 +1,6 @@
 package com.scut.easyfe.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.order.RGetMatchTicket;
 import com.scut.easyfe.network.request.user.parent.RConfirmMultiOrder;
 import com.scut.easyfe.network.request.user.parent.RConfirmSingleOrder;
 import com.scut.easyfe.network.request.user.parent.RConfirmSpecialOrder;
@@ -54,11 +56,14 @@ public class ConfirmOrderActivity extends BaseActivity {
     private TextView mProfessionGuidePriceTextView;
     private TextView mTicketTextView;
     private LinearLayout mTicketLinearLayout;
+    private LinearLayout mTutorLinearLayout;
     private CheckBox mProfessionGuideCheckBox;
 
     private Order mOrder;
     private int mTeachWeek = 0; //多次预约时预约多少次
     private int mTicketMoney = 0;
+
+    private boolean mIsLoadingCloseByUser = true;
 
     @Override
     protected void setLayoutView() {
@@ -73,7 +78,15 @@ public class ConfirmOrderActivity extends BaseActivity {
             if(null != extra){
                 mConfirmOrderType = extra.getInt(Constants.Key.CONFIRM_ORDER_TYPE);
                 mOrder = (Order) extra.getSerializable(Constants.Key.ORDER);
-                mOrder.setTutorPrice(Variables.TUTOR_PRICE);
+
+                if (null == mOrder) {
+                    mOrder = new Order();
+                }
+
+                if(mOrder.isProfessionTutorShow()) {
+                    mOrder.setTutorPrice(Variables.TUTOR_PRICE);
+                }
+
                 if(mConfirmOrderType == Constants.Identifier.CONFIRM_ORDER_MULTI_RESERVE){
                     mTeachWeek = extra.getInt(Constants.Key.TEACH_WEEK);
                 }
@@ -102,6 +115,7 @@ public class ConfirmOrderActivity extends BaseActivity {
         mProfessionGuidePriceTextView = OtherUtils.findViewById(this, R.id.confirm_order_tv_profession_guide_price);
         mProfessionGuideCheckBox = OtherUtils.findViewById(this, R.id.confirm_order_cb_profession_guide);
         mTicketLinearLayout = OtherUtils.findViewById(this, R.id.confirm_order_ll_ticket);
+        mTutorLinearLayout = OtherUtils.findViewById(this, R.id.confirm_order_ll_tutor);
         mTicketTextView = OtherUtils.findViewById(this, R.id.confirm_order_tv_ticket);
 
         mTeacherTextView.setText(mOrder.getTeacher().getName());
@@ -115,26 +129,76 @@ public class ConfirmOrderActivity extends BaseActivity {
         mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice()));
         mProfessionGuidePriceTextView.setText(String.format(Locale.CHINA, "%d 元/小时", Variables.TUTOR_PRICE));
 
+        if(!mOrder.isProfessionTutorShow()){
+            mTutorLinearLayout.setVisibility(View.GONE);
+            mTicketLinearLayout.setVisibility(View.GONE);
+        }
+
         initOtherViews();
     }
 
     @Override
     protected void initListener() {
-        mProfessionGuideCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mTicketLinearLayout.setVisibility(isChecked ? View.VISIBLE : View.GONE);
-                mOrder.setTicketMoney(isChecked ? mTicketMoney : 0);
-                mOrder.setTutorPrice(isChecked ? Variables.TUTOR_PRICE : 0);
-                mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice()));
-            }
-        });
+        if(mOrder.isProfessionTutorShow()) {
+            mProfessionGuideCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    mTicketLinearLayout.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+                    mOrder.setTicketMoney(isChecked ? mTicketMoney : 0);
+                    mOrder.setTutorPrice(isChecked ? Variables.TUTOR_PRICE : 0);
+                    mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice()));
+                }
+            });
+        }
     }
 
     @Override
     protected void fetchData() {
-        //Todo 获取可用优惠券 设置到Order里面,更新总价
+        if(mOrder.isProfessionTutorShow()) {
+            startLoading("加载数据中", new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    if (mIsLoadingCloseByUser) {
+                        finish();
+                    }
+                }
+            });
 
+            RequestManager.get().execute(new RGetMatchTicket(mOrder.getTeachTime().getDate(),
+                            mOrder.getTime(), mOrder.getGrade()),
+                    new RequestListener<JSONObject>() {
+                        @Override
+                        public void onSuccess(RequestBase request, JSONObject result) {
+                            int money = result.optInt("money", -1);
+                            if (-1 == money) {
+                                mTicketMoney = 0;
+                                toast(result.optString("message"));
+                            } else {
+                                mTicketMoney = money;
+                            }
+
+                            mOrder.setTicketMoney(mTicketMoney);
+                            mTicketTextView.setText(String.format(Locale.CHINA, "减 %d 元", mTicketMoney));
+                            mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice()));
+
+
+                            mIsLoadingCloseByUser = false;
+                            stopLoading();
+                        }
+
+                        @Override
+                        public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                            toast("获取优惠券数据失败");
+                            mIsLoadingCloseByUser = false;
+                            mTicketMoney = 0;
+                            mOrder.setTicketMoney(mTicketMoney);
+                            mTicketTextView.setText(String.format(Locale.CHINA, "减 %d 元", mTicketMoney));
+                            mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice()));
+
+                            stopLoading();
+                        }
+                    });
+        }
     }
 
     private void initOtherViews(){
@@ -203,7 +267,7 @@ public class ConfirmOrderActivity extends BaseActivity {
         switch (mConfirmOrderType){
             case Constants.Identifier.CONFIRM_ORDER_SPECIAL:
                 RequestManager.get().execute(new RConfirmSpecialOrder(App.getUser().getToken(),
-                        mOrder.getTrafficTime(), mOrder.get_id()),
+                        mOrder.getTrafficTime(), mOrder.get_id(), (int)mOrder.getTutorPrice()),
                         new RequestListener<JSONObject>() {
                     @Override
                     public void onSuccess(RequestBase request, JSONObject result) {
