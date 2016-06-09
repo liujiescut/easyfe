@@ -41,8 +41,26 @@ public class Order extends BaseEntity {
     private float subsidy = 5;     //超过交通时间，收的交通补贴
     private float addPrice = 0;
     private List<Comment> comments = new ArrayList<>();
+    private float tutorPrice = 0f;      //专业辅导单位价格
+    private float ticketMoney = 0f;     //可使用优惠券金额
 
     private int trafficTime = 0;
+
+    public float getTutorPrice() {
+        return tutorPrice;
+    }
+
+    public void setTutorPrice(float tutorPrice) {
+        this.tutorPrice = tutorPrice;
+    }
+
+    public float getTicketMoney() {
+        return ticketMoney;
+    }
+
+    public void setTicketMoney(float ticketMoney) {
+        this.ticketMoney = ticketMoney;
+    }
 
     public boolean isHadGetCoupon() {
         return hadGetCoupon;
@@ -55,8 +73,9 @@ public class Order extends BaseEntity {
     public float getPerPrice(){
         return price + addPrice;
     }
+
     public float getTotalPrice(){
-        return (price + addPrice) * ((float)time / 60) + subsidy;
+        return (price + addPrice + tutorPrice) * ((float)time / 60) + subsidy - ticketMoney;
     }
 
     public float getOriginalPrice() {

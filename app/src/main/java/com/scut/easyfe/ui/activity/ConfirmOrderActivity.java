@@ -12,6 +12,7 @@ import com.bigkoo.alertview.OnDismissListener;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.app.Variables;
 import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
@@ -26,6 +27,8 @@ import com.scut.easyfe.utils.OtherUtils;
 import com.scut.easyfe.utils.TimeUtils;
 
 import org.json.JSONObject;
+
+import java.util.Locale;
 
 /**
  * 确认订单页面(包括特价推广订单,单次预约订单,多次预约订单)
@@ -55,6 +58,7 @@ public class ConfirmOrderActivity extends BaseActivity {
 
     private Order mOrder;
     private int mTeachWeek = 0; //多次预约时预约多少次
+    private int mTicketMoney = 0;
 
     @Override
     protected void setLayoutView() {
@@ -69,6 +73,7 @@ public class ConfirmOrderActivity extends BaseActivity {
             if(null != extra){
                 mConfirmOrderType = extra.getInt(Constants.Key.CONFIRM_ORDER_TYPE);
                 mOrder = (Order) extra.getSerializable(Constants.Key.ORDER);
+                mOrder.setTutorPrice(Variables.TUTOR_PRICE);
                 if(mConfirmOrderType == Constants.Identifier.CONFIRM_ORDER_MULTI_RESERVE){
                     mTeachWeek = extra.getInt(Constants.Key.TEACH_WEEK);
                 }
@@ -103,9 +108,12 @@ public class ConfirmOrderActivity extends BaseActivity {
         mTeachGradeTextView.setText(String.format("%s", mOrder.getGrade()));
         mTeachCourseTextView.setText(mOrder.getCourse());
         mTeachTimeTextView.setText(TimeUtils.getTimeFromMinute(mOrder.getTime()));
-        mTeachPriceTextView.setText(String.format("%.2f 元", mOrder.getPerPrice()));
-        mTeachTipTextView.setText(String.format("%.2f 元", mOrder.getSubsidy()));
-        mTeachTotalPriceTextView.setText(String.format("%.2f 元", mOrder.getTotalPrice()));
+
+        mTeachPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getPerPrice()));
+
+        mTeachTipTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getSubsidy()));
+        mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice()));
+        mProfessionGuidePriceTextView.setText(String.format(Locale.CHINA, "%d 元/小时", Variables.TUTOR_PRICE));
 
         initOtherViews();
     }
@@ -116,18 +124,20 @@ public class ConfirmOrderActivity extends BaseActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mTicketLinearLayout.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+                mOrder.setTicketMoney(isChecked ? mTicketMoney : 0);
+                mOrder.setTutorPrice(isChecked ? Variables.TUTOR_PRICE : 0);
+                mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice()));
             }
         });
     }
 
     @Override
     protected void fetchData() {
-        //Todo 获取可用优惠券
+        //Todo 获取可用优惠券 设置到Order里面,更新总价
 
     }
 
     private void initOtherViews(){
-        //Todo 初始化Ticket、ProfessionGuidePrice
 
         String title = "";
         switch (mConfirmOrderType){

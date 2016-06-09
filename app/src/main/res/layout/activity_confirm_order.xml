@@ -173,7 +173,7 @@
         <RelativeLayout
             android:layout_weight="1"
             android:layout_width="0dip"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:background="@color/text_area_bg_inner"
             android:layout_height="match_parent">
         <CheckBox
@@ -181,6 +181,7 @@
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:checked="true"
+            android:buttonTint="@color/primary"
             android:layout_gravity="center_vertical"/>
         </RelativeLayout>
     </LinearLayout>

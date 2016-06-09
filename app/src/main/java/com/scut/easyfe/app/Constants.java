@@ -214,10 +214,16 @@ public class Constants {
         public static final ArrayList<String> scoreRangeList = new ArrayList<>();
         public static final ArrayList<String> hasTeachChildCountRangeList = new ArrayList<>();
         public static final ArrayList<String> hasTeachChildTimeRangeList = new ArrayList<>();
+        public static final ArrayList<String> paperDifficultyList = new ArrayList<>();
         public static ArrayList<String> bankNameList = new ArrayList<>();
         public static ArrayList<String> professionTutorCourseList = new ArrayList<>();
 
         static {
+            paperDifficultyList.add("容易");
+            paperDifficultyList.add("较易");
+            paperDifficultyList.add("一般");
+            paperDifficultyList.add("较难");
+            paperDifficultyList.add("困难");
 
             teachTimeHourList.add(0);
             teachTimeHourList.add(1);

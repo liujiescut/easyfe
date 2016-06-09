@@ -52,7 +52,7 @@ public class RGetTutorInfo extends RequestBase<TutorInfo>{
     public TutorInfo parseResultAsObject(JSONObject jsonObject) throws IOException, JSONException {
         TutorInfo result = new TutorInfo();
         try {
-            result = mObjectMapper.readValue(jsonObject.optJSONObject("grades").toString(), TutorInfo.class);
+            result = mObjectMapper.readValue(jsonObject.toString(), TutorInfo.class);
         }catch (Exception e){
             LogUtils.i("TutorInfo  parseResultAsObject -> 解析出错");
             e.printStackTrace();

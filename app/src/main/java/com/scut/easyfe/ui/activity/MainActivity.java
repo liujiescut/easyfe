@@ -13,6 +13,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.app.Variables;
 import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
@@ -118,6 +119,7 @@ public class MainActivity extends BaseActivity {
 
                 App.setQNToken(result.optString("qnToken"));
                 App.setServicePhone(result.optString("phone"));
+                Variables.TUTOR_PRICE = result.optInt("professionalPrice");
 
                 JSONObject advertise = result.optJSONObject("advertise");
                 if (advertise != null) {

@@ -13,6 +13,43 @@ public class TutorInfo extends BaseEntity {
     List<String> examPaper = new ArrayList<>();
     TutorKnowledge forKnowledge = new TutorKnowledge();
 
+    public ArrayList<String> getLevelOneList(){
+        ArrayList<String> list = new ArrayList<>();
+        for (int i = 0; i < forKnowledge.getLevel1().size(); i++) {
+            list.add(forKnowledge.getLevel1().get(i).getName());
+        }
+
+        return list;
+    }
+
+    public ArrayList<String> getLevelTwoList(int levelOneIndex){
+        ArrayList<String> list = new ArrayList<>();
+        if(levelOneIndex < 0 || levelOneIndex >= forKnowledge.getLevel1().size()){
+            return list;
+        }
+
+        for (int i = 0; i < forKnowledge.getLevel1().get(levelOneIndex).getLevel2().size(); i++) {
+            list.add(forKnowledge.getLevel1().get(levelOneIndex).getLevel2().get(i).getName());
+        }
+
+        return list;
+    }
+
+    public ArrayList<String> getLevelThreeList(int levelOneIndex, int levelTwoIndex){
+        ArrayList<String> list = new ArrayList<>();
+        if(levelOneIndex < 0 || levelOneIndex >= forKnowledge.getLevel1().size()){
+            return list;
+        }
+
+        if(levelTwoIndex < 0 || levelTwoIndex >= forKnowledge.getLevel1().get(levelOneIndex).getLevel2().size()){
+            return list;
+        }
+
+        list.addAll(forKnowledge.getLevel1().get(levelOneIndex).getLevel2().get(levelTwoIndex).getLevel3());
+
+        return list;
+    }
+
     public String getCategory() {
         return category;
     }

@@ -5,4 +5,5 @@ package com.scut.easyfe.app;
  * Created by jay on 16/3/10.
  */
 public class Variables {
+    public static int TUTOR_PRICE = 0;
 }
