@@ -15,9 +15,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.order.BriefOrder;
-import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.ui.base.BaseListViewScrollStateAdapter;
 import com.scut.easyfe.utils.DensityUtil;
 import com.scut.easyfe.utils.OtherUtils;
@@ -25,7 +25,6 @@ import com.scut.easyfe.utils.TimeUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 我的订单页面Adapter
@@ -84,7 +83,7 @@ public class MyOrderAdapter extends BaseListViewScrollStateAdapter {
 
         BriefOrder order = mOrders.get(position);
         holder.orderNum.setText(String.format("订单 : %s", order.getOrderNumber()));
-        holder.teacherName.setText(order.getTeacherName());
+        holder.name.setText(App.getUser().isTeacher() ? order.getParentName() : order.getTeacherName());
         holder.course.setText(order.getCourse());
         holder.date.setText(TimeUtils.getTime(TimeUtils.getDateFromString(order.getTeachTime().getDate()), "yyyy 年 MM 月 dd 日 (EEEE)"));
         holder.period.setText(order.getTeachTime().getChineseTime());
@@ -140,7 +139,7 @@ public class MyOrderAdapter extends BaseListViewScrollStateAdapter {
         LinearLayout background;
         CheckBox checkBox;
         TextView orderNum;
-        TextView teacherName;
+        TextView name;
         TextView course;
         TextView date;
         TextView period;
@@ -151,7 +150,7 @@ public class MyOrderAdapter extends BaseListViewScrollStateAdapter {
             background = OtherUtils.findViewById(root , R.id.item_my_order_ll_background);
             checkBox = OtherUtils.findViewById(root, R.id.item_my_order_cb_select);
             orderNum = OtherUtils.findViewById(root, R.id.item_my_order_tv_num);
-            teacherName = OtherUtils.findViewById(root, R.id.item_my_order_tv_teacher);
+            name = OtherUtils.findViewById(root, R.id.item_my_order_tv_teacher);
             course = OtherUtils.findViewById(root, R.id.item_my_order_tv_course);
             date = OtherUtils.findViewById(root, R.id.item_my_order_tv_date);
             period = OtherUtils.findViewById(root, R.id.item_my_order_tv_period);

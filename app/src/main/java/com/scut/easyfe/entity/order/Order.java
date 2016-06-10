@@ -20,40 +20,53 @@ import java.util.Locale;
  */
 public class Order extends BaseEntity {
     private String _id = "";
-    private String orderNumber = "";     //订单号, O-2016000000, 开头是字母O
-    private int type = 0;                //0表示普通订单，1表示特价订单
-    private int state = 0;               //0未修改已预订，1待执行，2修改过待确定，3已完成，4无效订单
-    private String tag = "";             //表示订单是否为同一批多次预约订单
-    private int time = 120;              //单次家教的时间
-    private String course = "";          //课程
-    private String grade = "";           //孩子年级
-    private float price = 0f;            //单价
-    private float originalPrice = 0f;    //原价(特价订单用到)
-    private int childAge = 0;            //孩子年龄
-    private int childGender = Constants.Identifier.FEMALE; //孩子性别
-    private String cancelPerson = "";    //订单状态为4才有的字段，“teacher”表示是教师取消订单，“parent”表示家长取消
-    private boolean hadComment = false;  //是否已经评价
-    private boolean hadGetCoupon = false;//是否已经领取现金券
-    private long completedTime = 0;      //订单完成时间
-    private TeachTime teachTime = new TeachTime();
-    private TeacherInfo teacher = new TeacherInfo();
-    private ParentInfo parent = new ParentInfo();
-    private Insurance insurance = new Insurance();
-    private float subsidy = 5;     //超过交通时间，收的交通补贴
-    private float addPrice = 0;
-    private List<Comment> comments = new ArrayList<>();
-    private float tutorPrice = 0f;      //专业辅导单位价格
-    private float ticketMoney = 0f;     //可使用优惠券金额
-    private TutorDetail thisTeachDetail = new TutorDetail();   //本次专业辅导信息
-    private TutorDetail nextTeachDetail = new TutorDetail();   //下次专业辅导信息
+    private String orderNumber = "";                  //订单号, O-2016000000, 开头是字母O
+    private int type = 0;                             //0表示普通订单，1表示特价订单
+    private int state = 0;                            //0未修改已预订，1待执行，2修改过待确定，3已完成，4无效订单
+    private String tag = "";                          //表示订单是否为同一批多次预约订单
+    private int time = 120;                           //单次家教的时间
+    private String course = "";                       //课程
+    private String grade = "";                        //孩子年级
+    private float price = 0f;                         //单价
+    private float originalPrice = 0f;                 //原价(特价订单用到)
+    private int childAge = 0;                         //孩子年龄
+    private int childGender =
+            Constants.Identifier.FEMALE;              //孩子性别
+    private String cancelPerson = "";                 //订单状态为4才有的字段，“teacher”表示是教师取消订单，“parent”表示家长取消
+    private boolean hadComment = false;               //是否已经评价
+    private boolean hadGetCoupon = false;             //是否已经领取现金券
+    private long completedTime = 0;                   //订单完成时间
+    private TeachTime teachTime =
+            new TeachTime();                          //授课的时间信息
+    private TeacherInfo teacher =
+            new TeacherInfo();                        //授课老师信息
+    private ParentInfo parent =
+            new ParentInfo();                         //授课家长信息
+    private Insurance insurance =
+            new Insurance();                          //授课保险信息
+    private float subsidy = 5;                        //超过交通时间，收的交通补贴
+    private float addPrice = 0;                       //家教完成课时单价增加的增加单价
+    private List<Comment> comments =
+            new ArrayList<>();                        //授课老师的前三条评论
+    private float professionalTutorPrice = 0f;        //专业辅导单位价格
+    private TutorDetail thisTeachDetail =
+            new TutorDetail();                        //本次专业辅导信息
+    private TutorDetail nextTeachDetail =
+            new TutorDetail();                        //下次专业辅导信息
+    private boolean isTeacherReport = false;          //家教是否完成课时并反馈
+    private Coupon coupon = new Coupon();             //优惠券信息
 
-    private int trafficTime = 0;
+    private int trafficTime = 0;                      //交通时间(客户端计算)
 
     /**
-     * 是否需要显示专业辅导
+     * 是否需要显示专业辅导(初中高中才显示)
      */
     public boolean isProfessionTutorShow(){
         return grade.contains("初中") || grade.contains("高中");
+    }
+
+    public boolean hasProfessionTutor(){
+        return professionalTutorPrice > 0;
     }
 
     public float getPerPrice(){
@@ -61,7 +74,7 @@ public class Order extends BaseEntity {
     }
 
     public float getTotalPrice(){
-        return (price + addPrice + tutorPrice) * ((float)time / 60) + subsidy - ticketMoney;
+        return (price + addPrice + professionalTutorPrice) * ((float)time / 60) + subsidy - coupon.money;
     }
 
     public float getOriginalPrice() {
@@ -83,21 +96,22 @@ public class Order extends BaseEntity {
         return content;
     }
 
-    public float getTutorPrice() {
-        return tutorPrice;
+
+    public boolean isTeacherReport() {
+        return isTeacherReport;
     }
 
-    public void setTutorPrice(float tutorPrice) {
-        this.tutorPrice = tutorPrice;
-    }
-
-    public float getTicketMoney() {
-        return ticketMoney;
+    public void setTeacherReport(boolean teacherReport) {
+        isTeacherReport = teacherReport;
     }
 
 
-    public void setTicketMoney(float ticketMoney) {
-        this.ticketMoney = ticketMoney;
+    public float getProfessionalTutorPrice() {
+        return professionalTutorPrice;
+    }
+
+    public void setProfessionalTutorPrice(float tutorPrice) {
+        this.professionalTutorPrice = tutorPrice;
     }
 
     public boolean isHadGetCoupon() {
@@ -284,6 +298,30 @@ public class Order extends BaseEntity {
         this.insurance = insurance;
     }
 
+    public TutorDetail getThisTeachDetail() {
+        return thisTeachDetail;
+    }
+
+    public void setThisTeachDetail(TutorDetail thisTeachDetail) {
+        this.thisTeachDetail = thisTeachDetail;
+    }
+
+    public TutorDetail getNextTeachDetail() {
+        return nextTeachDetail;
+    }
+
+    public void setNextTeachDetail(TutorDetail nextTeachDetail) {
+        this.nextTeachDetail = nextTeachDetail;
+    }
+
+    public Coupon getCoupon() {
+        return coupon;
+    }
+
+    public void setCoupon(Coupon coupon) {
+        this.coupon = coupon;
+    }
+
     public class Insurance extends BaseEntity {
         private String insuranceNumber = "";
         private String _id = "";
@@ -335,6 +373,11 @@ public class Order extends BaseEntity {
         private String easyLevel = "";   // todo 应该为String
         // 知识点, 辅导方式为: 针对知识点补习时才有的字段
         private List<String> knowledge = new ArrayList<>();
+
+        public boolean hadFillIn(){
+            //Todo 换一种更合适的判断
+            return category.length() != 0;
+        }
 
         public String getCategory() {
             return category;
@@ -393,19 +436,24 @@ public class Order extends BaseEntity {
         }
     }
 
-    public TutorDetail getThisTeachDetail() {
-        return thisTeachDetail;
-    }
+    public class Coupon extends BaseEntity{
+        private String _id = "";
+        private float money = 0f;
 
-    public void setThisTeachDetail(TutorDetail thisTeachDetail) {
-        this.thisTeachDetail = thisTeachDetail;
-    }
+        public String get_id() {
+            return _id;
+        }
 
-    public TutorDetail getNextTeachDetail() {
-        return nextTeachDetail;
-    }
+        public void set_id(String _id) {
+            this._id = _id;
+        }
 
-    public void setNextTeachDetail(TutorDetail nextTeachDetail) {
-        this.nextTeachDetail = nextTeachDetail;
+        public float getMoney() {
+            return money;
+        }
+
+        public void setMoney(float money) {
+            this.money = money;
+        }
     }
 }

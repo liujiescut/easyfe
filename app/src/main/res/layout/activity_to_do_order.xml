@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
     <include
         layout="@layout/titlebar"/>
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/shape_app_bg"
@@ -92,12 +93,13 @@
                 android:layout_height="@dimen/layout_margin_small"
                 android:background="@color/transparent" />
 
-            <!--<include layout="@layout/order_base_info"-->
-                <!--/>-->
+            <include layout="@layout/order_base_info"
+                />
 
             <LinearLayout
-                android:id="@+id/to_do_order_ll_profession_guide_incomplete"
+                android:id="@+id/to_do_order_ll_tutor_incomplete"
                 style="@style/ll_container_normal_style"
+                android:layout_marginTop="@dimen/layout_margin_small"
                 >
 
                 <TextView
@@ -109,21 +111,25 @@
                     android:text="@string/profession_guide_state" />
 
                 <TextView
-                    android:id="@+id/to_do_order_tv_incomplete_info"
+                    android:id="@+id/to_do_order_tv_tutor_incomplete_info"
                     style="@style/text_normal_style"
                     android:layout_weight="3"
-                    android:gravity="start|center_vertical"
-                    tools:text="250 元/小时"
+                    android:gravity="left|center_vertical"
+                    android:textColor="@color/text_area_text_color"
+                    tools:text="未预订此服务"
                     />
             </LinearLayout>
 
             <TextView
-                android:id="@+id/to_do_order_ll_profession_guide_complete"
+                android:id="@+id/to_do_order_tv_tutor_complete"
                 style="@style/text_normal_style"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/text_area_height"
+                android:layout_marginTop="@dimen/layout_margin_small"
                 android:drawableRight="@mipmap/icon_right_arrow_padding"
                 android:gravity="start|center_vertical"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:text="@string/profession_guide_state"
                 />
 
@@ -149,7 +155,7 @@
                 tools:text="1. 你好我是提示\n1. 你好我是提示1\n2. 你好你好我是提示1\n2. 你好你好我是提示1\n2. 你好" />
 
             <TextView
-                android:id="@+id/to_do_order_tv_doing"
+                android:id="@+id/to_do_order_tv_teacher_action"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/layout_margin_small"
@@ -157,17 +163,18 @@
                 android:gravity="center"
                 android:padding="@dimen/layout_padding_tiny"
                 android:text="@string/doing"
+                android:onClick="onTeacherActionClick"
                 android:textColor="@color/title_text_color" />
 
             <TextView
-                android:id="@+id/to_do_order_tv_pay"
+                android:id="@+id/to_do_order_tv_parent_action"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/layout_margin_small"
                 android:background="@drawable/selector_main_left_drawer_item"
                 android:gravity="center"
                 android:clickable="true"
-                android:onClick="onPayClick"
+                android:onClick="onParentActionClick"
                 android:padding="@dimen/layout_padding_tiny"
                 android:text="@string/pay_and_finish_course"
                 android:textColor="@color/title_text_color"

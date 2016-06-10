@@ -57,7 +57,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/to_do_order_tv_pay"
+        android:id="@+id/to_do_order_tv_parent_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/layout_margin_large"

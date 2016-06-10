@@ -85,7 +85,7 @@ public class ConfirmOrderActivity extends BaseActivity {
                 }
 
                 if(mOrder.isProfessionTutorShow()) {
-                    mOrder.setTutorPrice(Variables.TUTOR_PRICE);
+                    mOrder.setProfessionalTutorPrice(Variables.TUTOR_PRICE);
                 }
 
                 if(mConfirmOrderType == Constants.Identifier.CONFIRM_ORDER_MULTI_RESERVE){
@@ -145,8 +145,8 @@ public class ConfirmOrderActivity extends BaseActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     mTicketLinearLayout.setVisibility(isChecked ? View.VISIBLE : View.GONE);
-                    mOrder.setTicketMoney(isChecked ? mTicketMoney : 0);
-                    mOrder.setTutorPrice(isChecked ? Variables.TUTOR_PRICE : 0);
+                    mOrder.getCoupon().setMoney(isChecked ? mTicketMoney : 0);
+                    mOrder.setProfessionalTutorPrice(isChecked ? Variables.TUTOR_PRICE : 0);
                     mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice()));
                 }
             });
@@ -179,7 +179,7 @@ public class ConfirmOrderActivity extends BaseActivity {
                                 mTicketId = result.optString("id", "");
                             }
 
-                            mOrder.setTicketMoney(mTicketMoney);
+                            mOrder.getCoupon().setMoney(mTicketMoney);
                             mTicketTextView.setText(String.format(Locale.CHINA, "减 %d 元", mTicketMoney));
                             mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice()));
 
@@ -193,7 +193,7 @@ public class ConfirmOrderActivity extends BaseActivity {
                             toast("获取优惠券数据失败");
                             mIsLoadingCloseByUser = false;
                             mTicketMoney = 0;
-                            mOrder.setTicketMoney(mTicketMoney);
+                            mOrder.getCoupon().setMoney(mTicketMoney);
                             mTicketTextView.setText(String.format(Locale.CHINA, "减 %d 元", mTicketMoney));
                             mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice()));
 
@@ -269,7 +269,7 @@ public class ConfirmOrderActivity extends BaseActivity {
         switch (mConfirmOrderType){
             case Constants.Identifier.CONFIRM_ORDER_SPECIAL:
                 RequestManager.get().execute(new RConfirmSpecialOrder(App.getUser().getToken(),
-                        mOrder.getTrafficTime(), mOrder.get_id(), (int)mOrder.getTutorPrice()),
+                        mOrder.getTrafficTime(), mOrder.get_id(), (int)mOrder.getProfessionalTutorPrice(), mTicketId),
                         new RequestListener<JSONObject>() {
                     @Override
                     public void onSuccess(RequestBase request, JSONObject result) {

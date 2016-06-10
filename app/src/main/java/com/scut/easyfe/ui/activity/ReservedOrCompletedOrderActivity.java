@@ -23,6 +23,8 @@ import com.scut.easyfe.utils.TimeUtils;
 
 import org.json.JSONObject;
 
+import java.util.Locale;
+
 /**
  * 已预定跟已完成订单详情
  */
@@ -43,12 +45,18 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
     private TextView mTeacherNameTextView;
     private TextView mTeacherInfoTextView;
     private TextView mWaitTeacherApplyTextView;
+    private TextView mTutorPriceTextView;
+    private TextView mCouponTextView;
     private ImageView mTeacherAvatarImageView;
     private View mParentInfoContainer;
     private View mStudentInfoContainer;
     private View mTeacherInfoContainer;
     private View mOperationButtonsContainer;
     private View mNumContainer;
+    private View mTutorContainer;
+    private View mCouponContainer;
+
+
 
     private Order mOrder;
     private int mOrderType = Constants.Identifier.ORDER_RESERVATION;
@@ -83,9 +91,13 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
         mTimeTextView = OtherUtils.findViewById(this, R.id.order_base_info_tv_time);
         mPriceTextView = OtherUtils.findViewById(this, R.id.order_base_info_tv_price);
         mTipTextView = OtherUtils.findViewById(this, R.id.order_base_info_tv_tip);
+        mTutorPriceTextView = OtherUtils.findViewById(this, R.id.order_base_info_tv_tutor_price);
+        mCouponTextView = OtherUtils.findViewById(this, R.id.order_base_info_tv_coupon);
         mTotalPriceTextView = OtherUtils.findViewById(this, R.id.order_base_info_tv_total_price);
 
         mNumContainer = OtherUtils.findViewById(this, R.id.reserved_order_layout_num_info);
+        mTutorContainer = OtherUtils.findViewById(this, R.id.order_base_info_ll_tutor);
+        mCouponContainer = OtherUtils.findViewById(this, R.id.order_base_info_ll_coupon);
         mOrderNumTextView = OtherUtils.findViewById(this, R.id.order_base_num_tv_order);
         mInsuranceNumTextView = OtherUtils.findViewById(this, R.id.order_base_num_tv_insurance);
 
@@ -164,9 +176,9 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
                 TimeUtils.getTime(TimeUtils.getDateFromString(mOrder.getTeachTime().getDate()), "yyyy年MM月dd日(EEEE)"),
                 mOrder.getTeachTime().getChineseTime()));
         mTimeTextView.setText(TimeUtils.getTimeFromMinute(mOrder.getTime()));
-        mPriceTextView.setText(String.format("%.2f 元/小时", mOrder.getPrice()));
-        mTipTextView.setText(String.format("%.2f 元", mOrder.getSubsidy()));
-        mTotalPriceTextView.setText(String.format("%.2f 元", mOrder.getTotalPrice()));
+        mPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元/小时", mOrder.getPrice()));
+        mTipTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getSubsidy()));
+        mTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice()));
 
         if (mOrderType == Constants.Identifier.ORDER_COMPLETED) {
             mNumContainer.setVisibility(View.VISIBLE);
@@ -181,7 +193,7 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
             mParentNameTextView.setText(mOrder.getParent().getName());
             mParentGenderTextView.setText(mOrder.getParent().getGender() == Constants.Identifier.MALE ? "男" : "女");
             mStudentGenderTextView.setText(mOrder.getParent().getParentMessage().getChildGender() == Constants.Identifier.MALE ? "男" : "女");
-            mStudentAgeTextView.setText(String.format("%d", mOrder.getChildAge()));
+            mStudentAgeTextView.setText(String.format(Locale.CHINA, "%d", mOrder.getChildAge()));
 
             if (mOrderType == Constants.Identifier.ORDER_COMPLETED) {
                 mOperationButtonsContainer.setVisibility(View.GONE);
@@ -201,6 +213,14 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
                 mWaitTeacherApplyTextView.setVisibility(View.GONE);
             }
         }
+
+        if(!mOrder.hasProfessionTutor()){
+            mTutorContainer.setVisibility(View.GONE);
+            mCouponContainer.setVisibility(View.GONE);
+        }else{
+            mCouponTextView.setText(String.format(Locale.CHINA, "减 %.0f 元", mOrder.getCoupon().getMoney()));
+            mTutorPriceTextView.setText(String.format(Locale.CHINA, "%.0f 元/小时", mOrder.getProfessionalTutorPrice()));
+        }
     }
 
     public void onInsuranceClick(View view) {
@@ -213,6 +233,13 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
     public void onBackClick(View view) {
         redirectToActivity(mContext, MyOrderActivity.class);
         finish();
+    }
+
+    public void onProfessionGuideClick(View view){
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "专业辅导");
+        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.user_protocol_content));
+        redirectToActivity(mContext, ShowTextActivity.class, bundle);
     }
 
     @Override

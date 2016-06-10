@@ -46,8 +46,8 @@ public class RConfirmSingleOrder extends RequestBase<JSONObject>{
         params.put("subsidy", mOrder.getSubsidy());
         params.put("childAge", mOrder.getChildAge());
         params.put("childGender", mOrder.getChildGender());
-        if(0 != mOrder.getTutorPrice()) {
-            params.put("professionalTutorPrice", mOrder.getTutorPrice());
+        if(0 != mOrder.getProfessionalTutorPrice()) {
+            params.put("professionalTutorPrice", mOrder.getProfessionalTutorPrice());
         }
         if(mCouponId.length() != 0){
             params.put("couponId", mCouponId);

@@ -1,7 +1,6 @@
 package com.scut.easyfe.ui.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -30,7 +29,6 @@ public class EvaluationActivity extends BaseActivity {
     private ProperRatingBar mOnTimeRatingBar;
     private EditText mContentEditText;
     private Order mOrder = new Order();
-    private boolean mHasGetCashTicket = false;
 
     @Override
     protected void setLayoutView() {
@@ -119,9 +117,9 @@ public class EvaluationActivity extends BaseActivity {
         RequestManager.get().execute(new RGetCashTicket(mOrder.get_id()), new RequestListener<JSONObject>() {
             @Override
             public void onSuccess(RequestBase request, JSONObject result) {
+                mOrder.setHadGetCoupon(true);
                 toast(result.optString("message"));
                 stopLoading();
-                mHasGetCashTicket = true;
             }
 
             @Override

@@ -12,6 +12,7 @@ public class BriefOrder extends BaseEntity{
     private String course = "";
     private String tag = "";
     private String teacherName = "";
+    private String parentName = "";
     private String orderNumber = "";
     private int time = 0;
     private float price = 0;
@@ -39,6 +40,15 @@ public class BriefOrder extends BaseEntity{
 
     public void setParent(String parent) {
         this.parent = parent;
+    }
+
+    //todo 待后台返回
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
     }
 
     public boolean isSelected() {

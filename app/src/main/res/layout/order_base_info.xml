@@ -100,6 +100,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/order_base_info_ll_tutor"
         style="@style/ll_container_normal_style"
         >
 
@@ -114,7 +115,7 @@
             android:text="@string/profession_guide_price" />
 
         <TextView
-            android:id="@+id/order_base_info_tv_profession_guide_price"
+            android:id="@+id/order_base_info_tv_tutor_price"
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:gravity="start|center_vertical"
@@ -142,7 +143,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/order_base_info_ll_ticket"
+        android:id="@+id/order_base_info_ll_coupon"
         style="@style/ll_container_normal_style"
         >
 
@@ -153,7 +154,7 @@
             android:text="@string/cash_ticket" />
 
         <TextView
-            android:id="@+id/order_base_info_tv_ticket"
+            android:id="@+id/order_base_info_tv_coupon"
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:gravity="start|center_vertical"
