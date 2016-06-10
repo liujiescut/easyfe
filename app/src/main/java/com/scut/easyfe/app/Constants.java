@@ -34,6 +34,7 @@ public class Constants {
         public static final String URL_GET_SMS = URL_BASE + "Authentication/Sms";
         public static final String URL_CHECK_VERIFY_CODE = URL_BASE + "Authentication";
         public static final String URL_UPDATE_USER = URL_BASE + "user/data";
+        public static final String URL_GET_USER_LEVEL = URL_BASE + "Share/Level";
         public static final String URL_ORDERS = URL_BASE + "Order";
         public static final String URL_GET_ORDER_DETAIL = URL_BASE + "Order/Data";
         public static final String URL_GET_TEACHER_COMMENT = URL_BASE + "Parent/Teacher/Comments";
