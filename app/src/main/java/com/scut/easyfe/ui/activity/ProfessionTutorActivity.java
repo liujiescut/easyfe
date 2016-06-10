@@ -1,6 +1,8 @@
 package com.scut.easyfe.ui.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -11,6 +13,7 @@ import com.bigkoo.pickerview.OptionsPickerView;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.TutorInfo;
+import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
@@ -25,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProfessionTutorActivity extends BaseActivity {
-    public static final String NO_UPPER_KNOWLEDGE_CHOOSEN_INFO = "请先选择上级知识点";
+    public static final String NO_UPPER_KNOWLEDGE_CHOSEN_INFO = "请先选择上级知识点";
     private GridView mCourseGridView;
     //College Entrance Exam
     private TextView mCEETextView;
@@ -42,7 +45,7 @@ public class ProfessionTutorActivity extends BaseActivity {
     //复习模拟卷对应的年级
     private TextView mGradeTextView;
     //难易程度
-    private TextView mDifficultyTextView;
+    private TextView mEasyLevelTextView;
     private LinearLayout mWayKnowledgeLinearLayout;
     private LinearLayout mWayPaperLinearLayout;
     private OptionsPickerView<String> mPicker;
@@ -54,24 +57,51 @@ public class ProfessionTutorActivity extends BaseActivity {
 
     private String mCourseName = "";
     private String mCategory = "高考";
+    private String mPaper = "";
+    private String mGrade = "";
+    private String mEasyLevel = "";
+    private int mTutorWay = Constants.Identifier.TUTOR_WAY_KNOWLEDGE;
     private TutorInfo mTutorInfo = new TutorInfo();
     private List<String> mCourseList = new ArrayList<>();
 
     //知识点选中的Index(-1标记为未选中)
-    private int [][] mSelectLevelIndex = new int[][]{{-1,-1,-1},{-1,-1,-1},{-1,-1,-1}};
+    private int[][] mSelectLevelIndex = new int[][]{{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}};
 
+    private boolean mIsModify = false;         //是否是修改专业辅导信息
     private int mSelectedCoursePosition = 0;
     private boolean mIsLoadingCloseByUser = true;
+
+    private Order.TutorDetail mTutorDetail = new Order.TutorDetail();
 
     @Override
     protected void setLayoutView() {
         setContentView(R.layout.activity_profession_tutor);
     }
 
+    @Override
+    protected void initData() {
+        Intent intent = getIntent();
+        if (null != intent) {
+            Bundle extras = intent.getExtras();
+            if (null != extras) {
+                mTutorDetail = (Order.TutorDetail) extras.getSerializable(Constants.Key.TUTOR_DETAIL);
+                if (null != mTutorDetail) {
+                    mIsModify = mTutorDetail.hadFillIn();
+
+                } else {
+                    mTutorDetail = new Order.TutorDetail();
+                }
+            } else {
+                mTutorDetail = new Order.TutorDetail();
+            }
+        } else {
+            mTutorDetail = new Order.TutorDetail();
+        }
+    }
 
     @Override
     protected void initView() {
-        ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("专业辅导情况");
+        ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("专业辅导情况");
         mCEETextView = OtherUtils.findViewById(this, R.id.profession_tutor_tv_state_cee);
         mHEETextView = OtherUtils.findViewById(this, R.id.profession_tutor_tv_state_hee);
         mHighSchoolTextView = OtherUtils.findViewById(this, R.id.profession_tutor_tv_state_high);
@@ -81,12 +111,12 @@ public class ProfessionTutorActivity extends BaseActivity {
         mMiddleSchoolTextView = OtherUtils.findViewById(this, R.id.profession_tutor_tv_state_middle);
         mPaperTextView = OtherUtils.findViewById(this, R.id.profession_tutor_tv_paper);
         mGradeTextView = OtherUtils.findViewById(this, R.id.profession_tutor_tv_grade);
-        mDifficultyTextView = OtherUtils.findViewById(this, R.id.profession_tutor_tv_difficulty);
+        mEasyLevelTextView = OtherUtils.findViewById(this, R.id.profession_tutor_tv_difficulty);
         mWayKnowledgeLinearLayout = OtherUtils.findViewById(this, R.id.profession_tutor_ll_according_knowledge);
         mWayPaperLinearLayout = OtherUtils.findViewById(this, R.id.profession_tutor_ll_according_paper);
 
         mCourseGridView = OtherUtils.findViewById(this, R.id.profession_tutor_gv_course);
-        mCourseAdapter = new CourseAdapter(Constants.Data.professionTutorCourseList);
+        mCourseAdapter = new CourseAdapter(mCourseList);
         mCourseAdapter.setItemClickable(false);
         mCourseGridView.setAdapter(mCourseAdapter);
 
@@ -102,6 +132,50 @@ public class ProfessionTutorActivity extends BaseActivity {
         mKnowLedgeTextViews[2][2] = OtherUtils.findViewById(this, R.id.profession_tutor_tv_knowledge_3_3);
 
         mPicker = new OptionsPickerView<>(mContext);
+
+        if (mIsModify) {
+            mCourseName = mTutorDetail.getCourse();
+            mCategory = mTutorDetail.getCategory();
+            mGrade = mTutorDetail.getGrade();
+            mPaper = mTutorDetail.getExamPaper();
+            mEasyLevel = mTutorDetail.getEasyLevel();
+            mTutorWay = mTutorDetail.getTeachWay();
+
+            mGradeTextView.setText(mGrade);
+            mPaperTextView.setText(mPaper);
+            mEasyLevelTextView.setText(mEasyLevel);
+
+            //初始化Category的选中状态
+            mCEETextView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    mTutorDetail.getCategory().equals(mCEETextView.getText().toString()) ? R.mipmap.icon_gold_arrow_padding : 0, 0, 0, 0);
+            mHEETextView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    mTutorDetail.getCategory().equals(mHEETextView.getText().toString()) ? R.mipmap.icon_gold_arrow_padding : 0, 0, 0, 0);
+            mHighSchoolTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    mTutorDetail.getCategory().equals(mHighSchoolTextView.getText().toString()) ? R.mipmap.icon_gold_arrow_padding : 0, 0, 0, 0);
+            mMiddleSchoolTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    mTutorDetail.getCategory().equals(mMiddleSchoolTextView.getText().toString()) ? R.mipmap.icon_gold_arrow_padding : 0, 0, 0, 0);
+
+            mWayKnowledgeTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    mTutorWay == Constants.Identifier.TUTOR_WAY_KNOWLEDGE ? R.mipmap.icon_gold_arrow_padding : 0, 0, 0, 0);
+            mWayPaperTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    mTutorWay == Constants.Identifier.TUTOR_WAY_PAPER ? R.mipmap.icon_gold_arrow_padding : 0, 0, 0, 0);
+            mWayKnowledgeLinearLayout.setVisibility(mTutorWay == Constants.Identifier.TUTOR_WAY_KNOWLEDGE ? View.VISIBLE : View.GONE);
+            mWayPaperLinearLayout.setVisibility(mTutorWay == Constants.Identifier.TUTOR_WAY_KNOWLEDGE ? View.GONE : View.VISIBLE);
+
+            int index = 0;
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (index < mTutorDetail.getKnowledge().size()) {
+                        mKnowLedgeTextViews[i][j].setText(mTutorDetail.getKnowledge().get(index++));
+                    }
+                }
+            }
+
+        } else {
+
+            mGrade = mTutorDetail.getGrade();
+            mGradeTextView.setText(mGrade);
+        }
     }
 
     @Override
@@ -116,19 +190,39 @@ public class ProfessionTutorActivity extends BaseActivity {
         mWayPaperTextView.setOnClickListener(tutorWayClickListener);
         mWayKnowledgeTextView.setOnClickListener(tutorWayClickListener);
 
-        mPaperTextView.setOnClickListener(new View.OnClickListener() {
+        mGradeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(OtherUtils.isFastDoubleClick()){
                     return;
                 }
 
-                if(mTutorInfo.getExamPaper().size() == 0){
+                mPicker.setPicker(Constants.Data.tutorGradeList);
+                mPicker.setCyclic(false);
+                mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+                    @Override
+                    public void onOptionsSelect(int options1, int option2, int options3) {
+                        mPaper = Constants.Data.tutorGradeList.get(options1);
+                        mGradeTextView.setText(mPaper);
+                    }
+                });
+                mPicker.show();
+            }
+        });
+
+        mPaperTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (OtherUtils.isFastDoubleClick()) {
+                    return;
+                }
+
+                if (mTutorInfo.getExamPaper().size() == 0) {
                     toast("该课程没有复习模拟卷,请选择按照知识点复习");
                     return;
                 }
 
-                ArrayList<String > papers = new ArrayList<>();
+                ArrayList<String> papers = new ArrayList<>();
                 papers.addAll(mTutorInfo.getExamPaper());
                 mPicker.setPicker(papers);
                 mPicker.setCyclic(false);
@@ -142,19 +236,20 @@ public class ProfessionTutorActivity extends BaseActivity {
             }
         });
 
-        mDifficultyTextView.setOnClickListener(new View.OnClickListener() {
+        mEasyLevelTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(OtherUtils.isFastDoubleClick()){
+                if (OtherUtils.isFastDoubleClick()) {
                     return;
                 }
 
-                mPicker.setPicker(Constants.Data.paperDifficultyList);
+                mPicker.setPicker(Constants.Data.paperEasyLevelList);
                 mPicker.setCyclic(false);
                 mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
                     @Override
                     public void onOptionsSelect(int options1, int option2, int options3) {
-                        mDifficultyTextView.setText(Constants.Data.paperDifficultyList.get(options1));
+                        mEasyLevel = Constants.Data.paperEasyLevelList.get(options1);
+                        mEasyLevelTextView.setText(mEasyLevel);
                     }
                 });
                 mPicker.show();
@@ -175,7 +270,7 @@ public class ProfessionTutorActivity extends BaseActivity {
         });
 
         for (int i = 0; i < mKnowLedgeTextViews.length; i++) {
-            for (int j = 0; j < mKnowLedgeTextViews[i].length; j++){
+            for (int j = 0; j < mKnowLedgeTextViews[i].length; j++) {
                 mKnowLedgeTextViews[i][j].setOnClickListener(new KnowLedgeClickListener(i, j));
             }
         }
@@ -191,10 +286,16 @@ public class ProfessionTutorActivity extends BaseActivity {
                 if (null != result && result.size() > 0) {
                     mCourseList.clear();
                     mCourseList.addAll(result);
+                    if (mIsModify) {
+                        mSelectedCoursePosition = mCourseList.indexOf(mCourseName);
+                    } else {
+                        mSelectedCoursePosition = 0;
+                        mCourseName = mCourseList.get(mSelectedCoursePosition);
+                    }
+
                     mCourseAdapter.setSelectedPosition(mSelectedCoursePosition);
                     mCourseAdapter.notifyDataSetChanged();
-                    mCourseName = mCourseList.get(mSelectedCoursePosition);
-                    getTutorInfo(mCategory, mCourseName);
+                    getTutorInfo(mCategory, mCourseName, !mIsModify);
                 } else {
                     toast("加载数据失败");
                     stopLoading();
@@ -209,7 +310,7 @@ public class ProfessionTutorActivity extends BaseActivity {
         });
     }
 
-    private void startLoading(){
+    private void startLoading() {
         mIsLoadingCloseByUser = true;
         startLoading("加载数据中", new DialogInterface.OnDismissListener() {
             @Override
@@ -221,14 +322,43 @@ public class ProfessionTutorActivity extends BaseActivity {
         });
     }
 
+
     private void getTutorInfo(String category, String course) {
+        getTutorInfo(category, course, true);
+    }
+
+    private void getTutorInfo(String category, String course, final boolean clear) {
+        if (clear) {
+            resetKnowledgeArea();
+        }
+
         RequestManager.get().execute(new RGetTutorInfo(category, course), new RequestListener<TutorInfo>() {
             @Override
             public void onSuccess(RequestBase request, TutorInfo result) {
                 if (null != result) {
                     mTutorInfo = result;
 
-                    resetKnowledgeArea();
+                    //修改进来重新设置选中的LevelIndex
+                    if (!clear) {
+                        for (int i = 0; i < 3; i++) {
+                            mSelectLevelIndex[i][0] = mTutorInfo.getLevelOneList().indexOf(mKnowLedgeTextViews[i][0].getText().toString());
+                        }
+
+                        for (int i = 0; i < 3; i++) {
+                            mSelectLevelIndex[i][1] = mTutorInfo.getLevelTwoList(mSelectLevelIndex[i][0]).indexOf(mKnowLedgeTextViews[i][1].getText().toString());
+                        }
+
+                        for (int i = 0; i < 3; i++) {
+                            mSelectLevelIndex[i][2] = mTutorInfo.getLevelThreeList(mSelectLevelIndex[i][0], mSelectLevelIndex[i][1]).indexOf(mKnowLedgeTextViews[i][2].getText().toString());
+                        }
+                    }
+
+                    if (mTutorInfo.getExamPaper().size() != 0) {
+                        mPaper = mTutorInfo.getExamPaper().get(0);
+                        mPaperTextView.setText(mPaper);
+                    } else {
+                        toast("当前阶段课程分类暂没有复习模拟卷");
+                    }
                 } else {
                     mTutorInfo = new TutorInfo();
                     toast("加载数据失败");
@@ -248,20 +378,97 @@ public class ProfessionTutorActivity extends BaseActivity {
         });
     }
 
-    private void resetKnowledgeArea(){
+    private void resetKnowledgeArea() {
         for (int i = 0; i < 3; i++) {
-            for(int j = 0; j < 3; j++){
+            for (int j = 0; j < 3; j++) {
                 mKnowLedgeTextViews[i][j].setText("");
                 mSelectLevelIndex[i][j] = -1;
             }
         }
     }
 
-    public void onBackClick(View view){
+    public void onSaveClick(View view) {
+        if (!validate()) {
+            return;
+        }
+
+        mTutorDetail.setCategory(mCategory);
+        mTutorDetail.setCourse(mCourseName);
+        mTutorDetail.setTeachWay(mTutorWay);
+        mTutorDetail.setEasyLevel(mEasyLevel);
+        if (mTutorWay == Constants.Identifier.TUTOR_WAY_KNOWLEDGE) {
+            mTutorDetail.getKnowledge().clear();
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    mTutorDetail.getKnowledge().add(mKnowLedgeTextViews[i][j].getText().toString());
+                }
+            }
+        } else {
+            mTutorDetail.setGrade(mGrade);
+            mTutorDetail.setExamPaper(mPaper);
+        }
+
+        //Todo 调用接口保存数据
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.Key.TUTOR_DETAIL, mTutorDetail);
+        Intent intent = new Intent();
+        intent.putExtras(bundle);
+        this.setResult(0, intent);
+        finish();
+//        redirectToActivity(mContext, ToDoOrderActivity.class, bundle);
+    }
+
+    private boolean validate() {
+        if (mCategory.length() == 0) {
+            toast("请选择阶段");
+            return false;
+        }
+
+        if (mCourseName.length() == 0) {
+            toast("请选择课程");
+            return false;
+        }
+
+        if (mTutorWay == Constants.Identifier.TUTOR_WAY_KNOWLEDGE) {   //针对知识点复习
+            int[] levelValue = new int[3];
+            for (int i = 0; i < 3; i++) {
+                if (mSelectLevelIndex[i][0] == -1) {
+                    toast("请选择三个知识点");
+                    return false;
+                }
+                levelValue[i] = mSelectLevelIndex[i][0] * 100 + mSelectLevelIndex[i][1] * 10 + mSelectLevelIndex[i][2];
+            }
+
+            if (levelValue[0] == levelValue[1] || levelValue[0] == levelValue[2] || levelValue[1] == levelValue[2]) {
+                toast("请选择三个不同知识点");
+                return false;
+            }
+
+        } else {                                                       //复习模拟卷
+            if (mGrade.length() == 0) {
+                toast("请选择年级");
+                return false;
+            }
+
+            if (mPaper.length() == 0) {
+                toast("请选择复习模拟卷");
+                return false;
+            }
+        }
+
+        if (mEasyLevel.length() == 0) {
+            toast("请选择难易程度");
+            return false;
+        }
+
+        return true;
+    }
+
+    public void onBackClick(View view) {
         finish();
     }
 
-    private class KnowLedgeClickListener implements View.OnClickListener{
+    private class KnowLedgeClickListener implements View.OnClickListener {
         private int row = -1;
         private int column = -1;
 
@@ -273,15 +480,15 @@ public class ProfessionTutorActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             ArrayList<String> toPickData = new ArrayList<>();
-            switch (column){
+            switch (column) {
                 case 0:
                     toPickData = mTutorInfo.getLevelOneList();
                     break;
 
                 case 1:
                     //一级知识点没有选择
-                    if(mSelectLevelIndex[row][0] == -1){
-                        toast(NO_UPPER_KNOWLEDGE_CHOOSEN_INFO);
+                    if (mSelectLevelIndex[row][0] == -1) {
+                        toast(NO_UPPER_KNOWLEDGE_CHOSEN_INFO);
                         return;
                     }
 
@@ -290,8 +497,8 @@ public class ProfessionTutorActivity extends BaseActivity {
 
                 case 2:
                     //一级知识点没有选择
-                    if(mSelectLevelIndex[row][1] == -1){
-                        toast(NO_UPPER_KNOWLEDGE_CHOOSEN_INFO);
+                    if (mSelectLevelIndex[row][1] == -1) {
+                        toast(NO_UPPER_KNOWLEDGE_CHOSEN_INFO);
                         return;
                     }
 
@@ -299,7 +506,7 @@ public class ProfessionTutorActivity extends BaseActivity {
                     break;
             }
 
-            if(toPickData.size() == 0){
+            if (toPickData.size() == 0) {
                 DialogUtils.makeConfirmDialog(mContext, "提示", "当前知识点已没有下级知识点分类");
                 return;
             }
@@ -337,7 +544,7 @@ public class ProfessionTutorActivity extends BaseActivity {
             mMiddleSchoolTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
 
             ((TextView) v).setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.icon_gold_arrow_padding, 0, 0, 0);
-            mCategory = ((TextView)v).getText().toString();
+            mCategory = ((TextView) v).getText().toString();
 
             startLoading();
             getTutorInfo(mCategory, mCourseName);
@@ -359,11 +566,13 @@ public class ProfessionTutorActivity extends BaseActivity {
 
             switch (v.getId()) {
                 case R.id.profession_tutor_tv_way_knowledge:
+                    mTutorWay = Constants.Identifier.TUTOR_WAY_KNOWLEDGE;
                     mWayKnowledgeLinearLayout.setVisibility(View.VISIBLE);
                     mWayPaperLinearLayout.setVisibility(View.GONE);
                     break;
 
                 case R.id.profession_tutor_tv_way_paper:
+                    mTutorWay = Constants.Identifier.TUTOR_WAY_PAPER;
                     mWayKnowledgeLinearLayout.setVisibility(View.GONE);
                     mWayPaperLinearLayout.setVisibility(View.VISIBLE);
                     break;

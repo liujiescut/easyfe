@@ -26,6 +26,8 @@ import java.util.Locale;
 
 public class ToDoOrderActivity extends BaseActivity {
 
+    public static final int REQUEST_TUTOR_DETAIL = 1;
+
     private TextView mNameTextView;
     private TextView mNameLabelTextView;
     private TextView mPhoneTextView;
@@ -126,9 +128,9 @@ public class ToDoOrderActivity extends BaseActivity {
                 TimeUtils.getTime(TimeUtils.getDateFromString(mOrder.getTeachTime().getDate()), "yyyy年MM月dd日(EEEE)"),
                 mOrder.getTeachTime().getChineseTime()));
         mTimeTextView.setText(TimeUtils.getTimeFromMinute(mOrder.getTime()));
-        mPriceTextView.setText(String.format(Locale.CHINA, "%.2f", mOrder.getPrice()));
-        mTipTextView.setText(String.format(Locale.CHINA, "%.2f", mOrder.getSubsidy()));
-        mTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f", mOrder.getTotalPrice()));
+        mPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元/小时", mOrder.getPrice()));
+        mTipTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getSubsidy()));
+        mTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice()));
         mWarningTextView.setText("我就是温馨提示喽");
 
         if (isTeacher()) {
@@ -136,7 +138,7 @@ public class ToDoOrderActivity extends BaseActivity {
             mPhoneTextView.setText(mOrder.getParent().getPhone());
             mParentAddressTextView.setText(mOrder.getParent().getPosition().getAddress());
 
-            mStudentAgeTextView.setText(String.format(Locale.CHINA, "%d", mOrder.getChildAge()));
+            mStudentAgeTextView.setText(String.format(Locale.CHINA, "%d 岁", mOrder.getChildAge()));
             mStudentGenderTextView.setText(mOrder.getChildGender() == Constants.Identifier.MALE ? "男" : "女");
             mTeacherActionTextView.setText(mOrder.isTeacherReport() ? "待家长完成课程并付款" : "完成课程并反馈");
         } else {
@@ -151,47 +153,62 @@ public class ToDoOrderActivity extends BaseActivity {
             mParentActionTextView.setText(mOrder.isTeacherReport() ? "完成课程并付款" : "待家教完成课程并反馈");
         }
 
-        if(!mOrder.hasProfessionTutor()){
+        if (!mOrder.hasProfessionTutor()) {
             mTutorContainer.setVisibility(View.GONE);
             mCouponContainer.setVisibility(View.GONE);
             mThisTutorIncompleteInfoTextView.setText("未预定此服务");
-        }else{
+        } else {
             mCouponTextView.setText(String.format(Locale.CHINA, "减 %.0f 元", mOrder.getCoupon().getMoney()));
             mTutorPriceTextView.setText(String.format(Locale.CHINA, "%.0f 元/小时", mOrder.getProfessionalTutorPrice()));
-            if(mOrder.getThisTeachDetail().hadFillIn()){
+            if (mOrder.getThisTeachDetail().hadFillIn()) {
                 mThisTutorIncompleteLinearLayout.setVisibility(View.GONE);
                 mThisTutorCompleteTextView.setVisibility(View.VISIBLE);
                 mThisTutorCompleteTextView.setText("专业辅导情况");
-            }else{
-                if(isTeacher()){
+            } else {
+                if (isTeacher()) {
                     mThisTutorIncompleteLinearLayout.setVisibility(View.GONE);
                     mThisTutorCompleteTextView.setVisibility(View.VISIBLE);
                     mThisTutorCompleteTextView.setText("填写首次专业辅导情况");
-                }else{
+                } else {
                     mThisTutorIncompleteInfoTextView.setText("未填写");
                 }
             }
         }
     }
 
+    public void onCompleteTutorClick(View view) {
+        if (mOrder.isTeacherReport()) {
+            //Todo
+        } else {
+            if (!isTeacher()) {
+                return;
+            }
+
+            Bundle bundle = new Bundle();
+            mOrder.getThisTeachDetail().setGrade(mOrder.getGrade());
+            bundle.putSerializable(Constants.Key.TUTOR_DETAIL, mOrder.getThisTeachDetail());
+            Intent intent = new Intent(mContext, ProfessionTutorActivity.class);
+            intent.putExtras(bundle);
+            startActivityForResult(intent, REQUEST_TUTOR_DETAIL);
+        }
+    }
 
     /**
      * 家教底部按钮点击
      */
     public void onTeacherActionClick(View view) {
-        //Todo
+
     }
 
-    /*
+    /**
      * 家长底部按钮点击
      */
     public void onParentActionClick(View view) {
-        //Todo
         if (OtherUtils.isFastDoubleClick()) {
             return;
         }
 
-        if(mOrder.isTeacherReport()) {
+        if (mOrder.isTeacherReport()) {
             RequestManager.get().execute(new RPayOrder(mOrder.get_id()), new RequestListener<JSONObject>() {
                 @Override
                 public void onSuccess(RequestBase request, JSONObject result) {
@@ -209,9 +226,9 @@ public class ToDoOrderActivity extends BaseActivity {
                     toast(errorMsg);
                 }
             });
-        }else{
+        } else {
             DialogUtils.makeConfirmDialog(this, "温馨提示", "待老师完成课时并反馈之后才能付款哦~~").show();
-      }
+        }
     }
 
     public void onInsuranceClick(View view) {
@@ -242,7 +259,7 @@ public class ToDoOrderActivity extends BaseActivity {
         });
     }
 
-    public void onProfessionGuideClick(View view){
+    public void onProfessionGuideClick(View view) {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "专业辅导");
         bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.user_protocol_content));
@@ -261,5 +278,27 @@ public class ToDoOrderActivity extends BaseActivity {
 
     private boolean isTeacher() {
         return App.getUser().get_id().equals(mOrder.getTeacher().get_id());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // 根据上面发送过去的请求吗来区别
+        switch (requestCode) {
+            case REQUEST_TUTOR_DETAIL:
+                if (null != data) {
+                    Bundle bundle = data.getExtras();
+                    if (null != bundle) {
+                        Order.TutorDetail tutorDetail = (Order.TutorDetail) bundle.getSerializable(Constants.Key.TUTOR_DETAIL);
+                        if (null != tutorDetail) {
+                            mOrder.setThisTeachDetail(tutorDetail);
+                            updateView();
+                        }
+                    }
+                }
+                break;
+
+            default:
+                break;
+        }
     }
 }

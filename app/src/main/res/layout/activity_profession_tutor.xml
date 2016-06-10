@@ -153,12 +153,11 @@
                 android:layout_margin="@dimen/layout_margin_small"
                 android:background="@drawable/selector_main_left_drawer_item"
                 android:clickable="true"
+                android:onClick="onSaveClick"
                 android:gravity="center"
                 android:padding="@dimen/layout_padding_tiny"
                 android:text="@string/save_and_back"
-                android:textColor="@color/title_text_color"
-                android:visibility="gone"
-                tools:visibility="visible" />
+                android:textColor="@color/title_text_color"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

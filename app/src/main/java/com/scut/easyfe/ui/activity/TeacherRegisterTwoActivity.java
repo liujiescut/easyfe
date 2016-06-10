@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.MyTimePicker;
-import com.bigkoo.pickerview.OptionsPickerView;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
@@ -26,7 +25,7 @@ import com.zcw.togglebutton.ToggleButton;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * 家教注册第二部(家教时间) 家教信息维护页
@@ -41,29 +40,14 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
     private TextView mMaxTrafficTextView;           //能接受最长交通时间
     private TextView mSubsidyTextView;              //交通补贴
     private TextView mTeachableCourseTextView;      //可教授课程
-    //    private TextView mJoinAngleTextView;            //是否加入天使计划
-//    private TextView mAngleBoyAgeTextView;          //能接受男孩最大年龄
-//    private TextView mAngleGirlAgeTextView;         //能接受女孩最大年龄
-//    private TextView mAnglePriceTextView;           //天使计划价格
-    private TextView mSaveTextView;                 //保存并下一页
-    private LinearLayout mAngelBoyAgeLinearLayout;
-    private LinearLayout mAngelGirlAgeLinearLayout;
-    private LinearLayout mAngelPriceLinearLayout;
-    private LinearLayout mWorkOrNotLinearLayout;
-    private ToggleButton mWorkOrNotToggle;
+    private ToggleButton mWorkOrNotToggle;          //是否授课选择按钮
 
-
-    //    private boolean mJoinAngelPlan = false;         //是否加入天使计划
     private int mMinCourseTime = 120;               //最短课时(分钟)
     private int mTrafficTime = 120;                 //可接受交通时间(分钟)
     private int mMaxTrafficTime = 180;              //可接受最长交通时间(分钟)
-    private int mSubsidy = 5;                           //交通补贴
-    private int mMaxBoyAge = 0;                    //天使计划男孩最大年龄(默认0表示不接受)
-    private int mMaxGirlAge = 0;                   //天使计划女孩最大年龄(默认0表示不接受)
-    private int mAngelPrice = 0;                    //天使计划价格
+    private int mSubsidy = 5;                       //交通补贴
 
     private MyTimePicker mTimePicker;
-    private OptionsPickerView<String> mOptionPicker;
 
     /**
      * 选择时间的几种type
@@ -73,20 +57,8 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
     private static final int PICK_TIME_MAX_TRAFFIC = 2;
     private int mPickTimeType = -1;
 
-    private static final int PICK_OPTION_ANGEL_BOY_AGE = 0;
-    private static final int PICK_OPTION_ANGEL_GIRL_AGE = 1;
-    private int mOptionPickType = -1;
-
     private boolean mIsRegister = false;   //区分注册第二部跟家教信息维护
-
-    private static ArrayList<String> mAge = new ArrayList<>();
-
     private User mUser;
-
-    static {
-        mAge.add("不接受");
-        mAge.addAll(Constants.Data.ageList);
-    }
 
     @Override
     protected void onResume() {
@@ -94,11 +66,13 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
         /** 让User保持最新 */
         mUser = App.getUser(!mIsRegister).getCopy();
 
-        mTeachTimeTextView.setText(mUser.getTeacherMessage().getSingleBookTime().size() == 0 ?
-                "请选择您方便授课的时间" : "已填写");
+        if (null != mUser) {
+            mTeachTimeTextView.setText(mUser.getTeacherMessage().getSingleBookTime().size() == 0 ?
+                    "请选择您方便授课的时间" : "已填写");
 
-        mTeachableCourseTextView.setText(mUser.getTeacherMessage().getTeacherPrice().size() == 0 ?
-                "请完善此信息" : "已填写");
+            mTeachableCourseTextView.setText(mUser.getTeacherMessage().getTeacherPrice().size() == 0 ?
+                    "请完善此信息" : "已填写");
+        }
     }
 
     @Override
@@ -118,15 +92,12 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
 
         mUser = App.getUser(!mIsRegister).getCopy();
 
-        mMinCourseTime = mUser.getTeacherMessage().getMinCourseTime();
-        mTrafficTime = mUser.getTeacherMessage().getFreeTrafficTime();
-        mMaxTrafficTime = mUser.getTeacherMessage().getMaxTrafficTime();
-        mSubsidy = mUser.getTeacherMessage().getSubsidy();
-//        mJoinAngelPlan = mUser.getTeacherMessage().getAngelPlan().isJoin();
-        mMaxGirlAge = mUser.getTeacherMessage().getAngelPlan().getGirl();
-        mMaxBoyAge = mUser.getTeacherMessage().getAngelPlan().getBoy();
-        mAngelPrice = mUser.getTeacherMessage().getAngelPlan().getPrice();
-
+        if (null != mUser) {
+            mMinCourseTime = mUser.getTeacherMessage().getMinCourseTime();
+            mTrafficTime = mUser.getTeacherMessage().getFreeTrafficTime();
+            mMaxTrafficTime = mUser.getTeacherMessage().getMaxTrafficTime();
+            mSubsidy = mUser.getTeacherMessage().getSubsidy();
+        }
     }
 
     @Override
@@ -138,21 +109,12 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
         mMaxTrafficTextView = OtherUtils.findViewById(this, R.id.teacher_register_two_tv_max_traffic_time);
         mSubsidyTextView = OtherUtils.findViewById(this, R.id.teacher_register_two_tv_tip);
         mTeachableCourseTextView = OtherUtils.findViewById(this, R.id.teacher_register_two_tv_course);
-//        mJoinAngleTextView = OtherUtils.findViewById(this, R.id.teacher_register_two_tv_angel);
-//        mAngleBoyAgeTextView = OtherUtils.findViewById(this, R.id.teacher_register_two_tv_angel_boy_age);
-//        mAngleGirlAgeTextView = OtherUtils.findViewById(this, R.id.teacher_register_two_tv_angel_girl_age);
-//        mAnglePriceTextView = OtherUtils.findViewById(this, R.id.teacher_register_two_tv_angel_price);
-        mSaveTextView = OtherUtils.findViewById(this, R.id.teacher_register_two_tv_submit);
-//        mAngelBoyAgeLinearLayout = OtherUtils.findViewById(this, R.id.teacher_register_two_ll_angel_boy_age);
-//        mAngelGirlAgeLinearLayout = OtherUtils.findViewById(this, R.id.teacher_register_two_ll_angel_girl_age);
-//        mAngelPriceLinearLayout = OtherUtils.findViewById(this, R.id.teacher_register_two_ll_angel_price);
-        mWorkOrNotLinearLayout = OtherUtils.findViewById(this, R.id.teacher_register_two_ll_tb);
         mWorkOrNotToggle = OtherUtils.findViewById(this, R.id.teacher_register_two_tb);
 
         mTimePicker = new MyTimePicker(this);
-        mOptionPicker = new OptionsPickerView<>(this);
 
         if (!mIsRegister) {
+            LinearLayout mWorkOrNotLinearLayout = OtherUtils.findViewById(this, R.id.teacher_register_two_ll_tb);
             mWorkOrNotLinearLayout.setVisibility(View.VISIBLE);
             if (mUser.getTeacherMessage().isLock()) {
                 mWorkOrNotToggle.toggleOff();
@@ -160,30 +122,20 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
                 mWorkOrNotToggle.toggleOn();
             }
 
+            TextView mInfoOneTextView = OtherUtils.findViewById(this, R.id.teacher_register_two_tv_info_1);
+            TextView mInfoTwoTextView = OtherUtils.findViewById(this, R.id.teacher_register_two_tv_info_2);
+            mInfoOneTextView.setText(getResources().getString(R.string.teacher_register_step_two_info_modify));
+            mInfoTwoTextView.setVisibility(View.GONE);
+
+            TextView mSaveTextView = OtherUtils.findViewById(this, R.id.teacher_register_two_tv_submit);
             mSaveTextView.setText("确认并保存");
         }
 
         mMinTeachTimeTextView.setText(TimeUtils.getTimeFromMinute(mUser.getTeacherMessage().getMinCourseTime()));
         mTrafficTextView.setText(TimeUtils.getTimeFromMinute(mUser.getTeacherMessage().getFreeTrafficTime()));
         mMaxTrafficTextView.setText(TimeUtils.getTimeFromMinute(mUser.getTeacherMessage().getMaxTrafficTime()));
-        mSubsidyTextView.setText(String.format("%d元", mUser.getTeacherMessage().getSubsidy()));
+        mSubsidyTextView.setText(String.format(Locale.CHINA, "%d元", mUser.getTeacherMessage().getSubsidy()));
 
-//        mJoinAngleTextView.setText(mJoinAngelPlan ? R.string.yes : R.string.no);
-//        mAngelBoyAgeLinearLayout.setVisibility(mJoinAngelPlan ? View.VISIBLE : View.GONE);
-//        mAngelGirlAgeLinearLayout.setVisibility(mJoinAngelPlan ? View.VISIBLE : View.GONE);
-//        mAngelPriceLinearLayout.setVisibility(mJoinAngelPlan ? View.VISIBLE : View.GONE);
-//
-//        if (mJoinAngelPlan && mUser.getTeacherMessage().getAngelPlan().getPrice() != 0) {
-//            mJoinAngleTextView.setText(mUser.getTeacherMessage().getAngelPlan().isJoin() ? R.string.yes : R.string.no);
-//            mAngleBoyAgeTextView.setText(mUser.getTeacherMessage().getAngelPlan().getBoy() == 0 ?
-//                    "不接受" :
-//                    String.format("%d 岁", mUser.getTeacherMessage().getAngelPlan().getBoy()));
-//
-//            mAngleGirlAgeTextView.setText(mUser.getTeacherMessage().getAngelPlan().getGirl() == 0 ?
-//                    "不接受" :
-//                    String.format("%d 岁", mUser.getTeacherMessage().getAngelPlan().getGirl()));
-//            mAnglePriceTextView.setText(String.format("%d元/小时", mUser.getTeacherMessage().getAngelPlan().getPrice()));
-//        }
     }
 
     @Override
@@ -219,33 +171,6 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
             }
         });
 
-//        mOptionPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
-//            @Override
-//            public void onOptionsSelect(int options1, int option2, int options3) {
-//                switch (mOptionPickType) {
-//                    case PICK_OPTION_ANGEL_BOY_AGE:
-//                        mMaxBoyAge = options1;
-//                        if (options1 == 0) {
-//                            mAngleBoyAgeTextView.setText(mAge.get(0));
-//                            break;
-//                        }
-//                        mAngleBoyAgeTextView.setText(String.format("%d 岁", mMaxBoyAge));
-//                        break;
-//
-//                    case PICK_OPTION_ANGEL_GIRL_AGE:
-//                        mMaxGirlAge = options1;
-//                        if (options1 == 0) {
-//                            mAngleGirlAgeTextView.setText(mAge.get(0));
-//                            break;
-//                        }
-//                        mAngleGirlAgeTextView.setText(String.format("%d 岁", mMaxGirlAge));
-//                        break;
-//
-//                    default:
-//                        break;
-//                }
-//            }
-//        });
     }
 
     /**
@@ -320,74 +245,6 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
         redirectToActivity(mContext, TeachCourseActivity.class, bundle);
     }
 
-//    /**
-//     * 点击选择是否参与天使计划
-//     */
-//    public void onAnglePlaneClick(View view) {
-//        mJoinAngelPlan = !mJoinAngelPlan;
-//        mJoinAngleTextView.setText(mJoinAngelPlan ? R.string.yes : R.string.no);
-//        mAngelBoyAgeLinearLayout.setVisibility(mJoinAngelPlan ? View.VISIBLE : View.GONE);
-//        mAngelGirlAgeLinearLayout.setVisibility(mJoinAngelPlan ? View.VISIBLE : View.GONE);
-//        mAngelPriceLinearLayout.setVisibility(mJoinAngelPlan ? View.VISIBLE : View.GONE);
-//
-//        if (!mJoinAngelPlan) {
-//            mUser.getTeacherMessage().getAngelPlan().setBoy(-1);
-//            mUser.getTeacherMessage().getAngelPlan().setGirl(-1);
-//            mUser.getTeacherMessage().getAngelPlan().setPrice(0);
-//        }
-//    }
-
-//    /**
-//     * 点击查看天使计划详情
-//     */
-//    public void onAngleDetailClick(View view) {
-//        Bundle bundle = new Bundle();
-//        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "陪伴天使计划");
-//        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.about_us_content));
-//        redirectToActivity(mContext, ShowTextActivity.class, bundle);
-//    }
-//
-//    /**
-//     * 天使计划男生可接受最大年龄
-//     */
-//    public void onMaleAgeClick(View view) {
-//        mOptionPickType = PICK_OPTION_ANGEL_BOY_AGE;
-//        mOptionPicker.setTitle("男生可接受最大年龄");
-//        mOptionPicker.setPicker(mAge);
-//        mOptionPicker.setSelectOptions(0);
-//        mOptionPicker.show();
-//    }
-//
-//    /**
-//     * 天使计划女生可接受最大年龄
-//     */
-//    public void onFemaleAgeClick(View view) {
-//        mOptionPickType = PICK_OPTION_ANGEL_GIRL_AGE;
-//        mOptionPicker.setTitle("女生可接受最大年龄");
-//        mOptionPicker.setPicker(mAge);
-//        mOptionPicker.setSelectOptions(0);
-//        mOptionPicker.show();
-//    }
-//
-//    /**
-//     * 输入天使计划价格
-//     */
-//    public void onAnglePriceClick(View view) {
-//        DialogUtils.makeInputDialog(mContext, "陪伴天使计划价格", InputType.TYPE_CLASS_NUMBER, new DialogUtils.OnInputListener() {
-//            @Override
-//            public void onFinish(String message) {
-//                LogUtils.i(Constants.Tag.TEACHER_REGISTER_TAG, message);
-//                try {
-//                    mAngelPrice = Integer.parseInt(message);
-//                    mAnglePriceTextView.setText(String.format("%s 元/小时", message));
-//                } catch (NumberFormatException e) {
-//                    e.printStackTrace();
-//                    toast("只能输入数字");
-//                }
-//            }
-//        }).show();
-//    }
-
     /**
      * 点击注册
      */
@@ -396,13 +253,6 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
         mUser.getTeacherMessage().setFreeTrafficTime(mTrafficTime);
         mUser.getTeacherMessage().setMaxTrafficTime(mMaxTrafficTime);
         mUser.getTeacherMessage().setSubsidy(mSubsidy);
-//        mUser.getTeacherMessage().getAngelPlan().setJoin(mJoinAngelPlan);
-//
-//        if (mJoinAngelPlan) {
-//            mUser.getTeacherMessage().getAngelPlan().setBoy(mMaxBoyAge);
-//            mUser.getTeacherMessage().getAngelPlan().setGirl(mMaxGirlAge);
-//            mUser.getTeacherMessage().getAngelPlan().setPrice(mAngelPrice);
-//        }
 
         if (!validate(mUser)) {
             return;

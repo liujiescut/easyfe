@@ -51,11 +51,12 @@
 
 
             <TextView
+                android:id="@+id/teacher_register_two_tv_info_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="@dimen/layout_padding_small"
-                android:text="@string/teacher_register_step_two_info_1"
+                android:text="@string/teacher_register_step_two_info_register"
                 android:textColor="@color/text_hint_color"
                 android:textSize="@dimen/text_size_tiny" />
 
@@ -96,16 +97,18 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/teacher_register_two_tv_info_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="@dimen/layout_padding_small"
+                android:paddingTop="@dimen/layout_padding_small"
                 android:text="@string/teacher_register_step_two_info_2"
                 android:textColor="@color/text_hint_color"
                 android:textSize="@dimen/text_size_tiny" />
 
             <LinearLayout
                 style="@style/ll_container_normal_style"
+                android:layout_marginTop="@dimen/layout_margin_small"
                 android:layout_height="50dp">
 
                 <TextView

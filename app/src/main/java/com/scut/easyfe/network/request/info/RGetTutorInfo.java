@@ -45,6 +45,7 @@ public class RGetTutorInfo extends RequestBase<TutorInfo>{
         HttpParams params = new HttpParams();
         params.putQueryParams("category", mCategory);
         params.putQueryParams("course", mCourse);
+        LogUtils.i("cxtag", "category : " + mCategory + ", course : " + mCourse);
         return params;
     }
 

@@ -36,10 +36,10 @@
             android:onClick="onAdvertiseClick"
             android:clickable="true"
             android:layout_centerInParent="true"
-            android:paddingLeft="@dimen/layout_padding_large"
-            android:paddingRight="@dimen/layout_padding_large"
-            android:paddingTop="64dp"
-            android:paddingBottom="64dp"
+            android:layout_marginLeft="@dimen/layout_padding_large"
+            android:layout_marginRight="@dimen/layout_padding_large"
+            android:layout_marginTop="64dp"
+            android:layout_marginBottom="64dp"
             />
         <ImageView
             android:id="@+id/main_iv_close_advertisement"

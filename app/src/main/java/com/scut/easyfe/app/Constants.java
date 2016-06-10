@@ -114,6 +114,7 @@ public class Constants {
         public static final String CONFIRM_ORDER_TYPE =  "confirm_order_type";
         public static final String ORDER =  "order";
         public static final String ORDERS =  "orders";
+        public static final String TUTOR_DETAIL =  "tutor_deatil";
         public static final String TEACH_WEEK =  "teach_week";
         public static final String RESERVE_WAY = "reserve_way";
         public static final String TO_TEACHER_INFO_ACTIVITY_TYPE = "to_teacher_info_activity_type";
@@ -153,7 +154,7 @@ public class Constants {
         public static final int ORDER_ALL = -1;
         public static final int ORDER_RESERVATION = 0;
         public static final int ORDER_TO_DO = 1;
-        public static final int ORDER_MODIFIED_WAILT_CONFIRM = 2; //前台将该订单显示在已预约那里
+        public static final int ORDER_MODIFIED_WAIT_CONFIRM = 2; //前台将该订单显示在已预约那里
         public static final int ORDER_COMPLETED = 3;
         public static final int ORDER_INVALID = 4;
 
@@ -182,6 +183,10 @@ public class Constants {
         /** 到家教注册页面(基本信息)的功能 */
         public static final int TYPE_REGISTER = 0;
         public static final int TYPE_MODIFY = 1;
+
+        /** 专业辅导情况辅导方式 */
+        public static final int TUTOR_WAY_KNOWLEDGE = 1;
+        public static final int TUTOR_WAY_PAPER = 2;
     }
 
     public static class Path {
@@ -218,16 +223,24 @@ public class Constants {
         public static final ArrayList<String> scoreRangeList = new ArrayList<>();
         public static final ArrayList<String> hasTeachChildCountRangeList = new ArrayList<>();
         public static final ArrayList<String> hasTeachChildTimeRangeList = new ArrayList<>();
-        public static final ArrayList<String> paperDifficultyList = new ArrayList<>();
+        public static final ArrayList<String> paperEasyLevelList = new ArrayList<>();
         public static ArrayList<String> bankNameList = new ArrayList<>();
-        public static ArrayList<String> professionTutorCourseList = new ArrayList<>();
+        public static ArrayList<String> tutorGradeList = new ArrayList<>();
 
         static {
-            paperDifficultyList.add("容易");
-            paperDifficultyList.add("较易");
-            paperDifficultyList.add("一般");
-            paperDifficultyList.add("较难");
-            paperDifficultyList.add("困难");
+
+            tutorGradeList.add("初中 一年级");
+            tutorGradeList.add("初中 二年级");
+            tutorGradeList.add("初中 三年级");
+            tutorGradeList.add("高中 一年级");
+            tutorGradeList.add("高中 二年级");
+            tutorGradeList.add("高中 三年级");
+
+            paperEasyLevelList.add("容易");
+            paperEasyLevelList.add("较易");
+            paperEasyLevelList.add("一般");
+            paperEasyLevelList.add("较难");
+            paperEasyLevelList.add("困难");
 
             teachTimeHourList.add(0);
             teachTimeHourList.add(1);
@@ -314,15 +327,6 @@ public class Constants {
             hasTeachChildTimeRangeList.add("50-100小时");
             hasTeachChildTimeRangeList.add("100小时以上");
 
-            professionTutorCourseList.add("数学(初中)");
-            professionTutorCourseList.add("数学(高一)");
-            professionTutorCourseList.add("数学(高中文科)");
-            professionTutorCourseList.add("数学(高中理科)");
-            professionTutorCourseList.add("英语");
-            professionTutorCourseList.add("物理");
-            professionTutorCourseList.add("化学");
-            professionTutorCourseList.add("生物");
-            professionTutorCourseList.add("语文");
         }
     }
 

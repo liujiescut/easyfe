@@ -131,7 +131,7 @@ public class MyOrderFragment extends BaseRefreshFragment {
         Bundle bundle = new Bundle();
         switch (order.getState()) {
             case Constants.Identifier.ORDER_RESERVATION:
-            case Constants.Identifier.ORDER_MODIFIED_WAILT_CONFIRM:
+            case Constants.Identifier.ORDER_MODIFIED_WAIT_CONFIRM:
                 bundle.putInt(Constants.Key.ORDER_TYPE, Constants.Identifier.ORDER_RESERVATION);
                 bundle.putSerializable(Constants.Key.ORDER, order);
                 mActivity.redirectToActivity(mActivity, ReservedOrCompletedOrderActivity.class, bundle);

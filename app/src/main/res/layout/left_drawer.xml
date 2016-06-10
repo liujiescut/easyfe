@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="250dp"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_gravity="left"
@@ -14,12 +14,12 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:onClick="onAvatarClick"
-        android:paddingTop="38dp">
+        android:paddingTop="18dp">
 
         <com.scut.easyfe.ui.customView.CircleImageView
             android:id="@+id/left_drawer_civ_avatar"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:layout_centerHorizontal="true"
             tools:src="@mipmap/default_avatar" />
 
@@ -29,19 +29,18 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/left_drawer_civ_avatar"
             android:layout_centerHorizontal="true"
-            android:padding="@dimen/layout_padding_small"
+            android:padding="@dimen/layout_padding_normal"
             android:text="@string/main_left_drawer_login"
             android:textColor="@color/title_text_color"
             android:textSize="@dimen/text_size_normal" />
 
         <ImageView
             android:id="@+id/iv_arrow_right"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="@dimen/layout_padding_small"
-            android:layout_marginTop="15dp"
+            android:layout_marginRight="@dimen/layout_margin_large"
+            android:layout_marginTop="18dp"
             android:src="@mipmap/right_arrow" />
     </RelativeLayout>
 
@@ -161,8 +160,8 @@
         android:id="@+id/left_drawer_tv_bottom_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/layout_margin_small"
-        android:layout_marginRight="@dimen/layout_margin_small"
+        android:layout_marginLeft="@dimen/layout_margin_normal"
+        android:layout_marginRight="@dimen/layout_margin_normal"
         android:layout_marginTop="@dimen/layout_margin_normal"
         android:padding="@dimen/layout_padding_small"
         android:background="@color/theme_color_dark"

@@ -2,7 +2,7 @@
     <string name="app_name">优升学家教</string>
     <string name="main_title">首页</string>
     <string name="main_left_drawer_login">登录/注册</string>
-    <string name="main_left_drawer_level">我的级别</string>
+    <string name="main_left_drawer_level">我的等级</string>
     <string name="main_left_drawer_orders">我的订单</string>
     <string name="main_left_drawer_pocket">我的钱包</string>
     <string name="main_left_drawer_fe_msg">家教信息维护</string>
@@ -48,7 +48,8 @@
     <string name="had_teach_child_count">已家教过孩子的数量</string>
     <string name="had_teach_time_count">已家教过的时长</string>
     <string name="save_and_next_page">保存并进入下一页</string>
-    <string name="teacher_register_step_two_info_1">请完成下列信息，以方便合适您的家长能联系到您\n（下列信息可根据您的意愿随时更改）</string>
+    <string name="teacher_register_step_two_info_register">请完成下列信息，以方便合适您的家长能联系到您\n（下列信息可根据您的意愿随时更改）</string>
+    <string name="teacher_register_step_two_info_modify">完善您的信息，有助于合适您的家长能联系到您哦~</string>
     <string name="teacher_register_step_two_info_2">以下参照百度地图公共交通时间\n为您进行匹配每一订单交通补贴</string>
     <string name="teacher_register_step_two_info_3" formatted="false">（建议以家教价格为基础，下调20% ~ 30%）</string>
     <string name="teach_time">授课时间</string>

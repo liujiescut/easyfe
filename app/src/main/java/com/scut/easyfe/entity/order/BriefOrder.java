@@ -42,7 +42,6 @@ public class BriefOrder extends BaseEntity{
         this.parent = parent;
     }
 
-    //todo 待后台返回
     public String getParentName() {
         return parentName;
     }

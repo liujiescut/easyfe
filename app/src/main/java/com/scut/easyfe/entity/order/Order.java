@@ -358,19 +358,19 @@ public class Order extends BaseEntity {
     /**
      * 专业辅导信息
      */
-    public class TutorDetail extends BaseEntity{
+    public static class TutorDetail extends BaseEntity{
         // 阶段: 高考, 中考, 高中, 初中
         private String category = "";
         // 课程: 地理...
         private String course = "";
-        // 辅导方式: 针对知识点补习, 复习模拟卷  todo 应该为int
-        private String teachWay = "";
+        // 辅导方式: 针对知识点补习, 复习模拟卷
+        private int teachWay = Constants.Identifier.TUTOR_WAY_KNOWLEDGE;
         // 年级, 辅导方式为: 复习模拟卷
         private String grade = "";
         // 复习模拟卷
         private String examPaper = "";
         // 难度
-        private String easyLevel = "";   // todo 应该为String
+        private String easyLevel = "";
         // 知识点, 辅导方式为: 针对知识点补习时才有的字段
         private List<String> knowledge = new ArrayList<>();
 
@@ -395,11 +395,11 @@ public class Order extends BaseEntity {
             this.course = course;
         }
 
-        public String getTeachWay() {
+        public int getTeachWay() {
             return teachWay;
         }
 
-        public void setTeachWay(String teachWay) {
+        public void setTeachWay(int teachWay) {
             this.teachWay = teachWay;
         }
 

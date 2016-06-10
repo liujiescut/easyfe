@@ -8,12 +8,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.bigkoo.alertview.OnItemClickListener;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.order.BriefOrder;
-import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
@@ -237,7 +235,7 @@ public class MyOrderActivity extends BaseActivity {
     private boolean isOrdersModify(List<BriefOrder> orders) {
         for (BriefOrder order :
                 orders) {
-            if (order.getState() == Constants.Identifier.ORDER_MODIFIED_WAILT_CONFIRM) {
+            if (order.getState() == Constants.Identifier.ORDER_MODIFIED_WAIT_CONFIRM) {
                 return true;
             }
         }

@@ -155,7 +155,7 @@
                 style="@style/text_normal_style"
                 android:layout_marginRight="@dimen/container_stoke_width"
                 android:layout_weight="1"
-                android:text="授课年级" />
+                android:text="年级" />
 
             <TextView
                 android:id="@+id/profession_tutor_tv_grade"

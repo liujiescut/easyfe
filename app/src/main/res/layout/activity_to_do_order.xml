@@ -128,6 +128,7 @@
                 android:layout_marginTop="@dimen/layout_margin_small"
                 android:drawableRight="@mipmap/icon_right_arrow_padding"
                 android:gravity="start|center_vertical"
+                android:onClick="onCompleteTutorClick"
                 android:visibility="gone"
                 tools:visibility="visible"
                 android:text="@string/profession_guide_state"
