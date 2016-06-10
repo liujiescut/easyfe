@@ -126,6 +126,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:text="正确率" />
 
                 <TextView
@@ -151,6 +152,7 @@
                     android:gravity="left|center_vertical"
                     android:paddingBottom="@dimen/layout_padding_tiny"
                     android:paddingLeft="@dimen/layout_padding_small"
+                    android:clickable="false"
                     android:paddingTop="@dimen/layout_padding_tiny"
                     android:text="学生本次积极性："
                     android:textSize="@dimen/text_size_normal" />
@@ -185,6 +187,7 @@
                     android:paddingBottom="@dimen/layout_padding_tiny"
                     android:paddingLeft="@dimen/layout_padding_small"
                     android:paddingTop="@dimen/layout_padding_tiny"
+                    android:clickable="false"
                     android:text="学生本次吸收程度："
                     android:textSize="@dimen/text_size_normal" />
 

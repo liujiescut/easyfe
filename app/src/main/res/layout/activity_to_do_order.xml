@@ -33,6 +33,7 @@
                         style="@style/text_normal_style"
                         android:layout_marginRight="@dimen/container_stoke_width"
                         android:layout_weight="1"
+                        android:clickable="false"
                         android:text="@string/parent_name" />
 
                     <TextView
@@ -50,6 +51,7 @@
                         style="@style/text_normal_style"
                         android:layout_marginRight="@dimen/container_stoke_width"
                         android:layout_weight="1"
+                        android:clickable="false"
                         android:text="@string/phone" />
 
                     <TextView
@@ -71,6 +73,7 @@
                         style="@style/text_normal_style"
                         android:layout_marginRight="@dimen/container_stoke_width"
                         android:layout_weight="1"
+                        android:clickable="false"
                         android:text="@string/parent_address" />
 
                     <TextView

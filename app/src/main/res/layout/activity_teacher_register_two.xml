@@ -66,6 +66,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:text="@string/teach_time" />
 
                 <TextView
@@ -84,6 +85,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:text="@string/min_teach_time" />
 
                 <TextView
@@ -115,6 +117,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="3"
+                    android:clickable="false"
                     android:text="@string/accept_traffic_time" />
 
                 <TextView
@@ -135,6 +138,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="3"
+                    android:clickable="false"
                     android:text="@string/max_traffic_time" />
 
                 <TextView
@@ -153,6 +157,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:text="@string/traffic_tip" />
 
                 <TextView
@@ -174,6 +179,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="2"
+                    android:clickable="false"
                     android:text="@string/can_teach_course" />
 
                 <TextView

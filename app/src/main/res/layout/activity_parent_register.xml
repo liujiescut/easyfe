@@ -16,6 +16,7 @@
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
+            android:clickable="false"
             android:text="@string/parent_register_name" />
 
         <EditText
@@ -35,6 +36,7 @@
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
+            android:clickable="false"
             android:text="@string/gender" />
 
         <TextView
@@ -64,6 +66,7 @@
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
+            android:clickable="false"
             android:text="@string/phone" />
 
         <EditText
@@ -84,6 +87,7 @@
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
+            android:clickable="false"
             android:text="@string/verify_code" />
 
         <EditText
@@ -129,6 +133,7 @@
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
+            android:clickable="false"
             android:text="@string/child_gender" />
 
         <TextView
@@ -148,6 +153,7 @@
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
+            android:clickable="false"
             android:text="@string/child_age" />
 
         <TextView
@@ -167,6 +173,7 @@
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
+            android:clickable="false"
             android:text="@string/child_grade" />
 
         <TextView
@@ -187,6 +194,7 @@
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
+            android:clickable="false"
             android:text="@string/home_address" />
 
         <TextView

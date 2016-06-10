@@ -34,6 +34,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:text="@string/teach_course" />
 
                 <TextView
@@ -55,6 +56,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:text="@string/teach_grade" />
 
                 <TextView
@@ -76,6 +78,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:text="@string/teach_time"
                     android:paddingLeft="0dp"
                     android:paddingRight="0dp"
@@ -98,6 +101,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:text="@string/teach_time_length"
                     android:paddingLeft="0dp"
                     android:paddingRight="0dp"
@@ -123,6 +127,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:paddingLeft="0dp"
                     android:paddingRight="0dp"
                     android:text="@string/teach_student_age" />
@@ -144,6 +149,7 @@
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:paddingLeft="0dp"
+                    android:clickable="false"
                     android:paddingRight="0dp"
                     android:text="@string/teach_student_gender" />
 
@@ -174,12 +180,14 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="1px"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:text="@string/teacher_name" />
 
                 <EditText
                     android:id="@+id/book_et_teacher_name"
                     style="@style/text_editable_style"
                     android:layout_weight="3"
+                    android:clickable="false"
                     android:gravity="start|center_vertical"
                     android:paddingLeft="@dimen/layout_padding_small"
                     />

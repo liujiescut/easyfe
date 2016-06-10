@@ -26,6 +26,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:text="@string/parent_register_name" />
 
                 <EditText
@@ -42,6 +43,7 @@
                 <TextView
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
+                    android:clickable="false"
                     android:layout_weight="1"
                     android:text="@string/gender" />
 
@@ -62,6 +64,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:text="@string/birthday" />
 
                 <TextView
@@ -83,6 +86,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:text="@string/phone" />
 
                 <EditText
@@ -103,6 +107,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:text="@string/verify_code" />
 
                 <EditText
@@ -145,6 +150,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:text="@string/id_card_number" />
 
                 <EditText
@@ -163,6 +169,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:text="@string/school" />
 
                 <TextView
@@ -181,6 +188,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:text="@string/grade" />
 
                 <TextView
@@ -199,6 +207,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:text="@string/profession" />
 
                 <TextView
@@ -219,6 +228,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:text="@string/address" />
 
                 <TextView
@@ -241,6 +251,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="3"
+                    android:clickable="false"
                     android:text="@string/had_teach_child_count" />
 
                 <TextView
@@ -259,6 +270,7 @@
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="3"
+                    android:clickable="false"
                     android:text="@string/had_teach_time_count" />
 
                 <TextView

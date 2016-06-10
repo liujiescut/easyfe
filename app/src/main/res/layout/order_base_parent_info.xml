@@ -12,6 +12,7 @@
         <TextView
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
+            android:clickable="false"
             android:layout_weight="1"
             android:text="@string/parent_name" />
 
@@ -19,6 +20,7 @@
             android:id="@+id/order_base_parent_info_tv_name"
             style="@style/text_normal_style"
             android:layout_weight="3"
+            android:clickable="false"
             android:gravity="start|center_vertical"
             tools:text="张小龙"
             />
@@ -32,12 +34,14 @@
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
+            android:clickable="false"
             android:text="@string/parent_gender" />
 
         <TextView
             android:id="@+id/order_base_parent_info_tv_gender"
             style="@style/text_normal_style"
             android:layout_weight="3"
+            android:clickable="false"
             android:gravity="start|center_vertical"
             tools:text="@string/male"
             />

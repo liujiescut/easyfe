@@ -22,6 +22,7 @@ import com.scut.easyfe.utils.ListViewUtil;
 import com.scut.easyfe.utils.OtherUtils;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * 确认家教信息页面
@@ -32,7 +33,6 @@ public class TeacherInfoActivity extends BaseActivity {
     private TextView mBaseInfoTextView;
     private TextView mScoreInfoTextView;
     private TextView mSelfIntroduceTextView;
-    private TextView mSeeCommentsTextView;
     private TextView mMultiReserveHintTextView;
     private TextView mMultiReserveTimesTextView;
     private CircleImageView mAvatarImageView;
@@ -79,7 +79,6 @@ public class TeacherInfoActivity extends BaseActivity {
         mAvatarImageView = OtherUtils.findViewById(this, R.id.item_search_result_civ_avatar);
         mScoreInfoTextView = OtherUtils.findViewById(this, R.id.teacher_info_tv_score_content);
         mSelfIntroduceTextView = OtherUtils.findViewById(this, R.id.teacher_info_tv_self_introduce_content);
-        mSeeCommentsTextView = OtherUtils.findViewById(this, R.id.teacher_info_tv_comment_more);
         mMultiReserveHintTextView = OtherUtils.findViewById(this, R.id.teacher_info_tv_multi_reserve_info);
         mMultiReserveTimesTextView = OtherUtils.findViewById(this, R.id.teacher_info_tv_reserve_times);
         mMultiReserveTimesLinearLayout = OtherUtils.findViewById(this, R.id.teacher_info_ll_multi_reserve_times);
@@ -97,15 +96,13 @@ public class TeacherInfoActivity extends BaseActivity {
 
             ((TextView) OtherUtils.findViewById(this, R.id.item_search_result_tv_price)).setText(
                     String.format("%s%s",
-                            String.format("%.2f元/次", mOrder.getTotalPrice()),
-                            (0 == mOrder.getSubsidy() ? "" : String.format("包含交通补贴%.2f元", mOrder.getSubsidy()))));
+                            String.format(Locale.CHINA, "%.2f元/次", mOrder.getTotalPrice()),
+                            (0 == mOrder.getSubsidy() ? "" : String.format(Locale.CHINA, "包含交通补贴%.2f元", mOrder.getSubsidy()))));
 
             if (mReserveType == Constants.Identifier.RESERVE_SINGLE) {
                 mMultiReserveHintTextView.setVisibility(View.GONE);
                 mMultiReserveTimesLinearLayout.setVisibility(View.GONE);
                 mMultiReserveTimesTextView.setVisibility(View.GONE);
-            } else {
-                mMultiReserveTimesTextView.setText(mReserveTimes + "");
             }
 
             if (mOrder.getSubsidy() != 0) {
@@ -118,11 +115,11 @@ public class TeacherInfoActivity extends BaseActivity {
     }
 
     private void showTeacherInfo() {
-        String priceString = String.format("%.2f 元/小时", mOrder.getPerPrice());
+        String priceString = String.format(Locale.CHINA, "%.2f 元/小时", mOrder.getPerPrice());
         if (mOrder.getSubsidy() != 0) {
             mPriceTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.mipmap.icon_detail_question_small, 0);
-            priceString = String.format("%.2f 元/小时", mOrder.getPerPrice());
-            priceString += String.format("(不包含交通补贴%.2f元)", mOrder.getSubsidy());
+            priceString = String.format(Locale.CHINA, "%.2f 元/小时", mOrder.getPerPrice());
+            priceString += String.format(Locale.CHINA, "(不包含交通补贴%.2f元)", mOrder.getSubsidy());
         }
 
         mPriceTextView.setText(priceString);
@@ -152,12 +149,34 @@ public class TeacherInfoActivity extends BaseActivity {
         ListViewUtil.setListViewHeightBasedOnChildren(mCommentListView);
     }
 
+    public void onReserveTimeOneClick(View view){
+        onReserveTimeNumClick(10);
+    }
+
+    public void onReserveTimeTwoClick(View view){
+        onReserveTimeNumClick(20);
+    }
+
+    public void onReserveTimeThreeClick(View view){
+        onReserveTimeNumClick(30);
+    }
+
+    private void onReserveTimeNumClick(int times){
+        mReserveTimes = times;
+        mMultiReserveTimesTextView.setVisibility(View.VISIBLE);
+        mMultiReserveTimesTextView.setText(String.format("%s 次", times));
+    }
+
+    /**
+     * 点击选择预约次数
+     */
     public void onReserveTimesClick(View view) {
         DialogUtils.makeInputDialog(mContext, "预约次数", InputType.TYPE_CLASS_NUMBER, new DialogUtils.OnInputListener() {
             @Override
             public void onFinish(String msg) {
                 try {
                     mReserveTimes = Integer.parseInt(msg);
+                    mMultiReserveTimesTextView.setVisibility(View.VISIBLE);
                     mMultiReserveTimesTextView.setText(String.format("%s 次", msg));
                 } catch (NumberFormatException e) {
                     toast("请输入数字");

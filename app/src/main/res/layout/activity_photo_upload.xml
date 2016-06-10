@@ -29,6 +29,7 @@
                     style="@style/text_normal_style"
                     android:layout_weight="1"
                     android:text="@string/id_card_name"
+                    android:clickable="false"
                     android:gravity="center_vertical|left"
                     android:padding="@dimen/layout_padding_small"/>
 
@@ -61,6 +62,7 @@
                     android:layout_weight="1"
                     android:text="@string/student_card"
                     android:gravity="center_vertical|left"
+                    android:clickable="false"
                     android:padding="@dimen/layout_padding_small"/>
 
                 <TextView
@@ -93,6 +95,7 @@
                     android:layout_weight="1"
                     android:text="@string/avatar"
                     android:gravity="center_vertical|left"
+                    android:clickable="false"
                     android:padding="@dimen/layout_padding_small"/>
 
                 <TextView

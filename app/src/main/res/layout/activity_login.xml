@@ -15,6 +15,7 @@
             style="@style/text_normal_style"
             android:layout_marginRight="1px"
             android:layout_weight="1"
+            android:clickable="false"
             android:text="@string/phone" />
 
         <EditText
@@ -35,6 +36,7 @@
             style="@style/text_normal_style"
             android:layout_marginRight="1px"
             android:layout_weight="1"
+            android:clickable="false"
             android:text="@string/verify_code" />
 
         <EditText

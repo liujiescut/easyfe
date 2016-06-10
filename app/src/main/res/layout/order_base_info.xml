@@ -13,6 +13,7 @@
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
+            android:clickable="false"
             android:text="@string/teach_grade" />
 
         <TextView
@@ -32,6 +33,7 @@
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
+            android:clickable="false"
             android:text="@string/teach_course" />
 
         <TextView
@@ -51,6 +53,7 @@
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
+            android:clickable="false"
             android:text="@string/teach_time" />
 
         <TextView
@@ -70,6 +73,7 @@
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
+            android:clickable="false"
             android:text="@string/teach_time_length" />
 
         <TextView
@@ -88,6 +92,7 @@
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
+            android:clickable="false"
             android:text="@string/teach_price" />
 
         <TextView
@@ -131,6 +136,7 @@
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
+            android:clickable="false"
             android:text="@string/traffic_tip" />
 
         <TextView
@@ -151,6 +157,7 @@
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
+            android:clickable="false"
             android:text="@string/cash_ticket" />
 
         <TextView
@@ -170,6 +177,7 @@
             style="@style/text_normal_style"
             android:layout_marginRight="@dimen/container_stoke_width"
             android:layout_weight="1"
+            android:clickable="false"
             android:text="@string/total_price" />
 
         <TextView
