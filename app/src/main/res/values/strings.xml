@@ -231,4 +231,8 @@
     <string name="state">阶段</string>
     <string name="tutor_according_knowledge">针对性知识点补习</string>
     <string name="tutor_according_paper">复习模拟卷</string>
+    <string name="detail">详情</string>
+    <string name="complete_report">完成反馈</string>
+    <string name="add_next_teach_detail">填写下次专业辅导情况</string>
+    <string name="modify_next_teach_detail">修改下次专业辅导情况</string>
 </resources>

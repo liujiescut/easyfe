@@ -99,11 +99,11 @@ public class Order extends BaseEntity {
     }
 
 
-    public boolean isTeacherReport() {
+    public boolean isIsTeacherReport() {
         return isTeacherReport;
     }
 
-    public void setTeacherReport(boolean teacherReport) {
+    public void setIsTeacherReport(boolean teacherReport) {
         isTeacherReport = teacherReport;
     }
 

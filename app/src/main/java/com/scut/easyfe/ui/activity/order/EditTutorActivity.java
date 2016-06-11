@@ -70,7 +70,8 @@ public class EditTutorActivity extends BaseActivity {
     //知识点选中的Index(-1标记为未选中)
     private int[][] mSelectLevelIndex = new int[][]{{-1, -1, -1}, {-1, -1, -1}, {-1, -1, -1}};
 
-    private boolean mIsModify = false;         //是否是修改专业辅导信息
+    private boolean mIsModify = false;                          //是否是修改专业辅导信息
+    private boolean mUpdateToThisTeachDetail = false;           //是否同步到订单Id对应订单的thisTeachDetail的服务器数据
     private int mSelectedCoursePosition = 0;
     private boolean mIsLoadingCloseByUser = true;
 
@@ -413,27 +414,37 @@ public class EditTutorActivity extends BaseActivity {
             mTutorDetail.setExamPaper(mPaper);
         }
 
-        startLoading();
-        RequestManager.get().execute(new RModifyTutorInfo(mOrderId, mTutorDetail), new RequestListener<JSONObject>() {
-            @Override
-            public void onSuccess(RequestBase request, JSONObject result) {
-                mIsLoadingCloseByUser = false;
-                stopLoading();
-                toast(result.optString("message"));
+        if(mUpdateToThisTeachDetail) {
+            startLoading();
+            RequestManager.get().execute(new RModifyTutorInfo(mOrderId, mTutorDetail), new RequestListener<JSONObject>() {
+                @Override
+                public void onSuccess(RequestBase request, JSONObject result) {
+                    mIsLoadingCloseByUser = false;
+                    stopLoading();
+                    toast(result.optString("message"));
 
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(Constants.Key.TUTOR_DETAIL, mTutorDetail);
-                Intent intent = new Intent();
-                intent.putExtras(bundle);
-                EditTutorActivity.this.setResult(0, intent);
-                finish();
-            }
+                    setResultAndFinish();
+                }
 
-            @Override
-            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
-                toast(errorMsg);
-            }
-        });
+                @Override
+                public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                    toast(errorMsg);
+                }
+            });
+
+        }else{
+            setResultAndFinish();
+
+        }
+    }
+
+    private void setResultAndFinish(){
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.Key.TUTOR_DETAIL, mTutorDetail);
+        Intent intent = new Intent();
+        intent.putExtras(bundle);
+        EditTutorActivity.this.setResult(0, intent);
+        finish();
     }
 
     private boolean validate() {

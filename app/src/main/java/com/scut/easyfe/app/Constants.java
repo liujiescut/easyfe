@@ -75,6 +75,7 @@ public class Constants {
         public static final String URL_GET_TEACHER_DETAIL_INFO = URL_BASE + "Parent/Teacher/Data";
         public static final String URL_COMMENT_TEACHER = URL_BASE + "Parent/Comment/Teacher";
         public static final String URL_MODIFY_TUTOR = URL_BASE + "Teacher/Order/ThisTeachDetail";
+        public static final String URL_TEACHER_REPORT = URL_BASE + "Teacher/Report/Order";
 
         public static final String URL_GET_SPREAD_REWARD_LIST = URL_BASE + "Reward/Discount";
         public static final String URL_GET_SPREAD_REWARD =URL_BASE + "Reward/Discount";

@@ -30,7 +30,7 @@
                 android:textSize="@dimen/text_size_small" />
 
             <EditText
-                android:id="@+id/special_time_et_remember_things"
+                android:id="@+id/teacher_report_et_comment"
                 style="@style/text_editable_style"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
@@ -71,7 +71,9 @@
                     android:background="@color/text_hint_color" />
             </LinearLayout>
 
-            <include layout="@layout/profession_tutor_way_detail" />
+            <include
+                android:id="@+id/teacher_report_view_this_teach_detail"
+                layout="@layout/profession_tutor_way_detail" />
 
             <LinearLayout
                 style="@style/ll_container_normal_style"
@@ -84,8 +86,9 @@
                     android:layout_weight="1"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="left|center_vertical"
+                    android:onClick="onThisTeachDetailClick"
                     android:paddingLeft="@dimen/layout_padding_small"
-                    android:text="详情" />
+                    android:text="@string/detail" />
 
             </LinearLayout>
 
@@ -133,6 +136,7 @@
                     android:id="@+id/teacher_report_tv_correct_rate"
                     style="@style/text_editable_style"
                     android:layout_weight="3"
+                    android:onClick="onRightPercentClick"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="start|center_vertical" />
             </LinearLayout>
@@ -236,21 +240,25 @@
                     android:background="@color/text_hint_color" />
             </LinearLayout>
 
-            <include layout="@layout/profession_tutor_way_detail" />
+            <include
+                android:id="@+id/teacher_report_view_next_teach_detail"
+                layout="@layout/profession_tutor_way_detail" />
 
             <LinearLayout
+                android:id="@+id/teacher_report_ll_tutor_2_detail"
                 style="@style/ll_container_normal_style"
+                android:onClick="onNextTeachDetailClick"
                 android:layout_height="32dp">
 
                 <TextView
-                    android:id="@+id/teacher_report_tutor_2_detail"
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="left|center_vertical"
+                    android:clickable="false"
                     android:paddingLeft="@dimen/layout_padding_small"
-                    android:text="详情" />
+                    android:text="@string/detail" />
 
             </LinearLayout>
 
@@ -259,13 +267,15 @@
                 android:layout_marginTop="@dimen/layout_margin_small">
 
                 <TextView
+                    android:id="@+id/teacher_report_tv_edit_next_teach_detail"
                     style="@style/text_normal_style"
                     android:layout_marginRight="@dimen/container_stoke_width"
                     android:layout_weight="1"
                     android:drawableRight="@mipmap/icon_right_arrow_padding"
                     android:gravity="left|center_vertical"
                     android:paddingLeft="@dimen/layout_padding_small"
-                    android:text="订单详情" />
+                    android:onClick="onModifyNextTeachDetailClick"
+                    android:text="@string/add_next_teach_detail" />
             </LinearLayout>
 
             <TextView
@@ -278,7 +288,7 @@
                 android:gravity="center"
                 android:onClick="onSubmitClick"
                 android:padding="@dimen/layout_padding_tiny"
-                android:text="@string/sure"
+                android:text="@string/complete_report"
                 android:textColor="@color/title_text_color"
                 />
 

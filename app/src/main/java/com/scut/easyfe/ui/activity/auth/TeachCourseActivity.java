@@ -34,6 +34,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 可教授课程页面
@@ -159,22 +160,27 @@ public class TeachCourseActivity extends BaseActivity {
                                 TeachableCourse teachableCourse = new TeachableCourse(0x99999, mCourseNames.get(mSelectedCoursePosition),
                                         mGrade.get(mSelectedGradePosition), Float.parseFloat(message));
 
-                                RequestManager.get().execute(new RTeacherAddCourse(App.getUser().getToken(), teachableCourse), new RequestListener<JSONObject>() {
-                                    @Override
-                                    public void onSuccess(RequestBase request, JSONObject result) {
-                                        toast("增加课程成功");
-                                        addTeachableCourseItem(mCourseNames.get(mSelectedCoursePosition),
-                                                mGrade.get(mSelectedGradePosition), Integer.parseInt(message));
+                                if(! mTeachableCourses.contains(teachableCourse)) {      //新增加课程及单价
+                                    RequestManager.get().execute(new RTeacherAddCourse(App.getUser().getToken(), teachableCourse), new RequestListener<JSONObject>() {
+                                        @Override
+                                        public void onSuccess(RequestBase request, JSONObject result) {
+                                            toast("增加课程成功");
+                                            addTeachableCourseItem(mCourseNames.get(mSelectedCoursePosition),
+                                                    mGrade.get(mSelectedGradePosition), Integer.parseInt(message));
 
-                                        mSelectedGradePosition = -1;
-                                    }
+                                            mSelectedGradePosition = -1;
+                                        }
 
-                                    @Override
-                                    public void onFailed(RequestBase request, int errorCode, String errorMsg) {
-                                        toast(errorMsg);
-                                        mSelectedGradePosition = -1;
-                                    }
-                                });
+                                        @Override
+                                        public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                                            toast(errorMsg);
+                                            mSelectedGradePosition = -1;
+                                        }
+                                    });
+
+                                }else{              //原来课程年级对应TeachableCourse已存在
+                                    toast("增加失败, 课程已存在");
+                                }
 
                             } catch (NumberFormatException e) {
                                 e.printStackTrace();
@@ -269,7 +275,7 @@ public class TeachCourseActivity extends BaseActivity {
         ((TextView) itemView.findViewById(R.id.item_course_price_tv_state)).setText(Course.getStateFromGrade(gradeName));
         ((TextView) itemView.findViewById(R.id.item_course_price_tv_grade)).setText(Course.getGradeFromGrade(gradeName));
         final TextView priceTextView = ((TextView) itemView.findViewById(R.id.item_course_price_tv_price));
-        priceTextView.setText(String.format("%.0f 元/小时", price));
+        priceTextView.setText(String.format(Locale.CHINA, "%.0f 元/小时", price));
         itemView.setTag(teachableCourse);
 
         if (mFromType == Constants.Identifier.TYPE_REGISTER) {

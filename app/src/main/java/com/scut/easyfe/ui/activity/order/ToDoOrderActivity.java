@@ -141,7 +141,7 @@ public class ToDoOrderActivity extends BaseActivity {
 
             mStudentAgeTextView.setText(String.format(Locale.CHINA, "%d 岁", mOrder.getChildAge()));
             mStudentGenderTextView.setText(mOrder.getChildGender() == Constants.Identifier.MALE ? "男" : "女");
-            mTeacherActionTextView.setText(mOrder.isTeacherReport() ? "待家长完成课程并付款" : "完成课程并反馈");
+            mTeacherActionTextView.setText(mOrder.isIsTeacherReport() ? "待家长完成课程并付款" : "完成课程并反馈");
         } else {
             mNameLabelTextView.setText("家教姓名");
             mNameTextView.setText(mOrder.getTeacher().getName());
@@ -151,7 +151,7 @@ public class ToDoOrderActivity extends BaseActivity {
             mStudentInfoContainer.setVisibility(View.GONE);
             mTeacherActionTextView.setVisibility(View.GONE);
             mParentActionTextView.setVisibility(View.VISIBLE);
-            mParentActionTextView.setText(mOrder.isTeacherReport() ? "完成课程并付款" : "待家教完成课程并反馈");
+            mParentActionTextView.setText(mOrder.isIsTeacherReport() ? "完成课程并付款" : "待家教完成课程并反馈");
         }
 
         if (!mOrder.hasProfessionTutor()) {
@@ -186,7 +186,7 @@ public class ToDoOrderActivity extends BaseActivity {
         mOrder.getThisTeachDetail().setGrade(mOrder.getGrade());
         bundle.putSerializable(Constants.Key.TUTOR_DETAIL, mOrder.getThisTeachDetail());
 
-        if (isTeacher()) {          //家教可以进行修改
+        if (isTeacher() && !mOrder.isIsTeacherReport()) {          //家教可以进行修改
             bundle.putString(Constants.Key.ORDER_ID, mOrder.get_id());
             Intent intent = new Intent(mContext, EditTutorActivity.class);
             intent.putExtras(bundle);
@@ -204,7 +204,7 @@ public class ToDoOrderActivity extends BaseActivity {
      * 家教底部按钮点击
      */
     public void onTeacherActionClick(View view) {
-        if(mOrder.isTeacherReport()){           //家教已经完成课程并反馈
+        if(mOrder.isIsTeacherReport()){           //家教已经完成课程并反馈
             DialogUtils.makeConfirmDialog(mContext, "温馨提示", "您已完成课时并反馈,\n等待家长完成课程并付款中").show();
 
         }else{                                  //家教未完成课程并反馈
@@ -228,7 +228,7 @@ public class ToDoOrderActivity extends BaseActivity {
             return;
         }
 
-        if (mOrder.isTeacherReport()) {
+        if (mOrder.isIsTeacherReport()) {
             RequestManager.get().execute(new RPayOrder(mOrder.get_id()), new RequestListener<JSONObject>() {
                 @Override
                 public void onSuccess(RequestBase request, JSONObject result) {
@@ -302,7 +302,6 @@ public class ToDoOrderActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // 根据上面发送过去的请求吗来区别
         switch (requestCode) {
             case REQUEST_TUTOR_DETAIL:
                 if (null != data) {

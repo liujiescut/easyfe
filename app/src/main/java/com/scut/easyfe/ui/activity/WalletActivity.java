@@ -132,25 +132,16 @@ public class WalletActivity extends BaseActivity {
      * 点击右上角按钮(编辑/保存)
      */
     public void onRightClick(View view) {
-        mState = (mState == Constants.Identifier.STATE_EDIT) ? Constants.Identifier.STATE_NORMAL : Constants.Identifier.STATE_EDIT;
-        boolean isEdit = (mState == Constants.Identifier.STATE_EDIT);
-        mTitleRightTextView.setText(isEdit ? R.string.save : R.string.edit);
-        int textColor = mResources.getColor(isEdit ? R.color.text_area_editable_text_color : R.color.text_area_text_color);
-        mAlipayTextView.setTextColor(textColor);
-        mWechatTextView.setTextColor(textColor);
-        mBankNameTextView.setTextColor(textColor);
-        mCardNumTextView.setTextColor(textColor);
+        if (mState == Constants.Identifier.STATE_EDIT) {
+            if (!validate()) {
+                return;
+            }
 
-        if (!validate()) {
-            return;
-        }
+            mWallet.setAli(mAlipayTextView.getText().toString());
+            mWallet.setWechat(mWechatTextView.getText().toString());
+            mWallet.getBank().setName(mBankNameTextView.getText().toString());
+            mWallet.getBank().setAccount(mCardNumTextView.getText().toString());
 
-        mWallet.setAli(mAlipayTextView.getText().toString());
-        mWallet.setWechat(mWechatTextView.getText().toString());
-        mWallet.getBank().setName(mBankNameTextView.getText().toString());
-        mWallet.getBank().setAccount(mCardNumTextView.getText().toString());
-
-        if (mState == Constants.Identifier.STATE_NORMAL) {
             RequestManager.get().execute(new RModifyWalletInfo(App.getUser().getToken(), mWallet), new RequestListener<JSONObject>() {
                 @Override
                 public void onSuccess(RequestBase request, JSONObject result) {
@@ -163,6 +154,15 @@ public class WalletActivity extends BaseActivity {
                 }
             });
         }
+
+        mState = (mState == Constants.Identifier.STATE_EDIT) ? Constants.Identifier.STATE_NORMAL : Constants.Identifier.STATE_EDIT;
+        boolean isEdit = (mState == Constants.Identifier.STATE_EDIT);
+        mTitleRightTextView.setText(isEdit ? R.string.save : R.string.edit);
+        int textColor = mResources.getColor(isEdit ? R.color.text_area_editable_text_color : R.color.text_area_text_color);
+        mAlipayTextView.setTextColor(textColor);
+        mWechatTextView.setTextColor(textColor);
+        mBankNameTextView.setTextColor(textColor);
+        mCardNumTextView.setTextColor(textColor);
     }
 
     private boolean validate() {
@@ -237,6 +237,7 @@ public class WalletActivity extends BaseActivity {
 
     private void doWithdraw(JSONObject way, int money){
         if (money <= 0){
+            toast("请输入有效金额");
             return;
         }
 
