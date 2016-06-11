@@ -225,4 +225,10 @@
     <string name="main_left_drawer_vip_activity">我的会员活动</string>
     <string name="main_left_drawer_report">反馈报告</string>
     <string name="verify_code">短信验证码</string>
+    <string name="easy_level">难易程度</string>
+    <string name="tutor_way">辅导方式</string>
+    <string name="course">课程</string>
+    <string name="state">阶段</string>
+    <string name="tutor_according_knowledge">针对性知识点补习</string>
+    <string name="tutor_according_paper">复习模拟卷</string>
 </resources>

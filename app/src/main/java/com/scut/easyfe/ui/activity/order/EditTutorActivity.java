@@ -30,7 +30,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfessionTutorActivity extends BaseActivity {
+public class EditTutorActivity extends BaseActivity {
     public static final String NO_UPPER_KNOWLEDGE_CHOSEN_INFO = "请先选择上级知识点";
     private GridView mCourseGridView;
     //College Entrance Exam
@@ -79,7 +79,7 @@ public class ProfessionTutorActivity extends BaseActivity {
 
     @Override
     protected void setLayoutView() {
-        setContentView(R.layout.activity_profession_tutor);
+        setContentView(R.layout.activity_edit_tutor);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class ProfessionTutorActivity extends BaseActivity {
             Bundle extras = intent.getExtras();
             if (null != extras) {
                 mTutorDetail = (Order.TutorDetail) extras.getSerializable(Constants.Key.TUTOR_DETAIL);
-                mOrderId = extras.getString(Constants.Key.ORDER, "");
+                mOrderId = extras.getString(Constants.Key.ORDER_ID, "");
                 if (null != mTutorDetail) {
                     mIsModify = mTutorDetail.hadFillIn();
 
@@ -107,20 +107,20 @@ public class ProfessionTutorActivity extends BaseActivity {
     @Override
     protected void initView() {
         ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("专业辅导情况");
-        mCEETextView = OtherUtils.findViewById(this, R.id.profession_tutor_tv_state_cee);
-        mHEETextView = OtherUtils.findViewById(this, R.id.profession_tutor_tv_state_hee);
-        mHighSchoolTextView = OtherUtils.findViewById(this, R.id.profession_tutor_tv_state_high);
-        mMiddleSchoolTextView = OtherUtils.findViewById(this, R.id.profession_tutor_tv_state_middle);
-        mWayKnowledgeTextView = OtherUtils.findViewById(this, R.id.profession_tutor_tv_way_knowledge);
-        mWayPaperTextView = OtherUtils.findViewById(this, R.id.profession_tutor_tv_way_paper);
-        mMiddleSchoolTextView = OtherUtils.findViewById(this, R.id.profession_tutor_tv_state_middle);
+        mCEETextView = OtherUtils.findViewById(this, R.id.edit_tutor_tv_state_cee);
+        mHEETextView = OtherUtils.findViewById(this, R.id.edit_tutor_tv_state_hee);
+        mHighSchoolTextView = OtherUtils.findViewById(this, R.id.edit_tutor_tv_state_high);
+        mMiddleSchoolTextView = OtherUtils.findViewById(this, R.id.edit_tutor_tv_state_middle);
+        mWayKnowledgeTextView = OtherUtils.findViewById(this, R.id.edit_tutor_tv_way_knowledge);
+        mWayPaperTextView = OtherUtils.findViewById(this, R.id.edit_tutor_tv_way_paper);
+        mMiddleSchoolTextView = OtherUtils.findViewById(this, R.id.edit_tutor_tv_state_middle);
         mPaperTextView = OtherUtils.findViewById(this, R.id.profession_tutor_tv_paper);
         mGradeTextView = OtherUtils.findViewById(this, R.id.profession_tutor_tv_grade);
-        mEasyLevelTextView = OtherUtils.findViewById(this, R.id.profession_tutor_tv_difficulty);
+        mEasyLevelTextView = OtherUtils.findViewById(this, R.id.edit_tutor_tv_difficulty);
         mWayKnowledgeLinearLayout = OtherUtils.findViewById(this, R.id.profession_tutor_ll_according_knowledge);
         mWayPaperLinearLayout = OtherUtils.findViewById(this, R.id.profession_tutor_ll_according_paper);
 
-        mCourseGridView = OtherUtils.findViewById(this, R.id.profession_tutor_gv_course);
+        mCourseGridView = OtherUtils.findViewById(this, R.id.edit_tutor_gv_course);
         mCourseAdapter = new CourseAdapter(mCourseList);
         mCourseAdapter.setItemClickable(false);
         mCourseGridView.setAdapter(mCourseAdapter);
@@ -425,7 +425,7 @@ public class ProfessionTutorActivity extends BaseActivity {
                 bundle.putSerializable(Constants.Key.TUTOR_DETAIL, mTutorDetail);
                 Intent intent = new Intent();
                 intent.putExtras(bundle);
-                ProfessionTutorActivity.this.setResult(0, intent);
+                EditTutorActivity.this.setResult(0, intent);
                 finish();
             }
 
@@ -583,13 +583,13 @@ public class ProfessionTutorActivity extends BaseActivity {
             ((TextView) v).setCompoundDrawablesRelativeWithIntrinsicBounds(R.mipmap.icon_gold_arrow_padding, 0, 0, 0);
 
             switch (v.getId()) {
-                case R.id.profession_tutor_tv_way_knowledge:
+                case R.id.edit_tutor_tv_way_knowledge:
                     mTutorWay = Constants.Identifier.TUTOR_WAY_KNOWLEDGE;
                     mWayKnowledgeLinearLayout.setVisibility(View.VISIBLE);
                     mWayPaperLinearLayout.setVisibility(View.GONE);
                     break;
 
-                case R.id.profession_tutor_tv_way_paper:
+                case R.id.edit_tutor_tv_way_paper:
                     mTutorWay = Constants.Identifier.TUTOR_WAY_PAPER;
                     mWayKnowledgeLinearLayout.setVisibility(View.GONE);
                     mWayPaperLinearLayout.setVisibility(View.VISIBLE);

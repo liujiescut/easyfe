@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/shape_app_bg"
+    tools:context="com.scut.easyfe.ui.activity.order.ShowTutorActivity">
+    <include
+        layout="@layout/titlebar"/>
+
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        android:layout_marginTop="@dimen/layout_margin_small">
+
+        <TextView
+            style="@style/text_click_unable_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="1"
+            android:text="@string/state" />
+
+        <TextView
+            android:id="@+id/show_tutor_tv_state"
+            style="@style/text_click_unable_style"
+            android:layout_weight="3"
+            android:gravity="start|center_vertical" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/ll_container_normal_style">
+
+        <TextView
+            style="@style/text_click_unable_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="1"
+            android:text="@string/course" />
+
+        <TextView
+            android:id="@+id/show_tutor_tv_course"
+            style="@style/text_click_unable_style"
+            android:layout_weight="3"
+            android:gravity="start|center_vertical" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        android:layout_marginTop="@dimen/layout_margin_small"
+        android:layout_marginBottom="-10dp">
+
+        <TextView
+            style="@style/text_click_unable_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="1"
+            android:text="@string/tutor_way" />
+
+        <TextView
+            android:id="@+id/show_tutor_tv_tutor_way"
+            style="@style/text_click_unable_style"
+            android:layout_weight="3"
+            android:gravity="start|center_vertical" />
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/profession_tutor_way_detail"/>
+
+    <LinearLayout
+        style="@style/ll_container_normal_style"
+        android:layout_marginTop="@dimen/layout_margin_small">
+
+        <TextView
+            style="@style/text_click_unable_style"
+            android:layout_marginRight="@dimen/container_stoke_width"
+            android:layout_weight="1"
+            android:text="@string/easy_level" />
+
+        <TextView
+            android:id="@+id/show_tutor_tv_easy_level"
+            style="@style/text_click_unable_style"
+            android:layout_weight="3"
+            android:gravity="start|center_vertical" />
+    </LinearLayout>
+
+
+</LinearLayout>

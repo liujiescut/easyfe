@@ -108,7 +108,7 @@ public class ToDoOrderActivity extends BaseActivity {
         mPriceTextView = OtherUtils.findViewById(this, R.id.order_base_info_tv_price);
         mTipTextView = OtherUtils.findViewById(this, R.id.order_base_info_tv_tip);
         mTotalPriceTextView = OtherUtils.findViewById(this, R.id.order_base_info_tv_total_price);
-        mWarningTextView = OtherUtils.findViewById(this, R.id.to_do_order_tv_warning);
+        mWarningTextView = OtherUtils.findViewById(this, R.id.edit_tutor_tv_warning);
         mTeacherActionTextView = OtherUtils.findViewById(this, R.id.to_do_order_tv_teacher_action);
         mParentActionTextView = OtherUtils.findViewById(this, R.id.to_do_order_tv_parent_action);
 
@@ -178,16 +178,25 @@ public class ToDoOrderActivity extends BaseActivity {
     }
 
     public void onCompleteTutorClick(View view) {
-        if (isTeacher()) {
-            Bundle bundle = new Bundle();
-            mOrder.getThisTeachDetail().setGrade(mOrder.getGrade());
-            bundle.putSerializable(Constants.Key.TUTOR_DETAIL, mOrder.getThisTeachDetail());
+        if(OtherUtils.isFastDoubleClick()){
+            return;
+        }
+
+        Bundle bundle = new Bundle();
+        mOrder.getThisTeachDetail().setGrade(mOrder.getGrade());
+        bundle.putSerializable(Constants.Key.TUTOR_DETAIL, mOrder.getThisTeachDetail());
+
+        if (isTeacher()) {          //家教可以进行修改
             bundle.putString(Constants.Key.ORDER_ID, mOrder.get_id());
-            Intent intent = new Intent(mContext, ProfessionTutorActivity.class);
+            Intent intent = new Intent(mContext, EditTutorActivity.class);
             intent.putExtras(bundle);
             startActivityForResult(intent, REQUEST_TUTOR_DETAIL);
-        }else {
-            //Todo 只能查看
+
+        }else {                     //家长只能查看
+            Intent intent = new Intent(mContext, ShowTutorActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+
         }
     }
 
@@ -195,7 +204,20 @@ public class ToDoOrderActivity extends BaseActivity {
      * 家教底部按钮点击
      */
     public void onTeacherActionClick(View view) {
+        if(mOrder.isTeacherReport()){           //家教已经完成课程并反馈
+            DialogUtils.makeConfirmDialog(mContext, "温馨提示", "您已完成课时并反馈,\n等待家长完成课程并付款中").show();
 
+        }else{                                  //家教未完成课程并反馈
+            if(! mOrder.getThisTeachDetail().hadFillIn()){      //家教未完成本次专业辅导情况
+                toast("请先填写首次专业辅导情况");
+
+            }else{                                              //家教已完成本次专业辅导情况
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constants.Key.ORDER, mOrder);
+                redirectToActivity(mContext, TeacherReportActivity.class, bundle);
+
+            }
+        }
     }
 
     /**

@@ -74,7 +74,7 @@ public class Constants {
         public static final String URL_MULTI_RESERVE = URL_BASE + "Book/Multi";
         public static final String URL_GET_TEACHER_DETAIL_INFO = URL_BASE + "Parent/Teacher/Data";
         public static final String URL_COMMENT_TEACHER = URL_BASE + "Parent/Comment/Teacher";
-        public static final String URL_MODIFY_TUTOR = URL_BASE + "Order/Report";
+        public static final String URL_MODIFY_TUTOR = URL_BASE + "Teacher/Order/ThisTeachDetail";
 
         public static final String URL_GET_SPREAD_REWARD_LIST = URL_BASE + "Reward/Discount";
         public static final String URL_GET_SPREAD_REWARD =URL_BASE + "Reward/Discount";
@@ -217,8 +217,8 @@ public class Constants {
 
         public static final ArrayList<Integer> teachTimeHourList = new ArrayList<>();               //授课时间之小时
         public static final ArrayList<ArrayList<Integer>> teachTimeMinuteList = new ArrayList<>();  //授课时间之分钟
-        public static final ArrayList<Integer> trafficTimeHourList = new ArrayList<>();               //授课时间之小时
-        public static final ArrayList<ArrayList<Integer>> trafficTimeMinuteList = new ArrayList<>();  //授课时间之分钟
+        public static final ArrayList<Integer> trafficTimeHourList = new ArrayList<>();             //交通时间之小时
+        public static final ArrayList<ArrayList<Integer>> trafficTimeMinuteList = new ArrayList<>();//交通时间之分钟
         public static final ArrayList<String> genderList = new ArrayList<>();                       //可选性别
         public static final ArrayList<String> teacherGradeList = new ArrayList<>();                 //家教的年级列表
         public static final ArrayList<String> weekList = new ArrayList<>();
@@ -229,8 +229,15 @@ public class Constants {
         public static final ArrayList<String> paperEasyLevelList = new ArrayList<>();
         public static ArrayList<String> bankNameList = new ArrayList<>();
         public static ArrayList<String> tutorGradeList = new ArrayList<>();
+        public static ArrayList<String> rightPercentList = new ArrayList<>();
 
         static {
+            rightPercentList.add("50% 以下");
+            rightPercentList.add("50% - 60%");
+            rightPercentList.add("60% - 70%");
+            rightPercentList.add("70% - 80%");
+            rightPercentList.add("80% - 90%");
+            rightPercentList.add("90% 以上");
 
             tutorGradeList.add("初中 一年级");
             tutorGradeList.add("初中 二年级");

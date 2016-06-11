@@ -67,6 +67,10 @@
         <item name="android:textColor">@color/text_area_editable_text_color</item>
     </style>
 
+    <style name="text_click_unable_style" parent="text_normal_style">
+        <item name="android:clickable">false</item>
+    </style>
+
     <style name="my_order_item_style" parent="text_normal_style">
         <item name="android:textSize">@dimen/text_size_normal</item>
     </style>
