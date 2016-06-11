@@ -33,6 +33,7 @@ import com.scut.easyfe.network.request.book.RMultiBook;
 import com.scut.easyfe.network.request.info.RGetCourse;
 import com.scut.easyfe.network.request.book.RSingleBook;
 import com.scut.easyfe.network.request.info.RGetSchool;
+import com.scut.easyfe.ui.activity.order.SearchResultActivity;
 import com.scut.easyfe.ui.adapter.SelectItemAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.ListViewUtil;

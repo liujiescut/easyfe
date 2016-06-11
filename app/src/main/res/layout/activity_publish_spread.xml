@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tool="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context="com.scut.easyfe.ui.activity.PublishSpreadActivity">
+    tools:context=".ui.activity.order.PublishSpreadActivity">
 
     <include
         layout="@layout/titlebar"/>

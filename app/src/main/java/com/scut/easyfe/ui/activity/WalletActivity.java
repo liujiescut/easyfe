@@ -310,6 +310,6 @@ public class WalletActivity extends BaseActivity {
      * 点击我的优惠券
      */
     public void onMyTicketClick(View view){
-        redirectToActivity(this, TicketActivity.class);
+        redirectToActivity(this, CouponActivity.class);
     }
 }

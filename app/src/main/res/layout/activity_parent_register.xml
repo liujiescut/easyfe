@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/shape_app_bg"
     android:orientation="vertical"
-    tools:context="com.scut.easyfe.ui.activity.ParentRegisterActivity">
+    tools:context=".ui.activity.auth.ParentRegisterActivity">
     <include
         layout="@layout/titlebar"/>
     <LinearLayout

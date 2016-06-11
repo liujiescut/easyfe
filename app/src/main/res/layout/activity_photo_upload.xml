@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.scut.easyfe.ui.activity.PhotoUploadActivity">
+    tools:context=".ui.activity.auth.PhotoUploadActivity">
     <include
         layout="@layout/titlebar"/>
     <ScrollView

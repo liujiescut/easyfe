@@ -11,9 +11,9 @@ import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.ui.activity.CallbackActivity;
 import com.scut.easyfe.ui.activity.BookActivity;
-import com.scut.easyfe.ui.activity.SpecialOrderActivity;
-import com.scut.easyfe.ui.activity.TeacherRegisterOneActivity;
-import com.scut.easyfe.ui.activity.TeacherRegisterTwoActivity;
+import com.scut.easyfe.ui.activity.order.SpreadActivity;
+import com.scut.easyfe.ui.activity.auth.TeacherRegisterOneActivity;
+import com.scut.easyfe.ui.activity.auth.TeacherRegisterTwoActivity;
 import com.scut.easyfe.ui.activity.VipActivity;
 import com.scut.easyfe.ui.activity.WebActivity;
 import com.scut.easyfe.ui.adapter.ImagePagerAdapter;
@@ -179,7 +179,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
      */
     private void onSpecialOrderClick(View view){
         if(null != mActivity){
-            mActivity.redirectToActivity(mActivity, SpecialOrderActivity.class);
+            mActivity.redirectToActivity(mActivity, SpreadActivity.class);
         }
     }
 

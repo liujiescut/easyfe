@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/shape_app_bg"
             android:orientation="vertical"
-            tools:context="com.scut.easyfe.ui.activity.SpecialTimeActivity">
+            tools:context=".ui.activity.auth.SpecialTimeActivity">
 
             <FrameLayout
                 android:id="@+id/special_time_calendar"

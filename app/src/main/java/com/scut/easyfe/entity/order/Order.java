@@ -7,6 +7,7 @@ import com.scut.easyfe.entity.user.ParentInfo;
 import com.scut.easyfe.entity.user.TeacherInfo;
 import com.scut.easyfe.utils.TimeUtils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,6 +20,7 @@ import java.util.Locale;
  * Created by jay on 16/4/12.
  */
 public class Order extends BaseEntity {
+
     private String _id = "";
     private String orderNumber = "";                  //订单号, O-2016000000, 开头是字母O
     private int type = 0;                             //0表示普通订单，1表示特价订单
@@ -373,6 +375,23 @@ public class Order extends BaseEntity {
         private String easyLevel = "";
         // 知识点, 辅导方式为: 针对知识点补习时才有的字段
         private List<String> knowledge = new ArrayList<>();
+
+        public JSONObject getAsJson(){
+            JSONObject json = new JSONObject();
+            try {
+                json.put("category", category);
+                json.put("course", course);
+                json.put("teachWay", teachWay);
+                json.put("grade", grade);
+                json.put("examPaper", examPaper);
+                json.put("easyLevel", easyLevel);
+                json.put("knowledge", new JSONArray(knowledge));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return json;
+        }
 
         public boolean hadFillIn(){
             //Todo 换一种更合适的判断

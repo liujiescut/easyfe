@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/shape_app_bg"
     android:orientation="vertical"
-    tools:context=".ui.activity.TeachCourseActivity">
+    tools:context=".ui.activity.auth.TeachCourseActivity">
     <include
         layout="@layout/titlebar"/>
     <ScrollView

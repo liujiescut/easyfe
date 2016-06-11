@@ -20,6 +20,13 @@ import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.request.RGetOnlineParams;
 import com.scut.easyfe.network.request.authentication.RUpdateUser;
+import com.scut.easyfe.ui.activity.auth.LoginActivity;
+import com.scut.easyfe.ui.activity.auth.ParentRegisterActivity;
+import com.scut.easyfe.ui.activity.auth.TeacherRegisterOneActivity;
+import com.scut.easyfe.ui.activity.auth.TeacherRegisterTwoActivity;
+import com.scut.easyfe.ui.activity.order.MyOrderActivity;
+import com.scut.easyfe.ui.activity.order.PublishSpreadActivity;
+import com.scut.easyfe.ui.activity.reward.InviteRewardActivity;
 import com.scut.easyfe.ui.activity.reward.TaskRewardActivity;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.ui.base.BaseFragment;
@@ -27,7 +34,6 @@ import com.scut.easyfe.ui.customView.CircleImageView;
 import com.scut.easyfe.ui.fragment.HomeFragment;
 import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.ImageUtils;
-import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
 import org.json.JSONArray;
@@ -38,7 +44,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 
 /**
  * 程序主界面

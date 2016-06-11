@@ -74,6 +74,7 @@ public class Constants {
         public static final String URL_MULTI_RESERVE = URL_BASE + "Book/Multi";
         public static final String URL_GET_TEACHER_DETAIL_INFO = URL_BASE + "Parent/Teacher/Data";
         public static final String URL_COMMENT_TEACHER = URL_BASE + "Parent/Comment/Teacher";
+        public static final String URL_MODIFY_TUTOR = URL_BASE + "Order/Report";
 
         public static final String URL_GET_SPREAD_REWARD_LIST = URL_BASE + "Reward/Discount";
         public static final String URL_GET_SPREAD_REWARD =URL_BASE + "Reward/Discount";
@@ -113,9 +114,10 @@ public class Constants {
         public static final String CALLBACK_TYPE =  "callback_type";
         public static final String CALLBACK_HINT_TEXT =  "callback_hint_text";
         public static final String CONFIRM_ORDER_TYPE =  "confirm_order_type";
+        public static final String ORDER_ID =  "order_id";
         public static final String ORDER =  "order";
         public static final String ORDERS =  "orders";
-        public static final String TUTOR_DETAIL =  "tutor_deatil";
+        public static final String TUTOR_DETAIL =  "tutor_detail";
         public static final String TEACH_WEEK =  "teach_week";
         public static final String RESERVE_WAY = "reserve_way";
         public static final String TO_TEACHER_INFO_ACTIVITY_TYPE = "to_teacher_info_activity_type";

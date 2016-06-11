@@ -3,7 +3,7 @@ package com.scut.easyfe.network.request.wallet;
 import com.fasterxml.jackson.databind.JavaType;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
-import com.scut.easyfe.entity.Ticket;
+import com.scut.easyfe.entity.Coupon;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.kjFrame.http.HttpParams;
 import com.scut.easyfe.network.kjFrame.http.Request;
@@ -21,7 +21,7 @@ import java.util.List;
  * 获取我的优惠券(家长)
  * Created by jay on 16/4/7.
  */
-public class RGetMyTicket extends RequestBase<List<Ticket>> {
+public class RGetMyTicket extends RequestBase<List<Coupon>> {
     private String mToken = "";
 
     @Override
@@ -42,38 +42,38 @@ public class RGetMyTicket extends RequestBase<List<Ticket>> {
     }
 
     @Override
-    public List<Ticket> parseResultAsObject(JSONObject jsonObject) throws IOException, JSONException {
-        List<Ticket> result = new ArrayList<>();
-        JavaType javaType = mObjectMapper.getTypeFactory().constructParametricType(List.class, Ticket.class);
+    public List<Coupon> parseResultAsObject(JSONObject jsonObject) throws IOException, JSONException {
+        List<Coupon> result = new ArrayList<>();
+        JavaType javaType = mObjectMapper.getTypeFactory().constructParametricType(List.class, Coupon.class);
         try {
             JSONArray tickets = jsonObject.optJSONArray("list");
             if (null != tickets) {
-                /** 将返回的地址JsonArray转化为List<Ticket> */
+                /** 将返回的地址JsonArray转化为List<Coupon> */
                 result = mObjectMapper.readValue(tickets.toString(), javaType);
             }
         } catch (IOException e) {
-            LogUtils.i("Json转换为List<Ticket>失败!");
+            LogUtils.i("Json转换为List<Coupon>失败!");
             e.printStackTrace();
         }
 
         return getTicketWithCount(result);
     }
 
-    private List<Ticket> getTicketWithCount(List<Ticket> tickets) {
-        List<Ticket> uniqueTickets = new ArrayList<>();
+    private List<Coupon> getTicketWithCount(List<Coupon> coupons) {
+        List<Coupon> uniqueCoupons = new ArrayList<>();
 
-        for (Ticket ticket :
-                tickets) {
-            if (uniqueTickets.contains(ticket)) {
-                int index = uniqueTickets.indexOf(ticket);
-                uniqueTickets.get(index).addCount();
+        for (Coupon coupon :
+                coupons) {
+            if (uniqueCoupons.contains(coupon)) {
+                int index = uniqueCoupons.indexOf(coupon);
+                uniqueCoupons.get(index).addCount();
 
             } else {
-                ticket.setCount(1);
-                uniqueTickets.add(ticket);
+                coupon.setCount(1);
+                uniqueCoupons.add(coupon);
             }
         }
-        return uniqueTickets;
+        return uniqueCoupons;
     }
 
     @Override

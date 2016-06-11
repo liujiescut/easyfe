@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/shape_app_bg"
     android:orientation="vertical"
-    tools:context="com.scut.easyfe.ui.activity.ProfessionTutorActivity">
+    tools:context=".ui.activity.order.ProfessionTutorActivity">
 
     <include layout="@layout/titlebar" />
 

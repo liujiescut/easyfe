@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/shape_app_bg"
-    tools:context=".ui.activity.TeachTimeActivity">
+    tools:context=".ui.activity.auth.TeachTimeActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

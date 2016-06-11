@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/shape_app_bg"
-        tools:context="com.scut.easyfe.ui.activity.ToDoOrderActivity">
+        tools:context=".ui.activity.order.ToDoOrderActivity">
 
         <LinearLayout
             android:layout_width="match_parent"

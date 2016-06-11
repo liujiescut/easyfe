@@ -1,6 +1,5 @@
 package com.scut.easyfe.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -11,8 +10,8 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.order.Order;
-import com.scut.easyfe.ui.activity.ParentRegisterActivity;
-import com.scut.easyfe.ui.activity.TeacherInfoActivity;
+import com.scut.easyfe.ui.activity.auth.ParentRegisterActivity;
+import com.scut.easyfe.ui.activity.order.TeacherInfoActivity;
 import com.scut.easyfe.ui.adapter.SearchResultAdapter;
 import com.scut.easyfe.ui.base.BaseRefreshFragment;
 import com.scut.easyfe.utils.DensityUtil;

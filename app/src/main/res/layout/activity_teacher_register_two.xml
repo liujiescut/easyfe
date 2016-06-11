@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:toogle="http://schemas.android.com/apk/res-auto"
-    tools:context="com.scut.easyfe.ui.activity.TeacherRegisterTwoActivity">
+    tools:context=".ui.activity.auth.TeacherRegisterTwoActivity">
 
     <include
         android:id="@+id/teacher_register_step_two_titlebar"

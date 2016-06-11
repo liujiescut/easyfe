@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/shape_app_bg"
+    tools:context=".ui.activity.CouponActivity">
+
+    <include
+        layout="@layout/titlebar"/>
+
+    <ListView
+        android:id="@+id/ticket_lv_coupon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/transparent"
+        android:dividerHeight="4dp"
+        android:layout_marginTop="@dimen/layout_margin_small"/>
+
+</LinearLayout>

@@ -103,63 +103,63 @@
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name=".ui.activity.auth.LoginActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".ui.activity.ParentRegisterActivity" />
+        <activity android:name=".ui.activity.auth.ParentRegisterActivity" />
         <activity android:name=".ui.activity.AddressActivity" />
         <activity
-            android:name=".ui.activity.TeacherRegisterOneActivity"
+            android:name=".ui.activity.auth.TeacherRegisterOneActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".ui.activity.TeacherRegisterTwoActivity"
+            android:name=".ui.activity.auth.TeacherRegisterTwoActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".ui.activity.TeachTimeActivity" />
+        <activity android:name=".ui.activity.auth.TeachTimeActivity" />
         <activity
-            android:name=".ui.activity.SpecialTimeActivity"
+            android:name=".ui.activity.auth.SpecialTimeActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".ui.activity.TeachCourseActivity" />
-        <activity android:name=".ui.activity.SelfIntroduceActivity" />
-        <activity android:name=".ui.activity.ReceivablesChannelActivity" />
-        <activity android:name=".ui.activity.PhotoUploadActivity" />
+        <activity android:name=".ui.activity.auth.TeachCourseActivity" />
+        <activity android:name=".ui.activity.auth.SelfIntroduceActivity" />
+        <activity android:name=".ui.activity.auth.ReceivablesChannelActivity" />
+        <activity android:name=".ui.activity.auth.PhotoUploadActivity" />
         <activity
-            android:name=".ui.activity.MyOrderActivity"
+            android:name=".ui.activity.order.MyOrderActivity"
             android:launchMode="singleTask" />
         <activity android:name=".ui.activity.WalletActivity" />
-        <activity android:name=".ui.activity.PublishSpreadActivity" />
+        <activity android:name=".ui.activity.order.PublishSpreadActivity" />
         <activity android:name=".ui.activity.MessageCenterActivity" />
         <activity android:name=".ui.activity.ContactUsActivity" />
         <activity android:name=".ui.activity.MoreActivity" />
         <activity android:name=".ui.activity.ProblemAndHelpActivity" />
         <activity android:name=".ui.activity.ShowTextActivity" />
         <activity android:name=".ui.activity.CallbackActivity" />
-        <activity android:name=".ui.activity.SpecialOrderActivity" />
-        <activity android:name=".ui.activity.ConfirmOrderActivity" />
+        <activity android:name=".ui.activity.order.SpreadActivity" />
+        <activity android:name=".ui.activity.order.ConfirmOrderActivity" />
         <activity
             android:name=".ui.activity.BookActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".ui.activity.SearchResultActivity" />
-        <activity android:name=".ui.activity.TeacherInfoActivity" />
-        <activity android:name=".ui.activity.CommentsActivity" />
-        <activity android:name=".ui.activity.ReservedOrCompletedOrderActivity" />
-        <activity android:name=".ui.activity.ToDoOrderActivity" />
-        <activity android:name=".ui.activity.EvaluationActivity" />
-        <activity android:name=".ui.activity.ModifyOrderActivity" />
-        <activity android:name=".ui.activity.InviteRewardActivity" />
+        <activity android:name=".ui.activity.order.SearchResultActivity" />
+        <activity android:name=".ui.activity.order.TeacherInfoActivity" />
+        <activity android:name=".ui.activity.order.CommentsActivity" />
+        <activity android:name=".ui.activity.order.ReservedOrCompletedOrderActivity" />
+        <activity android:name=".ui.activity.order.ToDoOrderActivity" />
+        <activity android:name=".ui.activity.order.EvaluationActivity" />
+        <activity android:name=".ui.activity.order.ModifyOrderActivity" />
+        <activity android:name=".ui.activity.reward.InviteRewardActivity" />
         <activity android:name=".ui.activity.reward.TaskRewardActivity" />
         <activity android:name=".ui.activity.reward.SpreadRewardActivity" />
         <activity android:name=".ui.activity.reward.InviteRewardInfoActivity" />
         <activity android:name=".ui.activity.reward.ParentCourseRewardActivity" />
         <activity android:name=".ui.activity.reward.TeacherCourseRewardActivity" />
         <activity android:name=".ui.activity.reward.TeacherPriceAddExplainActivity" />
-        <activity android:name=".ui.activity.TicketActivity" />
+        <activity android:name=".ui.activity.CouponActivity" />
         <activity android:name=".ui.activity.WebActivity" />
-        <activity android:name=".ui.activity.ProfessionTutorActivity" >
+        <activity android:name=".ui.activity.order.ProfessionTutorActivity" >
         </activity>
-        <activity android:name=".ui.activity.SearchSpecialOrderActivity" />
+        <activity android:name=".ui.activity.order.SearchSpreadActivity" />
         <activity android:name=".ui.activity.LevelActivity" />
         <activity android:name=".ui.activity.ScoreProtocolActivity" />
         <activity
-            android:name=".ui.activity.TeacherReportActivity"
+            android:name=".ui.activity.order.TeacherReportActivity"
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
         <activity android:name=".ui.activity.VipActivity"></activity>

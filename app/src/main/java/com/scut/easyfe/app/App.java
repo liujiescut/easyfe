@@ -17,7 +17,7 @@ import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
 import com.qiniu.android.storage.Zone;
 import com.scut.easyfe.entity.user.User;
-import com.scut.easyfe.ui.activity.LoginActivity;
+import com.scut.easyfe.ui.activity.auth.LoginActivity;
 import com.scut.easyfe.utils.ActivityManagerUtils;
 import com.scut.easyfe.utils.SpUtils;
 import com.umeng.socialize.PlatformConfig;
