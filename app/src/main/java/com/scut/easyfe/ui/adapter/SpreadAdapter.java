@@ -61,7 +61,7 @@ public class SpreadAdapter extends BaseListViewScrollStateAdapter {
                 return null;
             }
             convertView = LayoutInflater.from(mContextReference.get()).
-                    inflate(R.layout.item_special_order, parent, false);
+                    inflate(R.layout.item_spread, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {

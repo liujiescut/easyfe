@@ -53,17 +53,6 @@ public class CouponActivity extends BaseActivity {
         RequestManager.get().execute(new RGetMyTicket(), new RequestListener<List<Coupon>>() {
             @Override
             public void onSuccess(RequestBase request, List<Coupon> result) {
-
-                //Todo 删除此段代码,这里只是为了暂时给客户隐藏
-                ArrayList<Coupon> invalidCoupons = new ArrayList<>();
-                for (Coupon coupon :
-                        result) {
-                    if(coupon.getMoney() <= 0){
-                        invalidCoupons.add(coupon);
-                    }
-                }
-                result.removeAll(invalidCoupons);
-
                 mCoupons.clear();
                 mCoupons.addAll(result);
                 mAdapter.notifyDataSetChanged();

@@ -1,7 +1,6 @@
 package com.scut.easyfe.ui.adapter;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,22 +8,16 @@ import android.widget.TextView;
 
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
-import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.FeedbackReport;
-import com.scut.easyfe.entity.order.Order;
-import com.scut.easyfe.entity.user.TeacherInfo;
-import com.scut.easyfe.ui.activity.auth.ParentRegisterActivity;
-import com.scut.easyfe.ui.activity.order.ConfirmOrderActivity;
-import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.ui.base.BaseListViewScrollStateAdapter;
-import com.scut.easyfe.utils.DialogUtils;
-import com.scut.easyfe.utils.LogUtils;
-import com.scut.easyfe.utils.MapUtils;
+import com.scut.easyfe.ui.customView.FixedClickListener;
 import com.scut.easyfe.utils.OtherUtils;
 import com.scut.easyfe.utils.TimeUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+
+import io.techery.properratingbar.ProperRatingBar;
 
 /**
  * 特价订单页面使用的Adapter
@@ -62,29 +55,64 @@ public class FeedbackReportAdapter extends BaseListViewScrollStateAdapter {
                 return null;
             }
             convertView = LayoutInflater.from(mContextReference.get()).
-                    inflate(R.layout.item_special_order, parent, false);
+                    inflate(R.layout.item_feedback_report, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
+        holder.content.setText(getContent(mReports.get(position)));
+        holder.absorption.setRating(mReports.get(position).getGetLevel());
+        holder.enthusiasm.setRating(mReports.get(position).getEnthusiasm());
+        holder.detail.setOnClickListener(new FixedClickListener() {
+            @Override
+            public void onFixClick(View view) {
+                //Todo Go to detail
+            }
+        });
+
         return convertView;
     }
 
+    private String getContent(FeedbackReport report){
+        StringBuilder builder = new StringBuilder();
+        builder.append("订单号: ");
+        builder.append(report.getOrderNum());
+        builder.append("\n");
+        if(App.getUser().isTeacher()){
+            builder.append("家长: ");
+            builder.append(report.getParentName());
+            builder.append("\n");
+        }else{
+            builder.append("家教: ");
+            builder.append(report.getTeacherName());
+            builder.append("\n");
+        }
+        builder.append("时间: ");
+        builder.append(String.format("%s %s",
+                TimeUtils.getTime(TimeUtils.getDateFromString(report.getTeachTime().getDate()), "yyyy年MM月dd日(EEEE)"),
+                report.getTeachTime().getChineseTime()));
+        builder.append("\n");
+        builder.append("正确率: ");
+        builder.append(report.getRightPercent());
+
+        return builder.toString();
+    }
+
     private class ViewHolder {
-        private TextView teacherName;
-        private TextView price;
-        private TextView contentUp;
-        private TextView contentDown;
-        private TextView reserve;
+        private TextView content;
+        private TextView detail;
+        private ProperRatingBar enthusiasm;
+        private ProperRatingBar absorption;
 
         public ViewHolder(View root) {
-            teacherName = OtherUtils.findViewById(root, R.id.item_special_order_tv_teacher);
-            price = OtherUtils.findViewById(root, R.id.item_special_order_tv_price);
-            contentUp = OtherUtils.findViewById(root, R.id.item_special_order_tv_content_up);
-            contentDown = OtherUtils.findViewById(root, R.id.item_special_order_tv_content_down);
-            reserve = OtherUtils.findViewById(root, R.id.item_special_order_tv_reserve);
+            content = OtherUtils.findViewById(root, R.id.item_feedback_report_tv_content);
+            detail = OtherUtils.findViewById(root, R.id.item_feedback_report_tv_detail);
+            enthusiasm = OtherUtils.findViewById(root, R.id.item_feedback_report_prb_enthusiasm);
+            absorption = OtherUtils.findViewById(root, R.id.item_feedback_report_prb_absorption_rate);
+            enthusiasm.setClickable(false);
+            absorption.setClickable(false);
         }
     }
 

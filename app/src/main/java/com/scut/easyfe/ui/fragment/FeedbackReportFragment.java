@@ -6,7 +6,6 @@ import android.widget.AdapterView;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.FeedbackReport;
 import com.scut.easyfe.ui.adapter.FeedbackReportAdapter;
-import com.scut.easyfe.ui.adapter.SpreadAdapter;
 import com.scut.easyfe.ui.base.BaseRefreshFragment;
 import com.scut.easyfe.utils.DensityUtil;
 
@@ -18,7 +17,7 @@ import java.util.ArrayList;
  * @author jay
  */
 public class FeedbackReportFragment extends BaseRefreshFragment {
-    private ArrayList<FeedbackReport> mOrders = new ArrayList<>();
+    private ArrayList<FeedbackReport> mReports = new ArrayList<>();
 
     @Override
     protected void initView(View view) {
@@ -34,7 +33,7 @@ public class FeedbackReportFragment extends BaseRefreshFragment {
 
         mDataListView.addHeaderView(headView);
         mDataListView.setDividerHeight(DensityUtil.dip2px(mActivity, 5));
-        mAdapter = new FeedbackReportAdapter(getActivity(), mOrders);
+        mAdapter = new FeedbackReportAdapter(getActivity(), mReports);
         setBaseAdapter(mAdapter);
     }
 
@@ -44,14 +43,15 @@ public class FeedbackReportFragment extends BaseRefreshFragment {
     }
 
     private void loadData(int skip, int limit, final boolean clear) {
-        setIsLoading(true);
-
+//        setIsLoading(true);
+        mReports.addAll(FeedbackReport.getTestData());
+        mAdapter.notifyDataSetChanged();
         //Todo
     }
 
     @Override
     protected void onLoadingData() {
-        loadData(mOrders.size(), Constants.DefaultValue.DEFAULT_LOAD_COUNT, false);
+        loadData(mReports.size(), Constants.DefaultValue.DEFAULT_LOAD_COUNT, false);
     }
 
     @Override

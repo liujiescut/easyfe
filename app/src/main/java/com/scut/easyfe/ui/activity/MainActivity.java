@@ -272,7 +272,11 @@ public class MainActivity extends BaseActivity {
      * 点击反馈报告
      */
     public void onReportClick(View view){
-        //Todo
+        if (!App.getUser().hasLogin()) {
+            return;
+        }
+
+        redirectToActivity(this, FeedbackReportActivity.class);
     }
 
     public void onTeacherMsgManageClick(View view) {
