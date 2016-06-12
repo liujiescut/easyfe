@@ -263,9 +263,10 @@ public class MainActivity extends BaseActivity {
             return;
         }
 
-        Bundle bundle = new Bundle();
-        bundle.putBoolean(Constants.Key.IS_MY_VIP_ACTIVITY, true);
-        redirectToActivity(this, VipActivity.class, bundle);
+        //Todo 2.0版本暂时
+//        Bundle bundle = new Bundle();
+//        bundle.putBoolean(Constants.Key.IS_MY_VIP_ACTIVITY, true);
+//        redirectToActivity(this, VipActivity.class, bundle);
     }
 
     /**
