@@ -10,11 +10,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bigkoo.alertview.OnDismissListener;
+import com.roomorama.caldroid.CalendarHelper;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.app.Variables;
 import com.scut.easyfe.entity.order.Order;
+import com.scut.easyfe.entity.order.TeachTime;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
@@ -32,6 +34,9 @@ import com.scut.easyfe.utils.TimeUtils;
 import org.json.JSONObject;
 
 import java.util.Locale;
+import java.util.TimeZone;
+
+import hirondelle.date4j.DateTime;
 
 /**
  * 确认订单页面(包括特价推广订单,单次预约订单,多次预约订单)
@@ -63,7 +68,6 @@ public class ConfirmOrderActivity extends BaseActivity {
     private Order mOrder;
     private int mTeachWeek = 0; //多次预约时预约多少次
     private int mTicketMoney = 0;
-    private String mTicketId = "";
 
     private boolean mIsLoadingCloseByUser = true;
 
@@ -166,7 +170,18 @@ public class ConfirmOrderActivity extends BaseActivity {
                 }
             });
 
-            RequestManager.get().execute(new RGetMatchTicket(mOrder.getTeachTime().getDate(),
+            String date = mOrder.getTeachTime().getDate();
+
+            //多次预约订单获取最近的一个订单日期
+            if(mConfirmOrderType == Constants.Identifier.CONFIRM_ORDER_MULTI_RESERVE){
+                DateTime dateTime = DateTime.today(TimeZone.getDefault());
+                while(dateTime.getWeekDay() - 1 != TimeUtils.getWeekIntFromString(mOrder.getTeachTime().getDate())){
+                    dateTime = dateTime.plusDays(1);
+                }
+                date = TimeUtils.getTime(CalendarHelper.convertDateTimeToDate(dateTime), "yyyy-MM-dd");
+            }
+
+            RequestManager.get().execute(new RGetMatchTicket(date,
                             mOrder.getTime(), mOrder.getGrade()),
                     new RequestListener<JSONObject>() {
                         @Override
@@ -175,9 +190,9 @@ public class ConfirmOrderActivity extends BaseActivity {
                             if (-1 == money) {
                                 mTicketMoney = 0;
                                 toast(result.optString("message"));
+
                             } else {
                                 mTicketMoney = money;
-                                mTicketId = result.optString("id", "");
                             }
 
                             mOrder.getCoupon().setMoney(mTicketMoney);
@@ -270,7 +285,7 @@ public class ConfirmOrderActivity extends BaseActivity {
         switch (mConfirmOrderType){
             case Constants.Identifier.CONFIRM_ORDER_SPECIAL:
                 RequestManager.get().execute(new RConfirmSpecialOrder(App.getUser().getToken(),
-                        mOrder.getTrafficTime(), mOrder.get_id(), (int)mOrder.getProfessionalTutorPrice(), mTicketId),
+                        mOrder.getTrafficTime(), mOrder.get_id(), (int)mOrder.getProfessionalTutorPrice()),
                         new RequestListener<JSONObject>() {
                     @Override
                     public void onSuccess(RequestBase request, JSONObject result) {
@@ -285,7 +300,7 @@ public class ConfirmOrderActivity extends BaseActivity {
                 break;
 
             case Constants.Identifier.CONFIRM_ORDER_SINGLE_RESERVE:
-                RequestManager.get().execute(new RConfirmSingleOrder(App.getUser().getToken(), mOrder, mTicketId), new RequestListener<JSONObject>() {
+                RequestManager.get().execute(new RConfirmSingleOrder(App.getUser().getToken(), mOrder), new RequestListener<JSONObject>() {
                     @Override
                     public void onSuccess(RequestBase request, JSONObject result) {
                         showDialog(mOrder.getTeacher().getName());

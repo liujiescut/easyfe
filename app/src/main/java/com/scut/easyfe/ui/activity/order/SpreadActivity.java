@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import com.scut.easyfe.R;
 import com.scut.easyfe.ui.base.BaseActivity;
-import com.scut.easyfe.ui.fragment.SpecialOrderFragment;
+import com.scut.easyfe.ui.fragment.SpreadFragment;
 import com.scut.easyfe.utils.OtherUtils;
 
 public class SpreadActivity extends BaseActivity {
@@ -20,7 +20,7 @@ public class SpreadActivity extends BaseActivity {
         ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("特价订单");
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.spread_fl_container, new SpecialOrderFragment())
+                .add(R.id.spread_fl_container, new SpreadFragment())
                 .commit();
 
         ((View)OtherUtils.findViewById(this, R.id.titlebar_iv_right_icon)).setVisibility(View.VISIBLE);

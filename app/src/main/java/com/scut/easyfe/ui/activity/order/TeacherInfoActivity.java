@@ -13,6 +13,7 @@ import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.Comment;
 import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.entity.test.ToSelectItem;
+import com.scut.easyfe.ui.activity.ShowTextActivity;
 import com.scut.easyfe.ui.adapter.SelectItemAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.ui.customView.CircleImageView;
@@ -42,7 +43,7 @@ public class TeacherInfoActivity extends BaseActivity {
 
     private Order mOrder;
     private int mReserveType = Constants.Identifier.RESERVE_MULTI;
-    private int mReserveTimes = 1;
+    private int mReserveTimes = -1;
     private int mFromType = Constants.Identifier.TYPE_RESERVE;
 
     @Override
@@ -86,7 +87,7 @@ public class TeacherInfoActivity extends BaseActivity {
         mDoReserveTextView = OtherUtils.findViewById(this, R.id.teacher_info_tv_do_reserve);
 
         if (mFromType == Constants.Identifier.TYPE_SEE_TEACHER_INFO) {
-            ((TextView) OtherUtils.findViewById(this, R.id.item_search_result_tv_price)).setVisibility(View.GONE);
+            mPriceTextView.setVisibility(View.GONE);
             mDoReserveTextView.setVisibility(View.GONE);
             mMultiReserveHintTextView.setVisibility(View.GONE);
             mMultiReserveTimesLinearLayout.setVisibility(View.GONE);
@@ -94,7 +95,7 @@ public class TeacherInfoActivity extends BaseActivity {
 
         } else {
 
-            ((TextView) OtherUtils.findViewById(this, R.id.item_search_result_tv_price)).setText(
+            mPriceTextView.setText(
                     String.format("%s%s",
                             String.format(Locale.CHINA, "%.2f元/次", mOrder.getTotalPrice()),
                             (0 == mOrder.getSubsidy() ? "" : String.format(Locale.CHINA, "包含交通补贴%.2f元", mOrder.getSubsidy()))));
@@ -111,7 +112,25 @@ public class TeacherInfoActivity extends BaseActivity {
         }
 
         showTeacherInfo();
+    }
 
+    @Override
+    protected void initListener() {
+        mPriceTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(OtherUtils.isFastDoubleClick()){
+                    return;
+                }
+
+                if(mOrder.getSubsidy() != 0){
+                    Bundle bundle = new Bundle();
+                    bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "交通补贴");
+                    bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.user_protocol_content));
+                    redirectToActivity(mContext, ShowTextActivity.class, bundle);
+                }
+            }
+        });
     }
 
     private void showTeacherInfo() {
@@ -195,8 +214,13 @@ public class TeacherInfoActivity extends BaseActivity {
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constants.Key.ORDER, mOrder);
         if (mReserveType == Constants.Identifier.RESERVE_MULTI) {
+            if(mReserveTimes <= 0){
+                toast("请先选择预约次数");
+                return;
+            }
             bundle.putInt(Constants.Key.CONFIRM_ORDER_TYPE, Constants.Identifier.CONFIRM_ORDER_MULTI_RESERVE);
             bundle.putInt(Constants.Key.TEACH_WEEK, mReserveTimes);
+
         } else {
             bundle.putInt(Constants.Key.CONFIRM_ORDER_TYPE, Constants.Identifier.CONFIRM_ORDER_SINGLE_RESERVE);
         }

@@ -18,7 +18,7 @@
     <dimen name="layout_padding_small">10dp</dimen>
     <dimen name="layout_padding_tiny">7dp</dimen>
 
-    <dimen name="default_divider_height">1dp</dimen>
+    <dimen name="default_divider_height">@dimen/default_border_height</dimen>
     <dimen name="home_fragment_text_padding">46dp</dimen>
 
     <dimen name="main_icon_outer_size">86dp</dimen>
@@ -28,7 +28,8 @@
     <dimen name="text_area_height">40dp</dimen>
     <dimen name="text_area_height_small">32dp</dimen>
 
-    <dimen name="container_stoke_width">1dp</dimen>
+    <dimen name="default_border_height">1px</dimen>
+    <dimen name="container_stoke_width">@dimen/default_border_height</dimen>
     <dimen name="negative_container_stoke_width">-1dp</dimen>
     <!-- 容器边框大小 -->
 </resources>

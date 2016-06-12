@@ -6,7 +6,7 @@
     android:background="@color/text_area_bg"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="@dimen/default_divider_height"
+    android:padding="@dimen/default_border_height"
     android:paddingLeft="@dimen/layout_padding_small">
 
     <RelativeLayout
@@ -42,7 +42,7 @@
             style="@style/my_order_item_style"
             android:layout_width="match_parent"
             android:layout_height="0dip"
-            android:layout_marginBottom="@dimen/default_divider_height"
+            android:layout_marginBottom="@dimen/default_border_height"
             android:layout_weight="1"
             android:gravity="center_vertical|left"
             android:clickable="false"

@@ -42,6 +42,7 @@
                 android:textColorHint="#A7A7A7" />
 
             <LinearLayout
+                android:id="@+id/teacher_report_ll_this_teach_detail_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -76,6 +77,7 @@
                 layout="@layout/profession_tutor_way_detail" />
 
             <LinearLayout
+                android:id="@+id/teacher_report_ll_tutor_1_detail"
                 style="@style/ll_container_normal_style"
                 android:layout_height="32dp">
 
@@ -211,6 +213,7 @@
 
 
             <LinearLayout
+                android:id="@+id/teacher_report_ll_next_teach_detail_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/layout_margin_small"
@@ -263,6 +266,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/teacher_report_ll_edit_next_teach_detail"
                 style="@style/ll_container_normal_style"
                 android:layout_marginTop="@dimen/layout_margin_small">
 

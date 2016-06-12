@@ -91,6 +91,7 @@ public class EditTutorActivity extends BaseActivity {
             if (null != extras) {
                 mTutorDetail = (Order.TutorDetail) extras.getSerializable(Constants.Key.TUTOR_DETAIL);
                 mOrderId = extras.getString(Constants.Key.ORDER_ID, "");
+                mUpdateToThisTeachDetail = extras.getBoolean(Constants.Key.TUTOR_UPDATE_TO_THIS_TEACH_DETAIL, false);
                 if (null != mTutorDetail) {
                     mIsModify = mTutorDetail.hadFillIn();
 

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CouponActivity extends BaseActivity {
-    private ListView mTicketListView;
+    private ListView mCouponListView;
     private CouponAdapter mAdapter;
     private List<Coupon> mCoupons = new ArrayList<>();
     private boolean mIsLoadingClosedByUser = true;
@@ -33,10 +33,10 @@ public class CouponActivity extends BaseActivity {
     protected void initView() {
         ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("我的现金券");
 
-        mTicketListView = OtherUtils.findViewById(this, R.id.ticket_lv_coupon);
+        mCouponListView = OtherUtils.findViewById(this, R.id.ticket_lv_coupon);
 
         mAdapter = new CouponAdapter(this, mCoupons);
-        mTicketListView.setAdapter(mAdapter);
+        mCouponListView.setAdapter(mAdapter);
     }
 
     @Override
@@ -53,6 +53,17 @@ public class CouponActivity extends BaseActivity {
         RequestManager.get().execute(new RGetMyTicket(), new RequestListener<List<Coupon>>() {
             @Override
             public void onSuccess(RequestBase request, List<Coupon> result) {
+
+                //Todo 删除此段代码,这里只是为了暂时给客户隐藏
+                ArrayList<Coupon> invalidCoupons = new ArrayList<>();
+                for (Coupon coupon :
+                        result) {
+                    if(coupon.getMoney() <= 0){
+                        invalidCoupons.add(coupon);
+                    }
+                }
+                result.removeAll(invalidCoupons);
+
                 mCoupons.clear();
                 mCoupons.addAll(result);
                 mAdapter.notifyDataSetChanged();

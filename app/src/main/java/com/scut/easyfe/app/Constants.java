@@ -119,6 +119,7 @@ public class Constants {
         public static final String ORDER =  "order";
         public static final String ORDERS =  "orders";
         public static final String TUTOR_DETAIL =  "tutor_detail";
+        public static final String TUTOR_UPDATE_TO_THIS_TEACH_DETAIL =  "tutor_update_to_this_teach_detail";
         public static final String TEACH_WEEK =  "teach_week";
         public static final String RESERVE_WAY = "reserve_way";
         public static final String TO_TEACHER_INFO_ACTIVITY_TYPE = "to_teacher_info_activity_type";
@@ -213,8 +214,23 @@ public class Constants {
         public static final String QQ_PACKAGE_NAME = "com.tencent.mobileqq";
 
         public static final String DEFAULT_QN_TOKEN = "R2Rq9_dBXtrL6wqLwA8_GC6EZNR9JU06xaGegd19:mKzKD3gB-mkdQpjt1BVtBAZmNYw=:eyJzY29wZSI6ImVhc3lmZSIsImRlYWRsaW5lIjoxNDg0OTIxMjY4fQ==";
-
-
+        public static final String ALIPAY_RSA_PUBLIC = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB";
+        public static final String ALIPAY_RSA_PRIVATE = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAOcFZ2189zt1453g" +
+                "9jQSW3oSwU8hT3DSwB4N3LspQ/3axpMyfS+CBcsEI22D7LyptaV9+S/WJcCBkP3p" +
+                "e/l6ImWa/uHhL33wDUtRK7Lw5xXXJ3ouh4fVf43n3goai7bmM1Sce6XljHUhDeFS" +
+                "wO5kv/aF1oacQhFaj7aAmVt3afd3AgMBAAECgYAWyv+zW7sA0NbOQt3HsW/5EVSl" +
+                "PAIcfY6a6H84sA+XQjiJWVfkkg2ERDpCmduHma7kTxOA1r4OyjnF831Z1eUCtVSQ" +
+                "zGhuLMa7vN+roBaYIMamX+UbWIdnj8IQQmtJ4IM53qUXjSv66uc6OeaeySjSv3TN" +
+                "7GV1qvb0NldewcU88QJBAPXCqBpnCPTIiUlvPvXe9lWRthXyjWeedT3sJ5j86Y67" +
+                "NngD3b0640ATqY3Zr49vc/kBXxeZkGg4q/tdxYPFEMMCQQDwpYjXmbc11A8/5o8S" +
+                "JQQ2fQPlczJtIw1z9OSf+24XhkbExrhPdCthaDzzWbetBo5qpKO1njUSdr8+smWG" +
+                "h5M9AkBD9ddcrb95SXdFemDzxvthwFCVEyTtUZFkVUjB8rZ3hOfUGmWYLY+oKYfK" +
+                "tTbqOEzev/VW5l1bpMhSU6UKAlXXAkEAvuCeVV0w7DpjSi1HyH2iBNJOl94y3kxS" +
+                "bGqQObGGVpSEZ6q0IRmlGyNCTUgZn922czJaREHUGOwlr8ZzLy00hQJBAM6gwMLl" +
+                "u/7E0919aQF/6omk4rj0UQh2h+GBiP4P+EZi7ZqdBazSd2ou1cKV5SkWf4znXGGc" +
+                "NrF6vay4QEnIhL4=";
+        public static final String ALIPAY_PID = "2088221383776744";
+        public static final String ALIPAY_SELLER = "jiajiaoyi2016@163.com";
 
         public static final ArrayList<Integer> teachTimeHourList = new ArrayList<>();               //授课时间之小时
         public static final ArrayList<ArrayList<Integer>> teachTimeMinuteList = new ArrayList<>();  //授课时间之分钟

@@ -60,6 +60,18 @@ public class Order extends BaseEntity {
 
     private int trafficTime = 0;                      //交通时间(客户端计算)
 
+    public String getPayTitle(){
+        return "家教费用";
+    }
+
+    public String getPayInfo(){
+        StringBuilder builder = new StringBuilder();
+        builder.append("授课课程: ");
+        builder.append(course);
+        builder.append(",授课时长: ");
+        builder.append(String.format(Locale.CHINA, "%d 分钟", time));
+        return builder.toString();
+    }
     /**
      * 是否需要显示专业辅导(初中高中才显示)
      */
@@ -106,7 +118,6 @@ public class Order extends BaseEntity {
     public void setIsTeacherReport(boolean teacherReport) {
         isTeacherReport = teacherReport;
     }
-
 
     public float getProfessionalTutorPrice() {
         return professionalTutorPrice;

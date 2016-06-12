@@ -54,7 +54,6 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
     private View mTeacherInfoContainer;
     private View mOperationButtonsContainer;
     private View mNumContainer;
-    private View mTutorContainer;
     private View mCouponContainer;
 
 
@@ -97,7 +96,6 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
         mTotalPriceTextView = OtherUtils.findViewById(this, R.id.order_base_info_tv_total_price);
 
         mNumContainer = OtherUtils.findViewById(this, R.id.reserved_order_layout_num_info);
-        mTutorContainer = OtherUtils.findViewById(this, R.id.order_base_info_ll_tutor);
         mCouponContainer = OtherUtils.findViewById(this, R.id.order_base_info_ll_coupon);
         mOrderNumTextView = OtherUtils.findViewById(this, R.id.order_base_num_tv_order);
         mInsuranceNumTextView = OtherUtils.findViewById(this, R.id.order_base_num_tv_insurance);
@@ -216,8 +214,8 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
         }
 
         if(!mOrder.hasProfessionTutor()){
-            mTutorContainer.setVisibility(View.GONE);
             mCouponContainer.setVisibility(View.GONE);
+            mTutorPriceTextView.setText("未预定此服务");
         }else{
             mCouponTextView.setText(String.format(Locale.CHINA, "减 %.0f 元", mOrder.getCoupon().getMoney()));
             mTutorPriceTextView.setText(String.format(Locale.CHINA, "%.0f 元/小时", mOrder.getProfessionalTutorPrice()));

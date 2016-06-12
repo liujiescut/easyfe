@@ -22,10 +22,9 @@ public class RConfirmSingleOrder extends RequestBase<JSONObject>{
     private Order mOrder = new Order();
     private String mCouponId = "";
 
-    public RConfirmSingleOrder(@NonNull String token, @NonNull Order order, @NonNull String couponId) {
+    public RConfirmSingleOrder(@NonNull String token, @NonNull Order order) {
         this.mToken = token;
         this.mOrder = order;
-        this.mCouponId = couponId;
     }
 
     @Override
@@ -46,11 +45,8 @@ public class RConfirmSingleOrder extends RequestBase<JSONObject>{
         params.put("subsidy", mOrder.getSubsidy());
         params.put("childAge", mOrder.getChildAge());
         params.put("childGender", mOrder.getChildGender());
-        if(0 != mOrder.getProfessionalTutorPrice()) {
+        if(-1 != mOrder.getProfessionalTutorPrice()) {
             params.put("professionalTutorPrice", mOrder.getProfessionalTutorPrice());
-        }
-        if(mCouponId.length() != 0){
-            params.put("couponId", mCouponId);
         }
 
         return params;

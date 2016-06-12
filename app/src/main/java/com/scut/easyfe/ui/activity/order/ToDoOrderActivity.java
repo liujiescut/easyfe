@@ -2,13 +2,19 @@ package com.scut.easyfe.ui.activity.order;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alipay.sdk.app.PayTask;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.entity.PayResult;
 import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
@@ -19,15 +25,19 @@ import com.scut.easyfe.ui.activity.ShowTextActivity;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.OtherUtils;
+import com.scut.easyfe.utils.SignUtils;
 import com.scut.easyfe.utils.TimeUtils;
 
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Locale;
 
 public class ToDoOrderActivity extends BaseActivity {
 
     public static final int REQUEST_TUTOR_DETAIL = 1;
+    public static final int SDK_PAY_FLAG = 2;
 
     private TextView mNameTextView;
     private TextView mNameLabelTextView;
@@ -58,6 +68,9 @@ public class ToDoOrderActivity extends BaseActivity {
     private View mParentAddressContainer;
 
     private Order mOrder;
+
+    //支付宝支付Handler
+    private Handler mAlipayHandler = new MyHandler();
 
     @Override
     protected void setLayoutView() {
@@ -155,8 +168,8 @@ public class ToDoOrderActivity extends BaseActivity {
         }
 
         if (!mOrder.hasProfessionTutor()) {
-            mTutorContainer.setVisibility(View.GONE);
             mCouponContainer.setVisibility(View.GONE);
+            mTutorPriceTextView.setText("未预定此服务");
             mThisTutorIncompleteInfoTextView.setText("未预定此服务");
         } else {
             mCouponTextView.setText(String.format(Locale.CHINA, "减 %.0f 元", mOrder.getCoupon().getMoney()));
@@ -188,6 +201,7 @@ public class ToDoOrderActivity extends BaseActivity {
 
         if (isTeacher() && !mOrder.isIsTeacherReport()) {          //家教可以进行修改
             bundle.putString(Constants.Key.ORDER_ID, mOrder.get_id());
+            bundle.putBoolean(Constants.Key.TUTOR_UPDATE_TO_THIS_TEACH_DETAIL, true);
             Intent intent = new Intent(mContext, EditTutorActivity.class);
             intent.putExtras(bundle);
             startActivityForResult(intent, REQUEST_TUTOR_DETAIL);
@@ -208,7 +222,7 @@ public class ToDoOrderActivity extends BaseActivity {
             DialogUtils.makeConfirmDialog(mContext, "温馨提示", "您已完成课时并反馈,\n等待家长完成课程并付款中").show();
 
         }else{                                  //家教未完成课程并反馈
-            if(! mOrder.getThisTeachDetail().hadFillIn()){      //家教未完成本次专业辅导情况
+            if(mOrder.hasProfessionTutor() && ! mOrder.getThisTeachDetail().hadFillIn()){      //家教未完成本次专业辅导情况
                 toast("请先填写首次专业辅导情况");
 
             }else{                                              //家教已完成本次专业辅导情况
@@ -228,7 +242,10 @@ public class ToDoOrderActivity extends BaseActivity {
             return;
         }
 
+        //test
+//        pay();
         if (mOrder.isIsTeacherReport()) {
+
             RequestManager.get().execute(new RPayOrder(mOrder.get_id()), new RequestListener<JSONObject>() {
                 @Override
                 public void onSuccess(RequestBase request, JSONObject result) {
@@ -319,5 +336,143 @@ public class ToDoOrderActivity extends BaseActivity {
             default:
                 break;
         }
+    }
+
+    static class MyHandler extends Handler{
+        @SuppressWarnings("unused")
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case SDK_PAY_FLAG: {
+                    PayResult payResult = new PayResult((String) msg.obj);
+                    /**
+                     * 同步返回的结果必须放置到服务端进行验证（验证的规则请看https://doc.open.alipay.com/doc2/detail.htm?spm=0.0.0.0.xdvAU6&treeId=59&articleId=103665&docType=1) 建议商户依赖异步通知
+                     * Todo verify from server
+                     */
+                    String resultInfo = payResult.getResult(); // 同步返回需要验证的信息
+
+                    String resultStatus = payResult.getResultStatus();
+
+                    // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
+                    if (TextUtils.equals(resultStatus, "9000")) {
+                        Toast.makeText(App.get().getApplicationContext(), "支付成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // 判断resultStatus 为非"9000"则代表可能支付失败
+                        // "8000"代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
+                        if (TextUtils.equals(resultStatus, "8000")) {
+                            Toast.makeText(App.get().getApplicationContext(), "支付结果确认中", Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
+                            Toast.makeText(App.get().getApplicationContext(), "支付失败", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+    }
+
+    /**
+     * 调用支付宝支付
+     */
+    public void pay() {
+        String orderInfo = getOrderInfo(mOrder.getPayTitle(), mOrder.getPayInfo(), mOrder.getTotalPrice() + "");
+
+        /**
+         * 特别注意，这里的签名逻辑需要放在服务端，切勿将私钥泄露在代码中！
+         * Todo get Sign from server
+         */
+        String sign = SignUtils.sign(orderInfo, Constants.Data.ALIPAY_RSA_PRIVATE);
+        try {
+            /**
+             * 仅需对sign 做URL编码
+             */
+            sign = URLEncoder.encode(sign, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        /**
+         * 完整的符合支付宝参数规范的订单信息
+         */
+        final String payInfo = orderInfo + "&sign=\"" + sign + "\"&" + "sign_type=\"RSA\"";
+
+        Runnable payRunnable = new Runnable() {
+
+            @Override
+            public void run() {
+                // 构造PayTask 对象
+                PayTask alipay = new PayTask(ToDoOrderActivity.this);
+                // 调用支付接口，获取支付结果
+                String result = alipay.pay(payInfo, true);
+
+                Message msg = new Message();
+                msg.what = SDK_PAY_FLAG;
+                msg.obj = result;
+                mAlipayHandler.sendMessage(msg);
+            }
+        };
+
+        // 必须异步调用
+        Thread payThread = new Thread(payRunnable);
+        payThread.start();
+    }
+
+    /**
+     * create the order info. 创建订单信息
+     *
+     */
+    private String getOrderInfo(String subject, String body, String price) {
+
+        // 签约合作者身份ID
+        String orderInfo = "partner=" + "\"" + Constants.Data.ALIPAY_PID + "\"";
+
+        // 签约卖家支付宝账号
+        orderInfo += "&seller_id=" + "\"" + Constants.Data.ALIPAY_SELLER + "\"";
+
+        // 商户网站唯一订单号
+        orderInfo += "&out_trade_no=" + "\"" + mOrder.get_id() + "\"";
+
+        // 商品名称
+        orderInfo += "&subject=" + "\"" + subject + "\"";
+
+        // 商品详情
+        orderInfo += "&body=" + "\"" + body + "\"";
+
+        // 商品金额
+        orderInfo += "&total_fee=" + "\"" + price + "\"";
+
+        // 服务器异步通知页面路径
+        orderInfo += "&notify_url=" + "\"" + "http://notify.msp.hk/notify.htm" + "\"";
+
+        // 服务接口名称， 固定值
+        orderInfo += "&service=\"mobile.securitypay.pay\"";
+
+        // 支付类型， 固定值
+        orderInfo += "&payment_type=\"1\"";
+
+        // 参数编码， 固定值
+        orderInfo += "&_input_charset=\"utf-8\"";
+
+        // 设置未付款交易的超时时间
+        // 默认30分钟，一旦超时，该笔交易就会自动被关闭。
+        // 取值范围：1m～15d。
+        // m-分钟，h-小时，d-天，1c-当天（无论交易何时创建，都在0点关闭）。
+        // 该参数数值不接受小数点，如1.5h，可转换为90m。
+        orderInfo += "&it_b_pay=\"30m\"";
+
+        // extern_token为经过快登授权获取到的alipay_open_id,带上此参数用户将使用授权的账户进行支付
+        // orderInfo += "&extern_token=" + "\"" + extern_token + "\"";
+
+        // 支付宝处理完请求后，当前页面跳转到商户指定页面的路径，可空
+        orderInfo += "&return_url=\"m.alipay.com\"";
+
+        // 调用银行卡支付，需配置此参数，参与签名， 固定值 （需要签约《无线银行卡快捷支付》才能使用）
+        // orderInfo += "&paymethod=\"expressGateway\"";
+
+        return orderInfo;
     }
 }

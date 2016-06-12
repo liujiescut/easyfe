@@ -20,7 +20,7 @@ import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.request.info.RGetCourse;
-import com.scut.easyfe.network.request.order.RPublishSpecialOrder;
+import com.scut.easyfe.network.request.order.RPublishSpread;
 import com.scut.easyfe.ui.activity.MainActivity;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.DialogUtils;
@@ -311,7 +311,7 @@ public class PublishSpreadActivity extends BaseActivity {
             return;
         }
 
-        RequestManager.get().execute(new RPublishSpecialOrder(App.getUser().getToken(), order), new RequestListener<JSONObject>() {
+        RequestManager.get().execute(new RPublishSpread(App.getUser().getToken(), order), new RequestListener<JSONObject>() {
             @Override
             public void onSuccess(RequestBase request, JSONObject result) {
                 DialogUtils.makeConfirmDialog(PublishSpreadActivity.this, "提示", "特价订单发布成功\n待工作人员审核通过后即可在特价订单页可见", new OnItemClickListener() {

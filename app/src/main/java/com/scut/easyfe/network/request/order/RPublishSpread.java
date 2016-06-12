@@ -17,12 +17,12 @@ import java.io.IOException;
  * 家教发布特价订单
  * Created by jay on 16/4/10.
  */
-public class RPublishSpecialOrder extends RequestBase<JSONObject>{
+public class RPublishSpread extends RequestBase<JSONObject>{
 
     private Order mOrder = new Order();
     private String mToken = "";
 
-    public RPublishSpecialOrder(@NonNull String token, @NonNull Order order) {
+    public RPublishSpread(@NonNull String token, @NonNull Order order) {
         this.mToken = token;
         this.mOrder = order;
     }

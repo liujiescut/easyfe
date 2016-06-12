@@ -10,10 +10,9 @@ import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.request.order.RGetSpecialOrder;
-import com.scut.easyfe.ui.adapter.SpecialOrderAdapter;
+import com.scut.easyfe.ui.adapter.SpreadAdapter;
 import com.scut.easyfe.ui.base.BaseRefreshFragment;
 import com.scut.easyfe.utils.DensityUtil;
-import com.sina.weibo.sdk.api.share.BaseRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,7 @@ import java.util.List;
  * 特价订单使用的Fragment
  * @author jay
  */
-public class SpecialOrderFragment extends BaseRefreshFragment {
+public class SpreadFragment extends BaseRefreshFragment {
     private ArrayList<Order> mOrders = new ArrayList<>();
 
     //是否显示的是搜索结果
@@ -44,7 +43,7 @@ public class SpecialOrderFragment extends BaseRefreshFragment {
 
         mDataListView.addHeaderView(headView);
         mDataListView.setDividerHeight(DensityUtil.dip2px(mActivity, 5));
-        mAdapter = new SpecialOrderAdapter(getActivity(), mOrders);
+        mAdapter = new SpreadAdapter(getActivity(), mOrders);
         setBaseAdapter(mAdapter);
     }
 

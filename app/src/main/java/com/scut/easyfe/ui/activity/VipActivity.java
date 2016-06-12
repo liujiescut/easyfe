@@ -1,7 +1,6 @@
 package com.scut.easyfe.ui.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -9,7 +8,6 @@ import android.widget.TextView;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.ui.base.BaseActivity;
-import com.scut.easyfe.ui.fragment.SpecialOrderFragment;
 import com.scut.easyfe.ui.fragment.VipFragment;
 import com.scut.easyfe.utils.OtherUtils;
 

@@ -12,7 +12,7 @@ import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.request.info.RGetCourse;
 import com.scut.easyfe.ui.base.BaseActivity;
-import com.scut.easyfe.ui.fragment.SpecialOrderFragment;
+import com.scut.easyfe.ui.fragment.SpreadFragment;
 import com.scut.easyfe.utils.OtherUtils;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class SearchSpreadActivity extends BaseActivity {
     private OptionsPickerView<String> mPicker;
     private TextView mGradeTextView;
     private TextView mCourseTextView;
-    private SpecialOrderFragment mFragment;
+    private SpreadFragment mFragment;
 
     private ArrayList<String> mGrade = new ArrayList<>();
     private static List<Course> mCourses = new ArrayList<>();
@@ -47,7 +47,7 @@ public class SearchSpreadActivity extends BaseActivity {
         mCourseTextView = OtherUtils.findViewById(this, R.id.search_spread_tv_course);
         mPicker = new OptionsPickerView<>(mContext);
 
-        mFragment = new SpecialOrderFragment();
+        mFragment = new SpreadFragment();
         mFragment.setShowSearchResult(true);
         getSupportFragmentManager()
                 .beginTransaction()

@@ -24,13 +24,11 @@ public class RConfirmSpecialOrder extends RequestBase<JSONObject>{
     private String mCouponId = "";
 
     public RConfirmSpecialOrder(@NonNull String token, @NonNull int trafficTime,
-                                @NonNull String orderId, @NonNull int professionalTutor,
-                                @NonNull String couponId) {
+                                @NonNull String orderId, @NonNull int professionalTutor) {
         this.mToken = token;
         this.mTrafficTime = trafficTime;
         this.mOrderId = orderId;
         this.mProfessionalTutor = professionalTutor;
-        this.mCouponId = couponId;
     }
 
     @Override
@@ -44,9 +42,8 @@ public class RConfirmSpecialOrder extends RequestBase<JSONObject>{
         params.put("token", mToken);
         params.put("orderId", mOrderId);
         params.put("trafficTime", mTrafficTime);
-        if(0 != mProfessionalTutor) {
+        if(-1 != mProfessionalTutor) {
             params.put("professionalTutorPrice", mProfessionalTutor);
-            params.put("couponId", mCouponId);
         }
         return params;
     }

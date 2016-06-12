@@ -88,6 +88,17 @@ public class TeacherReportActivity extends BaseActivity {
         mPicker = new OptionsPickerView<>(this);
         mPicker.setPicker(Constants.Data.rightPercentList);
         mPicker.setCyclic(false);
+
+        //如果订单没有专业辅导就隐藏相关内容
+        if(!mOrder.hasProfessionTutor()){
+            ((View)OtherUtils.findViewById(this, R.id.teacher_report_view_this_teach_detail)).setVisibility(View.GONE);
+            ((View)OtherUtils.findViewById(this, R.id.teacher_report_ll_tutor_1_detail)).setVisibility(View.GONE);
+            ((View)OtherUtils.findViewById(this, R.id.teacher_report_ll_this_teach_detail_label)).setVisibility(View.GONE);
+            ((View)OtherUtils.findViewById(this, R.id.teacher_report_view_next_teach_detail)).setVisibility(View.GONE);
+            ((View)OtherUtils.findViewById(this, R.id.teacher_report_ll_tutor_2_detail)).setVisibility(View.GONE);
+            ((View)OtherUtils.findViewById(this, R.id.teacher_report_ll_next_teach_detail_label)).setVisibility(View.GONE);
+            ((View)OtherUtils.findViewById(this, R.id.teacher_report_ll_edit_next_teach_detail)).setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -243,6 +254,7 @@ public class TeacherReportActivity extends BaseActivity {
             return;
         }
 
+        //Todo 没有专业辅导情况的订单的处理情况
         startLoading("提交评价中");
         RequestManager.get().execute(new RTeacherReport(mOrder.get_id(), mCommentEditText.getText().toString(),
                 mRightPercentTextView.getText().toString(), mEnthusiasmBar.getRating(),
@@ -279,7 +291,7 @@ public class TeacherReportActivity extends BaseActivity {
             return false;
         }
 
-        if(!mNextTeachDetail.hadFillIn()){
+        if(mOrder.hasProfessionTutor() && !mNextTeachDetail.hadFillIn()){
             toast("请先填写下次专业辅导情况");
             return false;
         }

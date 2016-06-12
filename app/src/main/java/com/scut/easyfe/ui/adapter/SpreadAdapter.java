@@ -29,11 +29,11 @@ import java.util.ArrayList;
  * 特价订单页面使用的Adapter
  * Created by jay on 16/3/29.
  */
-public class SpecialOrderAdapter extends BaseListViewScrollStateAdapter {
+public class SpreadAdapter extends BaseListViewScrollStateAdapter {
     private ArrayList<Order> mOrders;
     private WeakReference<Context> mContextReference;
 
-    public SpecialOrderAdapter(Context context, ArrayList<Order> mOrders) {
+    public SpreadAdapter(Context context, ArrayList<Order> mOrders) {
         this.mOrders = mOrders;
         mContextReference = new WeakReference<>(context);
     }

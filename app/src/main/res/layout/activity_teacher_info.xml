@@ -108,6 +108,7 @@
             <ListView
                 android:id="@+id/teacher_info_lv_comments"
                 android:layout_width="match_parent"
+                android:dividerHeight="@dimen/default_divider_height"
                 android:layout_height="wrap_content" />
 
             <TextView
