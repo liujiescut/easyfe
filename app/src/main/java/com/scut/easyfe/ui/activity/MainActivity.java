@@ -263,6 +263,7 @@ public class MainActivity extends BaseActivity {
             return;
         }
 
+        
         //Todo 2.0版本暂时
 //        Bundle bundle = new Bundle();
 //        bundle.putBoolean(Constants.Key.IS_MY_VIP_ACTIVITY, true);
