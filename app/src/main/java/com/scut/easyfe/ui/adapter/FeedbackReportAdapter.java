@@ -111,8 +111,6 @@ public class FeedbackReportAdapter extends BaseListViewScrollStateAdapter {
             detail = OtherUtils.findViewById(root, R.id.item_feedback_report_tv_detail);
             enthusiasm = OtherUtils.findViewById(root, R.id.item_feedback_report_prb_enthusiasm);
             absorption = OtherUtils.findViewById(root, R.id.item_feedback_report_prb_absorption_rate);
-            enthusiasm.setClickable(false);
-            absorption.setClickable(false);
         }
     }
 

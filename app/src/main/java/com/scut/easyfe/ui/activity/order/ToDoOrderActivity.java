@@ -20,13 +20,17 @@ import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.request.order.RPayOrder;
+import com.scut.easyfe.network.request.pay.RGetAlipaySign;
 import com.scut.easyfe.network.request.user.parent.RGetTeacherInfo;
 import com.scut.easyfe.ui.activity.ShowTextActivity;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.DialogUtils;
+import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 import com.scut.easyfe.utils.SignUtils;
 import com.scut.easyfe.utils.TimeUtils;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import org.json.JSONObject;
 
@@ -297,10 +301,11 @@ public class ToDoOrderActivity extends BaseActivity {
     }
 
     public void onProfessionGuideClick(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "专业辅导");
-        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.user_protocol_content));
-        redirectToActivity(mContext, ShowTextActivity.class, bundle);
+        doAlipay();
+//        Bundle bundle = new Bundle();
+//        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "专业辅导");
+//        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.user_protocol_content));
+//        redirectToActivity(mContext, ShowTextActivity.class, bundle);
     }
 
     public void onBackClick(View view) {
@@ -378,47 +383,71 @@ public class ToDoOrderActivity extends BaseActivity {
     /**
      * 调用支付宝支付
      */
-    public void pay() {
-        String orderInfo = getOrderInfo(mOrder.getPayTitle(), mOrder.getPayInfo(), mOrder.getTotalPrice() + "");
-
-        /**
-         * 特别注意，这里的签名逻辑需要放在服务端，切勿将私钥泄露在代码中！
-         * Todo get Sign from server
+    public void doAlipay() {
+        /*
+         * 获取支付信息的签名
          */
-        String sign = SignUtils.sign(orderInfo, Constants.Data.ALIPAY_RSA_PRIVATE);
-        try {
-            /**
-             * 仅需对sign 做URL编码
-             */
-            sign = URLEncoder.encode(sign, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        RequestManager.get().execute(new RGetAlipaySign(mOrder.get_id(), mOrder.getPayTitle(), mOrder.getPayInfo(), mOrder.getTotalPrice() + ""), new RequestListener<JSONObject>() {
+            @Override
+            public void onSuccess(RequestBase request, JSONObject result) {
+                String sign = result.optString("sign_string");
+                final String orderInfo = result.optString("sign_before");
+                LogUtils.i("cxtag", "orderInfo --> " + orderInfo);
+                LogUtils.i("cxtag", "sign  --> " + sign);
+                if(sign.length() != 0){
+                    try {
+                        /**
+                         * 仅需对sign 做URL编码
+                         */
+                        sign = URLEncoder.encode(sign, "UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
 
-        /**
-         * 完整的符合支付宝参数规范的订单信息
-         */
-        final String payInfo = orderInfo + "&sign=\"" + sign + "\"&" + "sign_type=\"RSA\"";
+                    final String finalSign = sign;
 
-        Runnable payRunnable = new Runnable() {
+                    ToDoOrderActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            /**
+                             * 完整的符合支付宝参数规范的订单信息
+                             */
+                            final String payInfo = orderInfo + "&sign=\"" + finalSign + "\"&" + "sign_type=\"RSA\"";
+
+                            Runnable payRunnable = new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    // 构造PayTask 对象
+                                    PayTask alipay = new PayTask(ToDoOrderActivity.this);
+                                    // 调用支付接口，获取支付结果
+                                    String result = alipay.pay(payInfo, true);
+
+                                    Message msg = new Message();
+                                    msg.what = SDK_PAY_FLAG;
+                                    msg.obj = result;
+                                    mAlipayHandler.sendMessage(msg);
+                                }
+                            };
+
+                            // 必须异步调用
+                            Thread payThread = new Thread(payRunnable);
+                            payThread.start();
+                        }
+                    });
+                }else{
+                    toast("支付失败,请联系客服");
+                }
+            }
 
             @Override
-            public void run() {
-                // 构造PayTask 对象
-                PayTask alipay = new PayTask(ToDoOrderActivity.this);
-                // 调用支付接口，获取支付结果
-                String result = alipay.pay(payInfo, true);
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
 
-                Message msg = new Message();
-                msg.what = SDK_PAY_FLAG;
-                msg.obj = result;
-                mAlipayHandler.sendMessage(msg);
             }
-        };
+        });
 
-        // 必须异步调用
-        Thread payThread = new Thread(payRunnable);
-        payThread.start();
+        LogUtils.i("cxtag", "orderInfo --> " + getOrderInfo(mOrder.getPayTitle(), mOrder.getPayInfo(), mOrder.getTotalPrice() + ""));
+        LogUtils.i("cxtag", "sign  --> " + SignUtils.sign(getOrderInfo(mOrder.getPayTitle(), mOrder.getPayInfo(), mOrder.getTotalPrice() + ""), Constants.Data.ALIPAY_RSA_PRIVATE));
     }
 
     /**
@@ -446,7 +475,7 @@ public class ToDoOrderActivity extends BaseActivity {
         orderInfo += "&total_fee=" + "\"" + price + "\"";
 
         // 服务器异步通知页面路径
-        orderInfo += "&notify_url=" + "\"" + "http://notify.msp.hk/notify.htm" + "\"";
+        orderInfo += "&notify_url=" + "\"" + "http://www.cadena.cn/money/notify/alipay" + "\"";
 
         // 服务接口名称， 固定值
         orderInfo += "&service=\"mobile.securitypay.pay\"";
@@ -474,5 +503,11 @@ public class ToDoOrderActivity extends BaseActivity {
         // orderInfo += "&paymethod=\"expressGateway\"";
 
         return orderInfo;
+    }
+
+    private void doWechatPay(){
+        final IWXAPI msgAPI = WXAPIFactory.createWXAPI(ToDoOrderActivity.this, Constants.Data.WECHAT_APP_ID);
+
+
     }
 }

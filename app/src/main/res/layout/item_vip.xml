@@ -14,6 +14,7 @@
         android:layout_height="@dimen/text_area_height"
         android:layout_weight="1"
         android:clickable="false"
+        android:background="@color/text_area_bg_inner"
         android:gravity="center_vertical|left"
         android:padding="@dimen/layout_padding_small"
         tools:text="我是活动标题"
@@ -38,13 +39,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:clickable="false"
+            android:background="@color/text_area_bg_inner"
             android:gravity="center_vertical|left"
             android:padding="@dimen/layout_padding_small"
             tools:text="已家教的时长: 250小时\n综合评分: 58分" />
 
 
         <View
-            android:layout_width="1dp"
+            android:layout_width="@dimen/default_divider_height"
             android:layout_height="match_parent"
             android:background="@color/bg_color_divider" />
 
@@ -99,6 +101,7 @@
         android:layout_height="@dimen/text_area_height"
         android:layout_weight="1"
         android:clickable="false"
+        android:background="@color/text_area_bg_inner"
         android:gravity="center_vertical|left"
         android:padding="@dimen/layout_padding_small"
         tools:text="可预约呦"

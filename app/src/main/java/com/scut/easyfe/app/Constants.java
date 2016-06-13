@@ -89,6 +89,8 @@ public class Constants {
         public static final String URL_GET_TEACHER_COMPLETE_COURSE_REWARD_LIST = URL_BASE + "Reward/FinishCourse/Teacher";
         public static final String URL_GET_TEACHER_COMPLETE_COURSE_REWARD = URL_BASE + "Reward/FinishCourse/Teacher";
 
+        public static final String URL_GET_ALIPAY_SIGN = URL_BASE + "Money/Sign/AliPay";
+
     }
 
     /**
@@ -206,6 +208,7 @@ public class Constants {
 
     public static class Data {
         public static final String WECHAT_APP_ID = "wx5242965d8b495478";                            //微信分享的APP_ID
+        public static final String WECHAT_PARTER_ID = "1352452902";                            //微信分享的APP_ID
         public static final String WEIBO_APP_KEY = "1033545693";                                    //微博分享
         public static final String QQ_APP_ID = "1105349762";
 

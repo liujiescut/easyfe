@@ -10,7 +10,6 @@
         layout="@layout/titlebar"/>
 
     <LinearLayout
-        android:paddingTop="@dimen/layout_padding_small"
         android:layout_width="match_parent"
         android:layout_height="46dp"
         android:orientation="horizontal">
