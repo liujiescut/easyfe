@@ -25,12 +25,14 @@ public class RGetOrders extends RequestBase<List<BriefOrder>>{
     private int mState = Constants.Identifier.ORDER_ALL;
     private int mLimit = Constants.DefaultValue.DEFAULT_LOAD_COUNT;
     private int mSkip = 0;
+    private String mSort = Constants.Identifier.SORT_BY_TIME;
 
-    public RGetOrders(String mToken, int mState, int mLimit, int mSkip) {
+    public RGetOrders(String mToken, int mState, int mLimit, int mSkip, String mSort) {
         this.mToken = mToken;
         this.mState = mState;
         this.mLimit = mLimit;
         this.mSkip = mSkip;
+        this.mSort = mSort;
     }
 
     @Override
@@ -50,6 +52,7 @@ public class RGetOrders extends RequestBase<List<BriefOrder>>{
         params.putQueryParams("state", mState);
         params.putQueryParams("skip", mSkip);
         params.putQueryParams("limit", mLimit);
+        params.putQueryParams("sort", mSort);
 
         return params;
     }

@@ -46,4 +46,14 @@ public class OrderPagerAdapter extends FragmentPagerAdapter {
         return fragments.get(position);
     }
 
+    
+    public void setSortWay(String sortWay){
+        if (null != fragments) {
+            for (MyOrderFragment fragment :
+                    fragments) {
+                fragment.setSortWay(sortWay);
+            }
+        }
+    }
+
 }

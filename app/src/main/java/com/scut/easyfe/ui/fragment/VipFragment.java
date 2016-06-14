@@ -5,11 +5,16 @@ import android.widget.AdapterView;
 
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.VipEvent;
+import com.scut.easyfe.network.RequestBase;
+import com.scut.easyfe.network.RequestListener;
+import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.RGetVipEvent;
 import com.scut.easyfe.ui.adapter.VipAdapter;
 import com.scut.easyfe.ui.base.BaseRefreshFragment;
 import com.scut.easyfe.utils.DensityUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 会员活动页面 我的会员活动页面
@@ -46,18 +51,42 @@ public class VipFragment extends BaseRefreshFragment {
     }
 
     private void loadData(int skip, int limit, final boolean clear) {
-//        setIsLoading(true); todo load data
-        mVipEvents.addAll(VipEvent.getTest());
+        setIsLoading(true);
+        RequestManager.get().execute(new RGetVipEvent(limit, skip), new RequestListener<List<VipEvent>>() {
+            @Override
+            public void onSuccess(RequestBase request, List<VipEvent> result) {
+                if (clear){
+                    mVipEvents.clear();
+                }
+
+                if (null != result) {
+                    if(result.size() != 0){
+                        mVipEvents.addAll(result);
+                        mAdapter.notifyDataSetChanged();
+                    }else{
+                        toast("没有更多数据可以加载");
+                    }
+                }
+
+                setIsLoading(false);
+            }
+
+            @Override
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                toast(errorMsg);
+                setIsLoading(false);
+            }
+        });
     }
 
     @Override
     protected void onLoadingData() {
-//        loadData(mOrders.size(), Constants.DefaultValue.DEFAULT_LOAD_COUNT, false);
+        loadData(mVipEvents.size(), Constants.DefaultValue.DEFAULT_LOAD_COUNT, false);
     }
 
     @Override
     protected void onRefreshData() {
-//        loadData(0, Constants.DefaultValue.DEFAULT_LOAD_COUNT, true);
+        loadData(0, Constants.DefaultValue.DEFAULT_LOAD_COUNT, true);
     }
 
     @Override

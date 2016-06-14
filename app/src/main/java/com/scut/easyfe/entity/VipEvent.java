@@ -16,29 +16,27 @@ public class VipEvent extends BaseEntity{
     private float score = 0f;
     //购买活动所需现金
     private float money = 0f;
-    //是否可以购买
-    private boolean reservable = false;
+    //预约的最大人数
+    private int allowCount = 0;
+    //已预约的人数
+    private int bookCount = 0;
 
-    public static List<VipEvent> getTest(){
-        ArrayList<VipEvent> events = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            VipEvent event = new VipEvent();
-            event.setTitle("活动" + i);
-            event.setDetail(
-                    "我是会员活动详情\n" +
-                    "我是会员活动详情\n" +
-                    "我是会员活动详情\n" +
-                    "我是会员活动详情");
-            event.setScore(i * 10 + 2 * i);
-            event.setMoney(i);
-            if(i % 2 == 0){
-                event.setReservable(true);
-            }
-            events.add(event);
-        }
-
-        return events;
+    public int getAllowCount() {
+        return allowCount;
     }
+
+    public void setAllowCount(int allowCount) {
+        this.allowCount = allowCount;
+    }
+
+    public int getBookCount() {
+        return bookCount;
+    }
+
+    public void setBookCount(int bookCount) {
+        this.bookCount = bookCount;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -72,10 +70,7 @@ public class VipEvent extends BaseEntity{
     }
 
     public boolean isReservable() {
-        return reservable;
+        return allowCount > bookCount;
     }
 
-    public void setReservable(boolean reservable) {
-        this.reservable = reservable;
-    }
 }

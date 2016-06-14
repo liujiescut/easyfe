@@ -340,6 +340,10 @@ public class MyOrderActivity extends BaseActivity {
         mSortByTimeImageView.setVisibility(View.INVISIBLE);
         mSortByNameTextView.setTextColor(getResources().getColor(R.color.theme_color));
         mSortByTimeTextView.setTextColor(getResources().getColor(R.color.text_area_text_color));
+
+        if (null != mPagerAdapter) {
+            mPagerAdapter.setSortWay(Constants.Identifier.SORT_BY_NAME);
+        }
     }
 
     public void onSortByTimeClick(View view) {
@@ -347,6 +351,10 @@ public class MyOrderActivity extends BaseActivity {
         mSortByTimeImageView.setVisibility(View.VISIBLE);
         mSortByNameTextView.setTextColor(getResources().getColor(R.color.text_area_text_color));
         mSortByTimeTextView.setTextColor(getResources().getColor(R.color.theme_color));
+
+        if (null != mPagerAdapter) {
+            mPagerAdapter.setSortWay(Constants.Identifier.SORT_BY_TIME);
+        }
     }
 
     public void onBackClick(View view) {

@@ -31,6 +31,7 @@ import java.util.List;
  */
 public class MyOrderFragment extends BaseRefreshFragment {
     private int mOrderType;
+    private String mSort = Constants.Identifier.SORT_BY_TIME;
     private int mState = Constants.Identifier.STATE_NORMAL;
     private ArrayList<BriefOrder> mOrders = new ArrayList<>();
 
@@ -56,7 +57,7 @@ public class MyOrderFragment extends BaseRefreshFragment {
     @Override
     protected void onLoadingData() {
         RequestManager.get().execute(
-                new RGetOrders(App.getUser().getToken(), mOrderType, Constants.DefaultValue.DEFAULT_LOAD_COUNT, mOrders.size()),
+                new RGetOrders(App.getUser().getToken(), mOrderType, Constants.DefaultValue.DEFAULT_LOAD_COUNT, mOrders.size(), mSort),
                 new RequestListener<List<BriefOrder>>() {
                     @Override
                     public void onSuccess(RequestBase request, List<BriefOrder> result) {
@@ -76,7 +77,7 @@ public class MyOrderFragment extends BaseRefreshFragment {
     @Override
     protected void onRefreshData() {
         RequestManager.get().execute(
-                new RGetOrders(App.getUser().getToken(), mOrderType, Constants.DefaultValue.DEFAULT_LOAD_COUNT, 0),
+                new RGetOrders(App.getUser().getToken(), mOrderType, Constants.DefaultValue.DEFAULT_LOAD_COUNT, 0, mSort),
                 new RequestListener<List<BriefOrder>>() {
                     @Override
                     public void onSuccess(RequestBase request, List<BriefOrder> result) {
@@ -202,5 +203,12 @@ public class MyOrderFragment extends BaseRefreshFragment {
 
     public int getState() {
         return mState;
+    }
+
+    public void setSortWay(String sortWay){
+        if(Constants.Identifier.SORT_BY_TIME.equals(sortWay) || Constants.Identifier.SORT_BY_NAME.equals(sortWay)){
+            mSort = sortWay;
+            updateData();
+        }
     }
 }

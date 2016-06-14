@@ -48,6 +48,7 @@ public class Constants {
         public static final String URL_GET_TUTOR_INFO = URL_BASE + "Share/Professional/Data";
         public static final String URL_CALLBACK = URL_BASE + "Share/Feedback";
         public static final String URL_ONLINE_PARAMS = URL_BASE + "Share/OnlineParams";
+        public static final String URL_GETVIP_EVENT = URL_BASE + "Share/VipEvent";
 
         public static final String URL_TEACHER_REGISTER = URL_BASE + "Authentication/SignUp/Teacher";
         public static final String URL_TEACHER_INFO_MODIFY = URL_BASE + "Teacher/Data";
