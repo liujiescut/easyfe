@@ -195,7 +195,7 @@ public class ToDoOrderActivity extends BaseActivity {
     }
 
     public void onCompleteTutorClick(View view) {
-        if(OtherUtils.isFastDoubleClick()){
+        if (OtherUtils.isFastDoubleClick()) {
             return;
         }
 
@@ -210,7 +210,7 @@ public class ToDoOrderActivity extends BaseActivity {
             intent.putExtras(bundle);
             startActivityForResult(intent, REQUEST_TUTOR_DETAIL);
 
-        }else {                     //家长只能查看
+        } else {                     //家长只能查看
             Intent intent = new Intent(mContext, ShowTutorActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
@@ -222,18 +222,18 @@ public class ToDoOrderActivity extends BaseActivity {
      * 家教底部按钮点击
      */
     public void onTeacherActionClick(View view) {
-        if(mOrder.isIsTeacherReport()){           //家教已经完成课程并反馈
+        if (mOrder.isIsTeacherReport()) {           //家教已经完成课程并反馈
             DialogUtils.makeConfirmDialog(mContext, "温馨提示", "您已完成课时并反馈,\n等待家长完成课程并付款中").show();
 
-        }else{                                  //家教未完成课程并反馈
-            if(mOrder.hasProfessionTutor() && ! mOrder.getThisTeachDetail().hadFillIn()){      //家教未完成本次专业辅导情况
+        } else {                                  //家教未完成课程并反馈
+            if (mOrder.hasProfessionTutor() && !mOrder.getThisTeachDetail().hadFillIn()) {      //家教未完成本次专业辅导情况
                 toast("请先填写首次专业辅导情况");
 
-            }else{                                              //家教已完成本次专业辅导情况
+            } else {                                              //家教已完成本次专业辅导情况
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(Constants.Key.ORDER, mOrder);
+                bundle.putInt(Constants.Key.TO_TEACHER_REPORT_ACTIVITY_TYPE, Constants.Identifier.TYPE_REPORT);
                 redirectToActivity(mContext, TeacherReportActivity.class, bundle);
-
             }
         }
     }
@@ -246,8 +246,6 @@ public class ToDoOrderActivity extends BaseActivity {
             return;
         }
 
-        //test
-//        pay();
         if (mOrder.isIsTeacherReport()) {
 
             RequestManager.get().execute(new RPayOrder(mOrder.get_id()), new RequestListener<JSONObject>() {
@@ -257,9 +255,9 @@ public class ToDoOrderActivity extends BaseActivity {
                     mOrder.setState(Constants.Identifier.ORDER_COMPLETED);
 
                     Bundle bundle = new Bundle();
-                    bundle.putInt(Constants.Key.ORDER_TYPE, Constants.Identifier.ORDER_COMPLETED);
                     bundle.putSerializable(Constants.Key.ORDER, mOrder);
-                    redirectToActivity(mContext, EvaluationActivity.class, bundle);
+                    bundle.putInt(Constants.Key.TO_TEACHER_REPORT_ACTIVITY_TYPE, Constants.Identifier.TYPE_CONFIRM);
+                    redirectToActivity(mContext, TeacherReportActivity.class, bundle);
                 }
 
                 @Override
@@ -301,11 +299,10 @@ public class ToDoOrderActivity extends BaseActivity {
     }
 
     public void onProfessionGuideClick(View view) {
-        doAlipay();
-//        Bundle bundle = new Bundle();
-//        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "专业辅导");
-//        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.user_protocol_content));
-//        redirectToActivity(mContext, ShowTextActivity.class, bundle);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "专业辅导");
+        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.user_protocol_content));
+        redirectToActivity(mContext, ShowTextActivity.class, bundle);
     }
 
     public void onBackClick(View view) {
@@ -343,7 +340,7 @@ public class ToDoOrderActivity extends BaseActivity {
         }
     }
 
-    static class MyHandler extends Handler{
+    static class MyHandler extends Handler {
         @SuppressWarnings("unused")
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -394,7 +391,7 @@ public class ToDoOrderActivity extends BaseActivity {
                 final String orderInfo = result.optString("sign_before");
                 LogUtils.i("cxtag", "orderInfo --> " + orderInfo);
                 LogUtils.i("cxtag", "sign  --> " + sign);
-                if(sign.length() != 0){
+                if (sign.length() != 0) {
                     try {
                         /**
                          * 仅需对sign 做URL编码
@@ -406,36 +403,31 @@ public class ToDoOrderActivity extends BaseActivity {
 
                     final String finalSign = sign;
 
-                    ToDoOrderActivity.this.runOnUiThread(new Runnable() {
+                    /**
+                     * 完整的符合支付宝参数规范的订单信息
+                     */
+                    final String payInfo = orderInfo + "&sign=\"" + finalSign + "\"&" + "sign_type=\"RSA\"";
+
+                    Runnable payRunnable = new Runnable() {
+
                         @Override
                         public void run() {
-                            /**
-                             * 完整的符合支付宝参数规范的订单信息
-                             */
-                            final String payInfo = orderInfo + "&sign=\"" + finalSign + "\"&" + "sign_type=\"RSA\"";
+                            // 构造PayTask 对象
+                            PayTask alipay = new PayTask(ToDoOrderActivity.this);
+                            // 调用支付接口，获取支付结果
+                            String result = alipay.pay(payInfo, true);
 
-                            Runnable payRunnable = new Runnable() {
-
-                                @Override
-                                public void run() {
-                                    // 构造PayTask 对象
-                                    PayTask alipay = new PayTask(ToDoOrderActivity.this);
-                                    // 调用支付接口，获取支付结果
-                                    String result = alipay.pay(payInfo, true);
-
-                                    Message msg = new Message();
-                                    msg.what = SDK_PAY_FLAG;
-                                    msg.obj = result;
-                                    mAlipayHandler.sendMessage(msg);
-                                }
-                            };
-
-                            // 必须异步调用
-                            Thread payThread = new Thread(payRunnable);
-                            payThread.start();
+                            Message msg = new Message();
+                            msg.what = SDK_PAY_FLAG;
+                            msg.obj = result;
+                            mAlipayHandler.sendMessage(msg);
                         }
-                    });
-                }else{
+                    };
+
+                    // 必须异步调用
+                    Thread payThread = new Thread(payRunnable);
+                    payThread.start();
+                } else {
                     toast("支付失败,请联系客服");
                 }
             }
@@ -447,12 +439,11 @@ public class ToDoOrderActivity extends BaseActivity {
         });
 
         LogUtils.i("cxtag", "orderInfo --> " + getOrderInfo(mOrder.getPayTitle(), mOrder.getPayInfo(), mOrder.getTotalPrice() + ""));
-        LogUtils.i("cxtag", "sign  --> " + SignUtils.sign(getOrderInfo(mOrder.getPayTitle(), mOrder.getPayInfo(), mOrder.getTotalPrice() + ""), Constants.Data.ALIPAY_RSA_PRIVATE));
+        LogUtils.i("cxtag", "sign1 --> " + SignUtils.sign(getOrderInfo(mOrder.getPayTitle(), mOrder.getPayInfo(), mOrder.getTotalPrice() + ""), Constants.Data.ALIPAY_RSA_PRIVATE));
     }
 
     /**
      * create the order info. 创建订单信息
-     *
      */
     private String getOrderInfo(String subject, String body, String price) {
 
@@ -505,7 +496,7 @@ public class ToDoOrderActivity extends BaseActivity {
         return orderInfo;
     }
 
-    private void doWechatPay(){
+    private void doWechatPay() {
         final IWXAPI msgAPI = WXAPIFactory.createWXAPI(ToDoOrderActivity.this, Constants.Data.WECHAT_APP_ID);
 
 

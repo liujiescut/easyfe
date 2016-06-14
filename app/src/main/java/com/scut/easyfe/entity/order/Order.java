@@ -60,6 +60,11 @@ public class Order extends BaseEntity {
 
     private int trafficTime = 0;                      //交通时间(客户端计算)
 
+    private String teacherComment = "";
+    private String rightPercent = "";
+    private int getLevel = 5;
+    private int enthusiasm = 5;
+
     public String getPayTitle(){
         return "家教费用";
     }
@@ -125,6 +130,46 @@ public class Order extends BaseEntity {
 
     public void setProfessionalTutorPrice(float tutorPrice) {
         this.professionalTutorPrice = tutorPrice;
+    }
+
+    public boolean isTeacherReport() {
+        return isTeacherReport;
+    }
+
+    public void setTeacherReport(boolean teacherReport) {
+        isTeacherReport = teacherReport;
+    }
+
+    public String getTeacherComment() {
+        return teacherComment;
+    }
+
+    public void setTeacherComment(String teacherComment) {
+        this.teacherComment = teacherComment;
+    }
+
+    public String getRightPercent() {
+        return rightPercent;
+    }
+
+    public void setRightPercent(String rightPercent) {
+        this.rightPercent = rightPercent;
+    }
+
+    public int getGetLevel() {
+        return getLevel;
+    }
+
+    public void setGetLevel(int getLevel) {
+        this.getLevel = getLevel;
+    }
+
+    public int getEnthusiasm() {
+        return enthusiasm;
+    }
+
+    public void setEnthusiasm(int enthusiasm) {
+        this.enthusiasm = enthusiasm;
     }
 
     public boolean isHadGetCoupon() {
@@ -405,7 +450,6 @@ public class Order extends BaseEntity {
         }
 
         public boolean hadFillIn(){
-            //Todo 换一种更合适的判断
             return category.length() != 0;
         }
 

@@ -10,15 +10,15 @@ import java.util.ArrayList;
  * Created by jay on 16/6/12.
  */
 public class FeedbackReport extends BaseEntity{
-    private String orderId = "";                    //订单_id
-    private String orderNum = "";                   //订单号
+    private String _id = "";                    //订单_id
+    private String orderNumber = "";                   //订单号
     private String teacherName = "";                //家教姓名
     private String parentName = "";                 //家长姓名
     private TeachTime teachTime = new TeachTime();  //授课时间
     private String teacherComment = "";             //家教评论
     private String rightPercent = "";               //正确率
-    private int enthusiasm = 0;                     //积极性
-    private int getLevel = 0;                       //吸收程度
+    private int enthusiasm = 5;                     //积极性
+    private int getLevel = 5;                       //吸收程度
     private Order.TutorDetail thisTeachDetail =     //本次专业辅导情况
             new Order.TutorDetail();
     private Order.TutorDetail nextTeachDetail =     //下次专业辅导情况
@@ -28,7 +28,7 @@ public class FeedbackReport extends BaseEntity{
         ArrayList<FeedbackReport> reports = new ArrayList<>();
         for (int i = 0; i < 15; i++) {
             FeedbackReport report = new FeedbackReport();
-            report.setOrderNum("120161324" + i);
+            report.setOrderNumber("120161324" + i);
             report.setTeacherName("家教");
             report.setParentName("家长");
             report.setEnthusiasm(i % 4 + 1);
@@ -45,20 +45,20 @@ public class FeedbackReport extends BaseEntity{
 
         return reports;
     }
-    public String getOrderId() {
-        return orderId;
+    public String get_id() {
+        return _id;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
-    public String getOrderNum() {
-        return orderNum;
+    public String getOrderNumber() {
+        return orderNumber;
     }
 
-    public void setOrderNum(String orderNum) {
-        this.orderNum = orderNum;
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
     }
 
     public String getTeacherName() {

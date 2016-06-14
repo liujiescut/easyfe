@@ -20,6 +20,7 @@ import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.ui.activity.auth.LoginActivity;
 import com.scut.easyfe.utils.ActivityManagerUtils;
 import com.scut.easyfe.utils.SpUtils;
+import com.scut.easyfe.utils.polling.PollingUtil;
 import com.umeng.socialize.PlatformConfig;
 
 
@@ -55,6 +56,7 @@ public class App extends Application {
 
         mInstance = this;
         mActivityManagerUtils = ActivityManagerUtils.getInstance();
+        PollingUtil.start(this);
         init();
     }
 
@@ -246,6 +248,7 @@ public class App extends Application {
      */
     public void exit() {
         mActivityManagerUtils.removeAllActivity();
+        PollingUtil.stop();
     }
 
 }

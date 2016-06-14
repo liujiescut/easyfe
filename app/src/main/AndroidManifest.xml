@@ -161,7 +161,17 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".ui.activity.VipActivity" />
         <activity android:name=".ui.activity.order.ShowTutorActivity" />
-        <activity android:name=".ui.activity.FeedbackReportActivity"></activity>
+        <activity android:name=".ui.activity.FeedbackReportActivity" />
+
+        <service
+            android:name=".utils.polling.PollingService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action
+                    android:name="com.scut.easyfe.service.PollingService"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

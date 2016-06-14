@@ -47,7 +47,9 @@ public class RTeacherReport extends RequestBase<JSONObject>{
         params.put("rightPercent", mRightPercent);
         params.put("enthusiasm", mEnthusiasm);
         params.put("getLevel", mGetLevel);
-        params.put("nextTeachDetail", mTutorDetail.getAsJson());
+        if(mTutorDetail.hadFillIn()) {
+            params.put("nextTeachDetail", mTutorDetail.getAsJson());
+        }
 
         return params;
     }

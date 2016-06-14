@@ -38,6 +38,10 @@ public class TeacherReportActivity extends BaseActivity {
     private Order.TutorDetail mThisTeachDetail;
     private Order.TutorDetail mNextTeachDetail;
 
+    private int mType = Constants.Identifier.TYPE_REPORT;
+
+    private boolean mIsLoadingClosedByUser = true;
+
     @Override
     protected void setLayoutView() {
         setContentView(R.layout.activity_teacher_report);
@@ -50,6 +54,7 @@ public class TeacherReportActivity extends BaseActivity {
             Bundle extras = intent.getExtras();
             if (null != extras) {
                 mOrder = (Order) extras.getSerializable(Constants.Key.ORDER);
+                mType = extras.getInt(Constants.Key.TO_TEACHER_REPORT_ACTIVITY_TYPE, Constants.Identifier.TYPE_REPORT);
                 if (null != mOrder) {
                     mThisTeachDetail = mOrder.getThisTeachDetail();
                     mNextTeachDetail = mOrder.getNextTeachDetail();
@@ -75,7 +80,15 @@ public class TeacherReportActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("完成课程并反馈");
+        String title;
+        if (mType == Constants.Identifier.TYPE_REPORT) {
+            title = "完成课程并反馈";
+        } else if (mType == Constants.Identifier.TYPE_CONFIRM) {
+            title = "本次家教反馈报告";
+        } else {
+            title = "反馈报告详情";
+        }
+        ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText(title);
 
         initThisTeachDetailViews();
         updateNextTeachDetailViews();
@@ -90,15 +103,44 @@ public class TeacherReportActivity extends BaseActivity {
         mPicker.setCyclic(false);
 
         //如果订单没有专业辅导就隐藏相关内容
-        if(!mOrder.hasProfessionTutor()){
-            ((View)OtherUtils.findViewById(this, R.id.teacher_report_view_this_teach_detail)).setVisibility(View.GONE);
-            ((View)OtherUtils.findViewById(this, R.id.teacher_report_ll_tutor_1_detail)).setVisibility(View.GONE);
-            ((View)OtherUtils.findViewById(this, R.id.teacher_report_ll_this_teach_detail_label)).setVisibility(View.GONE);
-            ((View)OtherUtils.findViewById(this, R.id.teacher_report_view_next_teach_detail)).setVisibility(View.GONE);
-            ((View)OtherUtils.findViewById(this, R.id.teacher_report_ll_tutor_2_detail)).setVisibility(View.GONE);
-            ((View)OtherUtils.findViewById(this, R.id.teacher_report_ll_next_teach_detail_label)).setVisibility(View.GONE);
-            ((View)OtherUtils.findViewById(this, R.id.teacher_report_ll_edit_next_teach_detail)).setVisibility(View.GONE);
+        if (!mOrder.hasProfessionTutor()) {
+            ((View) OtherUtils.findViewById(this, R.id.teacher_report_view_this_teach_detail)).setVisibility(View.GONE);
+            ((View) OtherUtils.findViewById(this, R.id.teacher_report_ll_tutor_1_detail)).setVisibility(View.GONE);
+            ((View) OtherUtils.findViewById(this, R.id.teacher_report_ll_this_teach_detail_label)).setVisibility(View.GONE);
+            ((View) OtherUtils.findViewById(this, R.id.teacher_report_view_next_teach_detail)).setVisibility(View.GONE);
+            ((View) OtherUtils.findViewById(this, R.id.teacher_report_ll_tutor_2_detail)).setVisibility(View.GONE);
+            ((View) OtherUtils.findViewById(this, R.id.teacher_report_ll_next_teach_detail_label)).setVisibility(View.GONE);
+            ((View) OtherUtils.findViewById(this, R.id.teacher_report_ll_edit_next_teach_detail)).setVisibility(View.GONE);
         }
+
+        if (mType != Constants.Identifier.TYPE_REPORT) {
+            mCommentEditText.setText(mOrder.getTeacherComment());
+            mRightPercentTextView.setText(mOrder.getRightPercent());
+            mRightPercentTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+            mAbsorptionBar.setRating(mOrder.getGetLevel());
+            mEnthusiasmBar.setRating(mOrder.getEnthusiasm());
+
+            mCommentEditText.setEnabled(false);
+            mRightPercentTextView.setClickable(false);
+            ((View) OtherUtils.findViewById(this, R.id.teacher_report_ll_edit_next_teach_detail)).setVisibility(View.GONE);
+            ((View) OtherUtils.findViewById(this, R.id.teacher_report_tv_commit)).setVisibility(View.GONE);
+
+            for (int i = 0; i < mAbsorptionBar.getChildCount(); i++) {
+                mAbsorptionBar.getChildAt(i).setClickable(false);
+            }
+
+            for (int i = 0; i < mEnthusiasmBar.getChildCount(); i++) {
+                mEnthusiasmBar.getChildAt(i).setClickable(false);
+            }
+
+            if (mType == Constants.Identifier.TYPE_SHOW) {
+                ((View) OtherUtils.findViewById(this, R.id.teacher_report_ll_order_detail)).setVisibility(View.VISIBLE);
+
+            } else if (mType == Constants.Identifier.TYPE_CONFIRM) {
+                ((View) OtherUtils.findViewById(this, R.id.teacher_report_tv_sure)).setVisibility(View.VISIBLE);
+            }
+        }
+
     }
 
     @Override
@@ -114,7 +156,7 @@ public class TeacherReportActivity extends BaseActivity {
     /**
      * 刷新下次专业辅导情况显示
      */
-    public void updateNextTeachDetailViews(){
+    public void updateNextTeachDetailViews() {
         //包含知识点跟复习模拟卷的View
         View mNextTeachDetailContainer = OtherUtils.findViewById(this, R.id.teacher_report_view_next_teach_detail);
         //包含知识点的View
@@ -127,7 +169,7 @@ public class TeacherReportActivity extends BaseActivity {
         mNextTeachDetailContainer.setVisibility(View.VISIBLE);
         mNextTeachDetailView.setVisibility(View.VISIBLE);
 
-        if(mNextTeachDetail.hadFillIn()){
+        if (mNextTeachDetail.hadFillIn()) {
             //填写或修改下次专业辅导情况的View
             TextView mNextTeachDetailActionTextView = OtherUtils.findViewById(this, R.id.teacher_report_tv_edit_next_teach_detail);
             mNextTeachDetailActionTextView.setText(getResources().getString(R.string.modify_next_teach_detail));
@@ -168,7 +210,7 @@ public class TeacherReportActivity extends BaseActivity {
                 }
             }
 
-        }else{
+        } else {
             mNextTeachDetailContainer.setVisibility(View.GONE);
             mNextTeachDetailView.setVisibility(View.GONE);
 
@@ -236,7 +278,7 @@ public class TeacherReportActivity extends BaseActivity {
         goShowTutorActivity(mNextTeachDetail);
     }
 
-    private void goShowTutorActivity(Order.TutorDetail detail){
+    private void goShowTutorActivity(Order.TutorDetail detail) {
         if (OtherUtils.isFastDoubleClick()) {
             return;
         }
@@ -250,48 +292,52 @@ public class TeacherReportActivity extends BaseActivity {
     }
 
     public void onSubmitClick(View view) {
-        if(!validate()){
+        if (!validate()) {
             return;
         }
 
-        //Todo 没有专业辅导情况的订单的处理情况
-        startLoading("提交评价中");
+        startLoading("提交反馈中");
         RequestManager.get().execute(new RTeacherReport(mOrder.get_id(), mCommentEditText.getText().toString(),
-                mRightPercentTextView.getText().toString(), mEnthusiasmBar.getRating(),
-                mAbsorptionBar.getRating(), mNextTeachDetail),
+                        mRightPercentTextView.getText().toString(), mEnthusiasmBar.getRating(),
+                        mAbsorptionBar.getRating(), mNextTeachDetail),
                 new RequestListener<JSONObject>() {
-            @Override
-            public void onSuccess(RequestBase request, JSONObject result) {
-                stopLoading();
-                toast(result.optString("message"));
+                    @Override
+                    public void onSuccess(RequestBase request, JSONObject result) {
+                        stopLoading();
+                        toast(result.optString("message"));
 
-                mOrder.setIsTeacherReport(true);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(Constants.Key.ORDER, mOrder);
-                TeacherReportActivity.this.redirectToActivity(TeacherReportActivity.this
-                        , ToDoOrderActivity.class, bundle);
-            }
+                        mOrder.setIsTeacherReport(true);
+                        mOrder.setTeacherComment(mCommentEditText.getText().toString());
+                        mOrder.setRightPercent(mRightPercentTextView.getText().toString());
+                        mOrder.setGetLevel(mAbsorptionBar.getRating());
+                        mOrder.setEnthusiasm(mEnthusiasmBar.getRating());
 
-            @Override
-            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
-                stopLoading();
-                toast(errorMsg);
-            }
-        });
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(Constants.Key.ORDER, mOrder);
+                        TeacherReportActivity.this.redirectToActivity(TeacherReportActivity.this
+                                , ToDoOrderActivity.class, bundle);
+                    }
+
+                    @Override
+                    public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                        stopLoading();
+                        toast(errorMsg);
+                    }
+                });
     }
 
-    private boolean validate(){
-        if(mCommentEditText.getText().length() == 0){
+    private boolean validate() {
+        if (mCommentEditText.getText().length() == 0) {
             toast("请输入对学生评价");
             return false;
         }
 
-        if(mRightPercentTextView.getText().length() == 0){
+        if (mRightPercentTextView.getText().length() == 0) {
             toast("请选择正确率");
             return false;
         }
 
-        if(mOrder.hasProfessionTutor() && !mNextTeachDetail.hadFillIn()){
+        if (mOrder.hasProfessionTutor() && !mNextTeachDetail.hadFillIn()) {
             toast("请先填写下次专业辅导情况");
             return false;
         }
@@ -300,12 +346,12 @@ public class TeacherReportActivity extends BaseActivity {
     }
 
     public void onModifyNextTeachDetailClick(View view) {
-        if(OtherUtils.isFastDoubleClick()){
+        if (OtherUtils.isFastDoubleClick()) {
             return;
         }
 
         Bundle bundle = new Bundle();
-        if(!mNextTeachDetail.hadFillIn()) {
+        if (!mNextTeachDetail.hadFillIn()) {
             mNextTeachDetail.setGrade(mOrder.getGrade());
         }
         bundle.putSerializable(Constants.Key.TUTOR_DETAIL, mNextTeachDetail);
@@ -316,11 +362,29 @@ public class TeacherReportActivity extends BaseActivity {
         startActivityForResult(intent, REQUEST_TUTOR_DETAIL);
     }
 
+    /**
+     * 点击"确认"按钮
+     */
+    public void onSureClick(View view) {
+        onOrderDetailClick(view);
+    }
+
+    /**
+     * 点击订单详情
+     */
+    public void onOrderDetailClick(View view) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constants.Key.ORDER_TYPE, Constants.Identifier.ORDER_COMPLETED);
+        bundle.putSerializable(Constants.Key.ORDER, mOrder);
+        redirectToActivity(mContext, ReservedOrCompletedOrderActivity.class, bundle);
+    }
+
     public void onRightPercentClick(View view) {
         if (null != mPicker) {
             mPicker.show();
         }
     }
+
 
     public void onBackClick(View view) {
         finish();

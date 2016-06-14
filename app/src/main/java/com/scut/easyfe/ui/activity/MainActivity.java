@@ -35,6 +35,8 @@ import com.scut.easyfe.ui.fragment.HomeFragment;
 import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.ImageUtils;
 import com.scut.easyfe.utils.OtherUtils;
+import com.scut.easyfe.utils.polling.PollingService;
+import com.scut.easyfe.utils.polling.PollingUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;

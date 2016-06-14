@@ -302,6 +302,7 @@ public class EditTutorActivity extends BaseActivity {
 
                     mCourseAdapter.setSelectedPosition(mSelectedCoursePosition);
                     mCourseAdapter.notifyDataSetChanged();
+
                     getTutorInfo(mCategory, mCourseName, !mIsModify);
                 } else {
                     toast("加载数据失败");
@@ -339,6 +340,9 @@ public class EditTutorActivity extends BaseActivity {
             resetKnowledgeArea();
         }
 
+        if(course.contains("数学")){
+            course = "数学";
+        }
         RequestManager.get().execute(new RGetTutorInfo(category, course), new RequestListener<TutorInfo>() {
             @Override
             public void onSuccess(RequestBase request, TutorInfo result) {

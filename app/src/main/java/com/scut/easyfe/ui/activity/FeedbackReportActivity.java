@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.ui.activity.order.SearchSpreadActivity;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.ui.fragment.FeedbackReportFragment;
@@ -22,6 +23,7 @@ public class FeedbackReportActivity extends BaseActivity {
     private ImageView mSortByTimeImageView;
     private TextView mSortByNameTextView;
     private ImageView mSortByNameImageView;
+    private FeedbackReportFragment mFragment;
 
     @Override
     protected void setLayoutView() {
@@ -31,9 +33,11 @@ public class FeedbackReportActivity extends BaseActivity {
     @Override
     protected void initView() {
         ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("反馈报告");
+
+        mFragment = new FeedbackReportFragment();
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.feedback_report_fl_container, new FeedbackReportFragment())
+                .add(R.id.feedback_report_fl_container, mFragment)
                 .commit();
 
         mSortByNameTextView = OtherUtils.findViewById(this, R.id.feedback_report_tv_sort_name);
@@ -47,6 +51,9 @@ public class FeedbackReportActivity extends BaseActivity {
         mSortByTimeImageView.setVisibility(View.INVISIBLE);
         mSortByNameTextView.setTextColor(getResources().getColor(R.color.theme_color));
         mSortByTimeTextView.setTextColor(getResources().getColor(R.color.text_area_text_color));
+        if (null != mFragment) {
+            mFragment.setSortWay(Constants.Identifier.SORT_BY_NAME);
+        }
     }
 
     public void onSortByTimeClick(View view) {
@@ -54,6 +61,10 @@ public class FeedbackReportActivity extends BaseActivity {
         mSortByTimeImageView.setVisibility(View.VISIBLE);
         mSortByNameTextView.setTextColor(getResources().getColor(R.color.text_area_text_color));
         mSortByTimeTextView.setTextColor(getResources().getColor(R.color.theme_color));
+
+        if (null != mFragment) {
+            mFragment.setSortWay(Constants.Identifier.SORT_BY_TIME);
+        }
     }
 
     public void onBackClick(View view){

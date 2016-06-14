@@ -75,6 +75,7 @@ public class Constants {
         public static final String URL_GET_TEACHER_DETAIL_INFO = URL_BASE + "Parent/Teacher/Data";
         public static final String URL_COMMENT_TEACHER = URL_BASE + "Parent/Comment/Teacher";
         public static final String URL_MODIFY_TUTOR = URL_BASE + "Teacher/Order/ThisTeachDetail";
+        public static final String URL_GET_FEEDBACK_REPORT = URL_BASE + "Share/Order/Report";
         public static final String URL_TEACHER_REPORT = URL_BASE + "Teacher/Report/Order";
 
         public static final String URL_GET_SPREAD_REWARD_LIST = URL_BASE + "Reward/Discount";
@@ -102,6 +103,7 @@ public class Constants {
         public static final String MAP_TAG = BASE_TAG + "map";
         public static final String ORDER_TAG = BASE_TAG + "order";
         public static final String TEACHER_REGISTER_TAG = BASE_TAG + "teacher_register";
+        public static final String POLLING_TAG = BASE_TAG + "polling";
     }
 
     public class Key{
@@ -120,6 +122,7 @@ public class Constants {
         public static final String ORDER_ID =  "order_id";
         public static final String ORDER =  "order";
         public static final String ORDERS =  "orders";
+        public static final String FEEDBACK_REPORT =  "feedback_report";
         public static final String TUTOR_DETAIL =  "tutor_detail";
         public static final String TUTOR_UPDATE_TO_THIS_TEACH_DETAIL =  "tutor_update_to_this_teach_detail";
         public static final String TEACH_WEEK =  "teach_week";
@@ -127,6 +130,7 @@ public class Constants {
         public static final String TO_TEACHER_INFO_ACTIVITY_TYPE = "to_teacher_info_activity_type";
         public static final String TO_TEACHER_REGISTER_ONE_ACTIVITY_TYPE = "to_teacher_register_one_activity_type";
         public static final String TO_PARENT_REGISTER_ACTIVITY_TYPE = "to_parent_register_activity_type";
+        public static final String TO_TEACHER_REPORT_ACTIVITY_TYPE = "to_teacher_report_activity_type";
         public static final String IS_MY_VIP_ACTIVITY = "is_my_vip_activity";
         public static final String TO_TEACH_TIME_ACTIVITY_TYPE = "to_teach_time_activity_type";
         public static final String TO_SPECIAL_TIME_ACTIVITY_TYPE = "to_special_time_activity_type";
@@ -191,9 +195,18 @@ public class Constants {
         public static final int TYPE_REGISTER = 0;
         public static final int TYPE_MODIFY = 1;
 
+        /** 到家教反馈页面的功能 */
+        public static final int TYPE_REPORT = 0;            //家教填写反馈报告
+        public static final int TYPE_CONFIRM = 1;           //家长付款完确认反馈报告
+        public static final int TYPE_SHOW = 2;              //显示反馈报告
+
         /** 专业辅导情况辅导方式 */
         public static final int TUTOR_WAY_KNOWLEDGE = 1;
         public static final int TUTOR_WAY_PAPER = 2;
+
+        /** 排序方式 */
+        public static final String SORT_BY_NAME = "name";
+        public static final String SORT_BY_TIME = "time";
     }
 
     public static class Path {

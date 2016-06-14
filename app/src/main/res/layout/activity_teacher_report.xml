@@ -296,6 +296,40 @@
                 android:textColor="@color/title_text_color"
                 />
 
+            <LinearLayout
+                android:id="@+id/teacher_report_ll_order_detail"
+                style="@style/ll_container_normal_style"
+                android:visibility="gone"
+                android:layout_marginBottom="@dimen/layout_margin_normal"
+                android:layout_marginTop="@dimen/layout_margin_small">
+
+                <TextView
+                    android:id="@+id/teacher_report_tv_order_detail"
+                    style="@style/text_normal_style"
+                    android:layout_marginRight="@dimen/container_stoke_width"
+                    android:layout_weight="1"
+                    android:drawableRight="@mipmap/icon_right_arrow_padding"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="@dimen/layout_padding_small"
+                    android:onClick="onOrderDetailClick"
+                    android:text="订单详情" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/teacher_report_tv_sure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_margin="@dimen/layout_margin_small"
+                android:background="@drawable/selector_main_left_drawer_item"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onSureClick"
+                android:padding="@dimen/layout_padding_tiny"
+                android:text="@string/sure"
+                android:textColor="@color/title_text_color"
+                />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

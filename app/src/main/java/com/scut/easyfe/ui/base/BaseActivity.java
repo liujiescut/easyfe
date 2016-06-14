@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.ui.customView.SimpleHUD.PairProgressHUD;
+import com.scut.easyfe.utils.polling.PollingUtil;
 import com.umeng.analytics.MobclickAgent;
 
 
@@ -126,6 +127,7 @@ public abstract class BaseActivity extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
+        PollingUtil.onResume();
     }
 
     @Override

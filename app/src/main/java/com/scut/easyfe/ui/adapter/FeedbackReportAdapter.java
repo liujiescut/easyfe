@@ -1,6 +1,7 @@
 package com.scut.easyfe.ui.adapter;
 
-import android.content.Context;
+import android.app.Activity;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +9,15 @@ import android.widget.TextView;
 
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
+import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.FeedbackReport;
+import com.scut.easyfe.entity.order.Order;
+import com.scut.easyfe.network.RequestBase;
+import com.scut.easyfe.network.RequestListener;
+import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.order.RGetOrderDetail;
+import com.scut.easyfe.ui.activity.order.TeacherReportActivity;
+import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.ui.base.BaseListViewScrollStateAdapter;
 import com.scut.easyfe.ui.customView.FixedClickListener;
 import com.scut.easyfe.utils.OtherUtils;
@@ -25,11 +34,11 @@ import io.techery.properratingbar.ProperRatingBar;
  */
 public class FeedbackReportAdapter extends BaseListViewScrollStateAdapter {
     private ArrayList<FeedbackReport> mReports;
-    private WeakReference<Context> mContextReference;
+    private WeakReference<BaseActivity> mActivityReference;
 
-    public FeedbackReportAdapter(Context context, ArrayList<FeedbackReport> mReports) {
+    public FeedbackReportAdapter(BaseActivity context, ArrayList<FeedbackReport> mReports) {
         this.mReports = mReports;
-        mContextReference = new WeakReference<>(context);
+        mActivityReference = new WeakReference<>(context);
     }
 
     @Override
@@ -51,10 +60,10 @@ public class FeedbackReportAdapter extends BaseListViewScrollStateAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (null == convertView) {
-            if (mContextReference.get() == null) {
+            if (mActivityReference.get() == null) {
                 return null;
             }
-            convertView = LayoutInflater.from(mContextReference.get()).
+            convertView = LayoutInflater.from(mActivityReference.get()).
                     inflate(R.layout.item_feedback_report, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
@@ -68,7 +77,30 @@ public class FeedbackReportAdapter extends BaseListViewScrollStateAdapter {
         holder.detail.setOnClickListener(new FixedClickListener() {
             @Override
             public void onFixClick(View view) {
-                //Todo Go to detail
+                if (null != mActivityReference.get()) {
+                    mActivityReference.get().startLoading("请稍候");
+                }
+                RequestManager.get().execute(new RGetOrderDetail(App.getUser().getToken(),
+                                mReports.get(position).get_id()),
+                        new RequestListener<Order>() {
+                            @Override
+                            public void onSuccess(RequestBase request, Order result) {
+                                if (null != result && null != mActivityReference.get()) {
+                                    mActivityReference.get().stopLoading();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putSerializable(Constants.Key.ORDER, result);
+                                    bundle.putInt(Constants.Key.TO_TEACHER_REPORT_ACTIVITY_TYPE, Constants.Identifier.TYPE_SHOW);
+                                    mActivityReference.get().redirectToActivity(mActivityReference.get(), TeacherReportActivity.class, bundle);
+                                }
+                            }
+
+                            @Override
+                            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                                if (null != mActivityReference.get()) {
+                                    mActivityReference.get().toast(errorMsg);
+                                }
+                            }
+                        });
             }
         });
 
@@ -78,7 +110,7 @@ public class FeedbackReportAdapter extends BaseListViewScrollStateAdapter {
     private String getContent(FeedbackReport report){
         StringBuilder builder = new StringBuilder();
         builder.append("订单号: ");
-        builder.append(report.getOrderNum());
+        builder.append(report.getOrderNumber());
         builder.append("\n");
         if(App.getUser().isTeacher()){
             builder.append("家长: ");
