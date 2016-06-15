@@ -15,7 +15,7 @@ public class PollingDataHandler {
 
     private static PollingDataHandler mInstance;
     private static EventBus mEventBus;
-    private PollingData mPreviousData = new PollingData(0);
+    private PollingData mPreviousData = new PollingData();
 
     /**
      * 获取轮询数据处理类单例
@@ -49,9 +49,13 @@ public class PollingDataHandler {
         LogUtils.i(Constants.Tag.POLLING_TAG, "PollingDataHandler -> handleData(PollingData data)");
         if(mPreviousData.equals(data)){
             return false;
+
+        }else{
+            LogUtils.i(Constants.Tag.POLLING_TAG, "Polling data no change");
         }
 
         LogUtils.i(Constants.Tag.POLLING_TAG, "post data change event!!!");
+        mPreviousData = data;
         mEventBus.post(new DataChangeEvent(data));
         return true;
     }

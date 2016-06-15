@@ -35,6 +35,7 @@ import com.scut.easyfe.ui.customView.CircleImageView;
 import com.scut.easyfe.ui.fragment.HomeFragment;
 import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.ImageUtils;
+import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 import com.scut.easyfe.utils.polling.PollingService;
 import com.scut.easyfe.utils.polling.PollingUtil;
@@ -383,6 +384,6 @@ public class MainActivity extends BaseActivity {
 
     @Subscribe
     public void onEvent(DataChangeEvent event){
-        toast("轮询 --> " + event.getData().getData());
+        LogUtils.i(Constants.Tag.POLLING_TAG, event.getData().getMine().getWallet() + "");
     }
 }

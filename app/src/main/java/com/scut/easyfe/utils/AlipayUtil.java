@@ -22,7 +22,7 @@ public class AlipayUtil {
     /**
      * 调用支付宝支付
      */
-    public static void pay(final Activity activity, String id, String title, String info, String price, final AlipayListener listener) {
+    public static void pay(final Activity activity, String id, String title, String info, String price, final PayUtil.PayListener listener) {
 
         final String orderInfo = getOrderInfo(id, title, info, price);
         String sign = SignUtils.sign(orderInfo, Constants.Data.ALIPAY_RSA_PRIVATE);
@@ -136,13 +136,12 @@ public class AlipayUtil {
         // 支付宝处理完请求后，当前页面跳转到商户指定页面的路径，可空
         orderInfo += "&return_url=\"m.alipay.com\"";
 
+        //Todo confirm
+        orderInfo += "&usage=\"wallet\"";
+
         // 调用银行卡支付，需配置此参数，参与签名， 固定值 （需要签约《无线银行卡快捷支付》才能使用）
         // orderInfo += "&paymethod=\"expressGateway\"";
 
         return orderInfo;
-    }
-
-    public interface AlipayListener {
-        void onPayReturn(boolean success);
     }
 }

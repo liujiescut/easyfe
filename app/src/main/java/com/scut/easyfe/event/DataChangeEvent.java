@@ -9,7 +9,7 @@ import com.scut.easyfe.entity.PollingData;
  * Created by jay on 16/6/15.
  */
 public class DataChangeEvent {
-    private PollingData data = new PollingData(0);
+    private PollingData data = new PollingData();
 
     public DataChangeEvent(@NonNull PollingData data) {
         this.data = data;

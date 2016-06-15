@@ -1,9 +1,7 @@
 package com.scut.easyfe.network.request;
 
 import com.fasterxml.jackson.databind.JavaType;
-import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
-import com.scut.easyfe.entity.FeedbackReport;
 import com.scut.easyfe.entity.VipEvent;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.kjFrame.http.HttpParams;
@@ -40,7 +38,7 @@ public class RGetVipEvent extends RequestBase<List<VipEvent>>{
 
     @Override
     public String getUrl() {
-        return Constants.URL.URL_GETVIP_EVENT;
+        return Constants.URL.URL_GET_VIP_EVENT;
     }
 
     @Override

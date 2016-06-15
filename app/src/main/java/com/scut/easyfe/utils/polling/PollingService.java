@@ -11,6 +11,10 @@ import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.app.Variables;
 import com.scut.easyfe.entity.PollingData;
 import com.scut.easyfe.event.PollingDataHandler;
+import com.scut.easyfe.network.RequestBase;
+import com.scut.easyfe.network.RequestListener;
+import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.RPollingData;
 import com.scut.easyfe.utils.LogUtils;
 
 public class PollingService extends Service {
@@ -44,7 +48,6 @@ public class PollingService extends Service {
         @Override
         public void run() {
             while(Variables.POLLING) {
-                LogUtils.i(Constants.Tag.POLLING_TAG, "轮询中 --> " + count++);
                 polling();
 
                 try {
@@ -57,20 +60,27 @@ public class PollingService extends Service {
     }
 
     /**
-     * 执行轮寻操作
+     * 执行轮询操作
      */
     public void polling(){
         final long finalPollingTime = mPollingTime++;
-        if(mPollingSuccessTime > finalPollingTime){
-            //Todo ignore data
-        }else{
-            mPollingSuccessTime = finalPollingTime;
-        }
+        RequestManager.get().execute(new RPollingData(), new RequestListener<PollingData>() {
+            @Override
+            public void onSuccess(RequestBase request, PollingData result) {
+                if(mPollingSuccessTime > finalPollingTime){
+                    return;
+                }
 
+                mPollingSuccessTime = finalPollingTime;
+                if(App.getUser(false).hasLogin()){
+                    PollingDataHandler.get().handleData(result);
+                }
+            }
 
+            @Override
+            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
 
-        if(App.getUser(false).hasLogin()){
-            PollingDataHandler.get().handleData(new PollingData((int)mPollingSuccessTime));
-        }
+            }
+        });
     }
 }

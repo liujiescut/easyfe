@@ -30,6 +30,7 @@ import com.scut.easyfe.utils.AlipayUtil;
 import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
+import com.scut.easyfe.utils.PayUtil;
 import com.scut.easyfe.utils.SignUtils;
 import com.scut.easyfe.utils.TimeUtils;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -247,7 +248,15 @@ public class ToDoOrderActivity extends BaseActivity {
         }
 
         if (mOrder.isIsTeacherReport()) {
-            showPayDialog();
+            new PayUtil(this, mOrder.get_id(), mOrder.getPayTitle(), mOrder.getPayInfo(), mOrder.getTotalPrice() + "", new PayUtil.PayListener() {
+                @Override
+                public void onPayReturn(boolean success) {
+                    if(success){
+                        //Todo
+                        LogUtils.i("支付成功");
+                    }
+                }
+            }).showPayDialog();
 
         } else {
             DialogUtils.makeConfirmDialog(this, "温馨提示", "待老师完成课时并反馈之后才能付款哦~~").show();
@@ -283,7 +292,15 @@ public class ToDoOrderActivity extends BaseActivity {
     }
 
     public void onProfessionGuideClick(View view) {
-        showPayDialog();
+        new PayUtil(this, mOrder.get_id(), mOrder.getPayTitle(), mOrder.getPayInfo(), mOrder.getTotalPrice() + "", new PayUtil.PayListener() {
+            @Override
+            public void onPayReturn(boolean success) {
+                if(success){
+                    //Todo
+                    LogUtils.i("支付成功");
+                }
+            }
+        }).showPayDialog();
 //        Bundle bundle = new Bundle();
 //        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "专业辅导");
 //        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.user_protocol_content));
@@ -325,61 +342,4 @@ public class ToDoOrderActivity extends BaseActivity {
         }
     }
 
-    private void showPayDialog(){
-        AlertView mPayWayAlertView = new AlertView("付款方式", null, "取消", null,
-                new String[]{"支付宝", "微信", "余额"},
-                this, AlertView.Style.ActionSheet, new OnItemClickListener() {
-            @Override
-            public void onItemClick(Object o, int position) {
-                    if (position == 0) {
-                        doAlipay();
-                    } else if (position == 1) {
-                        doWechatPay();
-                    } else if (position == 2) {
-                        doBalancePay();
-                    }
-            }
-
-        }).setButtonTextColor(R.color.theme_color);
-        mPayWayAlertView.show();
-    }
-
-    private void doAlipay() {
-        AlipayUtil.pay(ToDoOrderActivity.this, mOrder.get_id(), mOrder.getPayTitle(),
-                mOrder.getPayInfo(), mOrder.getTotalPrice() + "",
-                new AlipayUtil.AlipayListener() {
-            @Override
-            public void onPayReturn(boolean success) {
-                if(success){
-                    RequestManager.get().execute(new RPayOrder(mOrder.get_id()), new RequestListener<JSONObject>() {
-                        @Override
-                        public void onSuccess(RequestBase request, JSONObject result) {
-                            toast(result.optString("message"));
-                            mOrder.setState(Constants.Identifier.ORDER_COMPLETED);
-
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable(Constants.Key.ORDER, mOrder);
-                            bundle.putInt(Constants.Key.TO_TEACHER_REPORT_ACTIVITY_TYPE, Constants.Identifier.TYPE_CONFIRM);
-                            redirectToActivity(mContext, TeacherReportActivity.class, bundle);
-                        }
-
-                        @Override
-                        public void onFailed(RequestBase request, int errorCode, String errorMsg) {
-                            toast(errorMsg);
-                        }
-                    });
-                }
-            }
-        });
-    }
-
-    private void doWechatPay() {
-        final IWXAPI msgAPI = WXAPIFactory.createWXAPI(ToDoOrderActivity.this, Constants.Data.WECHAT_APP_ID);
-
-
-    }
-
-    private void doBalancePay(){
-
-    }
 }

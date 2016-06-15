@@ -1,5 +1,6 @@
 package com.scut.easyfe.ui.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,10 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.entity.VipEvent;
 import com.scut.easyfe.ui.base.BaseListViewScrollStateAdapter;
+import com.scut.easyfe.ui.customView.FixedClickListener;
+import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
+import com.scut.easyfe.utils.PayUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -75,6 +79,31 @@ public class VipAdapter extends BaseListViewScrollStateAdapter {
         holder.money.setText(String.format(Locale.CHINA, "%.0f 元\n参加", mVipEvents.get(position).getMoney()));
         holder.reservable.setText(mVipEvents.get(position).isReservable() ? "可预约呦~~" : "已订满啦 ~~");
 
+        holder.score.setOnClickListener(new FixedClickListener() {
+            @Override
+            public void onFixClick(View view) {
+                //Todo
+            }
+        });
+
+        holder.money.setOnClickListener(new FixedClickListener() {
+            @Override
+            public void onFixClick(View view) {
+                if (mContextReference.get() == null){
+                    return;
+                }
+
+                new PayUtil((Activity) mContextReference.get(), mVipEvents.get(position).get_id(), mVipEvents.get(position).getPayTitle(), mVipEvents.get(position).getPayInfo(), mVipEvents.get(position).getMoney() + "", new PayUtil.PayListener() {
+                    @Override
+                    public void onPayReturn(boolean success) {
+                        if(success){
+                            //Todo
+                            LogUtils.i("支付成功");
+                        }
+                    }
+                }).showPayDialog();
+            }
+        });
         boolean isReservable = mVipEvents.get(position).isReservable();
         int backgroundRes = isReservable ? R.drawable.selector_spread_reserve : R.drawable.shape_vip_unreservable;
         int textColor = App.get().getResources().getColor(isReservable ? R.color.theme_color : R.color.vip_un_reservable);

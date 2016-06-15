@@ -8,6 +8,8 @@ import java.util.List;
  * Created by jay on 16/6/7.
  */
 public class VipEvent extends BaseEntity{
+    //会员活动id
+    private String _id = "";
     //活动标题
     private String title = "";
     //活动详情
@@ -20,6 +22,22 @@ public class VipEvent extends BaseEntity{
     private int allowCount = 0;
     //已预约的人数
     private int bookCount = 0;
+
+    public String getPayTitle(){
+        return title;
+    }
+
+    public String getPayInfo(){
+        return  detail;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
 
     public int getAllowCount() {
         return allowCount;
