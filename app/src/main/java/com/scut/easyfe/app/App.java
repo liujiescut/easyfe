@@ -23,6 +23,8 @@ import com.scut.easyfe.utils.SpUtils;
 import com.scut.easyfe.utils.polling.PollingUtil;
 import com.umeng.socialize.PlatformConfig;
 
+import org.greenrobot.eventbus.EventBus;
+
 
 /**
  * 自定义 Application
@@ -32,6 +34,7 @@ public class App extends Application {
     private static App mInstance;           // Application单例
     private static User mUser;
     private static SpUtils mSpUtils;            // 用于管理 SharePreference 的工具类对象
+    private static EventBus mEventBus;
     private ActivityManagerUtils mActivityManagerUtils;             // 用于管理 Activity 的工具类对象
     private UploadManager qiniuManager;             //上传头像工具
 
@@ -116,6 +119,13 @@ public class App extends Application {
         return qiniuManager;
     }
 
+    public EventBus getEventBus(){
+        if (null == mEventBus) {
+            initEventBus();
+        }
+        return mEventBus;
+    }
+
 
     /**
      * Application 默认构造函数
@@ -131,9 +141,14 @@ public class App extends Application {
         initBaiduMap();
         initImageLoader();
         initUmeng();
+        initEventBus();
 
         /** 用户登陆*/
         User.doLogin();
+    }
+
+    private void initEventBus(){
+        mEventBus = EventBus.getDefault();
     }
 
 
@@ -193,6 +208,8 @@ public class App extends Application {
         // QQ和Qzone appid appkey
         PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
     }
+
+
 
     public static String getServicePhone() {
         return mServicePhone;

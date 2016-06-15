@@ -66,6 +66,7 @@
     <TextView
         style="@style/main_left_drawer_item"
         android:onClick="onMyOrderClick"
+        android:drawableRight="@mipmap/icon_red_point"
         android:text="@string/main_left_drawer_orders" />
 
     <View style="@style/main_left_drawer_divider" />

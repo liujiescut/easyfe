@@ -9,10 +9,14 @@ import android.widget.Toast;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.app.Variables;
+import com.scut.easyfe.entity.PollingData;
+import com.scut.easyfe.event.PollingDataHandler;
 import com.scut.easyfe.utils.LogUtils;
 
 public class PollingService extends Service {
-    public static final String ACTION = "com.scut.easyfe.service.PollingService";
+
+    private long mPollingTime = 0;
+    private long mPollingSuccessTime = 0;
 
     @Nullable
     @Override
@@ -56,7 +60,17 @@ public class PollingService extends Service {
      * 执行轮寻操作
      */
     public void polling(){
+        final long finalPollingTime = mPollingTime++;
+        if(mPollingSuccessTime > finalPollingTime){
+            //Todo ignore data
+        }else{
+            mPollingSuccessTime = finalPollingTime;
+        }
+
+
+
         if(App.getUser(false).hasLogin()){
+            PollingDataHandler.get().handleData(new PollingData((int)mPollingSuccessTime));
         }
     }
 }

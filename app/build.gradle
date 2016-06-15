@@ -44,6 +44,7 @@ dependencies {
     compile 'com.android.support:design:23.2.1'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'com.github.techery:ProperRatingBar:v0.0.3'
+    compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile project(':alertview')
     compile project(':pickerview')

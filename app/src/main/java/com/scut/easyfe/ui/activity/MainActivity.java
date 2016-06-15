@@ -15,6 +15,7 @@ import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.app.Variables;
 import com.scut.easyfe.entity.user.User;
+import com.scut.easyfe.event.DataChangeEvent;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
@@ -38,6 +39,7 @@ import com.scut.easyfe.utils.OtherUtils;
 import com.scut.easyfe.utils.polling.PollingService;
 import com.scut.easyfe.utils.polling.PollingUtil;
 
+import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,6 +68,18 @@ public class MainActivity extends BaseActivity {
     private String mAdvertiseLink = "";
     private List<String> mGuideMapImages = new ArrayList<>();
     private List<String> mGuideMapLinks = new ArrayList<>();
+
+    @Override
+    protected void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
+        App.get().getEventBus().register(mContext);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        App.get().getEventBus().unregister(mContext);
+    }
 
     @Override
     protected void onResume() {
@@ -365,5 +379,10 @@ public class MainActivity extends BaseActivity {
             redirectToActivity(this, WebActivity.class, bundle);
         }
         onCloseAdvertiseClick(view);
+    }
+
+    @Subscribe
+    public void onEvent(DataChangeEvent event){
+        toast("轮询 --> " + event.getData().getData());
     }
 }
