@@ -14,7 +14,7 @@ import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.request.user.teacher.RTeacherCancelOrder;
-import com.scut.easyfe.network.request.user.teacher.RTeacherComfirmOrder;
+import com.scut.easyfe.network.request.user.teacher.RTeacherConfirmOrder;
 import com.scut.easyfe.ui.activity.ShowTextActivity;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.DialogUtils;
@@ -24,6 +24,8 @@ import com.scut.easyfe.utils.TimeUtils;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -148,7 +150,9 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
     }
 
     public void onConfirmOrderClick(View view) {
-        RequestManager.get().execute(new RTeacherComfirmOrder(App.getUser().getToken(), mOrder.get_id()),
+        List<String> orders = new ArrayList<>();
+        orders.add(mOrder.get_id());
+        RequestManager.get().execute(new RTeacherConfirmOrder(App.getUser().getToken(), orders),
                 new RequestListener<JSONObject>() {
                     @Override
                     public void onSuccess(RequestBase request, JSONObject result) {

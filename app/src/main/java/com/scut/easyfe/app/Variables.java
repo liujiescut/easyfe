@@ -8,5 +8,5 @@ public class Variables {
     public static int TUTOR_PRICE = 0;
     public static boolean POLLING = true;                           //是否开启轮询
     public static boolean POLLING_KILLED = false;                   //轮询是否被杀死
-    public static int POLLING_INTERVAL_SECONDS = 2;                 //轮询时间间隔
+    public static int POLLING_INTERVAL_SECONDS = 5;                 //轮询时间间隔
 }

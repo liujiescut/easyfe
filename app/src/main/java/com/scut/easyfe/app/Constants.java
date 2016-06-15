@@ -64,6 +64,7 @@ public class Constants {
         public static final String URL_GET_MY_TICKET = URL_BASE + "Parent/Coupon";
         public static final String URL_WALLET_WITHDRAW = URL_BASE + "Money/Withdraw";
         public static final String URL_PAY_ORDER = URL_BASE + "Parent/Pay";
+        public static final String URL_PAY_CALLBACK = "http://www.cadena.cn/money/notify/alipay";
 
         public static final String URL_PARENT_REGISTER = URL_BASE + "Authentication/SignUp/Parent";
         public static final String URL_CONFIRM_SPECIAL_ORDER = URL_BASE + "Parent/Sure/Special";

@@ -97,7 +97,10 @@ public class MyOrderFragment extends BaseRefreshFragment {
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if(OtherUtils.isFastDoubleClick())
+        if(OtherUtils.isFastDoubleClick()){
+            return;
+        }
+
         if(position <= 0){
             return;
         }

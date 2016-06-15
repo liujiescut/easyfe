@@ -28,40 +28,60 @@
             style="@style/ll_container_normal_style"
             >
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dip"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:id="@+id/task_reward_tv_teacher_spread"
                 style="@style/text_normal_style"
                 android:drawableRight="@mipmap/icon_right_arrow_padding"
+                android:paddingRight="-5dp"
                 android:gravity="start|center_vertical"
                 android:onClick="onTeacherSpreadClick"
                 android:text="@string/spread_reward" />
+            <ImageView
+                android:id="@+id/task_reward_tv_spread_new"
+                style="@style/task_reward_point_style"
+                />
         </LinearLayout>
         <LinearLayout
             style="@style/ll_container_normal_style"
             >
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dip"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:id="@+id/task_reward_tv_teacher_invite"
                 style="@style/text_normal_style"
                 android:drawableRight="@mipmap/icon_right_arrow_padding"
                 android:gravity="start|center_vertical"
+                android:paddingRight="-5dp"
                 android:onClick="onTeacherInviteClick"
                 android:text="@string/invite_reward" />
+            <ImageView
+                android:id="@+id/task_reward_tv_teacher_invite_new"
+                style="@style/task_reward_point_style"
+                />
+
         </LinearLayout>
         <LinearLayout
             style="@style/ll_container_normal_style"
             >
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dip"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:id="@+id/task_reward_tv_teacher_complete_order"
                 style="@style/text_normal_style"
                 android:drawableRight="@mipmap/icon_right_arrow_padding"
                 android:gravity="start|center_vertical"
+                android:paddingRight="-5dp"
                 android:onClick="onTeacherCompleteOrderClick"
                 android:text="@string/complete_course_reward" />
+            <ImageView
+                android:id="@+id/task_reward_tv_teacher_complete_course_new"
+                style="@style/task_reward_point_style"
+                />
+
         </LinearLayout>
 
     </LinearLayout>
@@ -86,27 +106,41 @@
             style="@style/ll_container_normal_style"
             >
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dip"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:id="@+id/task_reward_tv_parent_invite"
                 style="@style/text_normal_style"
                 android:drawableRight="@mipmap/icon_right_arrow_padding"
                 android:gravity="start|center_vertical"
                 android:onClick="onParentInviteClick"
+                android:paddingRight="-5dp"
                 android:text="@string/invite_reward" />
+            <ImageView
+                android:id="@+id/task_reward_tv_parent_invite_new"
+                style="@style/task_reward_point_style"
+                />
+
         </LinearLayout>
         <LinearLayout
             style="@style/ll_container_normal_style"
             >
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dip"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:id="@+id/task_reward_tv_parent_complete_order"
                 style="@style/text_normal_style"
                 android:drawableRight="@mipmap/icon_right_arrow_padding"
                 android:gravity="start|center_vertical"
                 android:onClick="onParentCompleteOrderClick"
+                android:paddingRight="-5dp"
                 android:text="@string/parent_complete_course_reward" />
+            <ImageView
+                android:id="@+id/task_reward_tv_parent_complete_course_new"
+                style="@style/task_reward_point_style"
+                />
+
         </LinearLayout>
 
     </LinearLayout>

@@ -128,6 +128,17 @@
         <item name="android:textSize">@dimen/text_size_tiny</item>
     </style>
 
-
+    <style name="task_reward_point_style">
+        <item name="android:layout_width">16dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">top</item>
+        <item name="android:paddingRight">2dp</item>
+        <item name="android:paddingLeft">-6dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:background">@color/text_area_bg_inner</item>
+        <item name="android:src">@mipmap/icon_red_point</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
 
 </resources>

@@ -1,15 +1,33 @@
 package com.scut.easyfe.ui.activity.reward;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
+import com.scut.easyfe.entity.PollingData;
 import com.scut.easyfe.entity.user.User;
+import com.scut.easyfe.event.DataChangeEvent;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.OtherUtils;
 
+import org.greenrobot.eventbus.Subscribe;
+
 public class TaskRewardActivity extends BaseActivity {
+
+    @Override
+    protected void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
+        App.get().getEventBus().register(mContext);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        App.get().getEventBus().unregister(mContext);
+    }
+
     @Override
     protected void setLayoutView() {
         setContentView(R.layout.activity_task_reward);
@@ -75,5 +93,16 @@ public class TaskRewardActivity extends BaseActivity {
         if(App.getUser().hasLogin()){
             redirectToActivity(mContext, ParentCourseRewardActivity.class);
         }
+    }
+
+    @Subscribe
+    public void onEvent(DataChangeEvent event){
+        if (null != event) {
+            refreshUI(event.getData());
+        }
+    }
+
+    public void refreshUI(PollingData data){
+        //Todo 根据轮询数据更新UI
     }
 }

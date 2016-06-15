@@ -7,22 +7,25 @@ import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.kjFrame.http.HttpParams;
 import com.scut.easyfe.network.kjFrame.http.Request;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 家教确认订单
  * Created by jay on 16/4/10.
  */
-public class RTeacherComfirmOrder extends RequestBase<JSONObject>{
+public class RTeacherConfirmOrder extends RequestBase<JSONObject>{
     private String mToken = "";
-    private String mOrderId = "";
+    private List<String> mOrderIds = new ArrayList<>();
 
-    public RTeacherComfirmOrder(@NonNull String token, @NonNull String orderId) {
+    public RTeacherConfirmOrder(@NonNull String token, @NonNull List<String> orderIds) {
         this.mToken = token;
-        this.mOrderId = orderId;
+        this.mOrderIds = orderIds;
     }
 
     @Override
@@ -34,7 +37,7 @@ public class RTeacherComfirmOrder extends RequestBase<JSONObject>{
     public JSONObject getJsonParams() throws JSONException {
         JSONObject params = new JSONObject();
         params.put("token", mToken);
-        params.put("orderId", mOrderId);
+        params.put("orders", new JSONArray(mOrderIds));
         return params;
     }
 

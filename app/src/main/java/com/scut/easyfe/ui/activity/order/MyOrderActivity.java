@@ -3,6 +3,7 @@ package com.scut.easyfe.ui.activity.order;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -52,6 +53,7 @@ public class MyOrderActivity extends BaseActivity {
 
     private ViewPager mViewPager;
     private OrderPagerAdapter mPagerAdapter;
+    private List<TextView> mTabTextViews;
     private int mCurrentOrderType = Constants.Identifier.ORDER_TO_DO;
     private int mSelectedPage = 2;
 
@@ -102,6 +104,25 @@ public class MyOrderActivity extends BaseActivity {
         }
 
         mViewPager.setCurrentItem(mSelectedPage);
+
+        initTabTextView(mTabs);
+    }
+
+    private void initTabTextView(PagerSlidingTabStrip tab){
+        mTabTextViews = new ArrayList<>();
+        try {
+            ViewGroup container = (ViewGroup) tab.getChildAt(0);
+            for (int i = 0; i < container.getChildCount(); i++) {
+                mTabTextViews.add((TextView) container.getChildAt(i));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        for (int i = 0; i < mTabTextViews.size(); i++) {
+            mTabTextViews.get(i).setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.mipmap.icon_red_point_padding,0 );
+            mTabTextViews.get(i).setCompoundDrawablePadding(16);
+        }
     }
 
     @Override

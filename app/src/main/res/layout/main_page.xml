@@ -35,6 +35,15 @@
             android:onClick="onPresentClick"
             android:layout_alignParentRight="true"
             />
+        <ImageView
+            android:id="@+id/main_iv_present_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:src="@mipmap/icon_red_point_padding"
+            android:onClick="onPresentClick"
+            android:layout_alignParentRight="true"
+            />
     </RelativeLayout>
 
     <FrameLayout

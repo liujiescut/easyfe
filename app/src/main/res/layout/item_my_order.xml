@@ -37,16 +37,30 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/item_my_order_tv_num"
-            style="@style/my_order_item_style"
-            android:layout_width="match_parent"
+        <LinearLayout
             android:layout_height="0dip"
-            android:layout_marginBottom="@dimen/default_border_height"
             android:layout_weight="1"
-            android:gravity="center_vertical|left"
-            android:clickable="false"
-            tools:text="订单 : 123456789" />
+            style="@style/ll_container_normal_style"
+            android:layout_marginBottom="@dimen/default_border_height"
+            >
+            <TextView
+                android:id="@+id/item_my_order_tv_num"
+                style="@style/my_order_item_style"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical|left"
+                android:clickable="false"
+                tools:text="订单 : 123456789" />
+            <ImageView
+                android:id="@+id/item_my_order_new"
+                android:layout_width="@dimen/text_area_height"
+                android:layout_height="@dimen/text_area_height"
+                android:padding="8dp"
+                android:background="@color/text_area_bg_inner"
+                android:src="@mipmap/icon_red_point"
+                />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
