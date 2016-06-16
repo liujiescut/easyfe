@@ -52,14 +52,21 @@
                 android:gravity="center_vertical|left"
                 android:clickable="false"
                 tools:text="订单 : 123456789" />
-            <ImageView
-                android:id="@+id/item_my_order_new"
+            <LinearLayout
                 android:layout_width="@dimen/text_area_height"
                 android:layout_height="@dimen/text_area_height"
-                android:padding="8dp"
-                android:background="@color/text_area_bg_inner"
-                android:src="@mipmap/icon_red_point"
-                />
+                android:background="@color/text_area_bg_inner">
+
+                <ImageView
+                    android:id="@+id/item_my_order_new"
+                    android:layout_width="@dimen/text_area_height"
+                    android:layout_height="@dimen/text_area_height"
+                    android:padding="8dp"
+                    android:background="@color/text_area_bg_inner"
+                    android:src="@mipmap/icon_red_point"
+                    />
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout

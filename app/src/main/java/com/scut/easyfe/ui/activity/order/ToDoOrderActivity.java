@@ -16,12 +16,17 @@ import com.bigkoo.alertview.OnItemClickListener;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.app.Variables;
 import com.scut.easyfe.entity.Bank;
 import com.scut.easyfe.entity.PayResult;
+import com.scut.easyfe.entity.PollingData;
 import com.scut.easyfe.entity.order.Order;
+import com.scut.easyfe.event.DataChangeEvent;
+import com.scut.easyfe.event.PDHandler;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.order.RGetOrderDetail;
 import com.scut.easyfe.network.request.order.RPayOrder;
 import com.scut.easyfe.network.request.user.parent.RGetTeacherInfo;
 import com.scut.easyfe.ui.activity.ShowTextActivity;
@@ -36,6 +41,7 @@ import com.scut.easyfe.utils.TimeUtils;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
+import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -76,6 +82,18 @@ public class ToDoOrderActivity extends BaseActivity {
     private View mParentAddressContainer;
 
     private Order mOrder;
+
+    @Override
+    protected void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
+        App.get().getEventBus().register(mContext);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        App.get().getEventBus().unregister(mContext);
+    }
 
     @Override
     protected void setLayoutView() {
@@ -342,4 +360,54 @@ public class ToDoOrderActivity extends BaseActivity {
         }
     }
 
+    @Subscribe
+    public void onEvent(DataChangeEvent event) {
+        if(Variables.localData.getMine().isOrderNew(event.getData().getMine())){
+            PollingData.PollingPrivateData.NewOrderInfo orderInfo = Variables.localData.getMine().getNewOrderInfo(event.getData().getMine());
+            if(null != mOrder && orderInfo.ids.contains(mOrder.get_id())){
+
+                startLoading("刷新数据中");
+                RequestManager.get().execute(new RGetOrderDetail(App.getUser().getToken(), mOrder.get_id()), new RequestListener<Order>() {
+                    @Override
+                    public void onSuccess(RequestBase request, Order result) {
+                        mOrder = result;
+                        updateView();
+                        stopLoading();
+                    }
+
+                    @Override
+                    public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                        toast(errorMsg);
+                        stopLoading();
+                    }
+                });
+
+                for (int latestIndex = 0; latestIndex < PDHandler.get().getLatestData().getMine().getOrder().size(); latestIndex++) {
+                    if (PDHandler.get().getLatestData().getMine().getOrder().get(latestIndex).getOrderId().equals(mOrder.get_id())) {
+                        boolean orderInLocal = false;
+                        for (int localIndex = 0; localIndex < Variables.localData.getMine().getOrder().size(); localIndex++) {
+                            if (Variables.localData.getMine().getOrder().get(localIndex).getOrderId().equals(mOrder.get_id())) {
+
+                                Variables.localData.getMine().getOrder().get(localIndex).setTimestamp(PDHandler.get().getLatestData().getMine().getOrder().get(latestIndex).getTimestamp());
+                                Variables.localData.getMine().getOrder().get(localIndex).setState(PDHandler.get().getLatestData().getMine().getOrder().get(latestIndex).getState());
+                                Variables.localData.equals(PDHandler.get().getLatestData(), true);
+                                Variables.localData.save2Cache();
+                                App.get().getEventBus().post(new DataChangeEvent(PDHandler.get().getLatestData()));
+                                orderInLocal = true;
+                                break;
+                            }
+                        }
+
+                        if(!orderInLocal){
+                            Variables.localData.getMine().getOrder().add(PDHandler.get().getLatestData().getMine().getOrder().get(latestIndex));
+                            Variables.localData.equals(PDHandler.get().getLatestData(), true);
+                            Variables.localData.save2Cache();
+                            App.get().getEventBus().post(new DataChangeEvent(PDHandler.get().getLatestData()));
+                        }
+
+                    }
+                }
+            }
+        }
+    }
 }

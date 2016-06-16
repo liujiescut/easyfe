@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.app.Variables;
+import com.scut.easyfe.event.PDHandler;
 import com.scut.easyfe.ui.activity.CallbackActivity;
 import com.scut.easyfe.ui.activity.BookActivity;
 import com.scut.easyfe.ui.activity.order.SpreadActivity;
@@ -41,6 +43,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
     private List<String> mAdvertiseImages = new ArrayList<>();
     private List<String> mAdvertiseUrls = new ArrayList<>();
 
+    private boolean mIsVipNew = false;
+
     @Override
     protected void setLayoutRes() {
         layoutRes = R.layout.fragment_home;
@@ -62,6 +66,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         mAdvertiseViewPager.setAdapter(mAdvertisePagerAdapter);
 //        mAdvertiseViewPager.setPageTransformer(true,new DepthPageTransformer());
         mAdvertiseIndicator.setViewPager(mAdvertiseViewPager);
+
+        ((View)OtherUtils.findViewById(v, R.id.home_tv_vip_new)).setVisibility(mIsVipNew ? View.VISIBLE : View.INVISIBLE);
 
         initAdvertiseHeight();
     }
@@ -192,6 +198,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
             return;
         }
 
+        setVipNewState(false);
+        Variables.localData.getCommon().setVipEvent(PDHandler.get().getLatestData().getCommon().getVipEvent());
+        Variables.localData.equals(PDHandler.get().getLatestData(), true);
+        Variables.localData.save2Cache();
+
         Bundle bundle = new Bundle();
         bundle.putBoolean(Constants.Key.IS_MY_VIP_ACTIVITY, false);
         mActivity.redirectToActivity(mActivity, VipActivity.class, bundle);
@@ -265,5 +276,18 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         mLineTwoTextView.setText(line2);
         mLineThreeTextView.setText(line3);
         mHintTextView.setText(hint);
+    }
+
+    /**
+     * 设置会员活动是否有新数据
+     */
+    public void setVipNewState(boolean isNew){
+        mIsVipNew = isNew;
+
+        if (null == mActivity) {
+            return;
+        }
+
+        ((View)OtherUtils.findViewById(mActivity, R.id.home_tv_vip_new)).setVisibility(isNew ? View.VISIBLE : View.INVISIBLE);
     }
 }

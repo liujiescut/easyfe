@@ -12,7 +12,11 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.app.Variables;
+import com.scut.easyfe.entity.PollingData;
 import com.scut.easyfe.entity.order.BriefOrder;
+import com.scut.easyfe.event.DataChangeEvent;
+import com.scut.easyfe.event.PDHandler;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
@@ -22,6 +26,8 @@ import com.scut.easyfe.ui.adapter.OrderPagerAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.OtherUtils;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,10 +63,24 @@ public class MyOrderActivity extends BaseActivity {
     private int mCurrentOrderType = Constants.Identifier.ORDER_TO_DO;
     private int mSelectedPage = 2;
 
+    private PollingData.PollingPrivateData.NewOrderInfo newOrderInfo = new PollingData.PollingPrivateData.NewOrderInfo();
+
     private View.OnClickListener mModifyListener;
     private View.OnClickListener mDoModifyListener;
     private View.OnClickListener mCancelListener;
     private View.OnClickListener mDoCancelListener;
+
+    @Override
+    protected void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
+        App.get().getEventBus().register(mContext);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        App.get().getEventBus().unregister(mContext);
+    }
 
     @Override
     protected void onResume() {
@@ -106,6 +126,7 @@ public class MyOrderActivity extends BaseActivity {
         mViewPager.setCurrentItem(mSelectedPage);
 
         initTabTextView(mTabs);
+        refreshUI(PDHandler.get().getLatestData());
     }
 
     private void initTabTextView(PagerSlidingTabStrip tab){
@@ -117,11 +138,6 @@ public class MyOrderActivity extends BaseActivity {
             }
         }catch (Exception e){
             e.printStackTrace();
-        }
-
-        for (int i = 0; i < mTabTextViews.size(); i++) {
-            mTabTextViews.get(i).setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.mipmap.icon_red_point_padding,0 );
-            mTabTextViews.get(i).setCompoundDrawablePadding(16);
         }
     }
 
@@ -392,5 +408,25 @@ public class MyOrderActivity extends BaseActivity {
         }
 
         onBackClick(null);
+    }
+
+    @Subscribe
+    public void onEvent(DataChangeEvent event) {
+        if (null != event) {
+            refreshUI(event.getData());
+        }
+    }
+
+    private void refreshUI(PollingData data){
+        newOrderInfo = Variables.localData.getMine().getNewOrderInfo(data.getMine());
+
+        for (int i = 0; i < mTabTextViews.size() && i < newOrderInfo.state.length; i++) {
+            mTabTextViews.get(i).setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, newOrderInfo.state[i] == 1 ? R.mipmap.icon_red_point_padding : 0,0 );
+            mTabTextViews.get(i).setCompoundDrawablePadding(16);
+        }
+
+        if (null != mPagerAdapter && null != mPagerAdapter.getItem(mSelectedPage)) {
+            mPagerAdapter.getItem(mSelectedPage).updateData();
+        }
     }
 }

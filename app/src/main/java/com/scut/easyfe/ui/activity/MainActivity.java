@@ -16,6 +16,7 @@ import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.app.Variables;
 import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.event.DataChangeEvent;
+import com.scut.easyfe.event.PDHandler;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
@@ -35,10 +36,7 @@ import com.scut.easyfe.ui.customView.CircleImageView;
 import com.scut.easyfe.ui.fragment.HomeFragment;
 import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.ImageUtils;
-import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
-import com.scut.easyfe.utils.polling.PollingService;
-import com.scut.easyfe.utils.polling.PollingUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONArray;
@@ -62,6 +60,7 @@ public class MainActivity extends BaseActivity {
     private CircleImageView mAvatarImageView;
     private RelativeLayout mAdvertiseRelativeLayout;
     private ImageView mAdvertiseImage;
+    private ImageView mPresentNewImageView;
     private TextView mNameTextView;
     private Map<Integer, BaseFragment> mFragments = new HashMap<>();
     private HomeFragment mHomeFragment;
@@ -118,12 +117,17 @@ public class MainActivity extends BaseActivity {
         mLeftDrawer = OtherUtils.findViewById(this, R.id.drawer);
         mAvatarImageView = OtherUtils.findViewById(this, R.id.left_drawer_civ_avatar);
         mNameTextView = OtherUtils.findViewById(this, R.id.left_drawer_tv_name);
+        mPresentNewImageView = OtherUtils.findViewById(this, R.id.main_iv_present_new);
+
         mHomeFragment = new HomeFragment();
         mFragments.put(FRAGMENT_HOME, mHomeFragment);
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.main_container, mFragments.get(FRAGMENT_HOME))
                 .commit();
+
+        //onCreate的时候显示最新的状态
+        onEvent(new DataChangeEvent(PDHandler.get().getLatestData()));
     }
 
     @Override
@@ -171,9 +175,9 @@ public class MainActivity extends BaseActivity {
                 }
 
                 if (mHomeFragment != null) {
-                    if(0 == mGuideMapImages.size()){
+                    if (0 == mGuideMapImages.size()) {
 
-                    }else{
+                    } else {
                         mHomeFragment.setAdvertiseImages(mGuideMapImages, mGuideMapLinks);
                         mHomeFragment.notifyAdvertiseChange();
                     }
@@ -223,10 +227,19 @@ public class MainActivity extends BaseActivity {
 
     /**
      * 点击我的等级
+     *
      * @param view 被点击View
      */
-    public void onLevelClick(View view){
-        if(App.getUser().hasLogin()){
+    public void onLevelClick(View view) {
+        if (App.getUser().hasLogin()) {
+
+            ((TextView) OtherUtils.findViewById(this, R.id.left_drawer_tv_level)).
+                    setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+            Variables.localData.getMine().setLevel(
+                    PDHandler.get().getLatestData().getMine().getLevel());
+            Variables.localData.equals(PDHandler.get().getLatestData(), true);
+            Variables.localData.save2Cache();
+
             redirectToActivity(this, LevelActivity.class);
         }
     }
@@ -269,7 +282,16 @@ public class MainActivity extends BaseActivity {
      * 点击我的钱包
      */
     public void onPocketClick(View view) {
-        redirectToActivity(mContext, WalletActivity.class);
+        if (App.getUser().hasLogin()) {
+            ((TextView) OtherUtils.findViewById(this, R.id.left_drawer_tv_wallet)).
+                    setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+            Variables.localData.getMine().setWallet(
+                    PDHandler.get().getLatestData().getMine().getWallet());
+            Variables.localData.equals(PDHandler.get().getLatestData(), true);
+            Variables.localData.save2Cache();
+
+            redirectToActivity(mContext, WalletActivity.class);
+        }
     }
 
     /**
@@ -288,7 +310,7 @@ public class MainActivity extends BaseActivity {
     /**
      * 点击反馈报告
      */
-    public void onReportClick(View view){
+    public void onReportClick(View view) {
         if (!App.getUser().hasLogin()) {
             return;
         }
@@ -323,6 +345,13 @@ public class MainActivity extends BaseActivity {
      */
     public void onMessageCenterClick(View view) {
         if (App.getUser().hasLogin()) {
+            ((TextView) OtherUtils.findViewById(this, R.id.left_drawer_tv_message)).
+                    setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
+            Variables.localData.getCommon().setMessage(
+                    PDHandler.get().getLatestData().getCommon().getMessage());
+            Variables.localData.equals(PDHandler.get().getLatestData(), true);
+            Variables.localData.save2Cache();
+
             redirectToActivity(mContext, MessageCenterActivity.class);
         }
     }
@@ -333,6 +362,7 @@ public class MainActivity extends BaseActivity {
     public void onTaskRewardClick(View view) {
         if (App.getUser(false).hasLogin()) {
             redirectToActivity(mContext, TaskRewardActivity.class);
+
         } else {
             DialogUtils.makeConfirmDialog(mContext, null, "亲，您需要先注册/登陆哦\n\n ^-^");
         }
@@ -373,7 +403,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onAdvertiseClick(View view) {
-        if(null != mAdvertiseLink && mAdvertiseLink.length() != 0) {
+        if (null != mAdvertiseLink && mAdvertiseLink.length() != 0) {
             Bundle bundle = new Bundle();
             bundle.putString(Constants.Key.WEB_TITLE, "推广");
             bundle.putString(Constants.Key.WEB_URL, mAdvertiseLink);
@@ -383,7 +413,48 @@ public class MainActivity extends BaseActivity {
     }
 
     @Subscribe
-    public void onEvent(DataChangeEvent event){
-        LogUtils.i(Constants.Tag.POLLING_TAG, event.getData().getMine().getWallet() + "");
+    public void onEvent(DataChangeEvent event) {
+        if (null == mHomeFragment) {
+            return;
+        }
+
+        mHomeFragment.setVipNewState(Variables.localData.getCommon().isVipNew(event.getData().getCommon()));
+
+        ((TextView) OtherUtils.findViewById(this, R.id.left_drawer_tv_message)).
+                setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0,
+                        Variables.localData.getCommon().getMessage().
+                                isMessageNew(event.getData().getCommon().getMessage()) ?
+                                R.mipmap.icon_red_point_padding : 0, 0);
+
+        ((TextView) OtherUtils.findViewById(this, R.id.left_drawer_tv_wallet)).
+                setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0,
+                        Variables.localData.getMine().isWalletNew(event.getData().getMine()) ?
+                                R.mipmap.icon_red_point_padding : 0, 0);
+
+        if (Variables.localData.getMine().isCheckTypeNew(event.getData().getMine())) {
+            //Todo 用户头像可点击 红点
+//            ((TextView) OtherUtils.findViewById(this, R.id.left_drawer_tv_wallet)).
+//                    setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.mipmap.icon_red_point_padding, 0);
+        }
+
+        ((TextView) OtherUtils.findViewById(this, R.id.left_drawer_tv_level)).
+                setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0,
+                        Variables.localData.getMine().isLevelNew(event.getData().getMine()) ?
+                                R.mipmap.icon_red_point_padding : 0, 0);
+
+        ((TextView) OtherUtils.findViewById(this, R.id.left_drawer_tv_reward)).
+                setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0,
+                        Variables.localData.getMine().getReward().isRewardNew(event.getData().getMine().getReward()) ?
+                                R.mipmap.icon_red_point_padding : 0, 0);
+
+        ((TextView) OtherUtils.findViewById(this, R.id.left_drawer_tv_order)).
+                setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0,
+                        Variables.localData.getMine().isOrderNew(event.getData().getMine()) ?
+                                R.mipmap.icon_red_point_padding : 0, 0);
+
+
+        mPresentNewImageView.setVisibility(
+                Variables.localData.getMine().getReward().isRewardNew(event.getData().getMine().getReward()) ?
+                        View.VISIBLE : View.INVISIBLE);
     }
 }

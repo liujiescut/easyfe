@@ -20,7 +20,6 @@ import java.io.IOException;
 public class RConfirmSingleOrder extends RequestBase<JSONObject>{
     private String mToken = "";
     private Order mOrder = new Order();
-    private String mCouponId = "";
 
     public RConfirmSingleOrder(@NonNull String token, @NonNull Order order) {
         this.mToken = token;

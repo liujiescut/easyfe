@@ -12,25 +12,25 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 /**
- * 获取支付宝订单的签名信息
+ * 预支付
  * Created by jay on 16/6/13.
  */
-public class RGetAlipaySign extends RequestBase<JSONObject>{
-    private String orderId = "";
-    private String subject = "";
-    private String body = "";
-    private String price = "0";
+public class RPrePay extends RequestBase<JSONObject>{
+    private String orderId = "";        //支付订单时传
+    private String vipEventId = "";     //支付会员活动时传
+    private int money = 0;              //单位: 分
+    private int buy = -1;                //0支付订单, 1支付会员活动, 2充值
 
-    public RGetAlipaySign(String orderId, String subject, String body, String price) {
+    public RPrePay(String orderId, String vipEventId, int money, int payType) {
         this.orderId = orderId;
-        this.subject = subject;
-        this.body = body;
-        this.price = price;
+        this.vipEventId = vipEventId;
+        this.money = money;
+        this.buy = payType;
     }
 
     @Override
     public String getUrl() {
-        return Constants.URL.URL_GET_ALIPAY_SIGN;
+        return Constants.URL.URL_PRE_PAY;
     }
 
     @Override
@@ -43,9 +43,16 @@ public class RGetAlipaySign extends RequestBase<JSONObject>{
         HttpParams params = new HttpParams();
         params.putQueryParams("token", App.getUser().getToken());
         params.putQueryParams("orderId", orderId);
-        params.putQueryParams("subject", subject);
-        params.putQueryParams("body", body);
-        params.putQueryParams("price", price);
+        params.putQueryParams("money", money);
+        params.putQueryParams("buy", buy);
+
+        if (null != orderId && orderId.length() != 0) {
+            params.putQueryParams("orderId", orderId);
+        }
+
+        if (null != vipEventId && vipEventId.length() != 0) {
+            params.putQueryParams("vipEventId", vipEventId);
+        }
 
         return params;
     }

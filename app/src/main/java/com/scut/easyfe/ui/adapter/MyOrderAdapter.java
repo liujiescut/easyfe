@@ -11,14 +11,19 @@ import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.app.Variables;
 import com.scut.easyfe.entity.order.BriefOrder;
+import com.scut.easyfe.event.DataChangeEvent;
+import com.scut.easyfe.event.PDHandler;
 import com.scut.easyfe.ui.base.BaseListViewScrollStateAdapter;
+import com.scut.easyfe.ui.customView.FixedClickListener;
 import com.scut.easyfe.utils.DensityUtil;
 import com.scut.easyfe.utils.OtherUtils;
 import com.scut.easyfe.utils.TimeUtils;
@@ -64,7 +69,7 @@ public class MyOrderAdapter extends BaseListViewScrollStateAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+        final ViewHolder holder;
         if(null == convertView){
             if(null == mActivityReference.get()){
                 return null;
@@ -111,6 +116,15 @@ public class MyOrderAdapter extends BaseListViewScrollStateAdapter {
             holder.checkBox.setVisibility(View.VISIBLE);
         }
 
+        if(Variables.localData.getMine().getNewOrderInfo(
+                PDHandler.get().getLatestData().getMine()).ids.
+                contains(mOrders.get(position).get_id())){
+            holder.orderNew.setVisibility(View.VISIBLE);
+
+        }else{
+            holder.orderNew.setVisibility(View.INVISIBLE);
+        }
+
         return convertView;
     }
 
@@ -146,6 +160,7 @@ public class MyOrderAdapter extends BaseListViewScrollStateAdapter {
         TextView period;
         TextView teachTime;
         TextView price;
+        ImageView orderNew;
 
         public ViewHolder(View root) {
             background = OtherUtils.findViewById(root , R.id.item_my_order_ll_background);
@@ -157,6 +172,7 @@ public class MyOrderAdapter extends BaseListViewScrollStateAdapter {
             period = OtherUtils.findViewById(root, R.id.item_my_order_tv_period);
             teachTime = OtherUtils.findViewById(root, R.id.item_my_order_tv_teach_time);
             price = OtherUtils.findViewById(root, R.id.item_my_order_tv_price);
+            orderNew = OtherUtils.findViewById(root, R.id.item_my_order_new);
         }
     }
 

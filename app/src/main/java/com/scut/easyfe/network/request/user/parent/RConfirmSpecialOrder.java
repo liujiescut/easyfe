@@ -21,7 +21,6 @@ public class RConfirmSpecialOrder extends RequestBase<JSONObject>{
     private int mTrafficTime = 0;
     private int mProfessionalTutor = 0;
     private String mOrderId = "";
-    private String mCouponId = "";
 
     public RConfirmSpecialOrder(@NonNull String token, @NonNull int trafficTime,
                                 @NonNull String orderId, @NonNull int professionalTutor) {

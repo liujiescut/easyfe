@@ -43,6 +43,8 @@ public class RPollingData extends RequestBase<PollingData> {
 
         try {
             data = mObjectMapper.readValue(jsonObject.toString(), PollingData.class);
+            data.setDataString(jsonObject.toString());
+
         }catch (Exception e){
             LogUtils.i("PollingData  parseResultAsObject -> 解析出错");
             e.printStackTrace();

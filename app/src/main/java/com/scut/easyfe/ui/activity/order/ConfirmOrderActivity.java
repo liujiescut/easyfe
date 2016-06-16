@@ -15,8 +15,11 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.app.Variables;
+import com.scut.easyfe.entity.PollingData;
 import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.entity.order.TeachTime;
+import com.scut.easyfe.event.DataChangeEvent;
+import com.scut.easyfe.event.PDHandler;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
@@ -335,6 +338,14 @@ public class ConfirmOrderActivity extends BaseActivity {
     }
 
     private void showDialog(String teacherName){
+        PollingData.PollingOrderData data = new PollingData.PollingOrderData();
+        data.setOrderId(mOrder.get_id());
+        data.setState(mOrder.getState());
+        if(!Variables.localData.getMine().getOrder().contains(data)) {
+            Variables.localData.getMine().getOrder().add(data);
+        }
+        Variables.localData.save2Cache();
+
         DialogUtils.makeConfirmDialog(mContext, "生成订单成功!",
                 String.format("%s确认后将于第一时间与您联系，在老师联系您前可以修改或取消订单。", teacherName)).
                 setOnDismissListener(new OnDismissListener() {

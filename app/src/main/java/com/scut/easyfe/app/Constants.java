@@ -16,7 +16,7 @@ public class Constants {
         public static final boolean IS_SHOW_TOAST = true;  //是否显示使用LogUtil.toast出来的东西
         public static final boolean TO_MARKET = false;   //当分享时应用（例如wechat）不存在，是否跳转到应用市场
         public static final String APP_NAME = "直播易";
-        public static final int VERIFY_INTERVAL = 5;
+        public static final int VERIFY_INTERVAL = 15;
     }
 
     public class DefaultValue{
@@ -93,7 +93,7 @@ public class Constants {
         public static final String URL_GET_TEACHER_COMPLETE_COURSE_REWARD = URL_BASE + "Reward/FinishCourse/Teacher";
 
         public static final String URL_POLLING_DATA = URL_BASE + "Share/DataUpdateTime";
-        public static final String URL_GET_ALIPAY_SIGN = URL_BASE + "Money/Sign/AliPay";
+        public static final String URL_PRE_PAY = URL_BASE + "Money/PrePay";
 
     }
 
@@ -111,6 +111,7 @@ public class Constants {
 
     public class Key{
         public static final String USER_CACHE = "user_cache";
+        public static final String POLLING_DATA_CACHE = "polling_data_cache";
         public static final String LATITUDE = "latitude";
         public static final String LONGITUDE = "longitude";
         public static final String ADDRESS = "address";
@@ -163,6 +164,13 @@ public class Constants {
         /** 性别 */
         public static final int MALE = 1;
         public static final int FEMALE = 0;
+
+        /**
+         * 支付类型(0支付订单, 1支付会员活动, 2充值)
+         */
+        public static final int PAY_ORDER = 0;
+        public static final int PAY_VIP_EVENT = 1;
+        public static final int PAY_RECHARGE = 2;
 
         /** 订单类型 */
         public static final int ORDER_ALL = -1;

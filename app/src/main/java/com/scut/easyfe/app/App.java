@@ -16,6 +16,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
 import com.qiniu.android.storage.Zone;
+import com.scut.easyfe.entity.PollingData;
 import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.ui.activity.auth.LoginActivity;
 import com.scut.easyfe.utils.ActivityManagerUtils;
@@ -145,6 +146,11 @@ public class App extends Application {
 
         /** 用户登陆*/
         User.doLogin();
+
+        PollingData data = PollingData.getFromCache();
+        if (null != data) {
+            Variables.localData = data;
+        }
     }
 
     private void initEventBus(){

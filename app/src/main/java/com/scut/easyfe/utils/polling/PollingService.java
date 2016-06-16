@@ -4,13 +4,12 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
 
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.app.Variables;
 import com.scut.easyfe.entity.PollingData;
-import com.scut.easyfe.event.PollingDataHandler;
+import com.scut.easyfe.event.PDHandler;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
@@ -48,7 +47,9 @@ public class PollingService extends Service {
         @Override
         public void run() {
             while(Variables.POLLING) {
-                polling();
+                if(App.getUser(false).hasLogin()) {
+                    polling();
+                }
 
                 try {
                     Thread.sleep(Variables.POLLING_INTERVAL_SECONDS * 1000);
@@ -73,7 +74,7 @@ public class PollingService extends Service {
 
                 mPollingSuccessTime = finalPollingTime;
                 if(App.getUser(false).hasLogin()){
-                    PollingDataHandler.get().handleData(result);
+                    PDHandler.get().handleData(result);
                 }
             }
 

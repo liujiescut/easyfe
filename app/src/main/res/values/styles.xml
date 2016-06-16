@@ -33,7 +33,7 @@
 
     <!-- 首页侧拉栏每个分割线的样式 -->
     <style name="main_left_drawer_divider">
-        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_height">@dimen/default_divider_height</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_marginLeft">@dimen/layout_margin_small</item>
         <item name="android:layout_marginRight">@dimen/layout_margin_small</item>
