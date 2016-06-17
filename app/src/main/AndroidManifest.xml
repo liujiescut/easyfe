@@ -62,6 +62,11 @@
             android:name="com.sina.weibo.sdk.net.DownloadService"
             android:exported="false" />
 
+        <activity android:name=".wxapi.WXPayEntryActivity"
+            android:label="@string/app_name"
+            android:exported="true"
+            />
+
         <activity
             android:name="com.umeng.socialize.editorpage.ShareActivity"
             android:excludeFromRecents="true"

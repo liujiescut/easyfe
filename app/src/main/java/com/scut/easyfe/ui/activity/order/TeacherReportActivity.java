@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.scut.easyfe.R;
+import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.network.RequestBase;
@@ -376,7 +377,13 @@ public class TeacherReportActivity extends BaseActivity {
         Bundle bundle = new Bundle();
         bundle.putInt(Constants.Key.ORDER_TYPE, Constants.Identifier.ORDER_COMPLETED);
         bundle.putSerializable(Constants.Key.ORDER, mOrder);
+
+        if(App.getUser().isParent() && !mOrder.isHadComment()){
+            redirectToActivity(mContext, EvaluationActivity.class, bundle);
+
+        }else{
         redirectToActivity(mContext, ReservedOrCompletedOrderActivity.class, bundle);
+        }
     }
 
     public void onRightPercentClick(View view) {

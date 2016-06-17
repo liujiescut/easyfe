@@ -20,6 +20,8 @@ import java.lang.ref.WeakReference;
 public class PollingUtil {
     private static WeakReference<Context> mContextReference;
     private static ServiceConnection mConnection;
+    private static PollingService mPollingService;
+    private static boolean mIsPolling = false;
 
     /**
      * 每个页面onResume的时候检测是否需要重新开启
@@ -37,7 +39,11 @@ public class PollingUtil {
         mConnection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
+                mPollingService = ((PollingService.PollingBinder)service).getService();
 
+                if(mIsPolling){
+                    mPollingService.setIsUserLogin(mIsPolling);
+                }
             }
 
             @Override
@@ -47,6 +53,16 @@ public class PollingUtil {
         };
 
         context.bindService(intent, mConnection, Service.BIND_AUTO_CREATE);
+    }
+
+    /**
+     * 是否真的从服务器拉取数据
+     */
+    public static void setIsPolling(boolean isPolling){
+        mIsPolling = isPolling;
+        if (null != mPollingService) {
+            mPollingService.setIsUserLogin(mIsPolling);
+        }
     }
 
     //停止轮询服务

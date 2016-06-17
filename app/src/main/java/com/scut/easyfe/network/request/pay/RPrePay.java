@@ -19,13 +19,15 @@ public class RPrePay extends RequestBase<JSONObject>{
     private String orderId = "";        //支付订单时传
     private String vipEventId = "";     //支付会员活动时传
     private int money = 0;              //单位: 分
-    private int buy = -1;                //0支付订单, 1支付会员活动, 2充值
+    private int buy = -1;               //0支付订单, 1支付会员活动, 2充值
+    private int payType = -1;           //0现金, 1支付宝, 2微信
 
-    public RPrePay(String orderId, String vipEventId, int money, int payType) {
+    public RPrePay(String orderId, String vipEventId, int money, int buyType, int payType) {
         this.orderId = orderId;
         this.vipEventId = vipEventId;
         this.money = money;
-        this.buy = payType;
+        this.buy = buyType;
+        this.payType = payType;
     }
 
     @Override
@@ -35,26 +37,27 @@ public class RPrePay extends RequestBase<JSONObject>{
 
     @Override
     public JSONObject getJsonParams() throws JSONException {
-        return null;
+        JSONObject params = new JSONObject();
+        params.put("token", App.getUser().getToken());
+        params.put("orderId", orderId);
+        params.put("money", money);
+        params.put("buy", buy);
+        params.put("payType", payType);
+
+        if (null != orderId && orderId.length() != 0) {
+            params.put("orderId", orderId);
+        }
+
+        if (null != vipEventId && vipEventId.length() != 0) {
+            params.put("vipEventId", vipEventId);
+        }
+
+        return params;
     }
 
     @Override
     public HttpParams getQueryParams() {
-        HttpParams params = new HttpParams();
-        params.putQueryParams("token", App.getUser().getToken());
-        params.putQueryParams("orderId", orderId);
-        params.putQueryParams("money", money);
-        params.putQueryParams("buy", buy);
-
-        if (null != orderId && orderId.length() != 0) {
-            params.putQueryParams("orderId", orderId);
-        }
-
-        if (null != vipEventId && vipEventId.length() != 0) {
-            params.putQueryParams("vipEventId", vipEventId);
-        }
-
-        return params;
+        return null;
     }
 
     @Override
@@ -64,6 +67,6 @@ public class RPrePay extends RequestBase<JSONObject>{
 
     @Override
     public int getMethod() {
-        return Request.HttpMethod.GET;
+        return Request.HttpMethod.POST;
     }
 }

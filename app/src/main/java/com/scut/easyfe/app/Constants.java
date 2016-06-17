@@ -168,9 +168,23 @@ public class Constants {
         /**
          * 支付类型(0支付订单, 1支付会员活动, 2充值)
          */
-        public static final int PAY_ORDER = 0;
-        public static final int PAY_VIP_EVENT = 1;
-        public static final int PAY_RECHARGE = 2;
+        public static final int BUY_ORDER = 0;
+        public static final int BUY_VIP_EVENT = 1;
+        public static final int BUY_RECHARGE = 2;
+
+        /**
+         * 使用支付方式
+         */
+        public static final int PAY_CASH = 0;
+        public static final int PAY_ALIPAY = 1;
+        public static final int PAY_WECHAT = 2;
+
+        /**
+         * 教师类型(0待审核, 1已审核, 2已拒绝)
+         */
+        public static final int TEACHER_UNCHECK = 0;
+        public static final int TEACHER_CHECKED = 1;
+        public static final int TEACHER_REJECT = 2;
 
         /** 订单类型 */
         public static final int ORDER_ALL = -1;

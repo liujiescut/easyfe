@@ -201,7 +201,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
         setVipNewState(false);
         Variables.localData.getCommon().setVipEvent(PDHandler.get().getLatestData().getCommon().getVipEvent());
         Variables.localData.equals(PDHandler.get().getLatestData(), true);
-        Variables.localData.save2Cache();
+        Variables.localData.save2Cache(App.getUser().getPhone());
 
         Bundle bundle = new Bundle();
         bundle.putBoolean(Constants.Key.IS_MY_VIP_ACTIVITY, false);

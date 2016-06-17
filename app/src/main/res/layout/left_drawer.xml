@@ -25,6 +25,8 @@
 
         <TextView
             android:id="@+id/left_drawer_tv_name"
+            android:clickable="true"
+            android:onClick="onNameClick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/left_drawer_civ_avatar"

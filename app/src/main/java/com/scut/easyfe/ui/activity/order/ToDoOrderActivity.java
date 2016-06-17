@@ -28,6 +28,7 @@ import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.request.order.RGetOrderDetail;
 import com.scut.easyfe.network.request.order.RPayOrder;
+import com.scut.easyfe.network.request.pay.RPrePay;
 import com.scut.easyfe.network.request.user.parent.RGetTeacherInfo;
 import com.scut.easyfe.ui.activity.ShowTextActivity;
 import com.scut.easyfe.ui.base.BaseActivity;
@@ -266,12 +267,14 @@ public class ToDoOrderActivity extends BaseActivity {
         }
 
         if (mOrder.isIsTeacherReport()) {
-            new PayUtil(this, mOrder.get_id(), mOrder.getPayTitle(), mOrder.getPayInfo(), mOrder.getTotalPrice() + "", new PayUtil.PayListener() {
+            new PayUtil(this, Constants.Identifier.BUY_ORDER, mOrder.get_id(), mOrder.getPayTitle(), mOrder.getPayInfo(), (int)(mOrder.getTotalPrice() * 1000), new PayUtil.PayListener() {
                 @Override
                 public void onPayReturn(boolean success) {
                     if(success){
-                        //Todo
-                        LogUtils.i("支付成功");
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(Constants.Key.ORDER, mOrder);
+                        bundle.putInt(Constants.Key.TO_TEACHER_REPORT_ACTIVITY_TYPE, Constants.Identifier.TYPE_CONFIRM);
+                        ToDoOrderActivity.this.redirectToActivity(mContext, TeacherReportActivity.class, bundle);
                     }
                 }
             }).showPayDialog();
@@ -310,19 +313,10 @@ public class ToDoOrderActivity extends BaseActivity {
     }
 
     public void onProfessionGuideClick(View view) {
-        new PayUtil(this, mOrder.get_id(), mOrder.getPayTitle(), mOrder.getPayInfo(), mOrder.getTotalPrice() + "", new PayUtil.PayListener() {
-            @Override
-            public void onPayReturn(boolean success) {
-                if(success){
-                    //Todo
-                    LogUtils.i("支付成功");
-                }
-            }
-        }).showPayDialog();
-//        Bundle bundle = new Bundle();
-//        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "专业辅导");
-//        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.user_protocol_content));
-//        redirectToActivity(mContext, ShowTextActivity.class, bundle);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "专业辅导");
+        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.user_protocol_content));
+        redirectToActivity(mContext, ShowTextActivity.class, bundle);
     }
 
     public void onBackClick(View view) {
@@ -391,7 +385,7 @@ public class ToDoOrderActivity extends BaseActivity {
                                 Variables.localData.getMine().getOrder().get(localIndex).setTimestamp(PDHandler.get().getLatestData().getMine().getOrder().get(latestIndex).getTimestamp());
                                 Variables.localData.getMine().getOrder().get(localIndex).setState(PDHandler.get().getLatestData().getMine().getOrder().get(latestIndex).getState());
                                 Variables.localData.equals(PDHandler.get().getLatestData(), true);
-                                Variables.localData.save2Cache();
+                                Variables.localData.save2Cache(App.getUser().getPhone());
                                 App.get().getEventBus().post(new DataChangeEvent(PDHandler.get().getLatestData()));
                                 orderInLocal = true;
                                 break;
@@ -401,10 +395,9 @@ public class ToDoOrderActivity extends BaseActivity {
                         if(!orderInLocal){
                             Variables.localData.getMine().getOrder().add(PDHandler.get().getLatestData().getMine().getOrder().get(latestIndex));
                             Variables.localData.equals(PDHandler.get().getLatestData(), true);
-                            Variables.localData.save2Cache();
+                            Variables.localData.save2Cache(App.getUser().getPhone());
                             App.get().getEventBus().post(new DataChangeEvent(PDHandler.get().getLatestData()));
                         }
-
                     }
                 }
             }

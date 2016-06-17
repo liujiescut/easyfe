@@ -31,6 +31,7 @@ import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.MapUtils;
 import com.scut.easyfe.utils.OtherUtils;
+import com.scut.easyfe.utils.polling.PollingUtil;
 
 import org.json.JSONObject;
 
@@ -525,6 +526,7 @@ public class ParentRegisterActivity extends BaseActivity {
                 mUser.setAvatar(result.getAvatar());
                 mUser.setType(result.getType());
                 App.setUser(mUser);
+                PollingUtil.setIsPolling(true);
                 redirectToActivity(mContext, MainActivity.class);
             }
 

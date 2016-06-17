@@ -138,7 +138,7 @@ public class MyOrderFragment extends BaseRefreshFragment {
                         Variables.localData.getMine().getOrder().get(localIndex).setTimestamp(PDHandler.get().getLatestData().getMine().getOrder().get(latestIndex).getTimestamp());
                         Variables.localData.getMine().getOrder().get(localIndex).setState(PDHandler.get().getLatestData().getMine().getOrder().get(latestIndex).getState());
                         Variables.localData.equals(PDHandler.get().getLatestData(), true);
-                        Variables.localData.save2Cache();
+                        Variables.localData.save2Cache(App.getUser().getPhone());
                         App.get().getEventBus().post(new DataChangeEvent(PDHandler.get().getLatestData()));
                         orderInLocal = true;
                         break;
@@ -148,7 +148,7 @@ public class MyOrderFragment extends BaseRefreshFragment {
                 if(!orderInLocal){
                     Variables.localData.getMine().getOrder().add(PDHandler.get().getLatestData().getMine().getOrder().get(latestIndex));
                     Variables.localData.equals(PDHandler.get().getLatestData(), true);
-                    Variables.localData.save2Cache();
+                    Variables.localData.save2Cache(App.getUser().getPhone());
                     App.get().getEventBus().post(new DataChangeEvent(PDHandler.get().getLatestData()));
                 }
 

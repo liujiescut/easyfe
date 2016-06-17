@@ -14,8 +14,12 @@ import com.bigkoo.pickerview.listener.OnDismissListener;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.app.Variables;
 import com.scut.easyfe.entity.Course;
+import com.scut.easyfe.entity.PollingData;
 import com.scut.easyfe.entity.order.Order;
+import com.scut.easyfe.event.DataChangeEvent;
+import com.scut.easyfe.event.PDHandler;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
@@ -314,6 +318,15 @@ public class PublishSpreadActivity extends BaseActivity {
         RequestManager.get().execute(new RPublishSpread(App.getUser().getToken(), order), new RequestListener<JSONObject>() {
             @Override
             public void onSuccess(RequestBase request, JSONObject result) {
+                String orderId = result.optString("orderId");
+                PollingData.PollingOrderData data = new PollingData.PollingOrderData();
+                data.setOrderId(orderId);
+                if(!Variables.localData.getMine().getOrder().contains(data)){
+                    Variables.localData.getMine().getOrder().add(data);
+                }
+
+                App.get().getEventBus().post(new DataChangeEvent(PDHandler.get().getLatestData()));
+
                 DialogUtils.makeConfirmDialog(PublishSpreadActivity.this, "提示", "特价订单发布成功\n待工作人员审核通过后即可在特价订单页可见", new OnItemClickListener() {
                     @Override
                     public void onItemClick(Object o, int position) {

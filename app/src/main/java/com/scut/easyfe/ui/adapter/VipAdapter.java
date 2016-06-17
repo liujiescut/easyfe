@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
+import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.VipEvent;
 import com.scut.easyfe.ui.base.BaseListViewScrollStateAdapter;
 import com.scut.easyfe.ui.customView.FixedClickListener;
@@ -93,7 +94,12 @@ public class VipAdapter extends BaseListViewScrollStateAdapter {
                     return;
                 }
 
-                new PayUtil((Activity) mContextReference.get(), mVipEvents.get(position).get_id(), mVipEvents.get(position).getPayTitle(), mVipEvents.get(position).getPayInfo(), mVipEvents.get(position).getMoney() + "", new PayUtil.PayListener() {
+                new PayUtil((Activity) mContextReference.get(),
+                        Constants.Identifier.BUY_VIP_EVENT, mVipEvents.get(position).get_id(),
+                        mVipEvents.get(position).getPayTitle(),
+                        mVipEvents.get(position).getPayInfo(),
+                        (int)(mVipEvents.get(position).getMoney() * 1000),
+                        new PayUtil.PayListener() {
                     @Override
                     public void onPayReturn(boolean success) {
                         if(success){

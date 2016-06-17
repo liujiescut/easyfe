@@ -85,13 +85,7 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-        if (App.getUser(false).hasLogin()) {
-            mNameTextView.setText(App.getUser().getName());
-            ImageUtils.displayImage(App.getUser().getAvatar(), mAvatarImageView);
-        } else {
-            mNameTextView.setText("登录/注册");
-            mAvatarImageView.setImageResource(R.mipmap.default_avatar);
-        }
+        initAvatarAndName();
 
         boolean isTeacher = App.getUser(false).isTeacher();
 //        mLeftDrawer.findViewById(R.id.left_drawer_tv_wallet).setVisibility(isTeacher ? View.VISIBLE : View.GONE);
@@ -103,6 +97,31 @@ public class MainActivity extends BaseActivity {
 
         mAdvertiseRelativeLayout = OtherUtils.findViewById(this, R.id.main_rl_advertisement);
         mAdvertiseImage = OtherUtils.findViewById(this, R.id.main_iv_advertisement_image);
+    }
+
+    private void initAvatarAndName() {
+        if (App.getUser(false).hasLogin()) {
+            if (App.getUser().isParent()) {
+                mNameTextView.setText(App.getUser().getName());
+            } else {
+                String nameText = App.getUser().getName();
+                switch (App.getUser().getTeacherMessage().getCheckType()) {
+                    case Constants.Identifier.TEACHER_UNCHECK:
+                        nameText += "(审核中)";
+                        break;
+
+                    case Constants.Identifier.TEACHER_REJECT:
+                        nameText += "(审核不通过,点击重新审核)";
+                        break;
+                }
+
+                mNameTextView.setText(nameText);
+            }
+            ImageUtils.displayImage(App.getUser().getAvatar(), mAvatarImageView);
+        } else {
+            mNameTextView.setText("登录/注册");
+            mAvatarImageView.setImageResource(R.mipmap.default_avatar);
+        }
     }
 
     @Override
@@ -213,6 +232,14 @@ public class MainActivity extends BaseActivity {
     protected void initListener() {
     }
 
+    public void onNameClick(View view){
+        if(App.getUser().getTeacherMessage().getCheckType() == Constants.Identifier.TEACHER_REJECT){
+            toast("重新审核");
+
+        }else {
+            onAdvertiseClick(view);
+        }
+    }
 
     /**
      * 左上角个人按钮点击侧拉
@@ -238,7 +265,7 @@ public class MainActivity extends BaseActivity {
             Variables.localData.getMine().setLevel(
                     PDHandler.get().getLatestData().getMine().getLevel());
             Variables.localData.equals(PDHandler.get().getLatestData(), true);
-            Variables.localData.save2Cache();
+            Variables.localData.save2Cache(App.getUser().getPhone());
 
             redirectToActivity(this, LevelActivity.class);
         }
@@ -288,7 +315,7 @@ public class MainActivity extends BaseActivity {
             Variables.localData.getMine().setWallet(
                     PDHandler.get().getLatestData().getMine().getWallet());
             Variables.localData.equals(PDHandler.get().getLatestData(), true);
-            Variables.localData.save2Cache();
+            Variables.localData.save2Cache(App.getUser().getPhone());
 
             redirectToActivity(mContext, WalletActivity.class);
         }
@@ -332,8 +359,13 @@ public class MainActivity extends BaseActivity {
             return;
         }
 
-        if (!App.getUser().getTeacherMessage().isIsCheck()) {
+        if (Constants.Identifier.TEACHER_UNCHECK == App.getUser().getTeacherMessage().getCheckType()) {
             toast("您的信息还在审核中\n审核之后才可以发布订单喔");
+            return;
+        }
+
+        if (Constants.Identifier.TEACHER_REJECT == App.getUser().getTeacherMessage().getCheckType()) {
+            toast("您的信息审核未通过\n请重新提交审核后才能发布订单喔");
             return;
         }
 
@@ -350,7 +382,7 @@ public class MainActivity extends BaseActivity {
             Variables.localData.getCommon().setMessage(
                     PDHandler.get().getLatestData().getCommon().getMessage());
             Variables.localData.equals(PDHandler.get().getLatestData(), true);
-            Variables.localData.save2Cache();
+            Variables.localData.save2Cache(App.getUser().getPhone());
 
             redirectToActivity(mContext, MessageCenterActivity.class);
         }
@@ -432,9 +464,12 @@ public class MainActivity extends BaseActivity {
                                 R.mipmap.icon_red_point_padding : 0, 0);
 
         if (Variables.localData.getMine().isCheckTypeNew(event.getData().getMine())) {
-            //Todo 用户头像可点击 红点
-//            ((TextView) OtherUtils.findViewById(this, R.id.left_drawer_tv_wallet)).
-//                    setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.mipmap.icon_red_point_padding, 0);
+            if (App.getUser().isTeacher() && null != mNameTextView) {
+                Variables.localData.getMine().setCheckType(event.getData().getMine().getCheckType());
+                App.getUser().getTeacherMessage().setCheckType((int) event.getData().getMine().getCheckType());
+                initAvatarAndName();
+                mNameTextView.setTextColor(getResources().getColor(event.getData().getMine().getCheckType() == Constants.Identifier.TEACHER_REJECT ? R.color.info_color : R.color.white));
+            }
         }
 
         ((TextView) OtherUtils.findViewById(this, R.id.left_drawer_tv_level)).

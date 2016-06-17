@@ -2,6 +2,7 @@ package com.scut.easyfe.utils.polling;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
@@ -20,6 +21,8 @@ public class PollingService extends Service {
 
     private long mPollingTime = 0;
     private long mPollingSuccessTime = 0;
+    private boolean mIsUserLogin = false;
+    PollingBinder mBinder = new PollingBinder();
 
     @Nullable
     @Override
@@ -28,7 +31,7 @@ public class PollingService extends Service {
         Variables.POLLING_KILLED = false;
         new PollingThread().start();
 
-        return null;
+        return mBinder;
     }
 
     @Override
@@ -38,7 +41,6 @@ public class PollingService extends Service {
         super.onDestroy();
     }
 
-    int count = 0;
 
     /**
      * 模拟向Server轮询的异步线程
@@ -47,7 +49,7 @@ public class PollingService extends Service {
         @Override
         public void run() {
             while(Variables.POLLING) {
-                if(App.getUser(false).hasLogin()) {
+                if(mIsUserLogin) {
                     polling();
                 }
 
@@ -84,4 +86,18 @@ public class PollingService extends Service {
             }
         });
     }
+
+    public void setIsUserLogin(boolean isUserLogin){
+        mIsUserLogin = isUserLogin;
+    }
+
+    /**
+     * 用于跟Activity建立关联的Binder
+     */
+    public class PollingBinder extends Binder {
+        public PollingService getService(){
+            return PollingService.this;
+        }
+    }
+
 }

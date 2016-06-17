@@ -75,7 +75,7 @@ public class TaskRewardActivity extends BaseActivity {
             Variables.localData.getMine().getReward().setSpecialOrder(
                     PDHandler.get().getLatestData().getMine().getReward().getSpecialOrder());
             Variables.localData.equals(PDHandler.get().getLatestData(), true);
-            Variables.localData.save2Cache();
+            Variables.localData.save2Cache(App.getUser().getPhone());
             App.get().getEventBus().post(new DataChangeEvent(PDHandler.get().getLatestData()));
             redirectToActivity(mContext, SpreadRewardActivity.class);
         }
@@ -90,7 +90,7 @@ public class TaskRewardActivity extends BaseActivity {
             Variables.localData.getMine().getReward().setInviteTeacher(
                     PDHandler.get().getLatestData().getMine().getReward().getInviteTeacher());
             Variables.localData.equals(PDHandler.get().getLatestData(), true);
-            Variables.localData.save2Cache();
+            Variables.localData.save2Cache(App.getUser().getPhone());
             App.get().getEventBus().post(new DataChangeEvent(PDHandler.get().getLatestData()));
             redirectToActivity(mContext, InviteRewardInfoActivity.class);
         }
@@ -105,7 +105,7 @@ public class TaskRewardActivity extends BaseActivity {
             Variables.localData.getMine().getReward().setCompleteCourseTeacher(
                     PDHandler.get().getLatestData().getMine().getReward().getCompleteCourseTeacher());
             Variables.localData.equals(PDHandler.get().getLatestData(), true);
-            Variables.localData.save2Cache();
+            Variables.localData.save2Cache(App.getUser().getPhone());
             App.get().getEventBus().post(new DataChangeEvent(PDHandler.get().getLatestData()));
             redirectToActivity(mContext, TeacherCourseRewardActivity.class);
         }
@@ -120,7 +120,7 @@ public class TaskRewardActivity extends BaseActivity {
             Variables.localData.getMine().getReward().setInviteParent(
                     PDHandler.get().getLatestData().getMine().getReward().getInviteParent());
             Variables.localData.equals(PDHandler.get().getLatestData(), true);
-            Variables.localData.save2Cache();
+            Variables.localData.save2Cache(App.getUser().getPhone());
             App.get().getEventBus().post(new DataChangeEvent(PDHandler.get().getLatestData()));
             redirectToActivity(mContext, InviteRewardInfoActivity.class);
         }
@@ -135,7 +135,7 @@ public class TaskRewardActivity extends BaseActivity {
             Variables.localData.getMine().getReward().setCompleteCourseParent(
                     PDHandler.get().getLatestData().getMine().getReward().getCompleteCourseParent());
             Variables.localData.equals(PDHandler.get().getLatestData(), true);
-            Variables.localData.save2Cache();
+            Variables.localData.save2Cache(App.getUser().getPhone());
             App.get().getEventBus().post(new DataChangeEvent(PDHandler.get().getLatestData()));
 
             redirectToActivity(mContext, ParentCourseRewardActivity.class);

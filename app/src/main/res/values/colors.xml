@@ -5,6 +5,7 @@
     <color name="green">#00FF00</color>
     <color name="blue">#0000FF</color>
 
+    <color name="info_color">#f84550</color>
     <color name="colorAccent">#FF4081</color>
     <color name="theme_color">#C6A770</color>
     <color name="theme_color_light">#80FFE4B3</color>

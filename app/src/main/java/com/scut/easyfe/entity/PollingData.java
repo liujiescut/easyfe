@@ -29,19 +29,19 @@ public class PollingData extends BaseEntity {
     /**
      * 将用户信息缓存到本地
      */
-    public void save2Cache() {
+    public void save2Cache(final String phone) {
         final PollingData data = this;
         new Thread(new Runnable() {
             @Override
             public void run() {
-                ACache.getInstance().put(Constants.Key.POLLING_DATA_CACHE, data);
+                ACache.getInstance().put(Constants.Key.POLLING_DATA_CACHE + phone, data);
             }
         }).start();
     }
 
     @Nullable
-    public static PollingData getFromCache(){
-        PollingData data = (PollingData) ACache.getInstance().getAsObject(Constants.Key.POLLING_DATA_CACHE);
+    public static PollingData getFromCache(String phone){
+        PollingData data = (PollingData) ACache.getInstance().getAsObject(Constants.Key.POLLING_DATA_CACHE + phone);
         return data;
     }
 
@@ -222,7 +222,7 @@ public class PollingData extends BaseEntity {
         }
 
         public boolean isOrderNew(PollingPrivateData compareData) {
-            return !order.equals(compareData.order);
+            return !order.containsAll(compareData.order);
         }
 
         public boolean isWalletNew(PollingPrivateData compareData) {

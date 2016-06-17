@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.app.Variables;
+import com.scut.easyfe.entity.PollingData;
 import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
@@ -26,6 +28,7 @@ import com.scut.easyfe.ui.activity.ShowTextActivity;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
+import com.scut.easyfe.utils.polling.PollingUtil;
 
 import org.json.JSONObject;
 
@@ -119,6 +122,11 @@ public class LoginActivity extends BaseActivity {
                 user.setAvatar(user.getAvatar());
 
                 App.setUser(user);
+                PollingData data = PollingData.getFromCache(user.getPhone());
+                if (null != data) {
+                    Variables.localData = data;
+                }
+                PollingUtil.setIsPolling(true);
                 toast("登录成功");
                 redirectToActivity(mContext, MainActivity.class);
                 LogUtils.i(Constants.Tag.LOGIN_TAG, user.getToken());

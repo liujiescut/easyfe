@@ -1,5 +1,6 @@
 package com.scut.easyfe.entity.user;
 
+import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.BaseEntity;
 import com.scut.easyfe.entity.TeachableCourse;
 import com.scut.easyfe.entity.book.MultiBookTime;
@@ -88,7 +89,7 @@ public class Teacher extends BaseEntity {
     private int subsidy = 5;
 
     //是否已经通过审核
-    private boolean isCheck = false;
+    private int checkType = Constants.Identifier.TEACHER_UNCHECK;
 
     //天使计划
     private AngelPlan angelPlan = new AngelPlan();
@@ -103,12 +104,12 @@ public class Teacher extends BaseEntity {
         return scoreInfo;
     }
 
-    public boolean isIsCheck() {
-        return isCheck;
+    public int getCheckType() {
+        return checkType;
     }
 
-    public void setIsCheck(boolean check) {
-        isCheck = check;
+    public void setCheckType(int checkType) {
+        this.checkType = checkType;
     }
 
     public float getPunctualScore() {

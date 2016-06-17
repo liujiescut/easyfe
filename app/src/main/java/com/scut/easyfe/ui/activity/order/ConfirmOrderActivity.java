@@ -10,16 +10,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bigkoo.alertview.OnDismissListener;
+import com.fasterxml.jackson.databind.JavaType;
 import com.roomorama.caldroid.CalendarHelper;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.app.Variables;
 import com.scut.easyfe.entity.PollingData;
+import com.scut.easyfe.entity.order.BriefOrder;
 import com.scut.easyfe.entity.order.Order;
-import com.scut.easyfe.entity.order.TeachTime;
-import com.scut.easyfe.event.DataChangeEvent;
-import com.scut.easyfe.event.PDHandler;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
@@ -34,8 +33,12 @@ import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 import com.scut.easyfe.utils.TimeUtils;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -292,7 +295,9 @@ public class ConfirmOrderActivity extends BaseActivity {
                         new RequestListener<JSONObject>() {
                     @Override
                     public void onSuccess(RequestBase request, JSONObject result) {
-                        showDialog(mOrder.getTeacher().getName());
+                        List<String> orderId = new ArrayList<>();
+                        orderId.add(result.optString("orderId"));
+                        updateAndDialog(orderId, mOrder.getTeacher().getName());
                     }
 
                     @Override
@@ -306,7 +311,9 @@ public class ConfirmOrderActivity extends BaseActivity {
                 RequestManager.get().execute(new RConfirmSingleOrder(App.getUser().getToken(), mOrder), new RequestListener<JSONObject>() {
                     @Override
                     public void onSuccess(RequestBase request, JSONObject result) {
-                        showDialog(mOrder.getTeacher().getName());
+                        List<String> orderId = new ArrayList<>();
+                        orderId.add(result.optString("orderId"));
+                        updateAndDialog(orderId, mOrder.getTeacher().getName());
                     }
 
                     @Override
@@ -322,7 +329,16 @@ public class ConfirmOrderActivity extends BaseActivity {
                         new RequestListener<JSONObject>() {
                     @Override
                     public void onSuccess(RequestBase request, JSONObject result) {
-                        showDialog(mOrder.getTeacher().getName());
+                        List<String> orderId = new ArrayList<>();
+                        JSONArray orders = result.optJSONArray("orders");
+                        for (int i = 0; i < orders.length(); i++) {
+                            try {
+                                orderId.add(orders.get(i).toString());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        updateAndDialog(orderId, mOrder.getTeacher().getName());
                     }
 
                     @Override
@@ -337,14 +353,15 @@ public class ConfirmOrderActivity extends BaseActivity {
         }
     }
 
-    private void showDialog(String teacherName){
-        PollingData.PollingOrderData data = new PollingData.PollingOrderData();
-        data.setOrderId(mOrder.get_id());
-        data.setState(mOrder.getState());
-        if(!Variables.localData.getMine().getOrder().contains(data)) {
-            Variables.localData.getMine().getOrder().add(data);
+    private void updateAndDialog(List<String> orderId, String teacherName){
+        for (int i = 0; i < orderId.size(); i++) {
+            PollingData.PollingOrderData data = new PollingData.PollingOrderData();
+            data.setOrderId(orderId.get(i));
+            if (!Variables.localData.getMine().getOrder().contains(data)) {
+                Variables.localData.getMine().getOrder().add(data);
+            }
         }
-        Variables.localData.save2Cache();
+        Variables.localData.save2Cache(App.getUser().getPhone());
 
         DialogUtils.makeConfirmDialog(mContext, "生成订单成功!",
                 String.format("%s确认后将于第一时间与您联系，在老师联系您前可以修改或取消订单。", teacherName)).

@@ -37,6 +37,7 @@ import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.ImageUtils;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
+import com.scut.easyfe.utils.polling.PollingUtil;
 
 import org.json.JSONObject;
 
@@ -204,7 +205,7 @@ public class PhotoUploadActivity extends BaseActivity {
                 mUser.setAvatar(result.optString("avatar"));
                 mUser.setType(result.optInt("type"));
                 App.setUser(mUser);
-
+                PollingUtil.setIsPolling(true);
                 DialogUtils.makeConfirmDialog(PhotoUploadActivity.this, "提示", "您的信息正在审核中,请耐心等待", new OnItemClickListener() {
                     @Override
                     public void onItemClick(Object o, int position) {

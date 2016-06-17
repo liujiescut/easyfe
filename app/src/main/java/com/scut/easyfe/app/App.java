@@ -146,11 +146,6 @@ public class App extends Application {
 
         /** 用户登陆*/
         User.doLogin();
-
-        PollingData data = PollingData.getFromCache();
-        if (null != data) {
-            Variables.localData = data;
-        }
     }
 
     private void initEventBus(){

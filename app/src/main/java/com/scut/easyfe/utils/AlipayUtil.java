@@ -22,9 +22,9 @@ public class AlipayUtil {
     /**
      * 调用支付宝支付
      */
-    public static void pay(final Activity activity, String id, String title, String info, String price, final PayUtil.PayListener listener) {
+    public static void pay(final Activity activity, String buyId, String title, String info, String price, final PayUtil.PayListener listener) {
 
-        final String orderInfo = getOrderInfo(id, title, info, price);
+        final String orderInfo = getOrderInfo(buyId, title, info, price);
         String sign = SignUtils.sign(orderInfo, Constants.Data.ALIPAY_RSA_PRIVATE);
         try {
             /**
@@ -88,7 +88,7 @@ public class AlipayUtil {
     /**
      * create the order info. 创建订单信息
      */
-    private static String getOrderInfo(String orderId, String subject, String body, String price) {
+    private static String getOrderInfo(String buyId, String subject, String body, String price) {
 
         //Todo delete it
         price = "0.01";
@@ -100,7 +100,7 @@ public class AlipayUtil {
         orderInfo += "&seller_id=" + "\"" + Constants.Data.ALIPAY_SELLER + "\"";
 
         // 商户网站唯一订单号
-        orderInfo += "&out_trade_no=" + "\"" + orderId + "\"";
+        orderInfo += "&out_trade_no=" + "\"" + buyId + "\"";
 
         // 商品名称
         orderInfo += "&subject=" + "\"" + subject + "\"";

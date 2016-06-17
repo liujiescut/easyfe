@@ -13,6 +13,7 @@ import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.request.authentication.RUpdateUser;
 import com.scut.easyfe.utils.ACache;
 import com.scut.easyfe.utils.LogUtils;
+import com.scut.easyfe.utils.polling.PollingUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -107,6 +108,12 @@ public class User extends BaseEntity{
         User user = (User) ACache.getInstance().getAsObject(Constants.Key.USER_CACHE);
         if (user != null) {
             App.setUser(user, false);
+            PollingUtil.setIsPolling(true);
+            //Todo delete it
+//        PollingData data = PollingData.getFromCache(user.getPhone());
+//        if (null != data) {
+//            Variables.localData = data;
+//        }
         }
     }
 
