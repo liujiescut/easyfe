@@ -102,9 +102,9 @@ public class WalletActivity extends BaseActivity {
             @Override
             public void onSuccess(RequestBase request, Wallet wallet) {
                 mWallet = wallet;
-                mBalanceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mWallet.getBalance()));
-                mWithdrawingTextView.setText(String.format(Locale.CHINA, "%.2f 元", mWallet.getWithdrawing()));
-                mHasWithdrawTextView.setText(String.format(Locale.CHINA, "%.2f 元", mWallet.getHaveWithdraw()));
+                mBalanceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mWallet.getBalance() / 100));
+                mWithdrawingTextView.setText(String.format(Locale.CHINA, "%.2f 元", mWallet.getWithdrawing() / 100));
+                mHasWithdrawTextView.setText(String.format(Locale.CHINA, "%.2f 元", mWallet.getHaveWithdraw() / 100));
                 mAlipayTextView.setText(mWallet.getAli());
                 mWechatTextView.setText(mWallet.getWechat());
                 mBankNameTextView.setText(mWallet.getBank().getName());

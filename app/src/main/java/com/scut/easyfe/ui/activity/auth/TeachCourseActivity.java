@@ -146,7 +146,7 @@ public class TeachCourseActivity extends BaseActivity {
                         if (mFromType == Constants.Identifier.TYPE_REGISTER) {
                             try {
                                 addTeachableCourseItem(mCourseNames.get(mSelectedCoursePosition),
-                                        mGrade.get(mSelectedGradePosition), Integer.parseInt(message));
+                                        mGrade.get(mSelectedGradePosition), Integer.parseInt(message) * 100);
                             } catch (NumberFormatException e) {
                                 e.printStackTrace();
                                 toast("只能输入数字");
@@ -166,7 +166,7 @@ public class TeachCourseActivity extends BaseActivity {
                                         public void onSuccess(RequestBase request, JSONObject result) {
                                             toast("增加课程成功");
                                             addTeachableCourseItem(mCourseNames.get(mSelectedCoursePosition),
-                                                    mGrade.get(mSelectedGradePosition), Integer.parseInt(message));
+                                                    mGrade.get(mSelectedGradePosition), Integer.parseInt(message) * 100);
 
                                             mSelectedGradePosition = -1;
                                         }
@@ -275,7 +275,7 @@ public class TeachCourseActivity extends BaseActivity {
         ((TextView) itemView.findViewById(R.id.item_course_price_tv_state)).setText(Course.getStateFromGrade(gradeName));
         ((TextView) itemView.findViewById(R.id.item_course_price_tv_grade)).setText(Course.getGradeFromGrade(gradeName));
         final TextView priceTextView = ((TextView) itemView.findViewById(R.id.item_course_price_tv_price));
-        priceTextView.setText(String.format(Locale.CHINA, "%.0f 元/小时", price));
+        priceTextView.setText(String.format(Locale.CHINA, "%.0f 元/小时", price / 100));
         itemView.setTag(teachableCourse);
 
         if (mFromType == Constants.Identifier.TYPE_REGISTER) {
@@ -284,13 +284,13 @@ public class TeachCourseActivity extends BaseActivity {
             priceTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
-                    DialogUtils.makeInputDialog(mContext, "收费", InputType.TYPE_CLASS_NUMBER, new DialogUtils.OnInputListener() {
+                            DialogUtils.makeInputDialog(mContext, "收费", InputType.TYPE_CLASS_NUMBER, new DialogUtils.OnInputListener() {
                         @Override
                         public void onFinish(String message) {
                             LogUtils.i(Constants.Tag.TEACHER_REGISTER_TAG, message);
                             try {
                                 TeachableCourse clickPriceItem = (TeachableCourse) finalItemView.getTag();
-                                clickPriceItem.setPrice(Integer.parseInt(message));
+                                clickPriceItem.setPrice(Integer.parseInt(message) * 100);
                                 for (TeachableCourse item :
                                         mTeachableCourses) {
                                     if (item.getIntId() == clickPriceItem.getIntId()) {
@@ -298,6 +298,7 @@ public class TeachCourseActivity extends BaseActivity {
                                     }
                                 }
                                 priceTextView.setText(String.format("%s 元/小时", message));
+
                             } catch (NumberFormatException e) {
                                 e.printStackTrace();
                                 toast("只能输入数字");
@@ -307,6 +308,7 @@ public class TeachCourseActivity extends BaseActivity {
 
                 }
             });
+
         }else if(mFromType == Constants.Identifier.TYPE_MODIFY){
             priceTextView.setClickable(false);
             priceTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);

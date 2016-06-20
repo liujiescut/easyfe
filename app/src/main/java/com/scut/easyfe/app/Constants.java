@@ -15,7 +15,10 @@ public class Constants {
         public static final boolean ISLOG = true;        //是否显示log
         public static final boolean IS_SHOW_TOAST = true;  //是否显示使用LogUtil.toast出来的东西
         public static final boolean TO_MARKET = false;   //当分享时应用（例如wechat）不存在，是否跳转到应用市场
-        public static final String APP_NAME = "直播易";
+        public static final String APP_NAME = "优升学家教";
+        public static final String TEACHER_UNCHECKED_INFO = "信息审核中,通过后才可用该功能";
+        public static final String TEACHER_FORBIDDEN_INFO = "家长才可用该功能哟~";
+        public static final String PARENT_FORBINDDEN_INFO = "家教才可用该功能哟~";
         public static final int VERIFY_INTERVAL = 15;
     }
 
@@ -93,7 +96,9 @@ public class Constants {
         public static final String URL_GET_TEACHER_COMPLETE_COURSE_REWARD = URL_BASE + "Reward/FinishCourse/Teacher";
 
         public static final String URL_POLLING_DATA = URL_BASE + "Share/DataUpdateTime";
-        public static final String URL_PRE_PAY = URL_BASE + "Money/PrePay";
+        public static final String URL_CASH_PAY = URL_BASE + "Money/Pay/Cash";
+        public static final String URL_ALIPAY_PAY = URL_BASE + "Money/PrePay/AliPay";
+        public static final String URL_WECHAT_PAY = URL_BASE + "Money/PrePay/Wechat";
 
     }
 
@@ -246,7 +251,7 @@ public class Constants {
 
     public static class Data {
         public static final String WECHAT_APP_ID = "wx5242965d8b495478";                            //微信分享的APP_ID
-        public static final String WECHAT_PARTER_ID = "1352452902";                            //微信分享的APP_ID
+        public static final String WECHAT_PARTNER_ID = "1352452902";
         public static final String WEIBO_APP_KEY = "1033545693";                                    //微博分享
         public static final String QQ_APP_ID = "1105349762";
 
@@ -256,7 +261,8 @@ public class Constants {
 
         public static final String DEFAULT_QN_TOKEN = "R2Rq9_dBXtrL6wqLwA8_GC6EZNR9JU06xaGegd19:mKzKD3gB-mkdQpjt1BVtBAZmNYw=:eyJzY29wZSI6ImVhc3lmZSIsImRlYWRsaW5lIjoxNDg0OTIxMjY4fQ==";
         public static final String ALIPAY_RSA_PUBLIC = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkrIvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsraprwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUrCmZYI/FCEa3/cNMW0QIDAQAB";
-        public static final String ALIPAY_RSA_PRIVATE = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAOcFZ2189zt1453g" +
+        public static final String ALIPAY_RSA_PRIVATE =
+                "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAOcFZ2189zt1453g" +
                 "9jQSW3oSwU8hT3DSwB4N3LspQ/3axpMyfS+CBcsEI22D7LyptaV9+S/WJcCBkP3p" +
                 "e/l6ImWa/uHhL33wDUtRK7Lw5xXXJ3ouh4fVf43n3goai7bmM1Sce6XljHUhDeFS" +
                 "wO5kv/aF1oacQhFaj7aAmVt3afd3AgMBAAECgYAWyv+zW7sA0NbOQt3HsW/5EVSl" +
@@ -300,6 +306,7 @@ public class Constants {
             tutorGradeList.add("初中 一年级");
             tutorGradeList.add("初中 二年级");
             tutorGradeList.add("初中 三年级");
+
             tutorGradeList.add("高中 一年级");
             tutorGradeList.add("高中 二年级");
             tutorGradeList.add("高中 三年级");

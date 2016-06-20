@@ -14,7 +14,6 @@ import com.scut.easyfe.event.PDHandler;
 import com.scut.easyfe.ui.activity.CallbackActivity;
 import com.scut.easyfe.ui.activity.BookActivity;
 import com.scut.easyfe.ui.activity.order.SpreadActivity;
-import com.scut.easyfe.ui.activity.auth.TeacherRegisterOneActivity;
 import com.scut.easyfe.ui.activity.auth.TeacherRegisterTwoActivity;
 import com.scut.easyfe.ui.activity.VipActivity;
 import com.scut.easyfe.ui.activity.WebActivity;
@@ -198,6 +197,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
             return;
         }
 
+        if(App.getUser().isTeacher() && (!App.getUser().getTeacherMessage().isChecked())){
+            toast(Constants.Config.TEACHER_UNCHECKED_INFO);
+            return;
+        }
+
         setVipNewState(false);
         Variables.localData.getCommon().setVipEvent(PDHandler.get().getLatestData().getCommon().getVipEvent());
         Variables.localData.equals(PDHandler.get().getLatestData(), true);
@@ -252,10 +256,17 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
     private void onTeacherClick(View view){
         if(null != mActivity) {
             if(!App.getUser(false).isTeacher()) {
-                Bundle bundle = new Bundle();
-                bundle.putInt(Constants.Key.TO_TEACHER_REGISTER_ONE_ACTIVITY_TYPE, Constants.Identifier.TYPE_REGISTER);
-                mActivity.redirectToActivity(mActivity, TeacherRegisterOneActivity.class);
+                toast("此功能只对家教开放哟");
+//                Bundle bundle = new Bundle();
+//                bundle.putInt(Constants.Key.TO_TEACHER_REGISTER_ONE_ACTIVITY_TYPE, Constants.Identifier.TYPE_REGISTER);
+//                mActivity.redirectToActivity(mActivity, TeacherRegisterOneActivity.class);
+
             }else{
+
+                if(App.getUser().isTeacher() && (!App.getUser().getTeacherMessage().isChecked())){
+                    toast(Constants.Config.TEACHER_UNCHECKED_INFO);
+                    return;
+                }
 
                 Bundle extras = new Bundle();
                 extras.putBoolean(Constants.Key.IS_REGISTER, false);

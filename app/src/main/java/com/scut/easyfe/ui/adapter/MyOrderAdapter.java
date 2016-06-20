@@ -94,7 +94,7 @@ public class MyOrderAdapter extends BaseListViewScrollStateAdapter {
         holder.date.setText(TimeUtils.getTime(TimeUtils.getDateFromString(order.getTeachTime().getDate()), "yyyy 年 MM 月 dd 日 (EEEE)"));
         holder.period.setText(order.getTeachTime().getChineseTime());
         holder.teachTime.setText(TimeUtils.getTimeFromMinute(order.getTime()));
-        holder.price.setText(String.format(Locale.CHINA, "%.2f 元", order.getTotalPrice()));
+        holder.price.setText(String.format(Locale.CHINA, "%.2f 元", order.getTotalPrice() / 100));
 
         holder.checkBox.setOnCheckedChangeListener(null);
         holder.checkBox.setChecked(mOrders.get(position).isSelected());

@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 发布推广(特价订单)页面
@@ -65,7 +66,7 @@ public class PublishSpreadActivity extends BaseActivity {
     private Date mTeachDate = null;
     private String mPeriod = "";
     private int mTeachTime = 60;
-    private long mPrice = 1;
+    private long mPrice = 100;
 
 
     private boolean mISLoadingCloseByUser = true;
@@ -104,7 +105,7 @@ public class PublishSpreadActivity extends BaseActivity {
 
         mTimeTextView.setText(TimeUtils.getTimeFromMinute(mTeachTime));
 
-        mPriceTextView.setText(String.format("%d 元/小时", mPrice));
+        mPriceTextView.setText(String.format(Locale.CHINA, "%d 元/小时", mPrice / 100));
     }
 
     @Override
@@ -282,7 +283,7 @@ public class PublishSpreadActivity extends BaseActivity {
                     return;
                 }
 
-                mPrice = Integer.valueOf(message);
+                mPrice = Integer.valueOf(message) * 100;
                 LogUtils.i(Constants.Tag.ORDER_TAG, message);
                 OtherUtils.hideSoftInputWindow(mPriceTextView.getWindowToken());
                 try {
@@ -323,6 +324,7 @@ public class PublishSpreadActivity extends BaseActivity {
                 data.setOrderId(orderId);
                 if(!Variables.localData.getMine().getOrder().contains(data)){
                     Variables.localData.getMine().getOrder().add(data);
+                    Variables.localData.save2Cache(App.getUser().getPhone());
                 }
 
                 App.get().getEventBus().post(new DataChangeEvent(PDHandler.get().getLatestData()));

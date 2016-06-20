@@ -16,7 +16,7 @@ public class VipEvent extends BaseEntity{
     private String detail = "";
     //购买活动所需积分
     private float score = 0f;
-    //购买活动所需现金
+    //购买活动所需现金 单位: 分
     private float money = 0f;
     //预约的最大人数
     private int allowCount = 0;

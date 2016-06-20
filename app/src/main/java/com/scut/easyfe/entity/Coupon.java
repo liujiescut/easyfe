@@ -3,6 +3,7 @@ package com.scut.easyfe.entity;
 import com.scut.easyfe.utils.TimeUtils;
 
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * 优惠券
@@ -13,8 +14,8 @@ public class Coupon extends BaseEntity{
     String grade = "";                                  //适用年级
     String weekday = "";                                //适用时间
     private int time = 0;                               //当课时大于两个小时才可以使用
-    private int money = 0;                              //可以优惠10元
-    private long deadline = 0l;                         //时间戳，优惠券过期时间
+    private int money = 0;                              //可以优惠10元 单位: 分
+    private long deadline = 0L;                         //时间戳，优惠券过期时间
     private int count = 0;
 
     @Override
@@ -79,7 +80,7 @@ public class Coupon extends BaseEntity{
     }
 
     private String getConstraint(){
-        return String.format("授课时间超过%d小时可用", time);
+        return String.format(Locale.CHINA, "授课时间超过%d小时可用", time);
     }
 
     public String getTag() {

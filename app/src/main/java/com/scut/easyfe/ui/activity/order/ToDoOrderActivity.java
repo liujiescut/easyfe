@@ -2,23 +2,15 @@ package com.scut.easyfe.ui.activity.order;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alipay.sdk.app.PayTask;
-import com.bigkoo.alertview.AlertView;
-import com.bigkoo.alertview.OnItemClickListener;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.app.Variables;
-import com.scut.easyfe.entity.Bank;
-import com.scut.easyfe.entity.PayResult;
 import com.scut.easyfe.entity.PollingData;
 import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.event.DataChangeEvent;
@@ -27,27 +19,19 @@ import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.request.order.RGetOrderDetail;
-import com.scut.easyfe.network.request.order.RPayOrder;
-import com.scut.easyfe.network.request.pay.RPrePay;
 import com.scut.easyfe.network.request.user.parent.RGetTeacherInfo;
 import com.scut.easyfe.ui.activity.ShowTextActivity;
 import com.scut.easyfe.ui.base.BaseActivity;
-import com.scut.easyfe.utils.AlipayUtil;
 import com.scut.easyfe.utils.DialogUtils;
-import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 import com.scut.easyfe.utils.PayUtil;
-import com.scut.easyfe.utils.SignUtils;
 import com.scut.easyfe.utils.TimeUtils;
+import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import org.greenrobot.eventbus.Subscribe;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Locale;
 
 public class ToDoOrderActivity extends BaseActivity {
@@ -166,9 +150,9 @@ public class ToDoOrderActivity extends BaseActivity {
                 TimeUtils.getTime(TimeUtils.getDateFromString(mOrder.getTeachTime().getDate()), "yyyy年MM月dd日(EEEE)"),
                 mOrder.getTeachTime().getChineseTime()));
         mTimeTextView.setText(TimeUtils.getTimeFromMinute(mOrder.getTime()));
-        mPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元/小时", mOrder.getPrice()));
-        mTipTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getSubsidy()));
-        mTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice()));
+        mPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元/小时", mOrder.getPrice() / 100));
+        mTipTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getSubsidy() / 100));
+        mTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice() / 100));
         mWarningTextView.setText("我就是温馨提示喽");
 
         if (isTeacher()) {
@@ -196,8 +180,8 @@ public class ToDoOrderActivity extends BaseActivity {
             mTutorPriceTextView.setText("未预定此服务");
             mThisTutorIncompleteInfoTextView.setText("未预定此服务");
         } else {
-            mCouponTextView.setText(String.format(Locale.CHINA, "减 %.0f 元", mOrder.getCoupon().getMoney()));
-            mTutorPriceTextView.setText(String.format(Locale.CHINA, "%.0f 元/小时", mOrder.getProfessionalTutorPrice()));
+            mCouponTextView.setText(String.format(Locale.CHINA, "减 %.0f 元", mOrder.getCoupon().getMoney() / 100));
+            mTutorPriceTextView.setText(String.format(Locale.CHINA, "%.0f 元/小时", mOrder.getProfessionalTutorPrice() / 100));
             if (mOrder.getThisTeachDetail().hadFillIn()) {
                 mThisTutorIncompleteLinearLayout.setVisibility(View.GONE);
                 mThisTutorCompleteTextView.setVisibility(View.VISIBLE);
@@ -266,15 +250,44 @@ public class ToDoOrderActivity extends BaseActivity {
             return;
         }
 
+
+//        String appId = "wx5242965d8b495478";
+//        String partnerId = "1352452902";
+//        String prepayId = "wx20160619235706bbe534a95d0427096285";
+//        String sign = "E5A422ED67710B72F361C954BBDCD0E2";
+//        String packageValue = "Sign=WXPay";
+//        String timestamp = "1466351826";
+//        String nonce_str = "85c41d92b9e7ed4c";
+//
+//        IWXAPI api = WXAPIFactory.createWXAPI(ToDoOrderActivity.this, appId, true);
+//        api.registerApp(appId);
+//
+//
+//        PayReq request = new PayReq();
+//        request.appId = appId;
+//        request.partnerId = partnerId;
+//        request.prepayId = prepayId;
+//        request.packageValue = packageValue;
+//        request.nonceStr = nonce_str;
+//        request.timeStamp = timestamp;
+//        request.sign = sign;
+//
+//        if (!api.sendReq(request)) {
+//            Toast.makeText(App.get().getApplicationContext(), "支付请求发送失败", Toast.LENGTH_SHORT).show();
+//
+//        } else {
+//            Toast.makeText(App.get().getApplicationContext(), "支付请求发送成功", Toast.LENGTH_SHORT).show();
+//        }
+
         if (mOrder.isIsTeacherReport()) {
-            new PayUtil(this, Constants.Identifier.BUY_ORDER, mOrder.get_id(), mOrder.getPayTitle(), mOrder.getPayInfo(), (int)(mOrder.getTotalPrice() * 1000), new PayUtil.PayListener() {
+            new PayUtil(this, Constants.Identifier.BUY_ORDER, mOrder.get_id(), mOrder.getPayTitle(), mOrder.getPayInfo(), (int)mOrder.getTotalPrice(), new PayUtil.PayListener() {
                 @Override
                 public void onPayReturn(boolean success) {
                     if(success){
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable(Constants.Key.ORDER, mOrder);
-                        bundle.putInt(Constants.Key.TO_TEACHER_REPORT_ACTIVITY_TYPE, Constants.Identifier.TYPE_CONFIRM);
-                        ToDoOrderActivity.this.redirectToActivity(mContext, TeacherReportActivity.class, bundle);
+//                        Bundle bundle = new Bundle();
+//                        bundle.putSerializable(Constants.Key.ORDER, mOrder);
+//                        bundle.putInt(Constants.Key.TO_TEACHER_REPORT_ACTIVITY_TYPE, Constants.Identifier.TYPE_CONFIRM);
+//                        ToDoOrderActivity.this.redirectToActivity(mContext, TeacherReportActivity.class, bundle);
                     }
                 }
             }).showPayDialog();
@@ -364,9 +377,17 @@ public class ToDoOrderActivity extends BaseActivity {
                 RequestManager.get().execute(new RGetOrderDetail(App.getUser().getToken(), mOrder.get_id()), new RequestListener<Order>() {
                     @Override
                     public void onSuccess(RequestBase request, Order result) {
-                        mOrder = result;
-                        updateView();
                         stopLoading();
+                        mOrder = result;
+                        if(mOrder.getState() == Constants.Identifier.ORDER_COMPLETED){
+                            Bundle bundle = new Bundle();
+                            bundle.putInt(Constants.Key.ORDER_TYPE, Constants.Identifier.ORDER_COMPLETED);
+                            bundle.putSerializable(Constants.Key.ORDER, mOrder);
+                            redirectToActivity(ToDoOrderActivity.this, ReservedOrCompletedOrderActivity.class, bundle);
+
+                        }else {
+                            updateView();
+                        }
                     }
 
                     @Override

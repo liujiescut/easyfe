@@ -9,6 +9,9 @@ import com.scut.easyfe.network.kjFrame.http.Request;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
@@ -39,6 +42,16 @@ public class RTeacherRegister extends RequestBase<JSONObject>{
         params.put("teacherPrice", mUser.getTeacherMessage().getTeachCourseJsonArray());
         params.put("teacherMessage", mUser.getTeacherMessage().getTeacherJson());
 
+//        try {
+//            File file = new File("/easyfe/teacher_register_data");
+//            FileOutputStream fos = new FileOutputStream(file);
+//            fos.write(params.toString().getBytes());
+//            fos.close();
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         return params;
     }
 

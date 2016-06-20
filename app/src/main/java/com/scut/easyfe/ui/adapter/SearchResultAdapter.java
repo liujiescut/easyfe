@@ -15,6 +15,7 @@ import com.scut.easyfe.utils.OtherUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 单次预约多次预约筛选结果适配器
@@ -62,7 +63,7 @@ public class SearchResultAdapter extends BaseListViewScrollStateAdapter {
         }
 
         holder.teacherName.setText(mOrders.get(position).getTeacher().getName());
-        holder.price.setText(String.format("%.2f 元/小时", mOrders.get(position).getPerPrice()));
+        holder.price.setText(String.format(Locale.CHINA, "%.2f 元/小时", mOrders.get(position).getPerPrice() / 100));
         holder.content.setText(Order.getBaseInfo(mOrders.get(position)));
         ImageUtils.displayImage(mOrders.get(position).getTeacher().getAvatar(), holder.avatar);
 

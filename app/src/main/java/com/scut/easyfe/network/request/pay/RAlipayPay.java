@@ -12,38 +12,34 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 /**
- * 预支付
- * Created by jay on 16/6/13.
+ * 支付宝支付
+ * Created by jay on 16/6/18.
  */
-public class RPrePay extends RequestBase<JSONObject>{
-    private String orderId = "";        //支付订单时传
-    private String vipEventId = "";     //支付会员活动时传
-    private int money = 0;              //单位: 分
-    private int buy = -1;               //0支付订单, 1支付会员活动, 2充值
-    private int payType = -1;           //0现金, 1支付宝, 2微信
+public class RAlipayPay extends RequestBase<JSONObject>{
 
-    public RPrePay(String orderId, String vipEventId, int money, int buyType, int payType) {
+    private int buy = -1;                   //0支付订单, 1支付会员活动, 2充值
+    private String orderId = "";            //支付订单时传
+    private String vipEventId = "";         //支付会员活动时传
+    private int money = 0;                  //单位: 分
+
+    public RAlipayPay(int buy, String orderId, String vipEventId, int money) {
+        this.buy = buy;
         this.orderId = orderId;
         this.vipEventId = vipEventId;
         this.money = money;
-        this.buy = buyType;
-        this.payType = payType;
     }
 
     @Override
     public String getUrl() {
-        return Constants.URL.URL_PRE_PAY;
+        return Constants.URL.URL_ALIPAY_PAY;
     }
 
     @Override
     public JSONObject getJsonParams() throws JSONException {
         JSONObject params = new JSONObject();
         params.put("token", App.getUser().getToken());
-        params.put("orderId", orderId);
-        params.put("money", money);
         params.put("buy", buy);
-        params.put("payType", payType);
-
+        params.put("money", money);
         if (null != orderId && orderId.length() != 0) {
             params.put("orderId", orderId);
         }

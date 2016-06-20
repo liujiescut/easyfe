@@ -46,7 +46,7 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
     private int mMinCourseTime = 120;               //最短课时(分钟)
     private int mTrafficTime = 120;                 //可接受交通时间(分钟)
     private int mMaxTrafficTime = 180;              //可接受最长交通时间(分钟)
-    private int mSubsidy = 5;                       //交通补贴
+    private int mSubsidy = 500;                       //交通补贴
 
     private MyTimePicker mTimePicker;
 
@@ -135,7 +135,7 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
         mMinTeachTimeTextView.setText(TimeUtils.getTimeFromMinute(mUser.getTeacherMessage().getMinCourseTime()));
         mTrafficTextView.setText(TimeUtils.getTimeFromMinute(mUser.getTeacherMessage().getFreeTrafficTime()));
         mMaxTrafficTextView.setText(TimeUtils.getTimeFromMinute(mUser.getTeacherMessage().getMaxTrafficTime()));
-        mSubsidyTextView.setText(String.format(Locale.CHINA, "%d元", mUser.getTeacherMessage().getSubsidy()));
+        mSubsidyTextView.setText(String.format(Locale.CHINA, "%d元", mUser.getTeacherMessage().getSubsidy() / 100));
 
     }
 
@@ -226,7 +226,7 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
                 LogUtils.i(Constants.Tag.TEACHER_REGISTER_TAG, message);
                 OtherUtils.hideSoftInputWindow(mSubsidyTextView.getWindowToken());
                 try {
-                    mSubsidy = Integer.parseInt(message);
+                    mSubsidy = Integer.parseInt(message) * 100;
                     mSubsidyTextView.setText(String.format("%s 元", message));
                 } catch (NumberFormatException e) {
                     e.printStackTrace();

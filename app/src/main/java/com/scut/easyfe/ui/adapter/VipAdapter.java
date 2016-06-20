@@ -77,7 +77,7 @@ public class VipAdapter extends BaseListViewScrollStateAdapter {
         holder.title.setText(mVipEvents.get(position).getTitle());
         holder.detail.setText(mVipEvents.get(position).getDetail());
         holder.score.setText(String.format(Locale.CHINA, "%.0f 积分\n参加", mVipEvents.get(position).getScore()));
-        holder.money.setText(String.format(Locale.CHINA, "%.0f 元\n参加", mVipEvents.get(position).getMoney()));
+        holder.money.setText(String.format(Locale.CHINA, "%.0f 元\n参加", mVipEvents.get(position).getMoney() / 100));
         holder.reservable.setText(mVipEvents.get(position).isReservable() ? "可预约呦~~" : "已订满啦 ~~");
 
         holder.score.setOnClickListener(new FixedClickListener() {
@@ -98,7 +98,7 @@ public class VipAdapter extends BaseListViewScrollStateAdapter {
                         Constants.Identifier.BUY_VIP_EVENT, mVipEvents.get(position).get_id(),
                         mVipEvents.get(position).getPayTitle(),
                         mVipEvents.get(position).getPayInfo(),
-                        (int)(mVipEvents.get(position).getMoney() * 1000),
+                        (int)(mVipEvents.get(position).getMoney() * 100),
                         new PayUtil.PayListener() {
                     @Override
                     public void onPayReturn(boolean success) {

@@ -38,8 +38,8 @@ public class PollingUtil {
         Intent intent = new Intent(context, PollingService.class);
         mConnection = new ServiceConnection() {
             @Override
-            public void onServiceConnected(ComponentName name, IBinder service) {
-                mPollingService = ((PollingService.PollingBinder)service).getService();
+            public void onServiceConnected(ComponentName name, IBinder binder) {
+                mPollingService = ((PollingService.PollingBinder)binder).getService();
 
                 if(mIsPolling){
                     mPollingService.setIsUserLogin(mIsPolling);

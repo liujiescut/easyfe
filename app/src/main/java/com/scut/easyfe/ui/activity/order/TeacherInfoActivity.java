@@ -97,8 +97,8 @@ public class TeacherInfoActivity extends BaseActivity {
 
             mPriceTextView.setText(
                     String.format("%s%s",
-                            String.format(Locale.CHINA, "%.2f元/次", mOrder.getTotalPrice()),
-                            (0 == mOrder.getSubsidy() ? "" : String.format(Locale.CHINA, "包含交通补贴%.2f元", mOrder.getSubsidy()))));
+                            String.format(Locale.CHINA, "%.2f元/次", mOrder.getTotalPrice() / 100),
+                            (0 == mOrder.getSubsidy() ? "" : String.format(Locale.CHINA, "包含交通补贴%.2f元", mOrder.getSubsidy() / 100))));
 
             if (mReserveType == Constants.Identifier.RESERVE_SINGLE) {
                 mMultiReserveHintTextView.setVisibility(View.GONE);
@@ -134,11 +134,11 @@ public class TeacherInfoActivity extends BaseActivity {
     }
 
     private void showTeacherInfo() {
-        String priceString = String.format(Locale.CHINA, "%.2f 元/小时", mOrder.getPerPrice());
+        String priceString = String.format(Locale.CHINA, "%.2f 元/小时", mOrder.getPerPrice() / 100);
         if (mOrder.getSubsidy() != 0) {
             mPriceTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.mipmap.icon_detail_question_small, 0);
-            priceString = String.format(Locale.CHINA, "%.2f 元/小时", mOrder.getPerPrice());
-            priceString += String.format(Locale.CHINA, "(不包含交通补贴%.2f元)", mOrder.getSubsidy());
+            priceString = String.format(Locale.CHINA, "%.2f 元/小时", mOrder.getPerPrice() / 100);
+            priceString += String.format(Locale.CHINA, "(不包含交通补贴%.2f元)", mOrder.getSubsidy() / 100);
         }
 
         mPriceTextView.setText(priceString);

@@ -24,6 +24,7 @@ import com.qiniu.android.storage.UploadOptions;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.app.Variables;
 import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
@@ -205,6 +206,7 @@ public class PhotoUploadActivity extends BaseActivity {
                 mUser.setAvatar(result.optString("avatar"));
                 mUser.setType(result.optInt("type"));
                 App.setUser(mUser);
+                Variables.localData.getMine().setCheckType(Constants.Identifier.TEACHER_UNCHECK);
                 PollingUtil.setIsPolling(true);
                 DialogUtils.makeConfirmDialog(PhotoUploadActivity.this, "提示", "您的信息正在审核中,请耐心等待", new OnItemClickListener() {
                     @Override

@@ -60,7 +60,6 @@ public class App extends Application {
 
         mInstance = this;
         mActivityManagerUtils = ActivityManagerUtils.getInstance();
-        PollingUtil.start(this);
         init();
     }
 
@@ -266,7 +265,6 @@ public class App extends Application {
      */
     public void exit() {
         mActivityManagerUtils.removeAllActivity();
-        PollingUtil.stop();
     }
 
 }

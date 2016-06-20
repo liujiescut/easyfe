@@ -24,27 +24,6 @@ public class FeedbackReport extends BaseEntity{
     private Order.TutorDetail nextTeachDetail =     //下次专业辅导情况
             new Order.TutorDetail();
 
-    public static ArrayList<FeedbackReport> getTestData(){
-        ArrayList<FeedbackReport> reports = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
-            FeedbackReport report = new FeedbackReport();
-            report.setOrderNumber("120161324" + i);
-            report.setTeacherName("家教");
-            report.setParentName("家长");
-            report.setEnthusiasm(i % 4 + 1);
-            report.setGetLevel(i % 3 + 1);
-            report.setRightPercent("80% - 90%");
-            report.setTeacherComment("孩子挺聪明的~~~");
-            TeachTime teachTime = new TeachTime();
-            teachTime.setDate("2016-6-15");
-            teachTime.setTime("afternoon");
-            report.setTeachTime(teachTime);
-
-            reports.add(report);
-        }
-
-        return reports;
-    }
     public String get_id() {
         return _id;
     }

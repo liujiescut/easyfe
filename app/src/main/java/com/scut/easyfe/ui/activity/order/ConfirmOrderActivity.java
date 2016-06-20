@@ -135,11 +135,11 @@ public class ConfirmOrderActivity extends BaseActivity {
         mTeachCourseTextView.setText(mOrder.getCourse());
         mTeachTimeTextView.setText(TimeUtils.getTimeFromMinute(mOrder.getTime()));
 
-        mTeachPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getPerPrice()));
+        mTeachPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getPerPrice() / 100));
 
-        mTeachTipTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getSubsidy()));
-        mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice()));
-        mProfessionGuidePriceTextView.setText(String.format(Locale.CHINA, "%d 元/小时", Variables.TUTOR_PRICE));
+        mTeachTipTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getSubsidy() / 100));
+        mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice() / 100));
+        mProfessionGuidePriceTextView.setText(String.format(Locale.CHINA, "%d 元/小时", Variables.TUTOR_PRICE / 100));
 
         if(!mOrder.isProfessionTutorShow()){
             mTutorLinearLayout.setVisibility(View.GONE);
@@ -158,7 +158,7 @@ public class ConfirmOrderActivity extends BaseActivity {
                     mTicketLinearLayout.setVisibility(isChecked ? View.VISIBLE : View.GONE);
                     mOrder.getCoupon().setMoney(isChecked ? mTicketMoney : 0);
                     mOrder.setProfessionalTutorPrice(isChecked ? Variables.TUTOR_PRICE : 0);
-                    mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice()));
+                    mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice() / 100));
                 }
             });
         }
@@ -202,8 +202,8 @@ public class ConfirmOrderActivity extends BaseActivity {
                             }
 
                             mOrder.getCoupon().setMoney(mTicketMoney);
-                            mTicketTextView.setText(String.format(Locale.CHINA, "减 %d 元", mTicketMoney));
-                            mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice()));
+                            mTicketTextView.setText(String.format(Locale.CHINA, "减 %d 元", mTicketMoney / 100));
+                            mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice() / 100));
 
 
                             mIsLoadingCloseByUser = false;
@@ -216,8 +216,8 @@ public class ConfirmOrderActivity extends BaseActivity {
                             mIsLoadingCloseByUser = false;
                             mTicketMoney = 0;
                             mOrder.getCoupon().setMoney(mTicketMoney);
-                            mTicketTextView.setText(String.format(Locale.CHINA, "减 %d 元", mTicketMoney));
-                            mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice()));
+                            mTicketTextView.setText(String.format(Locale.CHINA, "减 %d 元", mTicketMoney / 100));
+                            mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice() / 100));
 
                             stopLoading();
                         }

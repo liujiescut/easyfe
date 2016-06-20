@@ -9,7 +9,7 @@ public class TeachableCourse extends BaseEntity{
     private String _id = "";
     private String course = "";
     private String grade = "";
-    private float price = 0f;
+    private float price = 0f;     //单位: 分
     private float addPrice = 0f;
 
     public TeachableCourse(){
@@ -63,12 +63,13 @@ public class TeachableCourse extends BaseEntity{
         this.grade = grade;
     }
 
+
     public float getPrice() {
         return price;
     }
 
     public void setPrice(float price) {
-        this.price = price;
+        this.price = price * 100;
     }
 
     @Override

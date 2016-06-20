@@ -494,6 +494,11 @@ public class BookActivity extends BaseActivity {
             return;
         }
 
+        if(App.getUser().isTeacher()){
+            toast(Constants.Config.TEACHER_FORBIDDEN_INFO);
+            return;
+        }
+
         startLoading("筛选中");
 
         if(mReserveType == Constants.Identifier.RESERVE_SINGLE){
@@ -508,7 +513,7 @@ public class BookActivity extends BaseActivity {
                     for (Order order :
                             result) {
 
-                        order.setSubsidy(order.getTeacher().getTeacherMessage().getSubsidy()); //同步一下(搜索只返回 teacher 里面的)
+                        order.setSubsidy(order.getTeacher().getTeacherMessage().getSubsidy());      //同步一下(搜索只返回 teacher 里面的)
 
                         /** 加上这些信息在后面预约会用到 */
                         order.getTeachTime().setDate(condition.getSingleBookTime().getDate());
@@ -547,7 +552,7 @@ public class BookActivity extends BaseActivity {
 
                     for (Order order :
                             result) {
-                        order.setSubsidy(order.getTeacher().getTeacherMessage().getSubsidy()); //同步一下(搜索只返回 teacher 里面的)
+                        order.setSubsidy(order.getTeacher().getTeacherMessage().getSubsidy());      //同步一下(搜索只返回 teacher 里面的)
 
                         /** 加上这些信息在后面预约会用到 */
                         order.getTeachTime().setDate(TimeUtils.getWeekStringFromInt(condition.getMultiBookTime().getWeekDay()));

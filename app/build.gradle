@@ -59,8 +59,8 @@ dependencies {
     compile files('libs/SocialSDK_Sina.jar')
     compile files('libs/umeng_social_sdk.jar')
     compile files('libs/weibosdkcore.jar')
-    compile files('libs/libammsdk.jar')
     compile files('libs/alipaySdk-20160516.jar')
+    compile files('libs/libammsdk.jar')
 }
 
 repositories {

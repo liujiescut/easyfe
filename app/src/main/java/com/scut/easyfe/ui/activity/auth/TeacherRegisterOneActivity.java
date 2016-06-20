@@ -650,6 +650,9 @@ public class TeacherRegisterOneActivity extends BaseActivity {
     }
 
     private boolean validate(User user) {
+        return validate(user, true);
+    }
+    private boolean validate(User user, boolean hasSms) {
         if (null == user.getName() || user.getName().length() == 0) {
             toast("请输入用户名");
             return false;
@@ -660,7 +663,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
             return false;
         }
 
-        if (mVerifyCodeEditText.getText().toString().length() != 6) {
+        if (hasSms && mVerifyCodeEditText.getText().toString().length() != 6) {
             toast("请输入有效验证码");
             return false;
         }
@@ -688,7 +691,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
 
     public void onModifyClick(View view) {
         getBaseUserInfo();
-        validate(mUser);
+        validate(mUser, false);
 
         mUser.getTeacherMessage().setTeachCount(mHadTeachChildTextView.getText().toString());
         mUser.getTeacherMessage().setHadTeach(mHadTeachTimeTextView.getText().toString());

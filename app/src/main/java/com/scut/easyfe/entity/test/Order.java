@@ -11,6 +11,7 @@ import java.util.Date;
  * 订单类
  * Created by jay on 16/3/27.
  */
+@Deprecated
 public class Order extends BaseEntity implements Serializable{
     private String _id = "";                //订单id
     private String orderNumber = "";        //订单号

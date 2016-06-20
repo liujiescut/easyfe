@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import hirondelle.date4j.DateTime;
 
@@ -101,11 +102,11 @@ public class ModifyOrderActivity extends BaseActivity {
         ((TextView)OtherUtils.findViewById(this, R.id.modify_order_tv_course)).setText(exampleOrder.getCourse());
         ((TextView)OtherUtils.findViewById(this, R.id.modify_order_tv_time)).setText(TimeUtils.getTimeFromMinute(exampleOrder.getTime()));
         ((TextView)OtherUtils.findViewById(this, R.id.modify_order_tv_price)).setText(
-                String.format("%.2f", exampleOrder.getPrice()));
+                String.format(Locale.CHINA, "%.2f 元/小时", exampleOrder.getPrice() / 100));
         ((TextView)OtherUtils.findViewById(this, R.id.modify_order_tv_tip)).setText(
-                String.format("%.2f", exampleOrder.getSubsidy()));
+                String.format(Locale.CHINA, "%.2f 元", exampleOrder.getSubsidy() / 100));
         ((TextView)OtherUtils.findViewById(this, R.id.modify_order_tv_total_price)).setText(
-                String.format("%.2f", exampleOrder.getTotalPrice()));
+                String.format(Locale.CHINA, "%.2f 元", exampleOrder.getTotalPrice() / 100));
 
         if(mOrders.size() == 1){
             //修改一个订单
@@ -158,7 +159,7 @@ public class ModifyOrderActivity extends BaseActivity {
                 mTeachTime = hour * 60 + minute;
                 mTimeTextView.setText(timeString);
                 exampleOrder.setTime(mTeachTime);
-                mTotalPriceTextView.setText( String.format("%.2f", exampleOrder.getTotalPrice()));
+                mTotalPriceTextView.setText( String.format(Locale.CHINA, "%.2f 元", exampleOrder.getTotalPrice() / 100));
             }
         });
     }

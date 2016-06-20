@@ -179,9 +179,9 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
                 TimeUtils.getTime(TimeUtils.getDateFromString(mOrder.getTeachTime().getDate()), "yyyy年MM月dd日(EEEE)"),
                 mOrder.getTeachTime().getChineseTime()));
         mTimeTextView.setText(TimeUtils.getTimeFromMinute(mOrder.getTime()));
-        mPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元/小时", mOrder.getPrice()));
-        mTipTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getSubsidy()));
-        mTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice()));
+        mPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元/小时", mOrder.getPrice() / 100));
+        mTipTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getSubsidy() / 100));
+        mTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice() / 100));
 
         if (mOrderType == Constants.Identifier.ORDER_COMPLETED) {
             mNumContainer.setVisibility(View.VISIBLE);
@@ -221,8 +221,8 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
             mCouponContainer.setVisibility(View.GONE);
             mTutorPriceTextView.setText("未预定此服务");
         }else{
-            mCouponTextView.setText(String.format(Locale.CHINA, "减 %.0f 元", mOrder.getCoupon().getMoney()));
-            mTutorPriceTextView.setText(String.format(Locale.CHINA, "%.0f 元/小时", mOrder.getProfessionalTutorPrice()));
+            mCouponTextView.setText(String.format(Locale.CHINA, "减 %.0f 元", mOrder.getCoupon().getMoney() / 100));
+            mTutorPriceTextView.setText(String.format(Locale.CHINA, "%.0f 元/小时", mOrder.getProfessionalTutorPrice() / 100));
         }
     }
 

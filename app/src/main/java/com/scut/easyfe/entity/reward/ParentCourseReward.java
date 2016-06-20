@@ -8,6 +8,7 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * 完成课时现金券及积分奖励
@@ -46,18 +47,18 @@ public class ParentCourseReward extends BaseReward {
     @Override
     public SpannableStringBuilder getAsString() {
         String content = "完成课时要求: ";
-        content += String.format("%d 小时", time);
+        content += String.format(Locale.CHINA, "%d 小时", time);
         content += "\n";
         content += "现金券奖励: ";
 
         int start1 = content.length();
-        String moneyReward = String.format("%.0f 元", money);
+        String moneyReward = String.format(Locale.CHINA, "%.0f 元", money / 100);
         content += moneyReward;
 
         content += "\n";
         content += "积分奖励: ";
         int start2 = content.length();
-        String integralReward = String.format("%.0f 分", score);
+        String integralReward = String.format(Locale.CHINA, "%.0f 分", score);
         content += integralReward;
 
         SpannableStringBuilder builder = new SpannableStringBuilder(content);

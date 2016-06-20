@@ -88,6 +88,7 @@ public class PollingService extends Service {
     }
 
     public void setIsUserLogin(boolean isUserLogin){
+        LogUtils.i(Constants.Tag.POLLING_TAG, "isUserLogin -> " + isUserLogin);
         mIsUserLogin = isUserLogin;
     }
 

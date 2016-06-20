@@ -8,6 +8,7 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * 完成课时现金券及积分奖励
@@ -18,27 +19,13 @@ public class TeacherCourseReward extends BaseReward{
     private String grade = "";
     private String course = "";
 
-
-//    public static ArrayList<BaseReward> getTestRewards(){
-//        ArrayList<BaseReward> rewards = new ArrayList<>();
-//        for (int i = 0; i < 8; i++) {
-//            TeacherCourseReward reward = new TeacherCourseReward();
-//            reward.setGrade("大学三年级");
-//            reward.setCourse("软件需求分析");
-//            rewards.add(reward);
-//        }
-//
-//
-//        return rewards;
-//    }
-
     @Override
     public SpannableStringBuilder getAsString() {
         String content = "已授课科目及年级: ";
         content += grade + course;
         content += "\n";
         content += "已完成课时: ";
-        content += String.format("%d 小时", finishTime);
+        content += String.format(Locale.CHINA, "%d 小时", finishTime);
 
         return new SpannableStringBuilder(content);
     }

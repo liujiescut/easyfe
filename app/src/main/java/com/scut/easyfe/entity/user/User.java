@@ -1,18 +1,13 @@
 package com.scut.easyfe.entity.user;
 
-import android.widget.Toast;
-
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
+import com.scut.easyfe.app.Variables;
 import com.scut.easyfe.entity.Address;
 import com.scut.easyfe.entity.Bank;
 import com.scut.easyfe.entity.BaseEntity;
-import com.scut.easyfe.network.RequestBase;
-import com.scut.easyfe.network.RequestListener;
-import com.scut.easyfe.network.RequestManager;
-import com.scut.easyfe.network.request.authentication.RUpdateUser;
+import com.scut.easyfe.entity.PollingData;
 import com.scut.easyfe.utils.ACache;
-import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.polling.PollingUtil;
 
 import org.json.JSONException;
@@ -26,7 +21,7 @@ import java.util.List;
  * 用户基本信息类(家长家教共有的)
  * Created by jay on 16/4/1.
  */
-public class User extends BaseEntity{
+public class User extends BaseEntity {
     //用户token
     private String token = "";
 
@@ -108,12 +103,14 @@ public class User extends BaseEntity{
         User user = (User) ACache.getInstance().getAsObject(Constants.Key.USER_CACHE);
         if (user != null) {
             App.setUser(user, false);
-            PollingUtil.setIsPolling(true);
-            //Todo delete it
-//        PollingData data = PollingData.getFromCache(user.getPhone());
-//        if (null != data) {
-//            Variables.localData = data;
-//        }
+            if(user.getToken().length() != 0) {
+                PollingData data = PollingData.getFromCache(user.getPhone());
+                if (null != data) {
+                    Variables.localData = data;
+                }
+                //Todo 开启轮询
+//                PollingUtil.setIsPolling(true);
+            }
         }
     }
 
@@ -237,7 +234,7 @@ public class User extends BaseEntity{
         this.gender = gender;
     }
 
-    public class Business implements Serializable{
+    public class Business implements Serializable {
         private String ali = "";
         private String wechat = "";
         private Bank bank = new Bank();
@@ -280,12 +277,12 @@ public class User extends BaseEntity{
 
     }
 
-    public boolean isTeacher(){
+    public boolean isTeacher() {
 //        return true;
         return type == Constants.Identifier.USER_TEACHER || type == Constants.Identifier.USER_TP;
     }
 
-    public boolean isParent(){
+    public boolean isParent() {
 //        return false;
         return type == Constants.Identifier.USER_PARENT || type == Constants.Identifier.USER_TP;
     }

@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 家教属性类
@@ -96,12 +97,16 @@ public class Teacher extends BaseEntity {
 
     public String getScoreInfo(){
         String scoreInfo = "";
-        scoreInfo += String.format("综合评分：%.1f\n", score);
-        scoreInfo += String.format("孩子喜欢程度：%.1f\n", childAccept);
-        scoreInfo += String.format("专业胜任程度：%.1f\n", ability);
-        scoreInfo += String.format("准时态度：%.1f", punctualScore);
+        scoreInfo += String.format(Locale.CHINA, "综合评分：%.1f\n", score);
+        scoreInfo += String.format(Locale.CHINA, "孩子喜欢程度：%.1f\n", childAccept);
+        scoreInfo += String.format(Locale.CHINA, "专业胜任程度：%.1f\n", ability);
+        scoreInfo += String.format(Locale.CHINA, "准时态度：%.1f", punctualScore);
 
         return scoreInfo;
+    }
+
+    public boolean isChecked(){
+        return checkType == Constants.Identifier.TEACHER_CHECKED;
     }
 
     public int getCheckType() {

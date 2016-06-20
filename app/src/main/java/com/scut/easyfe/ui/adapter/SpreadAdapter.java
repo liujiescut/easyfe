@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
@@ -13,7 +14,6 @@ import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.entity.user.TeacherInfo;
 import com.scut.easyfe.ui.activity.order.ConfirmOrderActivity;
-import com.scut.easyfe.ui.activity.auth.ParentRegisterActivity;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.ui.base.BaseListViewScrollStateAdapter;
 import com.scut.easyfe.utils.DialogUtils;
@@ -24,6 +24,7 @@ import com.scut.easyfe.utils.TimeUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * 特价订单页面使用的Adapter
@@ -79,26 +80,31 @@ public class SpreadAdapter extends BaseListViewScrollStateAdapter {
                     return;
                 }
 
-                if(!App.getUser(false).isParent()){
-                    if(null == mContextReference.get()){
-                        return;
-                    }
-
-                    DialogUtils.makeChooseDialog(mContextReference.get(), "提示", "只有家长才可以预约特价订单呦-.-\n去注册家长?", new DialogUtils.OnChooseListener() {
-                        @Override
-                        public void onChoose(boolean sure) {
-                            if (sure) {
-                                if(null == mContextReference.get()){
-                                    return;
-                                }
-
-                                BaseActivity activity = (BaseActivity) mContextReference.get();
-                                activity.redirectToActivity(activity, ParentRegisterActivity.class);
-                            }
-                        }
-                    });
+                if(App.getUser().isTeacher()){
+                    Toast.makeText(mContextReference.get(), Constants.Config.TEACHER_FORBIDDEN_INFO, Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+//                if(!App.getUser(false).isParent()){
+//                    if(null == mContextReference.get()){
+//                        return;
+//                    }
+//
+//                    DialogUtils.makeChooseDialog(mContextReference.get(), "提示", "只有家长才可以预约特价订单呦-.-\n去注册家长?", new DialogUtils.OnChooseListener() {
+//                        @Override
+//                        public void onChoose(boolean sure) {
+//                            if (sure) {
+//                                if(null == mContextReference.get()){
+//                                    return;
+//                                }
+//
+//                                BaseActivity activity = (BaseActivity) mContextReference.get();
+//                                activity.redirectToActivity(activity, ParentRegisterActivity.class);
+//                            }
+//                        }
+//                    });
+//                    return;
+//                }
 
                 if(App.getUser().get_id().equals(mOrders.get(position).getTeacher().get_id())){
                     DialogUtils.makeConfirmDialog(mContextReference.get(), "提示", "您不能预约自己的特价订单呦");
@@ -191,7 +197,7 @@ public class SpreadAdapter extends BaseListViewScrollStateAdapter {
         contentDown += TimeUtils.getTimeFromMinute(mOrders.get(position).getTime());
         if(0 != mOrders.get(position).getOriginalPrice()) {
             contentDown += "\n原价: ";
-            contentDown += String.format("%.0f 元/小时", mOrders.get(position).getOriginalPrice());
+            contentDown += String.format(Locale.CHINA, "%.0f 元/小时", mOrders.get(position).getOriginalPrice() / 100);
         }
         return contentDown;
     }

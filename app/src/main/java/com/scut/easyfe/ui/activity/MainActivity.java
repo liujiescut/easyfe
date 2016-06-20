@@ -14,6 +14,7 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.app.Variables;
+import com.scut.easyfe.entity.PollingData;
 import com.scut.easyfe.entity.user.User;
 import com.scut.easyfe.event.DataChangeEvent;
 import com.scut.easyfe.event.PDHandler;
@@ -37,6 +38,7 @@ import com.scut.easyfe.ui.fragment.HomeFragment;
 import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.ImageUtils;
 import com.scut.easyfe.utils.OtherUtils;
+import com.scut.easyfe.utils.polling.PollingUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONArray;
@@ -72,12 +74,14 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
+        PollingUtil.start(getApplicationContext());
         App.get().getEventBus().register(mContext);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        PollingUtil.stop();
         App.get().getEventBus().unregister(mContext);
     }
 
@@ -146,7 +150,9 @@ public class MainActivity extends BaseActivity {
                 .commit();
 
         //onCreate的时候显示最新的状态
-        onEvent(new DataChangeEvent(PDHandler.get().getLatestData()));
+        if(!PDHandler.get().getLatestData().equals(new PollingData())) {
+            onEvent(new DataChangeEvent(PDHandler.get().getLatestData()));
+        }
     }
 
     @Override
@@ -228,16 +234,14 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void initListener() {
-    }
-
     public void onNameClick(View view){
         if(App.getUser().getTeacherMessage().getCheckType() == Constants.Identifier.TEACHER_REJECT){
-            toast("重新审核");
+            Bundle bundle = new Bundle();
+            bundle.putInt(Constants.Key.TO_TEACHER_REGISTER_ONE_ACTIVITY_TYPE, Constants.Identifier.TYPE_REGISTER);
+            redirectToActivity(mContext, TeacherRegisterOneActivity.class, bundle);
 
         }else {
-            onAdvertiseClick(view);
+            onAvatarClick(view);
         }
     }
 
@@ -247,9 +251,11 @@ public class MainActivity extends BaseActivity {
      * @param view 被点击View
      */
     public void onPersonImageClick(View view) {
-        if (null != mDrawerLayout) {
-            mDrawerLayout.openDrawer(mLeftDrawer);
-        }
+        Variables.localData = new PollingData();
+        toast("清除了本地轮询数据缓存");
+//        if (null != mDrawerLayout) {
+//            mDrawerLayout.openDrawer(mLeftDrawer);
+//        }
     }
 
     /**
@@ -259,6 +265,11 @@ public class MainActivity extends BaseActivity {
      */
     public void onLevelClick(View view) {
         if (App.getUser().hasLogin()) {
+
+            if(App.getUser().isTeacher() && (!App.getUser().getTeacherMessage().isChecked())){
+                toast(Constants.Config.TEACHER_UNCHECKED_INFO);
+                return;
+            }
 
             ((TextView) OtherUtils.findViewById(this, R.id.left_drawer_tv_level)).
                     setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
@@ -276,6 +287,12 @@ public class MainActivity extends BaseActivity {
      */
     public void onMyOrderClick(View view) {
         if (App.getUser().hasLogin()) {
+
+            if(App.getUser().isTeacher() && (!App.getUser().getTeacherMessage().isChecked())){
+                toast(Constants.Config.TEACHER_UNCHECKED_INFO);
+                return;
+            }
+
             redirectToActivity(mContext, MyOrderActivity.class);
         }
     }
@@ -294,6 +311,12 @@ public class MainActivity extends BaseActivity {
 
             } else if (App.getUser().getType() == Constants.Identifier.USER_TEACHER ||
                     App.getUser().getType() == Constants.Identifier.USER_TP) {
+
+                if((!App.getUser().getTeacherMessage().isChecked())){
+                    toast(Constants.Config.TEACHER_UNCHECKED_INFO);
+                    return;
+                }
+
                 Bundle bundle = new Bundle();
                 bundle.putInt(Constants.Key.TO_TEACHER_REGISTER_ONE_ACTIVITY_TYPE, Constants.Identifier.TYPE_MODIFY);
                 redirectToActivity(mContext, TeacherRegisterOneActivity.class, bundle);
@@ -310,6 +333,12 @@ public class MainActivity extends BaseActivity {
      */
     public void onPocketClick(View view) {
         if (App.getUser().hasLogin()) {
+
+            if(App.getUser().isTeacher() && (!App.getUser().getTeacherMessage().isChecked())){
+                toast(Constants.Config.TEACHER_UNCHECKED_INFO);
+                return;
+            }
+
             ((TextView) OtherUtils.findViewById(this, R.id.left_drawer_tv_wallet)).
                     setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0);
             Variables.localData.getMine().setWallet(
@@ -329,6 +358,11 @@ public class MainActivity extends BaseActivity {
             return;
         }
 
+        if(App.getUser().isTeacher() && (!App.getUser().getTeacherMessage().isChecked())){
+            toast(Constants.Config.TEACHER_UNCHECKED_INFO);
+            return;
+        }
+
         Bundle bundle = new Bundle();
         bundle.putBoolean(Constants.Key.IS_MY_VIP_ACTIVITY, true);
         redirectToActivity(this, VipActivity.class, bundle);
@@ -342,10 +376,21 @@ public class MainActivity extends BaseActivity {
             return;
         }
 
+        if(App.getUser().isTeacher() && (!App.getUser().getTeacherMessage().isChecked())){
+            toast(Constants.Config.TEACHER_UNCHECKED_INFO);
+            return;
+        }
+
         redirectToActivity(this, FeedbackReportActivity.class);
     }
 
     public void onTeacherMsgManageClick(View view) {
+
+        if(App.getUser().isTeacher() && (!App.getUser().getTeacherMessage().isChecked())){
+            toast(Constants.Config.TEACHER_UNCHECKED_INFO);
+            return;
+        }
+
         Bundle extras = new Bundle();
         extras.putBoolean(Constants.Key.IS_REGISTER, false);
         redirectToActivity(this, TeacherRegisterTwoActivity.class, extras);
@@ -359,8 +404,8 @@ public class MainActivity extends BaseActivity {
             return;
         }
 
-        if (Constants.Identifier.TEACHER_UNCHECK == App.getUser().getTeacherMessage().getCheckType()) {
-            toast("您的信息还在审核中\n审核之后才可以发布订单喔");
+        if(App.getUser().isTeacher() && (!App.getUser().getTeacherMessage().isChecked())){
+            toast(Constants.Config.TEACHER_UNCHECKED_INFO);
             return;
         }
 
@@ -393,6 +438,11 @@ public class MainActivity extends BaseActivity {
      */
     public void onTaskRewardClick(View view) {
         if (App.getUser(false).hasLogin()) {
+            if(App.getUser().isTeacher() && (!App.getUser().getTeacherMessage().isChecked())){
+                toast(Constants.Config.TEACHER_UNCHECKED_INFO);
+                return;
+            }
+
             redirectToActivity(mContext, TaskRewardActivity.class);
 
         } else {
@@ -412,6 +462,11 @@ public class MainActivity extends BaseActivity {
      */
     public void onInviteRewardClick(View view) {
         if (App.getUser().hasLogin()) {
+            if(App.getUser().isTeacher() && (!App.getUser().getTeacherMessage().isChecked())){
+                toast(Constants.Config.TEACHER_UNCHECKED_INFO);
+                return;
+            }
+
             redirectToActivity(mContext, InviteRewardActivity.class);
         }
     }

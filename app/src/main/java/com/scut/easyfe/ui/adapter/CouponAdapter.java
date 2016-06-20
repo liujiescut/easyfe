@@ -13,6 +13,7 @@ import com.scut.easyfe.entity.Coupon;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 我的现金券适配器
@@ -62,7 +63,8 @@ public class CouponAdapter extends BaseAdapter{
         }
 
         holder.detail.setText(mCoupons.get(position).toString());
-        holder.money.setText(String.format("%d 元 x %d", mCoupons.get(position).getMoney(), mCoupons.get(position).getCount()));
+        holder.money.setText(String.format(Locale.CHINA, "%d 元 x %d",
+                mCoupons.get(position).getMoney() / 100, mCoupons.get(position).getCount()));
 
         return convertView;
     }

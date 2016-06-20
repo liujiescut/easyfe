@@ -9,9 +9,9 @@ public class Wallet extends BaseEntity{
     private String ali = "";
     private String wechat = "";
     private Bank bank = new Bank();
-    private float balance;
-    private float withdrawing;
-    private float haveWithdraw;
+    private float balance;                  // 单位 : 分
+    private float withdrawing;              // 单位 : 分
+    private float haveWithdraw;             // 单位 : 分
 
     public String getAli() {
         return ali;

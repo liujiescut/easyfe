@@ -46,7 +46,7 @@ public class Order extends BaseEntity {
             new ParentInfo();                         //授课家长信息
     private Insurance insurance =
             new Insurance();                          //授课保险信息
-    private float subsidy = 5;                        //超过交通时间，收的交通补贴
+    private float subsidy = 500;                      //超过交通时间，收的交通补贴
     private float addPrice = 0;                       //家教完成课时单价增加的增加单价
     private List<Comment> comments =
             new ArrayList<>();                        //授课老师的前三条评论
@@ -93,7 +93,8 @@ public class Order extends BaseEntity {
     }
 
     public float getTotalPrice(){
-        return (price + addPrice + professionalTutorPrice) * ((float)time / 60) + subsidy - coupon.money;
+        float totalPrice = (price + addPrice + professionalTutorPrice) * ((float)time / 60) + subsidy - coupon.money;
+        return totalPrice < 0 ? 0 : totalPrice;
     }
 
     public float getOriginalPrice() {
