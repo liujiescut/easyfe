@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
@@ -26,9 +25,6 @@ import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 import com.scut.easyfe.utils.PayUtil;
 import com.scut.easyfe.utils.TimeUtils;
-import com.tencent.mm.sdk.modelpay.PayReq;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -250,44 +246,31 @@ public class ToDoOrderActivity extends BaseActivity {
             return;
         }
 
-
-//        String appId = "wx5242965d8b495478";
-//        String partnerId = "1352452902";
-//        String prepayId = "wx20160619235706bbe534a95d0427096285";
-//        String sign = "E5A422ED67710B72F361C954BBDCD0E2";
-//        String packageValue = "Sign=WXPay";
-//        String timestamp = "1466351826";
-//        String nonce_str = "85c41d92b9e7ed4c";
-//
-//        IWXAPI api = WXAPIFactory.createWXAPI(ToDoOrderActivity.this, appId, true);
-//        api.registerApp(appId);
-//
-//
-//        PayReq request = new PayReq();
-//        request.appId = appId;
-//        request.partnerId = partnerId;
-//        request.prepayId = prepayId;
-//        request.packageValue = packageValue;
-//        request.nonceStr = nonce_str;
-//        request.timeStamp = timestamp;
-//        request.sign = sign;
-//
-//        if (!api.sendReq(request)) {
-//            Toast.makeText(App.get().getApplicationContext(), "支付请求发送失败", Toast.LENGTH_SHORT).show();
-//
-//        } else {
-//            Toast.makeText(App.get().getApplicationContext(), "支付请求发送成功", Toast.LENGTH_SHORT).show();
-//        }
-
         if (mOrder.isIsTeacherReport()) {
             new PayUtil(this, Constants.Identifier.BUY_ORDER, mOrder.get_id(), mOrder.getPayTitle(), mOrder.getPayInfo(), (int)mOrder.getTotalPrice(), new PayUtil.PayListener() {
                 @Override
-                public void onPayReturn(boolean success) {
+                public void onAlipayReturn(boolean success) {
+                    //支付宝支付回调该接口
                     if(success){
-//                        Bundle bundle = new Bundle();
-//                        bundle.putSerializable(Constants.Key.ORDER, mOrder);
-//                        bundle.putInt(Constants.Key.TO_TEACHER_REPORT_ACTIVITY_TYPE, Constants.Identifier.TYPE_CONFIRM);
-//                        ToDoOrderActivity.this.redirectToActivity(mContext, TeacherReportActivity.class, bundle);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(Constants.Key.ORDER, mOrder);
+                        bundle.putInt(Constants.Key.TO_TEACHER_REPORT_ACTIVITY_TYPE, Constants.Identifier.TYPE_CONFIRM);
+                        ToDoOrderActivity.this.redirectToActivity(mContext, TeacherReportActivity.class, bundle);
+                    }
+                }
+
+                @Override
+                public void onWechatPaySend(boolean success) {
+                    toast("支付请求发送" + (success ? "成功" : "失败"));
+                }
+
+                @Override
+                public void onCashPayReturn(boolean success){
+                    if(success){
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(Constants.Key.ORDER, mOrder);
+                        bundle.putInt(Constants.Key.TO_TEACHER_REPORT_ACTIVITY_TYPE, Constants.Identifier.TYPE_CONFIRM);
+                        ToDoOrderActivity.this.redirectToActivity(mContext, TeacherReportActivity.class, bundle);
                     }
                 }
             }).showPayDialog();
@@ -374,7 +357,7 @@ public class ToDoOrderActivity extends BaseActivity {
             if(null != mOrder && orderInfo.ids.contains(mOrder.get_id())){
 
                 startLoading("刷新数据中");
-                RequestManager.get().execute(new RGetOrderDetail(App.getUser().getToken(), mOrder.get_id()), new RequestListener<Order>() {
+                RequestManager.get().execute(new RGetOrderDetail(mOrder.get_id()), new RequestListener<Order>() {
                     @Override
                     public void onSuccess(RequestBase request, Order result) {
                         stopLoading();

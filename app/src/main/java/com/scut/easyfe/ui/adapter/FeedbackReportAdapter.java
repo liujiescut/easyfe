@@ -1,6 +1,5 @@
 package com.scut.easyfe.ui.adapter;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,7 +79,7 @@ public class FeedbackReportAdapter extends BaseListViewScrollStateAdapter {
                 if (null != mActivityReference.get()) {
                     mActivityReference.get().startLoading("请稍候");
                 }
-                RequestManager.get().execute(new RGetOrderDetail(App.getUser().getToken(),
+                RequestManager.get().execute(new RGetOrderDetail(
                                 mReports.get(position).get_id()),
                         new RequestListener<Order>() {
                             @Override

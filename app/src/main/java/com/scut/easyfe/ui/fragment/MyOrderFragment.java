@@ -116,7 +116,7 @@ public class MyOrderFragment extends BaseRefreshFragment {
             return;
         }
 
-        RequestManager.get().execute(new RGetOrderDetail(App.getUser().getToken(),
+        RequestManager.get().execute(new RGetOrderDetail(
                 mOrders.get(position - 1).get_id()), new RequestListener<Order>() {
             @Override
             public void onSuccess(RequestBase request, Order result) {

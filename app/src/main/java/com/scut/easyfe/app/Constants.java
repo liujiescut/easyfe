@@ -153,6 +153,8 @@ public class Constants {
         public static final String CHAT_OR_CIRCLE = "chat_or_circle";
         public static final String SHARE_FLAG = "flag";
         public static final String DATA_KEY = "data_key";
+
+        public static final String PAY_RESULT = "pay_result";
     }
 
     /**

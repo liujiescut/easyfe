@@ -2,15 +2,19 @@ package com.scut.easyfe.ui.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.VipEvent;
+import com.scut.easyfe.ui.activity.VipActivity;
 import com.scut.easyfe.ui.base.BaseListViewScrollStateAdapter;
 import com.scut.easyfe.ui.customView.FixedClickListener;
 import com.scut.easyfe.utils.LogUtils;
@@ -27,16 +31,16 @@ import java.util.Locale;
  */
 public class VipAdapter extends BaseListViewScrollStateAdapter {
     private ArrayList<VipEvent> mVipEvents;
-    private WeakReference<Context> mContextReference;
+    private WeakReference<Activity> mActivityReference;
     private boolean mIsMyVipActivity = false;
 
-    public VipAdapter(Context context, ArrayList<VipEvent> mVipEvents) {
+    public VipAdapter(Activity context, ArrayList<VipEvent> mVipEvents) {
         this(context, mVipEvents, false);
     }
 
-    public VipAdapter(Context context, ArrayList<VipEvent> mVipEvents, boolean mIsMyVipActivity) {
+    public VipAdapter(Activity context, ArrayList<VipEvent> mVipEvents, boolean mIsMyVipActivity) {
         this.mVipEvents = mVipEvents;
-        mContextReference = new WeakReference<>(context);
+        mActivityReference = new WeakReference<>(context);
         this.mIsMyVipActivity = mIsMyVipActivity;
     }
 
@@ -59,14 +63,14 @@ public class VipAdapter extends BaseListViewScrollStateAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (null == convertView) {
-            if (mContextReference.get() == null) {
+            if (mActivityReference.get() == null) {
                 return null;
             }
-            convertView = LayoutInflater.from(mContextReference.get()).
+            convertView = LayoutInflater.from(mActivityReference.get()).
                     inflate(R.layout.item_vip, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
-            if(mIsMyVipActivity){
+            if (mIsMyVipActivity) {
                 holder.reservable.setVisibility(View.GONE);
                 holder.reserveArea.setVisibility(View.GONE);
             }
@@ -90,24 +94,42 @@ public class VipAdapter extends BaseListViewScrollStateAdapter {
         holder.money.setOnClickListener(new FixedClickListener() {
             @Override
             public void onFixClick(View view) {
-                if (mContextReference.get() == null){
+                if (mActivityReference.get() == null) {
                     return;
                 }
 
-                new PayUtil((Activity) mContextReference.get(),
+                new PayUtil((Activity) mActivityReference.get(),
                         Constants.Identifier.BUY_VIP_EVENT, mVipEvents.get(position).get_id(),
                         mVipEvents.get(position).getPayTitle(),
                         mVipEvents.get(position).getPayInfo(),
-                        (int)(mVipEvents.get(position).getMoney() * 100),
+                        (int) (mVipEvents.get(position).getMoney()),
                         new PayUtil.PayListener() {
-                    @Override
-                    public void onPayReturn(boolean success) {
-                        if(success){
-                            //Todo
-                            LogUtils.i("支付成功");
-                        }
-                    }
-                }).showPayDialog();
+                            @Override
+                            public void onAlipayReturn(boolean success) {
+                                if(success && null != mActivityReference.get()){
+                                    Intent intent = new Intent(mActivityReference.get(), VipActivity.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putBoolean(Constants.Key.IS_MY_VIP_ACTIVITY, true);
+                                    mActivityReference.get().startActivity(intent, bundle);
+                                }
+                            }
+
+                            @Override
+                            public void onWechatPaySend(boolean success) {
+                                Toast.makeText(App.get().getApplicationContext(),
+                                        "支付请求发送" + (success ? "成功" : "失败"), Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onCashPayReturn(boolean success) {
+                                if(success && null != mActivityReference.get()){
+                                    Intent intent = new Intent(mActivityReference.get(), VipActivity.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putBoolean(Constants.Key.IS_MY_VIP_ACTIVITY, true);
+                                    mActivityReference.get().startActivity(intent, bundle);
+                                }
+                            }
+                        }).showPayDialog();
             }
         });
         boolean isReservable = mVipEvents.get(position).isReservable();

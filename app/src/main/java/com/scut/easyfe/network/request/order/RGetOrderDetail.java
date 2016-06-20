@@ -2,6 +2,7 @@ package com.scut.easyfe.network.request.order;
 
 import android.support.annotation.NonNull;
 
+import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.network.RequestBase;
@@ -19,13 +20,12 @@ import java.io.IOException;
  * Created by jay on 16/4/7.
  */
 public class RGetOrderDetail extends RequestBase<Order> {
-    private String mToken = "";
     private String mOrderId = "";
 
-    public RGetOrderDetail(@NonNull String token, @NonNull String orderId) {
-        this.mToken = token;
+    public RGetOrderDetail(@NonNull String orderId) {
         this.mOrderId = orderId;
     }
+
 
     @Override
     public String getUrl() {
@@ -40,7 +40,7 @@ public class RGetOrderDetail extends RequestBase<Order> {
     @Override
     public HttpParams getQueryParams() {
         HttpParams params = new HttpParams();
-        params.putQueryParams("token", mToken);
+        params.putQueryParams("token", App.getUser().getToken());
         params.putQueryParams("orderId", mOrderId);
         return params;
     }

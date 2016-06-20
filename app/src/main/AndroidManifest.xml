@@ -118,7 +118,8 @@
         <activity
             android:name=".ui.activity.auth.TeacherRegisterTwoActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".ui.activity.auth.TeachTimeActivity" />
+        <activity android:name=".ui.activity.auth.TeachTimeActivity"
+            />
         <activity
             android:name=".ui.activity.auth.SpecialTimeActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
