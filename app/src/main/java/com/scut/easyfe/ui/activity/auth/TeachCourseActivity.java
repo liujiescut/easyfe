@@ -88,7 +88,8 @@ public class TeachCourseActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText("家教注册 - 可教授课程及收费");
+        ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText(
+                mFromType == Constants.Identifier.TYPE_REGISTER ? "家教注册 - 可教授课程及收费" : "可教授课程及收费");
         mCourseGridView = OtherUtils.findViewById(this, R.id.teach_course_gv_course);
         mGradeLinearLayout = OtherUtils.findViewById(this, R.id.teach_course_ll_container);
         mSaveTextView = OtherUtils.findViewById(this, R.id.teach_course_tv_save);

@@ -37,7 +37,7 @@ public class PayUtil {
     private boolean isCashPayShow = true;
 
     public PayUtil(Activity activity, int buyType, String id, String title, String info, int price, PayListener listener) {
-        this(activity, buyType, id, title, info, price, listener, false);
+        this(activity, buyType, id, title, info, price, listener, true);
     }
 
     public PayUtil(Activity activity, int buyType, String id, String title, String info, int price, PayListener listener, boolean isCashPayShow) {
