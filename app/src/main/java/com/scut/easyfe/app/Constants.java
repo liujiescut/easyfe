@@ -10,6 +10,7 @@ import java.util.ArrayList;
  * Created by jay on 15/9/11.
  */
 public class Constants {
+    @SuppressWarnings("unused")
     public class Config{
         public static final boolean ISDEBUG = true;      //是否在debug模式，可以设置一些只有debug才会有的东西
         public static final boolean ISLOG = true;        //是否显示log
@@ -18,8 +19,8 @@ public class Constants {
         public static final String APP_NAME = "优升学家教";
         public static final String TEACHER_UNCHECKED_INFO = "信息审核中,通过后才可用该功能";
         public static final String TEACHER_FORBIDDEN_INFO = "家长才可用该功能哟~";
-        public static final String PARENT_FORBINDDEN_INFO = "家教才可用该功能哟~";
-        public static final int VERIFY_INTERVAL = 15;
+        public static final String PARENT_FORBIDDEN_INFO = "家教才可用该功能哟~";
+        public static final int VERIFY_INTERVAL = 60;
     }
 
     public class DefaultValue{
@@ -34,75 +35,100 @@ public class Constants {
         public static final String URL_BASE = "http://120.55.113.12/";
 //        public static final String URL_BASE = "http://www.ysxeducation.com/";
 
-        public static final String URL_LOGIN = URL_BASE + "Authentication/Login";
-        public static final String URL_GET_SMS = URL_BASE + "Authentication/Sms";
-        public static final String URL_CHECK_VERIFY_CODE = URL_BASE + "Authentication";
-        public static final String URL_UPDATE_USER = URL_BASE + "user/data";
-        public static final String URL_GET_USER_LEVEL = URL_BASE + "Share/Level";
-        public static final String URL_ORDERS = URL_BASE + "Order";
-        public static final String URL_GET_ORDER_DETAIL = URL_BASE + "Order/Data";
-        public static final String URL_GET_TEACHER_COMMENT = URL_BASE + "Parent/Teacher/Comments";
-        public static final String URL_USER_INFO_MODIFY = URL_BASE + "User/Data";
-        public static final String URL_GET_SPECIAL_ORDER = URL_BASE + "Share/DiscountOrder";
-        public static final String URL_GET_MESSAGES = URL_BASE + "Share/Message";
-        public static final String URL_GET_CHILD_GRADE = URL_BASE + "Share/Grade";
-        public static final String URL_GET_COURSE = URL_BASE + "Share/Course";
-        public static final String URL_GET_TUTOR_COURSE = URL_BASE + "Share/Professional/Course";
-        public static final String URL_GET_SCHOOL = URL_BASE + "Share/Education";
-        public static final String URL_GET_TUTOR_INFO = URL_BASE + "Share/Professional/Data";
-        public static final String URL_CALLBACK = URL_BASE + "Share/Feedback";
-        public static final String URL_ONLINE_PARAMS = URL_BASE + "Share/OnlineParams";
-        public static final String URL_GET_VIP_EVENT = URL_BASE + "Share/VipEvent";
-        public static final String URL_GET_MY_VIP_EVENT = URL_BASE + "Share/User/VipEvent";
+        /** 用户相关 */
+        public static final String URL_LOGIN = URL_BASE + "Authentication/Login";                   //登录
+        public static final String URL_GET_SMS = URL_BASE + "Authentication/Sms";                   //发送验证码
+        public static final String URL_CHECK_VERIFY_CODE = URL_BASE + "Authentication";             //验证验证码
+        public static final String URL_UPDATE_USER = URL_BASE + "user/data";                        //更新用户信息
+        public static final String URL_USER_INFO_MODIFY = URL_BASE + "User/Data";                   //修改用户信息
+        public static final String URL_GET_USER_LEVEL = URL_BASE + "Share/Level";                   //用户等级
+        public static final String URL_WALLET_INFO = URL_BASE + "Money/Wallet";                     //钱包信息
+        public static final String URL_WALLET_WITHDRAW = URL_BASE + "Money/Withdraw";               //提现
 
-        public static final String URL_TEACHER_REGISTER = URL_BASE + "Authentication/SignUp/Teacher";
-        public static final String URL_TEACHER_INFO_MODIFY = URL_BASE + "Teacher/Data";
-        public static final String URL_TEACHER_ADD_COURSE = URL_BASE + "Teacher/Price";
-        public static final String URL_TEACHER_MULTI_BOOK_TIME_MODIFY = URL_BASE + "Teacher/MultiBookTime";
-        public static final String URL_TEACHER_SINGLE_BOOK_TIME_MODIFY = URL_BASE + "Teacher/SingleBookTime";
-        public static final String URL_PUBLISH_SPECIAL_ORDER = URL_BASE + "Teacher/DiscountOrder";
-        public static final String URL_TEACHER_CONFIRM_ORDER = URL_BASE + "Teacher/Sure/Order";
-        public static final String URL_TEACHER_CANCEL_ORDERS = URL_BASE + "Teacher/Cancel/Order";
+        /** 家教相关 */
+        public static final String URL_TEACHER_REGISTER =
+                URL_BASE + "Authentication/SignUp/Teacher";                                         //家教注册
+        public static final String URL_TEACHER_INFO_MODIFY = URL_BASE + "Teacher/Data";             //修改家教基本信息
+        public static final String URL_TEACHER_ADD_COURSE = URL_BASE + "Teacher/Price";             //增加可教授课程
+        public static final String URL_TEACHER_MULTI_BOOK_TIME_MODIFY =
+                URL_BASE + "Teacher/MultiBookTime";                                                 //修改多次预约时间
+        public static final String URL_TEACHER_SINGLE_BOOK_TIME_MODIFY =
+                URL_BASE + "Teacher/SingleBookTime";                                                //修改单次预约时间
 
-        public static final String URL_WALLET_INFO = URL_BASE + "Money/Wallet";
-        public static final String URL_GET_MATCH_TICKET = URL_BASE + "Parent/SuitableCoupon";
-        public static final String URL_GET_MY_TICKET = URL_BASE + "Parent/Coupon";
-        public static final String URL_WALLET_WITHDRAW = URL_BASE + "Money/Withdraw";
-        public static final String URL_PAY_ORDER = URL_BASE + "Parent/Pay";
-        public static final String URL_PAY_CALLBACK = "http://www.ysxeducation.com/money/notify/alipay";
+        /** 家长相关 */
+        public static final String URL_PARENT_REGISTER = URL_BASE + "Authentication/SignUp/Parent"; //家长注册
+        public static final String URL_GET_MATCH_TICKET = URL_BASE + "Parent/SuitableCoupon";       //合适优惠券
+        public static final String URL_GET_MY_TICKET = URL_BASE + "Parent/Coupon";                  //我的优惠券
 
-        public static final String URL_PARENT_REGISTER = URL_BASE + "Authentication/SignUp/Parent";
-        public static final String URL_CONFIRM_SPECIAL_ORDER = URL_BASE + "Parent/Sure/Special";
-        public static final String URL_CONFIRM_SINGLE_ORDER = URL_BASE + "Parent/Sure/Single";
-        public static final String URL_CONFIRM_MULTI_ORDER = URL_BASE + "Parent/Sure/Multi";
-        public static final String URL_PARENT_CANCEL_ORDERS = URL_BASE + "Parent/Cancel/Order";
-        public static final String URL_PARENT_MODIFY_ORDERS = URL_BASE + "Order";
-        public static final String URL_SINGLE_RESERVE = URL_BASE + "Book/Single";
-        public static final String URL_MULTI_RESERVE = URL_BASE + "Book/Multi";
-        public static final String URL_GET_TEACHER_DETAIL_INFO = URL_BASE + "Parent/Teacher/Data";
-        public static final String URL_COMMENT_TEACHER = URL_BASE + "Parent/Comment/Teacher";
-        public static final String URL_MODIFY_TUTOR = URL_BASE + "Teacher/Order/ThisTeachDetail";
-        public static final String URL_GET_FEEDBACK_REPORT = URL_BASE + "Share/Order/Report";
-        public static final String URL_TEACHER_REPORT = URL_BASE + "Teacher/Report/Order";
+        /** 订单相关 */
+        public static final String URL_GET_SPECIAL_ORDER = URL_BASE + "Share/DiscountOrder";        //特价订单列表
+        public static final String URL_ORDERS = URL_BASE + "Order";                                 //我的订单列表
+        public static final String URL_GET_ORDER_DETAIL = URL_BASE + "Order/Data";                  //订单详情
+        public static final String URL_GET_TEACHER_COMMENT = URL_BASE + "Parent/Teacher/Comments";  //获取家教评论
+        public static final String URL_PUBLISH_SPECIAL_ORDER =
+                URL_BASE + "Teacher/DiscountOrder";                                                 //家教发布特价订单
+        public static final String URL_TEACHER_CONFIRM_ORDER =
+                URL_BASE + "Teacher/Sure/Order";                                                    //家教确认订单
+        public static final String URL_TEACHER_CANCEL_ORDERS =
+                URL_BASE + "Teacher/Cancel/Order";                                                  //家教取消订单
+        public static final String URL_MODIFY_TUTOR = URL_BASE + "Teacher/Order/ThisTeachDetail";   //家教修改本次专业辅导信息
+        public static final String URL_TEACHER_REPORT = URL_BASE + "Teacher/Report/Order";          //家教完成课程并反馈
+        public static final String URL_SINGLE_RESERVE = URL_BASE + "Book/Single";                   //家长单次预约筛选
+        public static final String URL_MULTI_RESERVE = URL_BASE + "Book/Multi";                     //家长多次预约筛选
+        public static final String URL_CONFIRM_SPECIAL_ORDER = URL_BASE + "Parent/Sure/Special";    //家长确认特价订单
+        public static final String URL_CONFIRM_SINGLE_ORDER = URL_BASE + "Parent/Sure/Single";      //家长确认单次预约订单
+        public static final String URL_CONFIRM_MULTI_ORDER = URL_BASE + "Parent/Sure/Multi";        //家长确认多次预约订单
+        public static final String URL_PARENT_CANCEL_ORDERS = URL_BASE + "Parent/Cancel/Order";     //家长取消订单
+        public static final String URL_PARENT_MODIFY_ORDERS = URL_BASE + "Order";                   //家长修改订单
+        public static final String URL_GET_TEACHER_DETAIL_INFO = URL_BASE + "Parent/Teacher/Data";  //家长获取家教具体信息
+        public static final String URL_COMMENT_TEACHER = URL_BASE + "Parent/Comment/Teacher";       //家长评论家教
+        public static final String URL_GET_FEEDBACK_REPORT = URL_BASE + "Share/Order/Report";       //获取反馈报告列表
 
-        public static final String URL_GET_SPREAD_REWARD_LIST = URL_BASE + "Reward/Discount";
-        public static final String URL_GET_SPREAD_REWARD =URL_BASE + "Reward/Discount";
-        public static final String URL_GET_TEACHER_INVITE_REWARD_LIST = URL_BASE + "Reward/Invite/Teacher";
-        public static final String URL_GET_TEACHER_INVITE_REWARD = URL_BASE + "Reward/Invite/Teacher";
-        public static final String URL_GET_PARENT_INVITE_REWARD_LIST = URL_BASE + "Reward/Invite/Parent";
-        public static final String URL_GET_PARENT_INVITE_REWARD = URL_BASE + "Reward/Invite/Parent";
-        public static final String URL_GET_PARENT_COMPLETE_COURSE_REWARD_LIST = URL_BASE + "Reward/FinishCourse/Parent";
-        public static final String URL_GET_PARENT_COMPLETE_COURSE_REWARD = URL_BASE + "Reward/FinishCourse/Parent";
-        public static final String URL_GET_PARENT_COMPLETE_ORDER_REWARD = URL_BASE + "Reward/FinishOrder";
-        public static final String URL_GET_TEACHER_COMPLETE_COURSE_REWARD_LIST = URL_BASE + "Reward/FinishCourse/Teacher";
-        public static final String URL_GET_TEACHER_COMPLETE_COURSE_REWARD = URL_BASE + "Reward/FinishCourse/Teacher";
+        /** 公用接口 */
+        public static final String URL_GET_MESSAGES = URL_BASE + "Share/Message";                   //消息中心
+        public static final String URL_GET_CHILD_GRADE = URL_BASE + "Share/Grade";                  //学生年级
+        public static final String URL_GET_COURSE = URL_BASE + "Share/Course";                      //可教授课程
+        public static final String URL_GET_TUTOR_COURSE = URL_BASE + "Share/Professional/Course";   //专业辅导课程
+        public static final String URL_GET_SCHOOL = URL_BASE + "Share/Education";                   //预约页面可选的家教所在学校
+        public static final String URL_GET_TUTOR_INFO = URL_BASE + "Share/Professional/Data";       //获取专业辅导相关的信息(知识点,复习卷)
+        public static final String URL_CALLBACK = URL_BASE + "Share/Feedback";                      //反馈
+        public static final String URL_ONLINE_PARAMS = URL_BASE + "Share/OnlineParams";             //在线参数
+        public static final String URL_POLLING_DATA = URL_BASE + "Share/DataUpdateTime";            //轮询
 
-        public static final String URL_POLLING_DATA = URL_BASE + "Share/DataUpdateTime";
-        public static final String URL_CASH_PAY = URL_BASE + "Money/Pay/Cash";
-        public static final String URL_ALIPAY_PAY = URL_BASE + "Money/PrePay/AliPay";
-        public static final String URL_WECHAT_PAY = URL_BASE + "Money/PrePay/Wechat";
-        public static final String URL_BUY_VIP_EVENT_BY_SCORE = URL_BASE + "Money/Pay/Score";
+        /** 会员活动相关 */
+        public static final String URL_GET_VIP_EVENT = URL_BASE + "Share/VipEvent";                 //会员活动列表
+        public static final String URL_GET_MY_VIP_EVENT = URL_BASE + "Share/User/VipEvent";         //我的会员活动列表
 
+        /** 支付相关 */
+        public static final String URL_PAY_CALLBACK =
+                "http://www.ysxeducation.com/money/notify/alipay";                                  //支付宝支付回调接口
+        public static final String URL_CASH_PAY = URL_BASE + "Money/Pay/Cash";                      //现金支付
+        public static final String URL_ALIPAY_PAY = URL_BASE + "Money/PrePay/AliPay";               //支付宝支付
+        public static final String URL_WECHAT_PAY = URL_BASE + "Money/PrePay/Wechat";               //微信支付
+        public static final String URL_BUY_VIP_EVENT_BY_SCORE = URL_BASE + "Money/Pay/Score";       //积分购买会员活动
+
+        /** 任务奖励相关 */
+        public static final String URL_GET_SPREAD_REWARD_LIST =
+                URL_BASE + "Reward/Discount";                                                       //特价推广奖励
+        public static final String URL_GET_SPREAD_REWARD =URL_BASE + "Reward/Discount";             //领取特价推广奖励
+        public static final String URL_GET_TEACHER_INVITE_REWARD_LIST =
+                URL_BASE + "Reward/Invite/Teacher";                                                 //获取邀请家教奖励列表
+        public static final String URL_GET_TEACHER_INVITE_REWARD =
+                URL_BASE + "Reward/Invite/Teacher";                                                 //领取邀请家教奖励
+        public static final String URL_GET_PARENT_INVITE_REWARD_LIST =
+                URL_BASE + "Reward/Invite/Parent";                                                  //获取邀请家长奖励列表
+        public static final String URL_GET_PARENT_INVITE_REWARD =
+                URL_BASE + "Reward/Invite/Parent";                                                  //领取邀请家长奖励
+        public static final String URL_GET_PARENT_COMPLETE_COURSE_REWARD_LIST =
+                URL_BASE + "Reward/FinishCourse/Parent";                                            //获取家长完成课时奖励列表
+        public static final String URL_GET_PARENT_COMPLETE_COURSE_REWARD =
+                URL_BASE + "Reward/FinishCourse/Parent";                                            //领取家长完成课时奖励
+        public static final String URL_GET_TEACHER_COMPLETE_COURSE_REWARD_LIST =
+                URL_BASE + "Reward/FinishCourse/Teacher";                                           //获取家教完成课时奖励列表
+        public static final String URL_GET_TEACHER_COMPLETE_COURSE_REWARD =
+                URL_BASE + "Reward/FinishCourse/Teacher";                                           //领取家教完成课时奖励
+        public static final String URL_GET_PARENT_COMPLETE_ORDER_REWARD =
+                URL_BASE + "Reward/FinishOrder";                                                    //家长领取现金券(完成订单后)
     }
 
     /**
@@ -134,7 +160,6 @@ public class Constants {
         public static final String ORDER_ID =  "order_id";
         public static final String ORDER =  "order";
         public static final String ORDERS =  "orders";
-        public static final String FEEDBACK_REPORT =  "feedback_report";
         public static final String TUTOR_DETAIL =  "tutor_detail";
         public static final String TUTOR_UPDATE_TO_THIS_TEACH_DETAIL =  "tutor_update_to_this_teach_detail";
         public static final String TEACH_WEEK =  "teach_week";
@@ -153,21 +178,16 @@ public class Constants {
         public static final String WEB_TITLE = "web_title";
         public static final String WEB_URL = "web_url";
         public static final String NEED_REFRESH = "need_refresh";
-
-        public static final String CHAT_OR_CIRCLE = "chat_or_circle";
-        public static final String SHARE_FLAG = "flag";
-        public static final String DATA_KEY = "data_key";
-
-        public static final String PAY_RESULT = "pay_result";
     }
 
     /**
      * 一些标识符
      */
+    @SuppressWarnings("unused")
     public class Identifier {
         /** 用户分类 */
         public static final int USER_UNDEFINED = -1;      //未注册
-        public static final int USER_WEB_REGISTED = 0;    //被邀请未注册
+        public static final int USER_WEB_REGISTER = 0;    //被邀请未注册
         public static final int USER_TEACHER = 1;         //家教
         public static final int USER_PARENT = 2;          //家长
         public static final int USER_TP = 3;              //即是家长又是家教
@@ -182,13 +202,6 @@ public class Constants {
         public static final int BUY_ORDER = 0;
         public static final int BUY_VIP_EVENT = 1;
         public static final int BUY_RECHARGE = 2;
-
-        /**
-         * 使用支付方式
-         */
-        public static final int PAY_CASH = 0;
-        public static final int PAY_ALIPAY = 1;
-        public static final int PAY_WECHAT = 2;
 
         /**
          * 教师类型(0待审核, 1已审核, 2已拒绝)
@@ -255,6 +268,7 @@ public class Constants {
         public static final String COMPLETE_PATH = SDCardRoot + DIR_WITH_SEPARATE;
     }
 
+    @SuppressWarnings("unused")
     public static class Data {
         public static final String WECHAT_APP_ID = "wx5242965d8b495478";                            //微信分享的APP_ID
         public static final String WECHAT_PARTNER_ID = "1352452902";

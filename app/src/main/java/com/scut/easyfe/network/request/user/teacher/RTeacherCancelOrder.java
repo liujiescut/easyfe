@@ -37,7 +37,7 @@ public class RTeacherCancelOrder extends RequestBase<Integer>{
     public JSONObject getJsonParams() throws JSONException {
         JSONObject params = new JSONObject();
         params.put("token", mToken);
-        params.put("orderId", new JSONArray(mOrders));
+        params.put("orders", new JSONArray(mOrders));
         return params;
     }
 

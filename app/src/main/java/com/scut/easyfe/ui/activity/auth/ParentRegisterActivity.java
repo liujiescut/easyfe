@@ -103,6 +103,7 @@ public class ParentRegisterActivity extends BaseActivity {
 
         mUser = App.getUser(mFromType != Constants.Identifier.TYPE_REGISTER).getCopy();
 
+        mParentGender = mUser.getGender();
         mAddress = mUser.getPosition().getAddress();
         mLatitude = mUser.getPosition().getLatitude();
         mLongitude = mUser.getPosition().getLongitude();

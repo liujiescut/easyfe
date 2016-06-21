@@ -258,6 +258,10 @@ public class WalletActivity extends BaseActivity {
      * 点击充值
      */
     public void onRechargeClick(View view) {
+        if(!App.getUser().isParent()){
+            return;
+        }
+
         if (mState == Constants.Identifier.STATE_NORMAL) {
             mRechargeMoney = -1;
             mRechargeInputDialog.show();

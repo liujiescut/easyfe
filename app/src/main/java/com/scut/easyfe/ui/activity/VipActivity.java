@@ -70,10 +70,15 @@ public class VipActivity extends BaseActivity {
 
 
     public void refresh(){
-        initTitle();
-        if (null != mFragment) {
-            mFragment.refresh();
-        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                initTitle();
+                if (null != mFragment) {
+                    mFragment.refresh();
+                }
+            }
+        });
     }
 
     public void setIsMyVipEvent(boolean mIsMyVipEvent) {

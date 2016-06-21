@@ -99,6 +99,10 @@ public class VipAdapter extends BaseListViewScrollStateAdapter {
                     public void onSuccess(RequestBase request, JSONObject result) {
                         Toast.makeText(App.get().getApplicationContext(),
                                 result.optString("message"), Toast.LENGTH_SHORT).show();
+                        if(null != mActivityReference.get()){
+                            ((VipActivity)mActivityReference.get()).setIsMyVipEvent(true);
+                            ((VipActivity)mActivityReference.get()).refresh();
+                        }
                     }
 
                     @Override

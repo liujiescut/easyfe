@@ -256,10 +256,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener{
     private void onTeacherClick(View view){
         if(null != mActivity) {
             if(!App.getUser(false).isTeacher()) {
-                toast("此功能只对家教开放哟");
-//                Bundle bundle = new Bundle();
-//                bundle.putInt(Constants.Key.TO_TEACHER_REGISTER_ONE_ACTIVITY_TYPE, Constants.Identifier.TYPE_REGISTER);
-//                mActivity.redirectToActivity(mActivity, TeacherRegisterOneActivity.class);
+                toast(Constants.Config.PARENT_FORBIDDEN_INFO);
 
             }else{
 
