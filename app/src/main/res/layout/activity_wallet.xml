@@ -22,12 +22,37 @@
         <TextView
             android:id="@+id/wallet_tv_account_balance"
             style="@style/text_normal_style"
-            android:layout_weight="2.2"
+            android:layout_weight="1.4"
             android:gravity="start|center_vertical"
             android:textColor="@color/theme_color"
             android:textSize="@dimen/text_size_large"
             tools:text="666 元" />
 
+        <RelativeLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:background="@color/text_area_bg_inner"
+            android:gravity="center"
+            android:onClick="onRechargeClick">
+
+            <TextView
+                android:id="@+id/wallet_tv_recharge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_wallet_withdraw"
+                android:clickable="true"
+                android:onClick="onRechargeClick"
+                android:paddingBottom="2dp"
+                android:paddingLeft="@dimen/layout_padding_normal"
+                android:paddingRight="@dimen/layout_padding_normal"
+                android:paddingTop="2dp"
+                android:singleLine="true"
+                android:visibility="invisible"
+                android:text="@string/recharge"
+                android:textColor="@color/theme_color"
+                android:textSize="@dimen/text_size_small" />
+        </RelativeLayout>
         <RelativeLayout
             android:layout_width="0dip"
             android:layout_height="match_parent"
@@ -173,6 +198,7 @@
     <LinearLayout
         android:id="@+id/wallet_ll_my_tickets"
         style="@style/ll_container_normal_style"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/layout_margin_small">
         <TextView
             style="@style/text_normal_style"

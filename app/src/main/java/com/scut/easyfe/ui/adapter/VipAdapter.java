@@ -98,7 +98,7 @@ public class VipAdapter extends BaseListViewScrollStateAdapter {
                     return;
                 }
 
-                new PayUtil((Activity) mActivityReference.get(),
+                new PayUtil(mActivityReference.get(),
                         Constants.Identifier.BUY_VIP_EVENT, mVipEvents.get(position).get_id(),
                         mVipEvents.get(position).getPayTitle(),
                         mVipEvents.get(position).getPayInfo(),

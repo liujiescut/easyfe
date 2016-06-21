@@ -1,6 +1,8 @@
 package com.scut.easyfe.ui.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.widget.TextView;
@@ -23,6 +25,7 @@ import com.scut.easyfe.network.request.wallet.RWithdraw;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.OtherUtils;
+import com.scut.easyfe.utils.PayUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,11 +44,27 @@ public class WalletActivity extends BaseActivity {
     private TextView mCardNumTextView;
 
     private OptionsPickerView<String> mPicker;
+    private AlertView mRechargeInputDialog;
 
     private int mState = Constants.Identifier.STATE_NORMAL;
 
     private boolean mIsLoadingDismissByUser = true;
     private Wallet mWallet = new Wallet();
+    private int mRechargeMoney = -1;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (null != getIntent()) {
+            Bundle extras = getIntent().getExtras();
+            if (null != extras) {
+                if (!mIsLoadingDismissByUser && extras.getBoolean(Constants.Key.NEED_REFRESH, false)) {
+                    fetchData();
+                }
+            }
+        }
+    }
 
     @Override
     protected void setLayoutView() {
@@ -71,9 +90,11 @@ public class WalletActivity extends BaseActivity {
         mPicker.setPicker(Constants.Data.bankNameList);
         mPicker.setCyclic(false);
 
-        if(!App.getUser().isParent()){
-            ((View)OtherUtils.findViewById(this, R.id.wallet_ll_my_tickets)).setVisibility(View.GONE);
+        if (App.getUser().isParent()) {
+            ((View) OtherUtils.findViewById(this, R.id.wallet_ll_my_tickets)).setVisibility(View.VISIBLE);
+            ((View) OtherUtils.findViewById(this, R.id.wallet_tv_recharge)).setVisibility(View.VISIBLE);
         }
+
     }
 
     @Override
@@ -84,10 +105,63 @@ public class WalletActivity extends BaseActivity {
                 mBankNameTextView.setText(Constants.Data.bankNameList.get(options1));
             }
         });
+
+
+        mRechargeInputDialog = DialogUtils.makeInputDialog(mContext, "充值金额(元)", InputType.TYPE_CLASS_NUMBER, new DialogUtils.OnInputListener() {
+            @Override
+            public void onFinish(String msg) {
+                if (msg.length() == 0) {
+                    return;
+                }
+
+                try {
+                    mRechargeMoney = Integer.valueOf(msg);
+
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    toast("请输入有效金额");
+                }
+
+            }
+        });
+
+        mRechargeInputDialog.setOnDismissListener(new OnDismissListener() {
+            @Override
+            public void onDismiss(Object o) {
+                if (-1 == mRechargeMoney) {
+                    return;
+                }
+
+                new PayUtil(WalletActivity.this, Constants.Identifier.BUY_RECHARGE, App.getUser().get_id(), "充值", "优升学家教钱包充值", mRechargeMoney * 100, new PayUtil.PayListener() {
+                    @Override
+                    public void onAlipayReturn(boolean success) {
+                        if (success) {
+                            WalletActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    fetchData();
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onWechatPaySend(boolean success) {
+                        toast("支付请求发送" + (success ? "成功" : "失败"));
+                    }
+
+                    @Override
+                    public void onCashPayReturn(boolean success) {
+                        //不会调用到此处
+                    }
+                }, false).showPayDialog();
+            }
+        });
     }
 
     @Override
     protected void fetchData() {
+        mIsLoadingDismissByUser = true;
         startLoading("加载数据中", new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
@@ -182,6 +256,19 @@ public class WalletActivity extends BaseActivity {
     }
 
     /**
+     * 点击充值
+     */
+    public void onRechargeClick(View view) {
+        if (mState == Constants.Identifier.STATE_NORMAL) {
+            mRechargeMoney = -1;
+            mRechargeInputDialog.show();
+
+        } else {
+            toast("请先保存");
+        }
+    }
+
+    /**
      * 点击提现
      */
     public void onWithdrawClick(View view) {
@@ -214,11 +301,11 @@ public class WalletActivity extends BaseActivity {
             mPayWayAlertView.setOnDismissListener(new OnDismissListener() {
                 @Override
                 public void onDismiss(Object o) {
-                    if(json.toString().length() == 0){
+                    if (json.toString().length() == 0) {
                         return;
                     }
 
-                    DialogUtils.makeInputDialog(mContext, "提现金额", InputType.TYPE_CLASS_NUMBER, new DialogUtils.OnInputListener() {
+                    DialogUtils.makeInputDialog(mContext, "提现金额(元)", InputType.TYPE_CLASS_NUMBER, new DialogUtils.OnInputListener() {
                         @Override
                         public void onFinish(String msg) {
                             if (msg.length() == 0 || json.toString().length() == 0) {
@@ -237,13 +324,13 @@ public class WalletActivity extends BaseActivity {
         }
     }
 
-    private void doWithdraw(JSONObject way, int money){
-        if (money <= 0){
+    private void doWithdraw(JSONObject way, int money) {
+        if (money <= 0) {
             toast("请输入有效金额");
             return;
         }
 
-        RequestManager.get().execute(new RWithdraw(App.getUser().getToken(), money, way), new RequestListener<JSONObject>() {
+        RequestManager.get().execute(new RWithdraw(App.getUser().getToken(), money * 100, way), new RequestListener<JSONObject>() {
             @Override
             public void onSuccess(RequestBase request, JSONObject result) {
                 toast(result.optString("message"));
@@ -312,7 +399,15 @@ public class WalletActivity extends BaseActivity {
     /**
      * 点击我的优惠券
      */
-    public void onMyTicketClick(View view){
+    public void onMyTicketClick(View view) {
         redirectToActivity(this, CouponActivity.class);
     }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        setIntent(intent);
+    }
+
 }

@@ -149,6 +149,7 @@ public class Constants {
         public static final String TEACHER_ID = "teacher_id";
         public static final String WEB_TITLE = "web_title";
         public static final String WEB_URL = "web_url";
+        public static final String NEED_REFRESH = "need_refresh";
 
         public static final String CHAT_OR_CIRCLE = "chat_or_circle";
         public static final String SHARE_FLAG = "flag";

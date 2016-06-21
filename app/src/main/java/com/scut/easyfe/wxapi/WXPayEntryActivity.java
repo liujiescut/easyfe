@@ -14,6 +14,7 @@ import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.request.order.RGetOrderDetail;
 import com.scut.easyfe.ui.activity.VipActivity;
+import com.scut.easyfe.ui.activity.WalletActivity;
 import com.scut.easyfe.ui.activity.order.ReservedOrCompletedOrderActivity;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.LogUtils;
@@ -64,6 +65,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
                     String[] datas = payResp.extData.split("_");
                     int buyType = Integer.valueOf(datas[0]);
                     String id = datas[1];
+                    Bundle bundle = new Bundle();
                     switch (buyType) {
                         case Constants.Identifier.BUY_ORDER:
                             startLoading("刷新数据中");
@@ -88,13 +90,14 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
                             break;
 
                         case Constants.Identifier.BUY_VIP_EVENT:
-                            Bundle bundle = new Bundle();
                             bundle.putBoolean(Constants.Key.IS_MY_VIP_ACTIVITY, true);
                             redirectToActivity(mContext, VipActivity.class, bundle);
                             finish();
                             break;
 
                         case Constants.Identifier.BUY_RECHARGE:
+                            bundle.putBoolean(Constants.Key.NEED_REFRESH, true);
+                            redirectToActivity(mContext, WalletActivity.class, bundle);
                             finish();
                             break;
 

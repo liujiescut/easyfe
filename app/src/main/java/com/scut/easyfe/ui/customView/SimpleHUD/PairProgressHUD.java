@@ -44,7 +44,9 @@ public class PairProgressHUD {
 	public static void showLoading(Context context, String text, boolean cancelable, DialogInterface.OnDismissListener listener){
 		dismiss();
 		setDialog(context, text, true, 0, cancelable, listener);
-		if(dialog!=null) dialog.show();
+		if(dialog!=null){
+			dialog.show();
+		}
 	}
 
     public static void showInfo(Context context, String msg) {
