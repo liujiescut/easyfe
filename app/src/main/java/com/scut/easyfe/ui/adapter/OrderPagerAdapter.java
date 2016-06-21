@@ -56,4 +56,11 @@ public class OrderPagerAdapter extends FragmentPagerAdapter {
         }
     }
 
+    public void updateAllFragment(){
+        for (MyOrderFragment f :
+                fragments) {
+            f.updateData();
+        }
+    }
+
 }

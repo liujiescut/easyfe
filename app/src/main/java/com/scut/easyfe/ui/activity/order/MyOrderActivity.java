@@ -21,6 +21,8 @@ import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.request.user.parent.RParentCancelOrders;
+import com.scut.easyfe.network.request.user.teacher.RTeacherCancelOrder;
+import com.scut.easyfe.network.request.user.teacher.RTeacherConfirmOrder;
 import com.scut.easyfe.ui.activity.MainActivity;
 import com.scut.easyfe.ui.adapter.OrderPagerAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
@@ -28,6 +30,7 @@ import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,8 +68,8 @@ public class MyOrderActivity extends BaseActivity {
 
     private PollingData.PollingPrivateData.NewOrderInfo newOrderInfo = new PollingData.PollingPrivateData.NewOrderInfo();
 
-    private View.OnClickListener mModifyListener;
-    private View.OnClickListener mDoModifyListener;
+    private View.OnClickListener mModifyOrConfirmListener;
+    private View.OnClickListener mDoModifyOrConfirmListener;
     private View.OnClickListener mCancelListener;
     private View.OnClickListener mDoCancelListener;
 
@@ -129,14 +132,14 @@ public class MyOrderActivity extends BaseActivity {
         refreshUI(PDHandler.get().getLatestData());
     }
 
-    private void initTabTextView(PagerSlidingTabStrip tab){
+    private void initTabTextView(PagerSlidingTabStrip tab) {
         mTabTextViews = new ArrayList<>();
         try {
             ViewGroup container = (ViewGroup) tab.getChildAt(0);
             for (int i = 0; i < container.getChildCount(); i++) {
                 mTabTextViews.add((TextView) container.getChildAt(i));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -164,7 +167,7 @@ public class MyOrderActivity extends BaseActivity {
             }
         });
 
-        mModifyListener = new View.OnClickListener() {
+        mModifyOrConfirmListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 refreshButtonsState(BUTTON_TYPE_ONE_MODIFY);
@@ -197,7 +200,7 @@ public class MyOrderActivity extends BaseActivity {
             }
         };
 
-        mDoModifyListener = new View.OnClickListener() {
+        mDoModifyOrConfirmListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPagerAdapter.getItem(mSelectedPage).setState(Constants.Identifier.STATE_NORMAL);
@@ -207,9 +210,16 @@ public class MyOrderActivity extends BaseActivity {
                     return;
                 }
 
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(Constants.Key.ORDERS, new ArrayList<>(mPagerAdapter.getItem(mSelectedPage).getSelectedOrders()));
-                redirectToActivity(mContext, ModifyOrderActivity.class, bundle);
+                if (App.getUser().isParent()) {
+                    /** 家长修改订单 */
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Constants.Key.ORDERS, new ArrayList<>(mPagerAdapter.getItem(mSelectedPage).getSelectedOrders()));
+                    redirectToActivity(mContext, ModifyOrderActivity.class, bundle);
+
+                } else {
+                    /** 家教确认订单 */
+                    doTeacherConfirmOrder();
+                }
             }
         };
 
@@ -222,23 +232,46 @@ public class MyOrderActivity extends BaseActivity {
                 if (!validateOrders(mPagerAdapter.getItem(mSelectedPage).getSelectedOrders())) {
                     return;
                 }
-                if(mCurrentOrderType == Constants.Identifier.ORDER_TO_DO || isOrdersModify(mPagerAdapter.getItem(mSelectedPage).getSelectedOrders())) {
-                    if (App.getUser().getBadRecord() >= Constants.DefaultValue.MAX_BAD_RECORD) {
-                        DialogUtils.makeConfirmDialog(mContext, "温馨提示", "您已经取消过订单两次,\n不能再取消订单了呦\n(完成6次订单可增加一次取消机会)");
-                        return;
+
+                if (App.getUser().getBadRecord() >= Constants.DefaultValue.MAX_BAD_RECORD) {
+                    DialogUtils.makeConfirmDialog(mContext, "温馨提示", "您已经取消过订单两次,\n不能再取消订单了呦\n(完成6次订单可增加一次取消机会)");
+                    return;
+                }
+
+                if (App.getUser().isParent()) {
+                    /** 家长取消订单 */
+                    if (mCurrentOrderType == Constants.Identifier.ORDER_TO_DO || isOrdersModify(mPagerAdapter.getItem(mSelectedPage).getSelectedOrders())) {
+
+                        DialogUtils.makeChooseDialog(mContext, "温馨提示", "取消订单将会产生1次不良记录\n不良记录超过2次将不能再取消订单\n(完成6次订单可增加一次取消机会)\n确认取消?",
+                                new DialogUtils.OnChooseListener() {
+                                    @Override
+                                    public void onChoose(boolean sure) {
+                                        if (sure) {
+                                            doParentCancelOrder();
+                                        }
+                                    }
+                                });
+
+                    } else {
+                        doParentCancelOrder();
                     }
 
-                    DialogUtils.makeChooseDialog(mContext, "温馨提示", "取消订单将会产生一次不良记录\n不良记录超过两次将不能再取消订单\n(完成6次订单可增加一次取消机会)\n确认取消?",
-                            new DialogUtils.OnChooseListener() {
-                                @Override
-                                public void onChoose(boolean sure) {
-                                    if (sure) {
-                                        doCancelOrder();
+                } else {
+                    /** 家教取消订单 */
+                    if (mCurrentOrderType == Constants.Identifier.ORDER_RESERVATION) {
+                        DialogUtils.makeChooseDialog(mContext, "温馨提示", "取消订单将会产生0.5次不良记录\n不良记录超过2次将不能再取消订单\n(完成6次订单可增加一次取消机会)\n确认取消?",
+                                new DialogUtils.OnChooseListener() {
+                                    @Override
+                                    public void onChoose(boolean sure) {
+                                        if (sure) {
+                                            doTeacherCancelOrder();
+                                        }
                                     }
-                                }
-                            });
-                }else{
-                    doCancelOrder();
+                                });
+
+                    } else if (mCurrentOrderType == Constants.Identifier.ORDER_MODIFIED_WAIT_CONFIRM) {
+                        doTeacherCancelOrder();
+                    }
                 }
             }
         };
@@ -246,21 +279,22 @@ public class MyOrderActivity extends BaseActivity {
         refreshButtonsState(getButtonTypeFromOrderType(mCurrentOrderType));
     }
 
-    private void doCancelOrder() {
-        RequestManager.get().execute(new RParentCancelOrders(App.getUser().getToken(), mPagerAdapter.getItem(mSelectedPage).getSelectedOrderIds()),
+    /**
+     * 家教取消订单
+     */
+    private void doTeacherCancelOrder() {
+        RequestManager.get().execute(new RTeacherCancelOrder(App.getUser().getToken(), mPagerAdapter.getItem(mSelectedPage).getSelectedOrderIds()),
                 new RequestListener<Integer>() {
                     @Override
-                    public void onSuccess(RequestBase request, Integer result) {
+                    public void onSuccess(RequestBase request, Integer badRecord) {
                         toast("取消成功");
 
-                        if (null != mPagerAdapter.getItem(mSelectedPage)) {
-                            mPagerAdapter.getItem(mSelectedPage).updateData();
+                        if (null != mPagerAdapter) {
+                            mPagerAdapter.updateAllFragment();
                         }
 
-                        App.getUser().setBadRecord(result);
+                        App.getUser().setBadRecord(badRecord);
                         App.getUser().save2Cache();
-
-                        redirectToActivity(mContext, MyOrderActivity.class);
                     }
 
                     @Override
@@ -270,6 +304,58 @@ public class MyOrderActivity extends BaseActivity {
                 });
     }
 
+    /**
+     * 家教确认订单
+     */
+    private void doTeacherConfirmOrder() {
+        RequestManager.get().execute(new RTeacherConfirmOrder(App.getUser().getToken(), mPagerAdapter.getItem(mSelectedPage).getSelectedOrderIds()),
+                new RequestListener<JSONObject>() {
+                    @Override
+                    public void onSuccess(RequestBase request, JSONObject result) {
+                        toast(result.optString("message"));
+
+                        if (null != mPagerAdapter) {
+                            mPagerAdapter.updateAllFragment();
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 家长取消订单
+     */
+    private void doParentCancelOrder() {
+        RequestManager.get().execute(new RParentCancelOrders(App.getUser().getToken(), mPagerAdapter.getItem(mSelectedPage).getSelectedOrderIds()),
+                new RequestListener<Integer>() {
+                    @Override
+                    public void onSuccess(RequestBase request, Integer result) {
+                        toast("取消成功");
+
+                        if (null != mPagerAdapter) {
+                            mPagerAdapter.updateAllFragment();
+                        }
+
+                        App.getUser().setBadRecord(result);
+                        App.getUser().save2Cache();
+                    }
+
+                    @Override
+                    public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                        toast(errorMsg);
+                    }
+                });
+    }
+
+    /**
+     * 是否有部分订单被修改过
+     *
+     * @param orders 待确认订单
+     */
     private boolean isOrdersModify(List<BriefOrder> orders) {
         for (BriefOrder order :
                 orders) {
@@ -294,11 +380,6 @@ public class MyOrderActivity extends BaseActivity {
                 toast("只有同次多次预约的订单可批量修改");
                 return false;
             }
-
-            if (!App.getUser().get_id().equals(order.getParent())) {
-                toast("您只能修改自己是家长的订单");
-                return false;
-            }
         }
 
         return true;
@@ -308,12 +389,11 @@ public class MyOrderActivity extends BaseActivity {
      * 根据 Order 的 type 来获取按钮的显示状态
      */
     private int getButtonTypeFromOrderType(int orderType) {
-        if (!App.getUser().isParent()) {
-            return BUTTON_TYPE_NONE;
+        if (orderType == Constants.Identifier.ORDER_RESERVATION) {
+            return BUTTON_TYPE_BOTH;
         }
 
-        if (orderType == Constants.Identifier.ORDER_RESERVATION ||
-                orderType == Constants.Identifier.ORDER_TO_DO) {
+        if (App.getUser().isParent() && orderType == Constants.Identifier.ORDER_TO_DO) {
             return BUTTON_TYPE_BOTH;
         }
 
@@ -342,7 +422,7 @@ public class MyOrderActivity extends BaseActivity {
                 mBtnLinearLayout.setVisibility(View.VISIBLE);
                 mModifyTextView.setVisibility(View.VISIBLE);
                 mCancelTextView.setVisibility(View.VISIBLE);
-                mModifyTextView.setOnClickListener(mModifyListener);
+                mModifyTextView.setOnClickListener(mModifyOrConfirmListener);
                 mCancelTextView.setOnClickListener(mCancelListener);
                 break;
 
@@ -356,7 +436,7 @@ public class MyOrderActivity extends BaseActivity {
                 mBtnLinearLayout.setVisibility(View.VISIBLE);
                 mModifyTextView.setVisibility(View.VISIBLE);
                 mCancelTextView.setVisibility(View.GONE);
-                mModifyTextView.setOnClickListener(mDoModifyListener);
+                mModifyTextView.setOnClickListener(mDoModifyOrConfirmListener);
                 break;
 
             case BUTTON_TYPE_ONE_CANCEL:
@@ -370,6 +450,8 @@ public class MyOrderActivity extends BaseActivity {
                 mBtnLinearLayout.setVisibility(View.GONE);
                 break;
         }
+
+        mModifyTextView.setText(App.getUser().isParent() ? "修改" : "确定");
     }
 
     public void onSortByNameClick(View view) {
@@ -417,11 +499,11 @@ public class MyOrderActivity extends BaseActivity {
         }
     }
 
-    private void refreshUI(PollingData data){
+    private void refreshUI(PollingData data) {
         newOrderInfo = Variables.localData.getMine().getNewOrderInfo(data.getMine());
 
         for (int i = 0; i < mTabTextViews.size() && i < newOrderInfo.state.length; i++) {
-            mTabTextViews.get(i).setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, newOrderInfo.state[i] == 1 ? R.mipmap.icon_red_point_padding : 0,0 );
+            mTabTextViews.get(i).setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, newOrderInfo.state[i] == 1 ? R.mipmap.icon_red_point_padding : 0, 0);
             mTabTextViews.get(i).setCompoundDrawablePadding(16);
         }
 

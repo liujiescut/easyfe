@@ -21,11 +21,11 @@ import java.util.List;
  */
 public class RTeacherCancelOrder extends RequestBase<Integer>{
     private String mToken = "";
-    private String mOrderId = "";
+    private List<String> mOrders = new ArrayList<>();
 
-    public RTeacherCancelOrder(@NonNull String token, @NonNull String orderId) {
+    public RTeacherCancelOrder(@NonNull String token, @NonNull List<String> orderIds) {
         this.mToken = token;
-        this.mOrderId = orderId;
+        this.mOrders = orderIds;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class RTeacherCancelOrder extends RequestBase<Integer>{
     public JSONObject getJsonParams() throws JSONException {
         JSONObject params = new JSONObject();
         params.put("token", mToken);
-        params.put("orderId", mOrderId);
+        params.put("orderId", new JSONArray(mOrders));
         return params;
     }
 

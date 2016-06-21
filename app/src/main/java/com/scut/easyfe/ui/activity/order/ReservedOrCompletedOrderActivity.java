@@ -131,7 +131,9 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
             return;
         }
 
-        RequestManager.get().execute(new RTeacherCancelOrder(App.getUser().getToken(), mOrder.get_id()),
+        List<String> orderIds = new ArrayList<>();
+        orderIds.add(mOrder.get_id());
+        RequestManager.get().execute(new RTeacherCancelOrder(App.getUser().getToken(), orderIds),
                 new RequestListener<Integer>() {
                     @Override
                     public void onSuccess(RequestBase request, Integer badRecord) {

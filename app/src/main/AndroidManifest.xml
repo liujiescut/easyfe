@@ -130,7 +130,10 @@
         <activity
             android:name=".ui.activity.order.MyOrderActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".ui.activity.WalletActivity" />
+        <activity
+            android:name=".ui.activity.WalletActivity"
+            android:launchMode="singleTask"
+            />
         <activity android:name=".ui.activity.order.PublishSpreadActivity" />
         <activity android:name=".ui.activity.MessageCenterActivity" />
         <activity android:name=".ui.activity.ContactUsActivity" />
