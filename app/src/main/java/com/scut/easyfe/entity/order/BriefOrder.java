@@ -21,9 +21,28 @@ public class BriefOrder extends BaseEntity{
     private int state = 0;
     private TeachTime teachTime = new TeachTime();
     private boolean selected = false;     //取消跟修改操作是否被选中
+    private Order.Coupon coupon = new Order.Coupon();             //优惠券信息
+    private float professionalTutorPrice = 0f;        //专业辅导单位价格
+
 
     public float getTotalPrice(){
-        return subsidy + price * ((float) time / 60);
+        return subsidy + (price + professionalTutorPrice) * ((float) time / 60) - coupon.getMoney();
+    }
+
+    public Order.Coupon getCoupon() {
+        return coupon;
+    }
+
+    public void setCoupon(Order.Coupon coupon) {
+        this.coupon = coupon;
+    }
+
+    public float getProfessionalTutorPrice() {
+        return professionalTutorPrice;
+    }
+
+    public void setProfessionalTutorPrice(float professionalTutorPrice) {
+        this.professionalTutorPrice = professionalTutorPrice;
     }
 
     public float getSubsidy() {

@@ -511,7 +511,7 @@ public class Order extends BaseEntity {
         }
     }
 
-    public class Coupon extends BaseEntity{
+    public static class Coupon extends BaseEntity{
         private String _id = "";
         private float money = 0f;
 

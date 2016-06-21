@@ -101,6 +101,7 @@ public class Constants {
         public static final String URL_CASH_PAY = URL_BASE + "Money/Pay/Cash";
         public static final String URL_ALIPAY_PAY = URL_BASE + "Money/PrePay/AliPay";
         public static final String URL_WECHAT_PAY = URL_BASE + "Money/PrePay/Wechat";
+        public static final String URL_BUY_VIP_EVENT_BY_SCORE = URL_BASE + "Money/Pay/Score";
 
     }
 

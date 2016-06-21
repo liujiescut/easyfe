@@ -14,12 +14,18 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.VipEvent;
+import com.scut.easyfe.network.RequestBase;
+import com.scut.easyfe.network.RequestListener;
+import com.scut.easyfe.network.RequestManager;
+import com.scut.easyfe.network.request.RBuyVipEventByScore;
 import com.scut.easyfe.ui.activity.VipActivity;
 import com.scut.easyfe.ui.base.BaseListViewScrollStateAdapter;
 import com.scut.easyfe.ui.customView.FixedClickListener;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 import com.scut.easyfe.utils.PayUtil;
+
+import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -88,7 +94,19 @@ public class VipAdapter extends BaseListViewScrollStateAdapter {
         holder.score.setOnClickListener(new FixedClickListener() {
             @Override
             public void onFixClick(View view) {
-                //Todo
+                RequestManager.get().execute(new RBuyVipEventByScore(mVipEvents.get(position).get_id()), new RequestListener<JSONObject>() {
+                    @Override
+                    public void onSuccess(RequestBase request, JSONObject result) {
+                        Toast.makeText(App.get().getApplicationContext(),
+                                result.optString("message"), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                        Toast.makeText(App.get().getApplicationContext(),
+                                errorMsg, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
