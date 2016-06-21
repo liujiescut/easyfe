@@ -147,7 +147,6 @@ public class WalletActivity extends BaseActivity {
 
                     @Override
                     public void onWechatPaySend(boolean success) {
-                        toast("支付请求发送" + (success ? "成功" : "失败"));
                     }
 
                     @Override

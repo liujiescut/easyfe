@@ -22,7 +22,6 @@ import java.util.List;
  * Created by jay on 16/4/7.
  */
 public class RGetMyTicket extends RequestBase<List<Coupon>> {
-    private String mToken = "";
 
     @Override
     public String getUrl() {

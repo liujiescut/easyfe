@@ -17,10 +17,27 @@ import com.scut.easyfe.utils.OtherUtils;
  */
 public class VipActivity extends BaseActivity {
     private boolean mIsMyVipEvent = false;
+    private VipFragment mFragment;
 
     @Override
     protected void setLayoutView() {
         setContentView(R.layout.activity_vip);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Intent intent = getIntent();
+        if (null != intent) {
+            Bundle bundle = intent.getExtras();
+            if (null != bundle) {
+                mIsMyVipEvent = bundle.getBoolean(Constants.Key.IS_MY_VIP_ACTIVITY, false);
+                if(bundle.getBoolean(Constants.Key.NEED_REFRESH, false)){
+                    refresh();
+                }
+            }
+        }
     }
 
     @Override
@@ -36,15 +53,34 @@ public class VipActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).
-                setText(mIsMyVipEvent ? "我的会员活动" : "会员活动");
+        initTitle();
 
-        VipFragment fragment = new VipFragment();
-        fragment.setIsMyVipEvent(mIsMyVipEvent);
+        mFragment = new VipFragment();
+        mFragment.setIsMyVipEvent(mIsMyVipEvent);
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.vip_fl_container, fragment)
+                .add(R.id.vip_fl_container, mFragment)
                 .commit();
+    }
+
+    private void initTitle(){
+        ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).
+                setText(mIsMyVipEvent ? "我的会员活动" : "会员活动");
+    }
+
+
+    public void refresh(){
+        initTitle();
+        if (null != mFragment) {
+            mFragment.refresh();
+        }
+    }
+
+    public void setIsMyVipEvent(boolean mIsMyVipEvent) {
+        this.mIsMyVipEvent = mIsMyVipEvent;
+        if (null != mFragment) {
+            mFragment.setIsMyVipEvent(mIsMyVipEvent);
+        }
     }
 
     public void onBackClick(View view){

@@ -97,6 +97,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 
                         case Constants.Identifier.BUY_RECHARGE:
                             bundle.putBoolean(Constants.Key.NEED_REFRESH, true);
+                            bundle.putBoolean(Constants.Key.IS_MY_VIP_ACTIVITY, true);
                             redirectToActivity(mContext, WalletActivity.class, bundle);
                             finish();
                             break;

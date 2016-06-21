@@ -52,7 +52,7 @@ public class VipFragment extends BaseRefreshFragment {
 
     private void loadData(int skip, int limit, final boolean clear) {
         setIsLoading(true);
-        RequestManager.get().execute(new RGetVipEvent(limit, skip), new RequestListener<List<VipEvent>>() {
+        RequestManager.get().execute(new RGetVipEvent(limit, skip, mIsMyVipEvent), new RequestListener<List<VipEvent>>() {
             @Override
             public void onSuccess(RequestBase request, List<VipEvent> result) {
                 if (clear){
@@ -96,5 +96,12 @@ public class VipFragment extends BaseRefreshFragment {
 
     public void setIsMyVipEvent(boolean isMyVipEvent){
         mIsMyVipEvent = isMyVipEvent;
+    }
+
+    public void refresh(){
+        if (null != mAdapter) {
+            ((VipAdapter)mAdapter).setIsMyVipActivity(mIsMyVipEvent);
+            onRefreshData();
+        }
     }
 }

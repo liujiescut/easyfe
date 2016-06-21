@@ -108,8 +108,7 @@ public class User extends BaseEntity {
                 if (null != data) {
                     Variables.localData = data;
                 }
-                //Todo 开启轮询
-//                PollingUtil.setIsPolling(true);
+                PollingUtil.setIsPolling(true);
             }
         }
     }

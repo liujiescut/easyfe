@@ -251,12 +251,13 @@ public class MainActivity extends BaseActivity {
      * @param view 被点击View
      */
     public void onPersonImageClick(View view) {
-        Variables.localData = new PollingData();
-        toast("清除了本地轮询数据缓存");
-//        if (null != mDrawerLayout) {
-//            mDrawerLayout.openDrawer(mLeftDrawer);
-//        }
+//        Variables.localData = new PollingData();
+//        toast("清除了本地轮询数据缓存");
+        if (null != mDrawerLayout) {
+            mDrawerLayout.openDrawer(mLeftDrawer);
+        }
     }
+
 
     /**
      * 点击我的等级

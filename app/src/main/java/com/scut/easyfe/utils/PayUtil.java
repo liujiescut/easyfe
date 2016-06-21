@@ -169,7 +169,10 @@ public class PayUtil {
                 request.extData = buyType + "_" + id;
 
                 if (null != listener) {
-                    listener.onWechatPaySend(api.sendReq(request));
+                    boolean success = api.sendReq(request);
+                    listener.onWechatPaySend(success);
+                    Toast.makeText(App.get().getApplicationContext(),
+                            "支付请求发送" + (success ? "成功" : "失败"), Toast.LENGTH_SHORT).show();
                 }
             }
         });

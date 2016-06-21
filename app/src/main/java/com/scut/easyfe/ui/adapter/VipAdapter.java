@@ -70,12 +70,13 @@ public class VipAdapter extends BaseListViewScrollStateAdapter {
                     inflate(R.layout.item_vip, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
-            if (mIsMyVipActivity) {
-                holder.reservable.setVisibility(View.GONE);
-                holder.reserveArea.setVisibility(View.GONE);
-            }
         } else {
             holder = (ViewHolder) convertView.getTag();
+        }
+
+        if (mIsMyVipActivity) {
+            holder.reservable.setVisibility(View.GONE);
+            holder.reserveArea.setVisibility(View.GONE);
         }
 
         holder.title.setText(mVipEvents.get(position).getTitle());
@@ -107,26 +108,20 @@ public class VipAdapter extends BaseListViewScrollStateAdapter {
                             @Override
                             public void onAlipayReturn(boolean success) {
                                 if(success && null != mActivityReference.get()){
-                                    Intent intent = new Intent(mActivityReference.get(), VipActivity.class);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putBoolean(Constants.Key.IS_MY_VIP_ACTIVITY, true);
-                                    mActivityReference.get().startActivity(intent, bundle);
+                                    ((VipActivity)mActivityReference.get()).setIsMyVipEvent(true);
+                                    ((VipActivity)mActivityReference.get()).refresh();
                                 }
                             }
 
                             @Override
                             public void onWechatPaySend(boolean success) {
-                                Toast.makeText(App.get().getApplicationContext(),
-                                        "支付请求发送" + (success ? "成功" : "失败"), Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
                             public void onCashPayReturn(boolean success) {
                                 if(success && null != mActivityReference.get()){
-                                    Intent intent = new Intent(mActivityReference.get(), VipActivity.class);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putBoolean(Constants.Key.IS_MY_VIP_ACTIVITY, true);
-                                    mActivityReference.get().startActivity(intent, bundle);
+                                    ((VipActivity)mActivityReference.get()).setIsMyVipEvent(true);
+                                    ((VipActivity)mActivityReference.get()).refresh();
                                 }
                             }
                         }).showPayDialog();
@@ -141,6 +136,10 @@ public class VipAdapter extends BaseListViewScrollStateAdapter {
         holder.score.setTextColor(textColor);
 
         return convertView;
+    }
+
+    public void setIsMyVipActivity(boolean mIsMyVipActivity) {
+        this.mIsMyVipActivity = mIsMyVipActivity;
     }
 
     private class ViewHolder {

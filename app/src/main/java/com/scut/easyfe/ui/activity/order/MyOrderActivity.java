@@ -507,8 +507,8 @@ public class MyOrderActivity extends BaseActivity {
             mTabTextViews.get(i).setCompoundDrawablePadding(16);
         }
 
-        if (null != mPagerAdapter && null != mPagerAdapter.getItem(mSelectedPage)) {
-            mPagerAdapter.getItem(mSelectedPage).updateData();
+        if (null != mPagerAdapter) {
+            mPagerAdapter.updateAllFragment();
         }
     }
 }

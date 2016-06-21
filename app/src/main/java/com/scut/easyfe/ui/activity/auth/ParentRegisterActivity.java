@@ -494,7 +494,7 @@ public class ParentRegisterActivity extends BaseActivity {
             return false;
         }
 
-        if (mVerifyCodeEditText.getText().toString().length() != 6) {
+        if (mFromType == Constants.Identifier.TYPE_REGISTER && mVerifyCodeEditText.getText().toString().length() != 6) {
             toast("请输入有效验证码");
             return false;
         }

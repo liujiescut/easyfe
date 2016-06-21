@@ -31,7 +31,8 @@ public class Constants {
     }
 
     public class URL{
-        public static final String URL_BASE = "http://121.42.37.233/";
+        public static final String URL_BASE = "http://120.55.113.12/";
+//        public static final String URL_BASE = "http://www.ysxeducation.com/";
 
         public static final String URL_LOGIN = URL_BASE + "Authentication/Login";
         public static final String URL_GET_SMS = URL_BASE + "Authentication/Sms";
@@ -52,6 +53,7 @@ public class Constants {
         public static final String URL_CALLBACK = URL_BASE + "Share/Feedback";
         public static final String URL_ONLINE_PARAMS = URL_BASE + "Share/OnlineParams";
         public static final String URL_GET_VIP_EVENT = URL_BASE + "Share/VipEvent";
+        public static final String URL_GET_MY_VIP_EVENT = URL_BASE + "Share/User/VipEvent";
 
         public static final String URL_TEACHER_REGISTER = URL_BASE + "Authentication/SignUp/Teacher";
         public static final String URL_TEACHER_INFO_MODIFY = URL_BASE + "Teacher/Data";
@@ -67,7 +69,7 @@ public class Constants {
         public static final String URL_GET_MY_TICKET = URL_BASE + "Parent/Coupon";
         public static final String URL_WALLET_WITHDRAW = URL_BASE + "Money/Withdraw";
         public static final String URL_PAY_ORDER = URL_BASE + "Parent/Pay";
-        public static final String URL_PAY_CALLBACK = "http://www.cadena.cn/money/notify/alipay";
+        public static final String URL_PAY_CALLBACK = "http://www.ysxeducation.com/money/notify/alipay";
 
         public static final String URL_PARENT_REGISTER = URL_BASE + "Authentication/SignUp/Parent";
         public static final String URL_CONFIRM_SPECIAL_ORDER = URL_BASE + "Parent/Sure/Special";
