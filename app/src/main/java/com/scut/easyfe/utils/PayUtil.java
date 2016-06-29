@@ -50,8 +50,9 @@ public class PayUtil {
         this.listener = listener;
         this.isCashPayShow = isCashPayShow;
 
-        //todo delete it
-        this.price = 1;
+        if(Constants.Config.ISDEBUG) {
+            this.price = 1;
+        }
     }
 
     public void showPayDialog() {

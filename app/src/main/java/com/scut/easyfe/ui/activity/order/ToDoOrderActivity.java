@@ -49,7 +49,6 @@ public class ToDoOrderActivity extends BaseActivity {
     private TextView mTotalPriceTextView;
     private TextView mStudentAgeTextView;
     private TextView mStudentGenderTextView;
-    private TextView mWarningTextView;
     private TextView mTeacherActionTextView;
     private TextView mParentActionTextView;
     private TextView mTutorPriceTextView;
@@ -125,7 +124,6 @@ public class ToDoOrderActivity extends BaseActivity {
         mPriceTextView = OtherUtils.findViewById(this, R.id.order_base_info_tv_price);
         mTipTextView = OtherUtils.findViewById(this, R.id.order_base_info_tv_tip);
         mTotalPriceTextView = OtherUtils.findViewById(this, R.id.order_base_info_tv_total_price);
-        mWarningTextView = OtherUtils.findViewById(this, R.id.edit_tutor_tv_warning);
         mTeacherActionTextView = OtherUtils.findViewById(this, R.id.to_do_order_tv_teacher_action);
         mParentActionTextView = OtherUtils.findViewById(this, R.id.to_do_order_tv_parent_action);
 
@@ -149,7 +147,6 @@ public class ToDoOrderActivity extends BaseActivity {
         mPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元/小时", mOrder.getPrice() / 100));
         mTipTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getSubsidy() / 100));
         mTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice() / 100));
-        mWarningTextView.setText("我就是温馨提示喽");
 
         if (isTeacher()) {
             mNameTextView.setText(mOrder.getParent().getName());
@@ -311,7 +308,7 @@ public class ToDoOrderActivity extends BaseActivity {
     public void onProfessionGuideClick(View view) {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "专业辅导");
-        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.user_protocol_content));
+        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.tutor_order_explain_content));
         redirectToActivity(mContext, ShowTextActivity.class, bundle);
     }
 

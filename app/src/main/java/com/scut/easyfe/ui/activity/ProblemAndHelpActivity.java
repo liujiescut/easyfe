@@ -34,7 +34,7 @@ public class ProblemAndHelpActivity extends BaseActivity {
         mProblemListView = OtherUtils.findViewById(this, R.id.problems_and_help_lv_problems);
         mOtherTextView = OtherUtils.findViewById(this, R.id.problems_and_help_tv_other);
 
-        mProblemListView.setAdapter(new ProblemAdapter(this, Problem.getTestProblems()));
+        mProblemListView.setAdapter(new ProblemAdapter(this, Problem.getProblems()));
         ListViewUtil.setListViewHeightBasedOnChildren(mProblemListView);
     }
 
@@ -51,7 +51,7 @@ public class ProblemAndHelpActivity extends BaseActivity {
     public void onMoreProblemsClick(View view){
         Bundle bundle = new Bundle();
         bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "更多问题");
-        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.about_us_content));
+        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, Problem.getOtherProblemsText());
         redirectToActivity(mContext, ShowTextActivity.class, bundle);
     }
 

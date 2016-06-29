@@ -20,8 +20,8 @@ android {
         applicationId "com.scut.easyfe"
         minSdkVersion 17
         targetSdkVersion 22
-        versionCode 160517
-        versionName "1.1"
+        versionCode 160621
+        versionName "2.4.0"
         signingConfig signingConfigs.easyfe_release
     }
     buildTypes {

@@ -260,4 +260,8 @@ public class ModifyOrderActivity extends BaseActivity {
                     }
                 });
     }
+    
+    public void onBackClick(View view){
+        finish();
+    }
 }

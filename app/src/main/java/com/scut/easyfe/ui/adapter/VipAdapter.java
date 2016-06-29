@@ -21,6 +21,7 @@ import com.scut.easyfe.network.request.RBuyVipEventByScore;
 import com.scut.easyfe.ui.activity.VipActivity;
 import com.scut.easyfe.ui.base.BaseListViewScrollStateAdapter;
 import com.scut.easyfe.ui.customView.FixedClickListener;
+import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 import com.scut.easyfe.utils.PayUtil;

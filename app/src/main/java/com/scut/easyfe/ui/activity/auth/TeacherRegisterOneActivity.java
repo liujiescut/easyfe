@@ -30,6 +30,7 @@ import com.scut.easyfe.network.request.user.RUserInfoModify;
 import com.scut.easyfe.ui.activity.AddressActivity;
 import com.scut.easyfe.ui.activity.MainActivity;
 import com.scut.easyfe.ui.base.BaseActivity;
+import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.MapUtils;
 import com.scut.easyfe.utils.OtherUtils;
@@ -677,7 +678,7 @@ public class TeacherRegisterOneActivity extends BaseActivity {
                 user.getPosition().getAddress() == null || user.getPosition().getAddress().length() == 0 ||
                 user.getPosition().getLatitude() == -1 ||
                 user.getPosition().getLongitude() == -1) {
-            toast("选择地址无效,请重新选择");
+            DialogUtils.makeConfirmDialog(TeacherRegisterOneActivity.this, "温馨提示", getResources().getString(R.string.address_disable_info_teacher)).show();
             return false;
         }
 

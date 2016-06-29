@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Constants {
     @SuppressWarnings("unused")
     public class Config{
-        public static final boolean ISDEBUG = true;      //是否在debug模式，可以设置一些只有debug才会有的东西
+        public static final boolean ISDEBUG = false;      //是否在debug模式，可以设置一些只有debug才会有的东西
         public static final boolean ISLOG = true;        //是否显示log
         public static final boolean IS_SHOW_TOAST = true;  //是否显示使用LogUtil.toast出来的东西
         public static final boolean TO_MARKET = false;   //当分享时应用（例如wechat）不存在，是否跳转到应用市场

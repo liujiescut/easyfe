@@ -126,7 +126,7 @@ public class TeacherInfoActivity extends BaseActivity {
                 if(mOrder.getSubsidy() != 0){
                     Bundle bundle = new Bundle();
                     bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "交通补贴");
-                    bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.user_protocol_content));
+                    bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.transportation_allowance_explain_text));
                     redirectToActivity(mContext, ShowTextActivity.class, bundle);
                 }
             }

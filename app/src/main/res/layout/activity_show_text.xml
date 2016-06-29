@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/layout_padding_normal"
+            android:gravity="left"
             android:layout_marginTop="@dimen/layout_margin_small"
             tools:text="@string/text_example"/>
     </ScrollView>

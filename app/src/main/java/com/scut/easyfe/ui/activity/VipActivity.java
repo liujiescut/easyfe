@@ -9,6 +9,7 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.ui.fragment.VipFragment;
+import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 
 /**
@@ -77,6 +78,7 @@ public class VipActivity extends BaseActivity {
                 if (null != mFragment) {
                     mFragment.refresh();
                 }
+                DialogUtils.makeConfirmDialog(VipActivity.this, "温馨提示", "您已成功预约此活动咯^^").show();
             }
         });
     }

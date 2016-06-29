@@ -26,6 +26,14 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/layout_padding_large"
+                android:text="@string/teach_course_info_header"
+                android:textColor="@color/text_hint_color"
+                android:textSize="@dimen/text_size_small" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
                 android:padding="@dimen/layout_padding_small"
                 android:text="@string/grade_and_price"
@@ -66,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="@dimen/layout_padding_large"
-                android:text="@string/teach_course_info"
+                android:text="@string/teach_course_info_footer"
                 android:textColor="@color/text_hint_color"
                 android:textSize="@dimen/text_size_small" />
 

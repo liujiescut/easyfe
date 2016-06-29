@@ -243,7 +243,7 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
     public void onProfessionGuideClick(View view){
         Bundle bundle = new Bundle();
         bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "专业辅导");
-        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.user_protocol_content));
+        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.tutor_order_explain_content));
         redirectToActivity(mContext, ShowTextActivity.class, bundle);
     }
 

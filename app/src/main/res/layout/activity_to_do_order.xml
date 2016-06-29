@@ -156,7 +156,8 @@
                 android:layout_marginTop="@dimen/default_divider_height"
                 android:gravity="left"
                 android:padding="@dimen/layout_padding_small"
-                tools:text="1. 你好我是提示\n1. 你好我是提示1\n2. 你好你好我是提示1\n2. 你好你好我是提示1\n2. 你好" />
+                android:text="@string/to_do_order_warning"
+                />
 
             <TextView
                 android:id="@+id/to_do_order_tv_teacher_action"

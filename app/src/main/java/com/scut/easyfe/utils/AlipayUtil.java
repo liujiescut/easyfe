@@ -90,9 +90,6 @@ public class AlipayUtil {
      */
     private static String getOrderInfo(String buyId, String subject, String body, String price) {
 
-        //Todo delete it
-        price = "0.01";
-
         // 签约合作者身份ID
         String orderInfo = "partner=" + "\"" + Constants.Data.ALIPAY_PID + "\"";
 

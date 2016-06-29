@@ -10,14 +10,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bigkoo.alertview.OnDismissListener;
-import com.fasterxml.jackson.databind.JavaType;
 import com.roomorama.caldroid.CalendarHelper;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.app.Variables;
 import com.scut.easyfe.entity.PollingData;
-import com.scut.easyfe.entity.order.BriefOrder;
 import com.scut.easyfe.entity.order.Order;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
@@ -376,7 +374,7 @@ public class ConfirmOrderActivity extends BaseActivity {
     public void onProfessionGuideClick(View view){
         Bundle bundle = new Bundle();
         bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "专业辅导");
-        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.user_protocol_content));
+        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.tutor_reserve_explain_content));
         redirectToActivity(mContext, ShowTextActivity.class, bundle);
     }
 
