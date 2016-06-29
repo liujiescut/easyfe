@@ -42,6 +42,7 @@ public class WalletActivity extends BaseActivity {
     private TextView mWechatTextView;
     private TextView mBankNameTextView;
     private TextView mCardNumTextView;
+    private TextView mModifyInfoTextView;
 
     private OptionsPickerView<String> mPicker;
     private AlertView mRechargeInputDialog;
@@ -85,6 +86,7 @@ public class WalletActivity extends BaseActivity {
         mWechatTextView = OtherUtils.findViewById(this, R.id.wallet_tv_wechat);
         mBankNameTextView = OtherUtils.findViewById(this, R.id.wallet_tv_bank_name);
         mCardNumTextView = OtherUtils.findViewById(this, R.id.wallet_tv_card_num);
+        mModifyInfoTextView = OtherUtils.findViewById(this, R.id.wallet_tv_modify_info);
 
         mPicker = new OptionsPickerView<>(mContext);
         mPicker.setPicker(Constants.Data.bankNameList);
@@ -94,7 +96,17 @@ public class WalletActivity extends BaseActivity {
             ((View) OtherUtils.findViewById(this, R.id.wallet_ll_my_tickets)).setVisibility(View.VISIBLE);
             ((View) OtherUtils.findViewById(this, R.id.wallet_tv_recharge)).setVisibility(View.VISIBLE);
         }
+    }
 
+    /**
+     * 初始化微信支付宝是否可点击修改
+     */
+    private void initModifyState(boolean clickable) {
+        mAlipayTextView.setClickable(clickable);
+        mWechatTextView.setClickable(clickable);
+        int textColor = mResources.getColor(clickable ? R.color.text_area_editable_text_color : R.color.text_area_text_color);
+        mAlipayTextView.setTextColor(textColor);
+        mWechatTextView.setTextColor(textColor);
     }
 
     @Override
@@ -182,7 +194,7 @@ public class WalletActivity extends BaseActivity {
                 mWechatTextView.setText(mWallet.getWechat());
                 mBankNameTextView.setText(mWallet.getBank().getName());
                 mCardNumTextView.setText(mWallet.getBank().getAccount());
-
+                initModifyState(mWallet.getAli().equals("") || mWallet.getWechat().equals(""));
                 mIsLoadingDismissByUser = false;
                 stopLoading();
             }
@@ -221,6 +233,7 @@ public class WalletActivity extends BaseActivity {
                 @Override
                 public void onSuccess(RequestBase request, JSONObject result) {
                     toast("修改成功");
+                    initModifyState(false);
                 }
 
                 @Override
@@ -233,11 +246,11 @@ public class WalletActivity extends BaseActivity {
         mState = (mState == Constants.Identifier.STATE_EDIT) ? Constants.Identifier.STATE_NORMAL : Constants.Identifier.STATE_EDIT;
         boolean isEdit = (mState == Constants.Identifier.STATE_EDIT);
         mTitleRightTextView.setText(isEdit ? R.string.save : R.string.edit);
-        int textColor = mResources.getColor(isEdit ? R.color.text_area_editable_text_color : R.color.text_area_text_color);
-        mAlipayTextView.setTextColor(textColor);
-        mWechatTextView.setTextColor(textColor);
-        mBankNameTextView.setTextColor(textColor);
-        mCardNumTextView.setTextColor(textColor);
+        mAlipayTextView.setTextColor(mResources.getColor(isEdit && mAlipayTextView.getText().equals("") ? R.color.text_area_editable_text_color : R.color.text_area_text_color));
+        mWechatTextView.setTextColor(mResources.getColor(isEdit && mWechatTextView.getText().equals("") ? R.color.text_area_editable_text_color : R.color.text_area_text_color));
+        mBankNameTextView.setTextColor(mResources.getColor(isEdit && mCardNumTextView.getText().equals("") ? R.color.text_area_editable_text_color : R.color.text_area_text_color));
+        mCardNumTextView.setTextColor(mResources.getColor(isEdit && mCardNumTextView.getText().equals("") ? R.color.text_area_editable_text_color : R.color.text_area_text_color));
+        mModifyInfoTextView.setVisibility(mState == Constants.Identifier.STATE_EDIT ? View.VISIBLE : View.GONE);
     }
 
     private boolean validate() {
@@ -258,7 +271,7 @@ public class WalletActivity extends BaseActivity {
      * 点击充值
      */
     public void onRechargeClick(View view) {
-        if(!App.getUser().isParent()){
+        if (!App.getUser().isParent()) {
             return;
         }
 
@@ -351,7 +364,7 @@ public class WalletActivity extends BaseActivity {
      * 点击支付宝账户
      */
     public void onAlipayAccountClick(View view) {
-        if (mState == Constants.Identifier.STATE_EDIT) {
+        if (mState == Constants.Identifier.STATE_EDIT && mAlipayTextView.getText().equals("")) {
             DialogUtils.makeInputDialog(this, "支付宝账号", InputType.TYPE_CLASS_TEXT, new DialogUtils.OnInputListener() {
                 @Override
                 public void onFinish(String msg) {
@@ -365,7 +378,8 @@ public class WalletActivity extends BaseActivity {
      * 点击微信账户
      */
     public void onWechatAccountClick(View view) {
-        if (mState == Constants.Identifier.STATE_EDIT) {
+        if (mState == Constants.Identifier.STATE_EDIT && mWechatTextView.getText().equals("")) {
+            //当微信账号未输入时才可修改
             DialogUtils.makeInputDialog(this, "微信号", InputType.TYPE_CLASS_TEXT, new DialogUtils.OnInputListener() {
                 @Override
                 public void onFinish(String msg) {
@@ -380,7 +394,7 @@ public class WalletActivity extends BaseActivity {
      * 点击开户银行
      */
     public void onBankNameClick(View view) {
-        if (mState == Constants.Identifier.STATE_EDIT) {
+        if (mState == Constants.Identifier.STATE_EDIT && mCardNumTextView.getText().equals("")) {
             mPicker.show();
         }
     }
@@ -389,7 +403,7 @@ public class WalletActivity extends BaseActivity {
      * 点击银行卡号
      */
     public void onCardNumClick(View view) {
-        if (mState == Constants.Identifier.STATE_EDIT) {
+        if (mState == Constants.Identifier.STATE_EDIT && mCardNumTextView.getText().equals("")) {
             DialogUtils.makeInputDialog(this, "银行卡号", InputType.TYPE_CLASS_NUMBER, new DialogUtils.OnInputListener() {
                 @Override
                 public void onFinish(String msg) {

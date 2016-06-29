@@ -62,7 +62,7 @@ public class PayUtil {
 
         String [] payWays;
         if(isCashPayShow){
-            payWays = new String[]{"支付宝", "微信","现金"};
+            payWays = new String[]{"支付宝", "微信","账户余额"};
         }else {
             payWays = new String[]{"支付宝", "微信"};
         }

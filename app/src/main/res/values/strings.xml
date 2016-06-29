@@ -21,8 +21,9 @@
     <string name="login_parent_register">家长注册</string>
     <string name="login_teacher_register">家教注册</string>
     <string name="login_protocol_hint">点击登录，即表示您已同意《xxxx协议》</string>
-    <string name="parent_register_name">您的姓名</string>
+    <string name="parent_register_name">您的昵称</string>
     <string name="parent_register_info">请准确填写联系方式，以便家教老师直接联系您。</string>
+    <string name="wallet_modify_info">为了您的资金安全，输入后不可修改，如需修改，可联系后台客服人员（微信号：优升学（ysxjj2016）；QQ：2446883640）哟。</string>
     <string name="phone">手  机</string>
     <string name="gender">性  别</string>
     <string name="password">密 码</string>

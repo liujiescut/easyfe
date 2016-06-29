@@ -194,11 +194,26 @@
             tools:text="123456789" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/wallet_tv_modify_info"
+        android:visibility="gone"
+        tools:visibility = "visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_normal"
+        android:gravity="center"
+        android:paddingLeft="@dimen/layout_padding_small"
+        android:paddingRight="@dimen/layout_padding_small"
+        android:text="@string/wallet_modify_info"
+        android:textColor="@color/text_hint_color"
+        android:textSize="@dimen/text_size_small" />
+
 
     <LinearLayout
         android:id="@+id/wallet_ll_my_tickets"
         style="@style/ll_container_normal_style"
         android:visibility="gone"
+        tools:visibility="visible"
         android:layout_marginTop="@dimen/layout_margin_small">
         <TextView
             style="@style/text_normal_style"
@@ -211,5 +226,7 @@
             android:padding="@dimen/layout_padding_small"
             android:text="@string/my_ticket" />
     </LinearLayout>
+
+
 
 </LinearLayout>
