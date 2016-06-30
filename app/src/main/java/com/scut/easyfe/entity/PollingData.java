@@ -214,7 +214,8 @@ public class PollingData extends BaseEntity {
                             break;
                     }
 
-                    newOrderInfo.state[0] = 1;
+                    //如果全部需要显示红点的话取消注释该行
+                    // newOrderInfo.state[0] = 1;
                 }
             }
 

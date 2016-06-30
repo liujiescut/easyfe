@@ -13,6 +13,17 @@ public class SingleBookTime extends BaseBookTime {
 
     private String memo = "";
 
+    public SingleBookTime() {
+    }
+
+    public SingleBookTime(String date, boolean morning, boolean afternoon, boolean evening, boolean isOk) {
+        this.date = date;
+        this.setMorning(morning);
+        this.setAfternoon(afternoon);
+        this.setEvening(evening);
+        this.setIsOk(isOk);
+    }
+
     public String getDate() {
         return date;
     }

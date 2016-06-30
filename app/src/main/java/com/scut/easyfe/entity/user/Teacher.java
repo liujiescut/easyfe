@@ -1,10 +1,12 @@
 package com.scut.easyfe.entity.user;
 
+import com.roomorama.caldroid.CalendarHelper;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.BaseEntity;
 import com.scut.easyfe.entity.TeachableCourse;
 import com.scut.easyfe.entity.book.MultiBookTime;
 import com.scut.easyfe.entity.book.SingleBookTime;
+import com.scut.easyfe.utils.TimeUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,6 +16,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
+
+import hirondelle.date4j.DateTime;
 
 /**
  * 家教属性类
@@ -90,7 +95,7 @@ public class Teacher extends BaseEntity {
     private int subsidy = 5;
 
     //是否已经通过审核
-    private int checkType = Constants.Identifier.TEACHER_UNCHECK;
+    private int checkType = Constants.Identifier.TEACHER_UNCHECKED;
 
     //天使计划
     private AngelPlan angelPlan = new AngelPlan();
@@ -103,6 +108,32 @@ public class Teacher extends BaseEntity {
         scoreInfo += String.format(Locale.CHINA, "准时态度：%.1f", punctualScore);
 
         return scoreInfo;
+    }
+
+    /**
+     * 同步单次与多次预约时间
+     */
+    public void synchronizeTeachTime(){
+        List<SingleBookTime> singleTimes = new ArrayList<>();
+        DateTime dateTime;
+        int index;
+        for (MultiBookTime multiTime :
+                multiBookTime) {
+            dateTime = DateTime.today(TimeZone.getDefault());
+            dateTime = dateTime.plusDays(-1);
+            index = 1;
+            for (int i = 0; i <= 60; i += index) {
+                dateTime = dateTime.plusDays(index);
+                if(dateTime.getWeekDay() - 1 == multiTime.getWeekDay()){
+                    index = 7;
+                    SingleBookTime singleTime = new SingleBookTime(TimeUtils.getTime(CalendarHelper.convertDateTimeToDate(dateTime), "yyyy-MM-dd"),
+                            multiTime.isMorning(), multiTime.isAfternoon(), multiTime.isEvening(), true);
+                    singleTimes.add(singleTime);
+                }
+            }
+        }
+
+        setSingleBookTime(singleTimes);
     }
 
     public boolean isChecked(){

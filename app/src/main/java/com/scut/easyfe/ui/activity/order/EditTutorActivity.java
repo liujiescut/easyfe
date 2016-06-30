@@ -9,6 +9,7 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bigkoo.alertview.OnItemClickListener;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.scut.easyfe.R;
 import com.scut.easyfe.app.Constants;
@@ -200,7 +201,7 @@ public class EditTutorActivity extends BaseActivity {
         mGradeTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(OtherUtils.isFastDoubleClick()){
+                if (OtherUtils.isFastDoubleClick()) {
                     return;
                 }
 
@@ -340,7 +341,7 @@ public class EditTutorActivity extends BaseActivity {
             resetKnowledgeArea();
         }
 
-        if(course.contains("数学")){
+        if (course.contains("数学")) {
             course = "数学";
         }
         RequestManager.get().execute(new RGetTutorInfo(category, course), new RequestListener<TutorInfo>() {
@@ -419,31 +420,38 @@ public class EditTutorActivity extends BaseActivity {
             mTutorDetail.setExamPaper(mPaper);
         }
 
-        if(mUpdateToThisTeachDetail) {
-            startLoading();
-            RequestManager.get().execute(new RModifyTutorInfo(mOrderId, mTutorDetail), new RequestListener<JSONObject>() {
+        if (mUpdateToThisTeachDetail) {
+            DialogUtils.makeConfirmDialog(EditTutorActivity.this, "温馨提示", "专业辅导内容确定后，不可修改，如需修改，可联系后台客服人员（微信号：优升学（ysxjj2016）；QQ：2446883640）哟。", new OnItemClickListener() {
                 @Override
-                public void onSuccess(RequestBase request, JSONObject result) {
-                    mIsLoadingCloseByUser = false;
-                    stopLoading();
-                    toast(result.optString("message"));
+                public void onItemClick(Object o, int position) {
+                    if (position == 0) {
+                        startLoading();
+                        RequestManager.get().execute(new RModifyTutorInfo(mOrderId, mTutorDetail), new RequestListener<JSONObject>() {
+                            @Override
+                            public void onSuccess(RequestBase request, JSONObject result) {
+                                mIsLoadingCloseByUser = false;
+                                stopLoading();
+                                toast(result.optString("message"));
 
-                    setResultAndFinish();
+                                setResultAndFinish();
+                            }
+
+                            @Override
+                            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                                toast(errorMsg);
+                            }
+                        });
+                    }
                 }
+            }).show();
 
-                @Override
-                public void onFailed(RequestBase request, int errorCode, String errorMsg) {
-                    toast(errorMsg);
-                }
-            });
-
-        }else{
+        } else {
             setResultAndFinish();
 
         }
     }
 
-    private void setResultAndFinish(){
+    private void setResultAndFinish() {
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constants.Key.TUTOR_DETAIL, mTutorDetail);
         Intent intent = new Intent();
@@ -464,19 +472,25 @@ public class EditTutorActivity extends BaseActivity {
         }
 
         if (mTutorWay == Constants.Identifier.TUTOR_WAY_KNOWLEDGE) {   //针对知识点复习
-            int[] levelValue = new int[3];
-            for (int i = 0; i < 3; i++) {
-                if (mSelectLevelIndex[i][0] == -1) {
-                    toast("请选择三个知识点");
-                    return false;
-                }
-                levelValue[i] = mSelectLevelIndex[i][0] * 100 + mSelectLevelIndex[i][1] * 10 + mSelectLevelIndex[i][2];
-            }
-
-            if (levelValue[0] == levelValue[1] || levelValue[0] == levelValue[2] || levelValue[1] == levelValue[2]) {
-                toast("请选择三个不同知识点");
+            if (mSelectLevelIndex[0][0] == -1 &&
+                    mSelectLevelIndex[1][0] == -1 &&
+                    mSelectLevelIndex[2][0] == -1) {
+                toast("请选择知识点");
                 return false;
             }
+//            int[] levelValue = new int[3];
+//            for (int i = 0; i < 3; i++) {
+//                if (mSelectLevelIndex[i][0] == -1) {
+//                    toast("请选择三个知识点");
+//                    return false;
+//                }
+//                levelValue[i] = mSelectLevelIndex[i][0] * 100 + mSelectLevelIndex[i][1] * 10 + mSelectLevelIndex[i][2];
+//            }
+//
+//            if (levelValue[0] == levelValue[1] || levelValue[0] == levelValue[2] || levelValue[1] == levelValue[2]) {
+//                toast("请选择三个不同知识点");
+//                return false;
+//            }
 
         } else {                                                       //复习模拟卷
             if (mGrade.length() == 0) {

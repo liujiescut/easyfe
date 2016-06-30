@@ -105,6 +105,7 @@ public class TeacherReportActivity extends BaseActivity {
 
         //如果订单没有专业辅导就隐藏相关内容
         if (!mOrder.hasProfessionTutor()) {
+            ((View) OtherUtils.findViewById(this, R.id.teacher_report_ll_correct_rate)).setVisibility(View.GONE);
             ((View) OtherUtils.findViewById(this, R.id.teacher_report_view_this_teach_detail)).setVisibility(View.GONE);
             ((View) OtherUtils.findViewById(this, R.id.teacher_report_ll_tutor_1_detail)).setVisibility(View.GONE);
             ((View) OtherUtils.findViewById(this, R.id.teacher_report_ll_this_teach_detail_label)).setVisibility(View.GONE);
@@ -333,7 +334,7 @@ public class TeacherReportActivity extends BaseActivity {
             return false;
         }
 
-        if (mRightPercentTextView.getText().length() == 0) {
+        if (mOrder.hasProfessionTutor() && mRightPercentTextView.getText().length() == 0) {
             toast("请选择正确率");
             return false;
         }

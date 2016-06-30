@@ -110,7 +110,7 @@ public class MainActivity extends BaseActivity {
             } else {
                 String nameText = App.getUser().getName();
                 switch (App.getUser().getTeacherMessage().getCheckType()) {
-                    case Constants.Identifier.TEACHER_UNCHECK:
+                    case Constants.Identifier.TEACHER_UNCHECKED:
                         nameText += "(审核中)";
                         break;
 

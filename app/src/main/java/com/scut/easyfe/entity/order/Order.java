@@ -93,7 +93,7 @@ public class Order extends BaseEntity {
     }
 
     public float getTotalPrice(){
-        float totalPrice = (price + addPrice + professionalTutorPrice) * ((float)time / 60) + subsidy - coupon.money;
+        float totalPrice = (price + addPrice + (professionalTutorPrice == -1 ? 0 : professionalTutorPrice)) * ((float)time / 60) + subsidy - coupon.money;
         return totalPrice < 0 ? 0 : totalPrice;
     }
 

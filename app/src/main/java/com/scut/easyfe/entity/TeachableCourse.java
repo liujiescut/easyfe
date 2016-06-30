@@ -69,7 +69,7 @@ public class TeachableCourse extends BaseEntity{
     }
 
     public void setPrice(float price) {
-        this.price = price * 100;
+        this.price = price;
     }
 
     @Override

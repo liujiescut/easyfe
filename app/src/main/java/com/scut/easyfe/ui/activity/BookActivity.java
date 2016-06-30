@@ -122,17 +122,17 @@ public class BookActivity extends BaseActivity {
         mScoreItems = new ArrayList<>();
 
         mScoreItems.add(new ToSelectItem("6 分以上", false, "6"));
-        mScoreItems.add(new ToSelectItem("8 分以上", false, "8"));
-        mScoreItems.add(new ToSelectItem("12 分以上", false, "12"));
+        mScoreItems.add(new ToSelectItem("7 分以上", false, "7"));
+        mScoreItems.add(new ToSelectItem("9 分以上", false, "9"));
 
         try {
-            mPriceItems.add(new ToSelectItem("50以下", false, new JSONArray("[0,50]")));
-            mPriceItems.add(new ToSelectItem("50 - 80", false, new JSONArray("[50,80]")));
-            mPriceItems.add(new ToSelectItem("80 - 100", false, new JSONArray("[80,100]")));
-            mPriceItems.add(new ToSelectItem("100 - 120", false, new JSONArray("[100,120]")));
-            mPriceItems.add(new ToSelectItem("120 - 140", false, new JSONArray("[120,140]")));
-            mPriceItems.add(new ToSelectItem("140 - 160", false, new JSONArray("[140,160]")));
-            mPriceItems.add(new ToSelectItem("160以上", false, new JSONArray("[160," + Integer.MAX_VALUE + "]")));
+            mPriceItems.add(new ToSelectItem("40元以下", false, new JSONArray("[0,40]")));
+            mPriceItems.add(new ToSelectItem("40-50(包括50)", false, new JSONArray("[40,50]")));
+            mPriceItems.add(new ToSelectItem("50-60(包括60)", false, new JSONArray("[50,60]")));
+            mPriceItems.add(new ToSelectItem("60-70(包括70)", false, new JSONArray("[60,70]")));
+            mPriceItems.add(new ToSelectItem("70-80(包括80)", false, new JSONArray("[70,80]")));
+            mPriceItems.add(new ToSelectItem("80-90(包括90)", false, new JSONArray("[80,90]")));
+            mPriceItems.add(new ToSelectItem("90以上", false, new JSONArray("[90," + Integer.MAX_VALUE + "]")));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -441,7 +441,7 @@ public class BookActivity extends BaseActivity {
 
     public void onTimeClick(View view){
         OtherUtils.hideSoftInputWindow(mTeachTimeTextView.getWindowToken());
-        mTimePicker.setTitle("最短授课时长");
+        mTimePicker.setTitle("授课时长");
         mTimePicker.show();
     }
 

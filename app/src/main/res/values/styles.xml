@@ -74,7 +74,9 @@
     </style>
 
     <style name="my_order_item_style" parent="text_normal_style">
-        <item name="android:textSize">@dimen/text_size_normal</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:paddingLeft">@dimen/layout_padding_tiny</item>
+        <item name="android:paddingRight">@dimen/layout_padding_tiny</item>
     </style>
 
     <!-- 默认对话框样式 -->

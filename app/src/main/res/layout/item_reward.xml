@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
+    android:layout_height="86dp"
     android:background="@drawable/shape_reward_bg">
     <TextView
         android:id="@+id/item_reward_tv_text"

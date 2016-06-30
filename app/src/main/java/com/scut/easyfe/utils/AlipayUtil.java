@@ -106,7 +106,7 @@ public class AlipayUtil {
         orderInfo += "&body=" + "\"" + body + "\"";
 
         // 商品金额
-        orderInfo += "&total_fee=" + "\"" + price + "\"";
+        orderInfo += "&total_fee=" + "\"" + (Constants.Config.ISDEBUG ? 0.01 : price) + "\"";
 
         // 服务器异步通知页面路径
         orderInfo += "&notify_url=" + "\"" + Constants.URL.URL_PAY_CALLBACK + "\"";

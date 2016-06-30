@@ -125,7 +125,9 @@
                     android:background="@color/text_hint_color" />
             </LinearLayout>
 
-            <LinearLayout style="@style/ll_container_normal_style">
+            <LinearLayout
+                android:id="@+id/teacher_report_ll_correct_rate"
+                style="@style/ll_container_normal_style">
 
                 <TextView
                     style="@style/text_normal_style"

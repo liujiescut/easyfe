@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Constants {
     @SuppressWarnings("unused")
     public class Config{
-        public static final boolean ISDEBUG = false;      //是否在debug模式，可以设置一些只有debug才会有的东西
+        public static final boolean ISDEBUG = true;      //是否在debug模式，可以设置一些只有debug才会有的东西
         public static final boolean ISLOG = true;        //是否显示log
         public static final boolean IS_SHOW_TOAST = true;  //是否显示使用LogUtil.toast出来的东西
         public static final boolean TO_MARKET = false;   //当分享时应用（例如wechat）不存在，是否跳转到应用市场
@@ -206,7 +206,7 @@ public class Constants {
         /**
          * 教师类型(0待审核, 1已审核, 2已拒绝)
          */
-        public static final int TEACHER_UNCHECK = 0;
+        public static final int TEACHER_UNCHECKED = 0;
         public static final int TEACHER_CHECKED = 1;
         public static final int TEACHER_REJECT = 2;
 
@@ -331,16 +331,14 @@ public class Constants {
             tutorGradeList.add("高中 二年级");
             tutorGradeList.add("高中 三年级");
 
-            paperEasyLevelList.add("容易");
-            paperEasyLevelList.add("较易");
-            paperEasyLevelList.add("一般");
-            paperEasyLevelList.add("较难");
-            paperEasyLevelList.add("困难");
+            paperEasyLevelList.add("一般难度");
+            paperEasyLevelList.add("升级难度");
 
             teachTimeHourList.add(0);
             teachTimeHourList.add(1);
             teachTimeHourList.add(2);
             teachTimeHourList.add(3);
+            teachTimeHourList.add(4);
 
             for (int i = 0; i < teachTimeHourList.size(); i++) {
                 ArrayList<Integer> teachTimeMinutes = new ArrayList<>();
@@ -393,6 +391,7 @@ public class Constants {
             teacherGradeList.add("研二");
             teacherGradeList.add("研三");
             teacherGradeList.add("博士");
+            teacherGradeList.add("专业老师");
 
             weekList.add("星期日");
             weekList.add("星期一");

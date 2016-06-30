@@ -26,7 +26,8 @@ public class BriefOrder extends BaseEntity{
 
 
     public float getTotalPrice(){
-        return subsidy + (price + professionalTutorPrice) * ((float) time / 60) - coupon.getMoney();
+        float finalPrice = subsidy + (price + (professionalTutorPrice == -1 ? 0 : professionalTutorPrice)) * ((float) time / 60) - coupon.getMoney();
+        return finalPrice >= 0 ? finalPrice : 0;
     }
 
     public Order.Coupon getCoupon() {

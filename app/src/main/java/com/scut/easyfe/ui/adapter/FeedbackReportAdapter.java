@@ -124,9 +124,12 @@ public class FeedbackReportAdapter extends BaseListViewScrollStateAdapter {
         builder.append(String.format("%s %s",
                 TimeUtils.getTime(TimeUtils.getDateFromString(report.getTeachTime().getDate()), "yyyy年MM月dd日(EEEE)"),
                 report.getTeachTime().getChineseTime()));
-        builder.append("\n");
-        builder.append("正确率: ");
-        builder.append(report.getRightPercent());
+
+        if (null != report.getRightPercent() && !report.getRightPercent().equals("")) {
+            builder.append("\n");
+            builder.append("正确率: ");
+            builder.append(report.getRightPercent());
+        }
 
         return builder.toString();
     }

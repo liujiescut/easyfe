@@ -200,14 +200,14 @@ public class ToDoOrderActivity extends BaseActivity {
         mOrder.getThisTeachDetail().setGrade(mOrder.getGrade());
         bundle.putSerializable(Constants.Key.TUTOR_DETAIL, mOrder.getThisTeachDetail());
 
-        if (isTeacher() && !mOrder.isIsTeacherReport()) {          //家教可以进行修改
+        if (isTeacher() && !mOrder.getThisTeachDetail().hadFillIn()) {
             bundle.putString(Constants.Key.ORDER_ID, mOrder.get_id());
             bundle.putBoolean(Constants.Key.TUTOR_UPDATE_TO_THIS_TEACH_DETAIL, true);
             Intent intent = new Intent(mContext, EditTutorActivity.class);
             intent.putExtras(bundle);
             startActivityForResult(intent, REQUEST_TUTOR_DETAIL);
 
-        } else {                     //家长只能查看
+        } else {                     //填写了专业辅导之后只能查看
             Intent intent = new Intent(mContext, ShowTutorActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);

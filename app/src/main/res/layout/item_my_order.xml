@@ -100,6 +100,8 @@
                         style="@style/my_order_item_style"
                         android:layout_weight="1"
                         android:clickable="false"
+                        android:singleLine="true"
+                        android:ellipsize="end"
                         android:gravity="center_vertical|right"
                         tools:text="人生哲理" />
                 </LinearLayout>

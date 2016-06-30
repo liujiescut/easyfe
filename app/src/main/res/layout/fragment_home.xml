@@ -13,6 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="168dp">
 
+
+
         <com.scut.easyfe.ui.customView.ScrollableViewPager
             android:id="@+id/home_vp_advertise"
             android:layout_width="match_parent"
@@ -97,8 +99,8 @@
             android:gravity="center">
 
             <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:src="@mipmap/icon_gold_crown"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -106,11 +108,11 @@
                 android:gravity="left"
                 android:text="@string/home_vip_activity"
                 android:textColor="@color/theme_color"
-                android:textSize="@dimen/text_size_large" />
+                android:textSize="@dimen/text_size_medium" />
             <ImageView
                 android:id="@+id/home_tv_vip_new"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:paddingLeft="-10dp"
                 android:visibility="invisible"
                 tools:visibility="visible"
@@ -129,11 +131,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="@dimen/layout_padding_normal"
+            android:padding="@dimen/layout_padding_small"
             android:singleLine="true"
             android:text="@string/home_need_not_found"
             android:textColor="@color/theme_color"
-            android:textSize="@dimen/text_size_large" />
+            android:textSize="@dimen/text_size_medium" />
     </LinearLayout>
 
     <LinearLayout
@@ -218,6 +220,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/layout_margin_large"
             android:gravity="center"
+            android:textSize="10dp"
             android:text="@string/home_multi_book_text"
             android:textColor="@color/theme_color" />
 
@@ -231,6 +234,7 @@
             android:layout_width="@dimen/main_icon_outer_size"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textSize="10dp"
             android:text="@string/home_once_book_text"
 
             android:textColor="@color/theme_color" />
@@ -247,7 +251,7 @@
             android:layout_marginRight="@dimen/layout_margin_large"
             android:gravity="center"
             android:text="@string/home_teacher_text"
-
+            android:textSize="10dp"
             android:textColor="@color/theme_color" />
     </LinearLayout>
 

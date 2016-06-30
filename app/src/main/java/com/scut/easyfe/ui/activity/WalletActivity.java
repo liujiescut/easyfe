@@ -289,6 +289,11 @@ public class WalletActivity extends BaseActivity {
      */
     public void onWithdrawClick(View view) {
         if (mState == Constants.Identifier.STATE_NORMAL) {
+            if(mAlipayTextView.getText().equals("") || mWechatTextView.getText().equals("")){
+                toast("请先输入正确的支付宝账号和微信账号哟");
+                return;
+            }
+
             final JSONObject json = new JSONObject();
 
             AlertView mPayWayAlertView = new AlertView("提现到", null, "取消", null,

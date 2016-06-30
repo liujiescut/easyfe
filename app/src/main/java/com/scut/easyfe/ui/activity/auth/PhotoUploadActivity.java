@@ -206,7 +206,7 @@ public class PhotoUploadActivity extends BaseActivity {
                 mUser.setAvatar(result.optString("avatar"));
                 mUser.setType(result.optInt("type"));
                 App.setUser(mUser);
-                Variables.localData.getMine().setCheckType(Constants.Identifier.TEACHER_UNCHECK);
+                Variables.localData.getMine().setCheckType(Constants.Identifier.TEACHER_UNCHECKED);
                 PollingUtil.setIsPolling(true);
                 DialogUtils.makeConfirmDialog(PhotoUploadActivity.this, "提示", "您的信息正在审核中,请耐心等待", new OnItemClickListener() {
                     @Override

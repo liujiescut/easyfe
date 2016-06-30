@@ -23,7 +23,6 @@ import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.request.info.RGetCourse;
 import com.scut.easyfe.network.request.user.teacher.RTeacherAddCourse;
-import com.scut.easyfe.ui.activity.auth.TeacherRegisterTwoActivity;
 import com.scut.easyfe.ui.adapter.CourseAdapter;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.DialogUtils;
@@ -159,7 +158,7 @@ public class TeachCourseActivity extends BaseActivity {
 
                             try {
                                 TeachableCourse teachableCourse = new TeachableCourse(0x99999, mCourseNames.get(mSelectedCoursePosition),
-                                        mGrade.get(mSelectedGradePosition), Float.parseFloat(message));
+                                        mGrade.get(mSelectedGradePosition), Float.parseFloat(message) * 100);
 
                                 if(! mTeachableCourses.contains(teachableCourse)) {      //新增加课程及单价
                                     RequestManager.get().execute(new RTeacherAddCourse(App.getUser().getToken(), teachableCourse), new RequestListener<JSONObject>() {
@@ -276,7 +275,7 @@ public class TeachCourseActivity extends BaseActivity {
         ((TextView) itemView.findViewById(R.id.item_course_price_tv_state)).setText(Course.getStateFromGrade(gradeName));
         ((TextView) itemView.findViewById(R.id.item_course_price_tv_grade)).setText(Course.getGradeFromGrade(gradeName));
         final TextView priceTextView = ((TextView) itemView.findViewById(R.id.item_course_price_tv_price));
-        priceTextView.setText(String.format(Locale.CHINA, "%.0f 元/小时", price / 100));
+        priceTextView.setText(String.format(Locale.CHINA, "%.2f 元/小时", price / 100));
         itemView.setTag(teachableCourse);
 
         if (mFromType == Constants.Identifier.TYPE_REGISTER) {

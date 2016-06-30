@@ -502,13 +502,15 @@ public class MyOrderActivity extends BaseActivity {
     private void refreshUI(PollingData data) {
         newOrderInfo = Variables.localData.getMine().getNewOrderInfo(data.getMine());
 
+        if (null == mPagerAdapter) {
+            return;
+        }
+
         for (int i = 0; i < mTabTextViews.size() && i < newOrderInfo.state.length; i++) {
             mTabTextViews.get(i).setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, newOrderInfo.state[i] == 1 ? R.mipmap.icon_red_point_padding : 0, 0);
             mTabTextViews.get(i).setCompoundDrawablePadding(16);
         }
 
-        if (null != mPagerAdapter) {
-            mPagerAdapter.updateAllFragment();
-        }
+        mPagerAdapter.updateAllFragment();
     }
 }

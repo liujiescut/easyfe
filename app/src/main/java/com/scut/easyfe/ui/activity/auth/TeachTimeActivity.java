@@ -1,5 +1,6 @@
 package com.scut.easyfe.ui.activity.auth;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
 import com.scut.easyfe.network.request.user.teacher.RTeacherMultiBookTimeModify;
+import com.scut.easyfe.network.request.user.teacher.RTeacherSingleBookTimeModify;
 import com.scut.easyfe.ui.base.BaseActivity;
 import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.OtherUtils;
@@ -36,6 +38,7 @@ public class TeachTimeActivity extends BaseActivity {
     private ArrayList<ArrayList<String>> mTime = new ArrayList<>();
 
     private OptionsPickerView<String> mPicker;
+    private boolean mHasModify = false;
 
     /**
      * 第一个纬度表示星期几,第二个纬度表示上午下午晚上是否有空(跟后台约定)
@@ -45,6 +48,7 @@ public class TeachTimeActivity extends BaseActivity {
 
     private User mUser;
     private int mFromType = Constants.Identifier.TYPE_REGISTER;
+    private boolean mIsLoadingClosedByUser = true;
 
     @Override
     protected void onResume() {
@@ -128,6 +132,7 @@ public class TeachTimeActivity extends BaseActivity {
             public void onOptionsSelect(int options1, int option2, int options3) {
                 mCourseTime[options1][0] = 1;
                 mCourseTime[options1][option2 + 1] = 1;
+                mHasModify = true;
                 addCourseTimeItem(options1, option2);
             }
         });
@@ -162,6 +167,7 @@ public class TeachTimeActivity extends BaseActivity {
                         @Override
                         public void onChoose(boolean sure) {
                             if (sure) {
+                                mHasModify = true;
                                 mContainerLinearLayout.removeView(finalItemView);
                                 for(int i = 0; i < 4; i++){
                                     mCourseTime[option1][i] = 0;
@@ -197,7 +203,7 @@ public class TeachTimeActivity extends BaseActivity {
      * 点击近两月时间特别安排
      */
     public void onDetailPlanClick(View view) {
-        if (!saveAndValidate()) {
+        if (mHasModify && !saveAndValidate()) {
             return;
         }
 
@@ -236,16 +242,44 @@ public class TeachTimeActivity extends BaseActivity {
             App.setUser(mUser);
 
         }else{
+            mIsLoadingClosedByUser = true;
+            startLoading("数据加载中", new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    if(mIsLoadingClosedByUser){
+                        finish();
+                    }
+                }
+            });
+
+            mUser.getTeacherMessage().synchronizeTeachTime();
             RequestManager.get().execute(new RTeacherMultiBookTimeModify(mUser), new RequestListener<JSONObject>() {
                 @Override
                 public void onSuccess(RequestBase request, JSONObject result) {
-                    App.setUser(mUser);
-                    toast("修改成功");
+
+                    RequestManager.get().execute(new RTeacherSingleBookTimeModify(mUser), new RequestListener<JSONObject>() {
+                        @Override
+                        public void onSuccess(RequestBase request, JSONObject result) {
+                            App.setUser(mUser);
+                            toast("修改成功");
+                            mIsLoadingClosedByUser = false;
+                            stopLoading();
+                        }
+
+                        @Override
+                        public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                            toast(errorMsg);
+                            mIsLoadingClosedByUser = false;
+                            stopLoading();
+                        }
+                    });
                 }
 
                 @Override
                 public void onFailed(RequestBase request, int errorCode, String errorMsg) {
                     toast(errorMsg);
+                    mIsLoadingClosedByUser = false;
+                    stopLoading();
                 }
             });
         }
