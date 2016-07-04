@@ -421,10 +421,10 @@ public class EditTutorActivity extends BaseActivity {
         }
 
         if (mUpdateToThisTeachDetail) {
-            DialogUtils.makeConfirmDialog(EditTutorActivity.this, "温馨提示", "专业辅导内容确定后，不可修改，如需修改，可联系后台客服人员（微信号：优升学（ysxjj2016）；QQ：2446883640）哟。", new OnItemClickListener() {
+            DialogUtils.makeChooseDialog(EditTutorActivity.this, "温馨提示", "专业辅导内容确定后，不可修改，如需修改，可联系后台客服人员（微信号：优升学（ysxjj2016）；QQ：2446883640）哟。", new DialogUtils.OnChooseListener() {
                 @Override
-                public void onItemClick(Object o, int position) {
-                    if (position == 0) {
+                public void onChoose(boolean sure) {
+                    if (sure) {
                         startLoading();
                         RequestManager.get().execute(new RModifyTutorInfo(mOrderId, mTutorDetail), new RequestListener<JSONObject>() {
                             @Override
@@ -443,7 +443,7 @@ public class EditTutorActivity extends BaseActivity {
                         });
                     }
                 }
-            }).show();
+            });
 
         } else {
             setResultAndFinish();

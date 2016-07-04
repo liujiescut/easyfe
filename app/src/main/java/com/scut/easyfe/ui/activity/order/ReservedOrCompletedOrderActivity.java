@@ -127,7 +127,7 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
     public void onCancelOrderClick(View view) {
         //Todo 判断有没有修改,然后取消做相应判断
         if (App.getUser().getBadRecord() >= Constants.DefaultValue.MAX_BAD_RECORD) {
-            DialogUtils.makeConfirmDialog(mContext, "温馨提示", "您已经取消过订单两次,\n不能再取消订单了呦\n(完成6次订单可增加一次取消机会)");
+            DialogUtils.makeConfirmDialog(mContext, "温馨提示", "您已经取消过订单" + Constants.DefaultValue.MAX_BAD_RECORD + "次,\n不能再取消订单了呦\n(完成6次订单可增加一次取消机会)");
             return;
         }
 

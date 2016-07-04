@@ -37,6 +37,7 @@ import com.scut.easyfe.ui.customView.CircleImageView;
 import com.scut.easyfe.ui.fragment.HomeFragment;
 import com.scut.easyfe.utils.DialogUtils;
 import com.scut.easyfe.utils.ImageUtils;
+import com.scut.easyfe.utils.LogUtils;
 import com.scut.easyfe.utils.OtherUtils;
 import com.scut.easyfe.utils.polling.PollingUtil;
 
@@ -73,6 +74,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle bundle) {
+        LogUtils.i("main", "onCreate");
         super.onCreate(bundle);
         PollingUtil.start(getApplicationContext());
         App.get().getEventBus().register(mContext);
@@ -81,6 +83,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        LogUtils.i("main", "onDestroy");
         PollingUtil.stop();
         App.get().getEventBus().unregister(mContext);
     }

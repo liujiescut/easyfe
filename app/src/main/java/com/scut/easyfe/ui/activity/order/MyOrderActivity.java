@@ -234,7 +234,7 @@ public class MyOrderActivity extends BaseActivity {
                 }
 
                 if (App.getUser().getBadRecord() >= Constants.DefaultValue.MAX_BAD_RECORD) {
-                    DialogUtils.makeConfirmDialog(mContext, "温馨提示", "您已经取消过订单两次,\n不能再取消订单了呦\n(完成6次订单可增加一次取消机会)");
+                    DialogUtils.makeConfirmDialog(mContext, "温馨提示", "您已经取消过订单"+ Constants.DefaultValue.MAX_BAD_RECORD +"次,\n不能再取消订单了呦\n(完成6次订单可增加一次取消机会)");
                     return;
                 }
 
@@ -242,7 +242,7 @@ public class MyOrderActivity extends BaseActivity {
                     /** 家长取消订单 */
                     if (mCurrentOrderType == Constants.Identifier.ORDER_TO_DO || isOrdersModify(mPagerAdapter.getItem(mSelectedPage).getSelectedOrders())) {
 
-                        DialogUtils.makeChooseDialog(mContext, "温馨提示", "取消订单将会产生1次不良记录\n不良记录超过2次将不能再取消订单\n(完成6次订单可增加一次取消机会)\n确认取消?",
+                        DialogUtils.makeChooseDialog(mContext, "温馨提示", "取消订单将会产生1次不良记录\n不良记录超过" + Constants.DefaultValue.MAX_BAD_RECORD + "次将不能再取消订单\n(完成6次订单可增加一次取消机会)\n确认取消?",
                                 new DialogUtils.OnChooseListener() {
                                     @Override
                                     public void onChoose(boolean sure) {
@@ -259,7 +259,7 @@ public class MyOrderActivity extends BaseActivity {
                 } else {
                     /** 家教取消订单 */
                     if (mCurrentOrderType == Constants.Identifier.ORDER_RESERVATION) {
-                        DialogUtils.makeChooseDialog(mContext, "温馨提示", "取消订单将会产生0.5次不良记录\n不良记录超过2次将不能再取消订单\n(完成6次订单可增加一次取消机会)\n确认取消?",
+                        DialogUtils.makeChooseDialog(mContext, "温馨提示", "取消订单将会产生0.5次不良记录\n不良记录超过"+ Constants.DefaultValue.MAX_BAD_RECORD +"次将不能再取消订单\n(完成6次订单可增加一次取消机会)\n确认取消?",
                                 new DialogUtils.OnChooseListener() {
                                     @Override
                                     public void onChoose(boolean sure) {
@@ -283,11 +283,17 @@ public class MyOrderActivity extends BaseActivity {
      * 家教取消订单
      */
     private void doTeacherCancelOrder() {
-        RequestManager.get().execute(new RTeacherCancelOrder(App.getUser().getToken(), mPagerAdapter.getItem(mSelectedPage).getSelectedOrderIds()),
+        final List<String> selectedOrderIds = mPagerAdapter.getItem(mSelectedPage).getSelectedOrderIds();
+        RequestManager.get().execute(new RTeacherCancelOrder(App.getUser().getToken(), selectedOrderIds),
                 new RequestListener<Integer>() {
                     @Override
                     public void onSuccess(RequestBase request, Integer badRecord) {
                         toast("取消成功");
+
+                        for (String orderId :
+                                selectedOrderIds) {
+                            PDHandler.get().resetOrderNormal(orderId);
+                        }
 
                         if (null != mPagerAdapter) {
                             mPagerAdapter.updateAllFragment();
@@ -308,11 +314,17 @@ public class MyOrderActivity extends BaseActivity {
      * 家教确认订单
      */
     private void doTeacherConfirmOrder() {
+        final List<String> selectedOrderIds = mPagerAdapter.getItem(mSelectedPage).getSelectedOrderIds();
         RequestManager.get().execute(new RTeacherConfirmOrder(App.getUser().getToken(), mPagerAdapter.getItem(mSelectedPage).getSelectedOrderIds()),
                 new RequestListener<JSONObject>() {
                     @Override
                     public void onSuccess(RequestBase request, JSONObject result) {
                         toast(result.optString("message"));
+
+                        for (String orderId :
+                                selectedOrderIds) {
+                            PDHandler.get().resetOrderNormal(orderId);
+                        }
 
                         if (null != mPagerAdapter) {
                             mPagerAdapter.updateAllFragment();
@@ -330,11 +342,17 @@ public class MyOrderActivity extends BaseActivity {
      * 家长取消订单
      */
     private void doParentCancelOrder() {
+        final List<String> selectedOrderIds = mPagerAdapter.getItem(mSelectedPage).getSelectedOrderIds();
         RequestManager.get().execute(new RParentCancelOrders(App.getUser().getToken(), mPagerAdapter.getItem(mSelectedPage).getSelectedOrderIds()),
                 new RequestListener<Integer>() {
                     @Override
                     public void onSuccess(RequestBase request, Integer result) {
                         toast("取消成功");
+
+                        for (String orderId :
+                                selectedOrderIds) {
+                            PDHandler.get().resetOrderNormal(orderId);
+                        }
 
                         if (null != mPagerAdapter) {
                             mPagerAdapter.updateAllFragment();
@@ -478,7 +496,6 @@ public class MyOrderActivity extends BaseActivity {
 
     public void onBackClick(View view) {
         redirectToActivity(mContext, MainActivity.class);
-        finish();
     }
 
     @Override

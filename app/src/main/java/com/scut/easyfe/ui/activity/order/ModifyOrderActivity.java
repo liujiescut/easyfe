@@ -16,6 +16,8 @@ import com.scut.easyfe.R;
 import com.scut.easyfe.app.App;
 import com.scut.easyfe.app.Constants;
 import com.scut.easyfe.entity.order.BriefOrder;
+import com.scut.easyfe.entity.order.Order;
+import com.scut.easyfe.event.PDHandler;
 import com.scut.easyfe.network.RequestBase;
 import com.scut.easyfe.network.RequestListener;
 import com.scut.easyfe.network.RequestManager;
@@ -250,6 +252,10 @@ public class ModifyOrderActivity extends BaseActivity {
                     @Override
                     public void onSuccess(RequestBase request, JSONObject result) {
                         toast(result.optString("message"));
+                        for (BriefOrder order :
+                                mOrders) {
+                            PDHandler.get().resetOrderNormal(order.get_id());
+                        }
                         redirectToActivity(mContext, MyOrderActivity.class);
                         finish();
                     }

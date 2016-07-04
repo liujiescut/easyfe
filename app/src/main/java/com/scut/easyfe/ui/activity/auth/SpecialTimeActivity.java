@@ -236,45 +236,45 @@ public class SpecialTimeActivity extends BaseActivity {
         mCalendarFragment.setMinDate(minDate);
         mCalendarFragment.setMaxDate(maxDate);
 
-        if (App.getSpUtils().getValue(Constants.Key.IS_FIRST_IN_SPECIAL_TIME_ACTIVITY, true)) {
-            //这里表示第一次进入到特别时间安排页面,帮他默认选中
-
-            List<Integer> workWeekDays = new ArrayList<>();   //工作的星期
-            Map<Integer, MultiBookTime> workWeekMap = new HashMap<>();
-            for (MultiBookTime multiBookTime :
-                    mUser.getTeacherMessage().getMultiBookTime()) {
-                workWeekDays.add(multiBookTime.getWeekDay() + 1);//加1是为了跟DateTime返回的相同
-                workWeekMap.put(multiBookTime.getWeekDay() + 1, multiBookTime);
-            }
-            DateTime minDateTime = CalendarHelper.convertDateToDateTime(minDate);
-            DateTime maxDateTime = CalendarHelper.convertDateToDateTime(maxDate);
-
-            mSingleBookTimes = new HashMap<>();
-
-            mUser.getTeacherMessage().getSingleBookTime().clear();
-            MultiBookTime tempMultiBookTime;
-            while (minDateTime.lteq(maxDateTime)) {
-                if (workWeekDays.contains(minDateTime.getWeekDay())) {
-                    mWorkDays.add(minDateTime);
-
-                    tempMultiBookTime = workWeekMap.get(minDateTime.getWeekDay());
-
-                    SingleBookTime singleBookTime = new SingleBookTime();
-                    singleBookTime.setIsOk(true);
-                    singleBookTime.setMorning(tempMultiBookTime.isMorning());
-                    singleBookTime.setAfternoon(tempMultiBookTime.isAfternoon());
-                    singleBookTime.setEvening(tempMultiBookTime.isEvening());
-                    singleBookTime.setDate(TimeUtils.getTime(CalendarHelper.convertDateTimeToDate(minDateTime), "yyyy-MM-dd"));
-
-                    mSingleBookTimes.put(TimeUtils.getDateFromString(singleBookTime.getDate()).getTime(), singleBookTime);
-                    mUser.getTeacherMessage().getSingleBookTime().add(singleBookTime);
-                    App.setUser(mUser);
-                }
-                minDateTime = minDateTime.plusDays(1);
-            }
-
-            App.getSpUtils().setValue(Constants.Key.IS_FIRST_IN_SPECIAL_TIME_ACTIVITY, false);
-        } else {
+//        if (App.getSpUtils().getValue(Constants.Key.IS_FIRST_IN_SPECIAL_TIME_ACTIVITY, true)) {
+//            //这里表示第一次进入到特别时间安排页面,帮他默认选中
+//
+//            List<Integer> workWeekDays = new ArrayList<>();   //工作的星期
+//            Map<Integer, MultiBookTime> workWeekMap = new HashMap<>();
+//            for (MultiBookTime multiBookTime :
+//                    mUser.getTeacherMessage().getMultiBookTime()) {
+//                workWeekDays.add(multiBookTime.getWeekDay() + 1);//加1是为了跟DateTime返回的相同
+//                workWeekMap.put(multiBookTime.getWeekDay() + 1, multiBookTime);
+//            }
+//            DateTime minDateTime = CalendarHelper.convertDateToDateTime(minDate);
+//            DateTime maxDateTime = CalendarHelper.convertDateToDateTime(maxDate);
+//
+//            mSingleBookTimes = new HashMap<>();
+//
+//            mUser.getTeacherMessage().getSingleBookTime().clear();
+//            MultiBookTime tempMultiBookTime;
+//            while (minDateTime.lteq(maxDateTime)) {
+//                if (workWeekDays.contains(minDateTime.getWeekDay())) {
+//                    mWorkDays.add(minDateTime);
+//
+//                    tempMultiBookTime = workWeekMap.get(minDateTime.getWeekDay());
+//
+//                    SingleBookTime singleBookTime = new SingleBookTime();
+//                    singleBookTime.setIsOk(true);
+//                    singleBookTime.setMorning(tempMultiBookTime.isMorning());
+//                    singleBookTime.setAfternoon(tempMultiBookTime.isAfternoon());
+//                    singleBookTime.setEvening(tempMultiBookTime.isEvening());
+//                    singleBookTime.setDate(TimeUtils.getTime(CalendarHelper.convertDateTimeToDate(minDateTime), "yyyy-MM-dd"));
+//
+//                    mSingleBookTimes.put(TimeUtils.getDateFromString(singleBookTime.getDate()).getTime(), singleBookTime);
+//                    mUser.getTeacherMessage().getSingleBookTime().add(singleBookTime);
+//                    App.setUser(mUser);
+//                }
+//                minDateTime = minDateTime.plusDays(1);
+//            }
+//
+//            App.getSpUtils().setValue(Constants.Key.IS_FIRST_IN_SPECIAL_TIME_ACTIVITY, false);
+//        } else {
 
             /** 重新进来特别时间安排 */
             for (SingleBookTime singleBookTime :
@@ -282,7 +282,7 @@ public class SpecialTimeActivity extends BaseActivity {
                 mSingleBookTimes.put(TimeUtils.getDateFromString(singleBookTime.getDate()).getTime(), singleBookTime);
                 mWorkDays.add(CalendarHelper.convertDateToDateTime(TimeUtils.getDateFromString(singleBookTime.getDate())));
             }
-        }
+//        }
 
         mCalendarFragment.setWorkDays(mWorkDays);
 

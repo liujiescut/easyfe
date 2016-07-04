@@ -238,6 +238,8 @@ public class TeachTimeActivity extends BaseActivity {
 
         mUser.getTeacherMessage().getMultiBookTime().clear();
         mUser.getTeacherMessage().setMultiBookTime(times);
+        mUser.getTeacherMessage().synchronizeTeachTime();
+
         if(mFromType == Constants.Identifier.TYPE_REGISTER) {
             App.setUser(mUser);
 
@@ -252,7 +254,6 @@ public class TeachTimeActivity extends BaseActivity {
                 }
             });
 
-            mUser.getTeacherMessage().synchronizeTeachTime();
             RequestManager.get().execute(new RTeacherMultiBookTimeModify(mUser), new RequestListener<JSONObject>() {
                 @Override
                 public void onSuccess(RequestBase request, JSONObject result) {

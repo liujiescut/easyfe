@@ -28,7 +28,7 @@ public class Constants {
         public static final String DEFAULT_SHARE_LINK_INVITE_PARENT = "http://www.cadena.cn:3000/invite_parent.html?";
         public static final String DEFAULT_SHARE_LINK_INVITE_TEACHER = "http://www.cadena.cn:3000/invite_teacher.html?";
         public static final int DEFAULT_LOAD_COUNT = 15;
-        public static final int MAX_BAD_RECORD = 2;
+        public static final int MAX_BAD_RECORD = 3;
     }
 
     public class URL{

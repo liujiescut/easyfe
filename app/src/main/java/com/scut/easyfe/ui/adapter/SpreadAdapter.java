@@ -70,7 +70,7 @@ public class SpreadAdapter extends BaseListViewScrollStateAdapter {
         }
 
         holder.teacherName.setText(mOrders.get(position).getTeacher().getName());
-        holder.price.setText(String.format("%.2f 元/小时", mOrders.get(position).getPrice()));
+        holder.price.setText(String.format(Locale.CHINA, "%.2f 元/小时", mOrders.get(position).getPrice() / 100));
         holder.contentUp.setText(getContentUp(position));
         holder.contentDown.setText(getContentDown(position));
         holder.reserve.setOnClickListener(new View.OnClickListener() {
