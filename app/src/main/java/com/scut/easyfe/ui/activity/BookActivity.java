@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 预约界面
@@ -117,6 +118,10 @@ public class BookActivity extends BaseActivity {
 
         mUser = App.getUser(false);
 
+        if (null != mUser && mUser.isParent()) {
+            mChildAge = mUser.getParentMessage().getChildAge();
+            mChildGender = mUser.getParentMessage().getChildGender();
+        }
         mSchoolItems = new ArrayList<>();
         mPriceItems = new ArrayList<>();
         mScoreItems = new ArrayList<>();
@@ -184,7 +189,8 @@ public class BookActivity extends BaseActivity {
 
         mTeachTimeTextView.setText("2 小时 0 分钟");
 
-        mStudentAgeTextView.setText(String.format("%d", mChildAge));
+        mStudentAgeTextView.setText(String.format(Locale.CHINA, "%d岁", mChildAge));
+        mStudentGenderTextView.setText(String.format(Locale.CHINA, mChildGender == Constants.Identifier.FEMALE ? "女" : "男"));
 
         if(mReserveType == Constants.Identifier.RESERVE_MULTI){
             mTeachDateLabelTextView.setText("每周授课时间");
@@ -245,6 +251,11 @@ public class BookActivity extends BaseActivity {
         mDatePicker.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date) {
+                if(date.getTime() < new Date().getTime()){
+                    toast("请选择有效日期");
+                    return;
+                }
+
                 mDateStringToShow = TimeUtils.getTime(date, "yyyy 年 MM 月 dd 日 (EEEE)");
                 mDate = TimeUtils.getTime(date, "yyyy-MM-dd");
                 LogUtils.i(Constants.Tag.ORDER_TAG, mDateStringToShow);
@@ -380,6 +391,7 @@ public class BookActivity extends BaseActivity {
                 mGradeTextView.setText(mGrade.get(options1));
             }
         });
+        mSinglePicker.setOnDismissListener(null);
         mSinglePicker.show();
     }
 
@@ -403,6 +415,7 @@ public class BookActivity extends BaseActivity {
                 mGradeTextView.setText(mGrade.get(0));
             }
         });
+        mSinglePicker.setOnDismissListener(null);
         mSinglePicker.show();
 
     }
@@ -464,6 +477,7 @@ public class BookActivity extends BaseActivity {
                 mChildAge = Integer.parseInt(Constants.Data.ageList.get(options1));
             }
         });
+        mSinglePicker.setOnDismissListener(null);
         mSinglePicker.show();
     }
 
@@ -486,6 +500,7 @@ public class BookActivity extends BaseActivity {
                 mChildGender = options1;
             }
         });
+        mSinglePicker.setOnDismissListener(null);
         mSinglePicker.show();
     }
 

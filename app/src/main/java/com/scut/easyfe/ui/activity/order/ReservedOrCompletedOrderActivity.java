@@ -198,7 +198,7 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
             mParentNameTextView.setText(mOrder.getParent().getName());
             mParentGenderTextView.setText(mOrder.getParent().getGender() == Constants.Identifier.MALE ? "男" : "女");
             mStudentGenderTextView.setText(mOrder.getParent().getParentMessage().getChildGender() == Constants.Identifier.MALE ? "男" : "女");
-            mStudentAgeTextView.setText(String.format(Locale.CHINA, "%d", mOrder.getChildAge()));
+            mStudentAgeTextView.setText(String.format(Locale.CHINA, "%d岁", mOrder.getChildAge()));
 
             if (mOrderType == Constants.Identifier.ORDER_COMPLETED) {
                 mOperationButtonsContainer.setVisibility(View.GONE);
@@ -223,15 +223,15 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
             mCouponContainer.setVisibility(View.GONE);
             mTutorPriceTextView.setText("未预定此服务");
         }else{
-            mCouponTextView.setText(String.format(Locale.CHINA, "减 %.0f 元", mOrder.getCoupon().getMoney() / 100));
-            mTutorPriceTextView.setText(String.format(Locale.CHINA, "%.0f 元/小时", mOrder.getProfessionalTutorPrice() / 100));
+            mCouponTextView.setText(String.format(Locale.CHINA, "减 %.2f 元", mOrder.getCoupon().getMoney() / 100));
+            mTutorPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元/小时", mOrder.getProfessionalTutorPrice() / 100));
         }
     }
 
     public void onInsuranceClick(View view) {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "关于保险");
-        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.about_us_content));
+        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.about_insurance));
         redirectToActivity(mContext, ShowTextActivity.class, bundle);
     }
 

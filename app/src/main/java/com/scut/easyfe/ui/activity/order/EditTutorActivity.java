@@ -251,12 +251,14 @@ public class EditTutorActivity extends BaseActivity {
                     return;
                 }
 
-                mPicker.setPicker(Constants.Data.paperEasyLevelList);
+                final  ArrayList<String> easyLevels = mTutorWay == Constants.Identifier.TUTOR_WAY_KNOWLEDGE ?
+                        Constants.Data.knowledgeEasyLevelList : Constants.Data.paperEasyLevelList;
+                mPicker.setPicker(easyLevels);
                 mPicker.setCyclic(false);
                 mPicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
                     @Override
                     public void onOptionsSelect(int options1, int option2, int options3) {
-                        mEasyLevel = Constants.Data.paperEasyLevelList.get(options1);
+                        mEasyLevel = easyLevels.get(options1);
                         mEasyLevelTextView.setText(mEasyLevel);
                     }
                 });
@@ -615,12 +617,14 @@ public class EditTutorActivity extends BaseActivity {
             switch (v.getId()) {
                 case R.id.edit_tutor_tv_way_knowledge:
                     mTutorWay = Constants.Identifier.TUTOR_WAY_KNOWLEDGE;
+                    mEasyLevel = Constants.Data.knowledgeEasyLevelList.get(0);
                     mWayKnowledgeLinearLayout.setVisibility(View.VISIBLE);
                     mWayPaperLinearLayout.setVisibility(View.GONE);
                     break;
 
                 case R.id.edit_tutor_tv_way_paper:
                     mTutorWay = Constants.Identifier.TUTOR_WAY_PAPER;
+                    mEasyLevel = Constants.Data.paperEasyLevelList.get(0);
                     mWayKnowledgeLinearLayout.setVisibility(View.GONE);
                     mWayPaperLinearLayout.setVisibility(View.VISIBLE);
                     break;
@@ -628,6 +632,7 @@ public class EditTutorActivity extends BaseActivity {
                 default:
                     break;
             }
+            mEasyLevelTextView.setText(mEasyLevel);
         }
     }
 }

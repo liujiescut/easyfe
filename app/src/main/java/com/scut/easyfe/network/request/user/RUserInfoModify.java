@@ -36,6 +36,7 @@ public class RUserInfoModify extends RequestBase<JSONObject>{
             JSONObject parentMessage = new JSONObject();
             parentMessage.put("childGender", mUser.getParentMessage().getChildGender());
             parentMessage.put("childGrade", mUser.getParentMessage().getChildGrade());
+            parentMessage.put("childAge", mUser.getParentMessage().getChildAge());
             params.put("parentMessage", parentMessage);
         }
 

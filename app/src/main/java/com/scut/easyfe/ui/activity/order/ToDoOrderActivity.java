@@ -173,8 +173,8 @@ public class ToDoOrderActivity extends BaseActivity {
             mTutorPriceTextView.setText("未预定此服务");
             mThisTutorIncompleteInfoTextView.setText("未预定此服务");
         } else {
-            mCouponTextView.setText(String.format(Locale.CHINA, "减 %.0f 元", mOrder.getCoupon().getMoney() / 100));
-            mTutorPriceTextView.setText(String.format(Locale.CHINA, "%.0f 元/小时", mOrder.getProfessionalTutorPrice() / 100));
+            mCouponTextView.setText(String.format(Locale.CHINA, "减 %.2f 元", mOrder.getCoupon().getMoney() / 100));
+            mTutorPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元/小时", mOrder.getProfessionalTutorPrice() / 100));
             if (mOrder.getThisTeachDetail().hadFillIn()) {
                 mThisTutorIncompleteLinearLayout.setVisibility(View.GONE);
                 mThisTutorCompleteTextView.setVisibility(View.VISIBLE);
@@ -280,7 +280,7 @@ public class ToDoOrderActivity extends BaseActivity {
     public void onInsuranceClick(View view) {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "关于保险");
-        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.about_us_content));
+        bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.about_insurance));
         redirectToActivity(mContext, ShowTextActivity.class, bundle);
     }
 

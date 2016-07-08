@@ -223,7 +223,7 @@
             android:textColor="@color/theme_color"
             android:textSize="@dimen/text_size_medium"
             android:drawableRight="@mipmap/icon_right_arrow_padding"
-            android:padding="@dimen/layout_padding_small"
+            android:padding="@dimen/layout_padding_tiny"
             android:text="@string/my_ticket" />
     </LinearLayout>
 

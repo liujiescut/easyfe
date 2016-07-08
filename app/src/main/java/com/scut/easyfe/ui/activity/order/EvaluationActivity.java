@@ -65,10 +65,10 @@ public class EvaluationActivity extends BaseActivity {
     }
 
     public void onRightClick(View view) {
-        if (mContentEditText.getText().toString().length() == 0) {
-            toast("请先输入相关评论喔");
-            return;
-        }
+//        if (mContentEditText.getText().toString().length() == 0) {
+//            toast("请先输入相关评论喔");
+//            return;
+//        }
 
         if (!mOrder.isHadGetCoupon()) {
             DialogUtils.makeChooseDialog(mContext, "提示", "您可以先领优惠券哟，提交评价后订单完成将无法再领取优惠券咯^^\n确认提交?", new DialogUtils.OnChooseListener() {

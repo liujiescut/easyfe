@@ -10,8 +10,8 @@ import java.util.ArrayList;
  * Created by jay on 16/6/12.
  */
 public class FeedbackReport extends BaseEntity{
-    private String _id = "";                    //订单_id
-    private String orderNumber = "";                   //订单号
+    private String _id = "";                        //订单_id
+    private String orderNumber = "";                //订单号
     private String teacherName = "";                //家教姓名
     private String parentName = "";                 //家长姓名
     private TeachTime teachTime = new TeachTime();  //授课时间

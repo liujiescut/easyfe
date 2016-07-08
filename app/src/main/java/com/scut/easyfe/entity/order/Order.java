@@ -108,11 +108,11 @@ public class Order extends BaseEntity {
     public static String getBaseInfo(Order order){
         String content = "";
         content += String.format(Locale.CHINA, "性别: %s\n", order.getTeacher().getGender() == Constants.Identifier.MALE ? "男" : "女");
-        content += String.format(Locale.CHINA, "年龄: %d\n", TimeUtils.getAgeFromBirthday(order.getTeacher().getBirthday()));
+        content += String.format(Locale.CHINA, "年龄: %d岁\n", TimeUtils.getAgeFromBirthday(order.getTeacher().getBirthday()));
         content += String.format(Locale.CHINA, "大学专业: %s %s\n", order.getTeacher().getTeacherMessage().getSchool(), order.getTeacher().getTeacherMessage().getProfession());
         content += String.format(Locale.CHINA, "已家教过的孩子数量：%s\n", order.getTeacher().getTeacherMessage().getTeachCount());
         content += String.format(Locale.CHINA, "已家教的时长：%s\n", order.getTeacher().getTeacherMessage().getHadTeach());
-        content += String.format(Locale.CHINA, "综合评分：%.2f", order.getTeacher().getTeacherMessage().getScore());
+        content += String.format(Locale.CHINA, "综合评分：%.2f分", order.getTeacher().getTeacherMessage().getScore());
         return content;
     }
 

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Constants {
     @SuppressWarnings("unused")
     public class Config{
-        public static final boolean ISDEBUG = true;      //是否在debug模式，可以设置一些只有debug才会有的东西
+        public static final boolean ISDEBUG = false;      //是否在debug模式，可以设置一些只有debug才会有的东西
         public static final boolean ISLOG = true;        //是否显示log
         public static final boolean IS_SHOW_TOAST = true;  //是否显示使用LogUtil.toast出来的东西
         public static final boolean TO_MARKET = false;   //当分享时应用（例如wechat）不存在，是否跳转到应用市场
@@ -310,6 +310,7 @@ public class Constants {
         public static final ArrayList<String> scoreRangeList = new ArrayList<>();
         public static final ArrayList<String> hasTeachChildCountRangeList = new ArrayList<>();
         public static final ArrayList<String> hasTeachChildTimeRangeList = new ArrayList<>();
+        public static final ArrayList<String> knowledgeEasyLevelList = new ArrayList<>();
         public static final ArrayList<String> paperEasyLevelList = new ArrayList<>();
         public static ArrayList<String> bankNameList = new ArrayList<>();
         public static ArrayList<String> tutorGradeList = new ArrayList<>();
@@ -330,6 +331,12 @@ public class Constants {
             tutorGradeList.add("高中 一年级");
             tutorGradeList.add("高中 二年级");
             tutorGradeList.add("高中 三年级");
+
+            knowledgeEasyLevelList.add("简单");
+            knowledgeEasyLevelList.add("较易");
+            knowledgeEasyLevelList.add("一般");
+            knowledgeEasyLevelList.add("较难");
+            knowledgeEasyLevelList.add("困难");
 
             paperEasyLevelList.add("一般难度");
             paperEasyLevelList.add("升级难度");

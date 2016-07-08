@@ -353,7 +353,7 @@ public class ParentRegisterActivity extends BaseActivity {
         mSinglePicker.setOnOptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
-                mChildAge = options1 + 1;
+                mChildAge = Integer.valueOf(Constants.Data.ageList.get(options1));
                 mChildAgeTextView.setText(String.format("%s 岁", Constants.Data.ageList.get(options1)));
             }
         });

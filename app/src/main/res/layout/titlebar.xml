@@ -33,7 +33,7 @@
         android:clickable="true"
         android:gravity="center"
         android:onClick="onRightClick"
-        android:padding="@dimen/layout_padding_normal"
+        android:padding="@dimen/layout_padding_tiny"
         android:text="@string/sure"
         android:textColor="@color/title_text_color"
         android:textSize="16sp"

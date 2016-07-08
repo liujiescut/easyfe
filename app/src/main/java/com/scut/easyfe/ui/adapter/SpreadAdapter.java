@@ -178,7 +178,7 @@ public class SpreadAdapter extends BaseListViewScrollStateAdapter {
         contentUp += "已家教时长: ";
         contentUp += teacher.getTeacherMessage().getHadTeach() + "\n";
         contentUp += "综合评分: ";
-        contentUp += String.format("%.2f 分", teacher.getTeacherMessage().getScore());
+        contentUp += String.format(Locale.CHINA, "%.2f 分", teacher.getTeacherMessage().getScore());
         return contentUp;
     }
 
@@ -197,7 +197,7 @@ public class SpreadAdapter extends BaseListViewScrollStateAdapter {
         contentDown += TimeUtils.getTimeFromMinute(mOrders.get(position).getTime());
         if(0 != mOrders.get(position).getOriginalPrice()) {
             contentDown += "\n原价: ";
-            contentDown += String.format(Locale.CHINA, "%.0f 元/小时", mOrders.get(position).getOriginalPrice() / 100);
+            contentDown += String.format(Locale.CHINA, "%.2f 元/小时", mOrders.get(position).getOriginalPrice() / 100);
         }
         return contentDown;
     }

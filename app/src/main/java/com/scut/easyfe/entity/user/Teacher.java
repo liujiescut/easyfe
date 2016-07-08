@@ -86,13 +86,13 @@ public class Teacher extends BaseEntity {
     private int minCourseTime = 120;
 
     //不收交通补贴的最长交通时间
-    private int freeTrafficTime = 120;
+    private int freeTrafficTime = 60;
 
     //交通时间超过此时间不接单
-    private int maxTrafficTime = 180;
+    private int maxTrafficTime = 80;
 
     //超过交通时间，收的交通补贴
-    private int subsidy = 5;
+    private int subsidy = 1000;
 
     //是否已经通过审核
     private int checkType = Constants.Identifier.TEACHER_UNCHECKED;
@@ -102,10 +102,10 @@ public class Teacher extends BaseEntity {
 
     public String getScoreInfo(){
         String scoreInfo = "";
-        scoreInfo += String.format(Locale.CHINA, "综合评分：%.1f\n", score);
-        scoreInfo += String.format(Locale.CHINA, "孩子喜欢程度：%.1f\n", childAccept);
-        scoreInfo += String.format(Locale.CHINA, "专业胜任程度：%.1f\n", ability);
-        scoreInfo += String.format(Locale.CHINA, "准时态度：%.1f", punctualScore);
+        scoreInfo += String.format(Locale.CHINA, "综合评分：%.2f分\n", score);
+        scoreInfo += String.format(Locale.CHINA, "孩子喜欢程度：%.2f分\n", childAccept);
+        scoreInfo += String.format(Locale.CHINA, "专业胜任程度：%.2f分\n", ability);
+        scoreInfo += String.format(Locale.CHINA, "准时态度：%.2f分", punctualScore);
 
         return scoreInfo;
     }
@@ -467,6 +467,7 @@ public class Teacher extends BaseEntity {
             teacherJson.put("images", images.getImageJson());
             teacherJson.put("school", school);
             teacherJson.put("profession", profession);
+            teacherJson.put("grade", grade);
             teacherJson.put("hadTeach", hadTeach);
             teacherJson.put("teachCount", teachCount);
             teacherJson.put("teachTime", teachTime);

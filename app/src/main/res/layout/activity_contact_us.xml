@@ -23,7 +23,7 @@
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:gravity="end|center_vertical"
-            android:text="123456789"
+            android:text="2446883640"
             android:paddingRight="@dimen/layout_padding_normal"
             android:textSize="@dimen/text_size_medium" />
     </LinearLayout>
@@ -41,7 +41,7 @@
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:gravity="end|center_vertical"
-            android:text="easyFamilyEducation"
+            android:text="ysxjj2016(优升学)"
             android:paddingRight="@dimen/layout_padding_normal"
             android:textSize="@dimen/text_size_medium" />
     </LinearLayout>
@@ -59,7 +59,7 @@
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:gravity="end|center_vertical"
-            android:text="easyFamilyEducation"
+            android:text="优升学家教(youshengxue2016)"
             android:paddingRight="@dimen/layout_padding_normal"
             android:textSize="@dimen/text_size_medium" />
     </LinearLayout>
@@ -77,7 +77,7 @@
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:gravity="end|center_vertical"
-            android:text="123456789@qq.com"
+            android:text="2446883640@qq.com"
             android:paddingRight="@dimen/layout_padding_normal"
             android:textSize="@dimen/text_size_medium" />
     </LinearLayout>
@@ -95,7 +95,7 @@
             style="@style/text_normal_style"
             android:layout_weight="3"
             android:gravity="end|center_vertical"
-            android:text="18813425675"
+            android:text="15521187110"
             android:paddingRight="@dimen/layout_padding_normal"
             android:clickable="false"
             android:textSize="@dimen/text_size_medium" />

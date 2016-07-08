@@ -107,6 +107,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initAvatarAndName() {
+        mNameTextView.setTextColor(getResources().getColor(R.color.white));
         if (App.getUser(false).hasLogin()) {
             if (App.getUser().isParent()) {
                 mNameTextView.setText(App.getUser().getName());
@@ -119,11 +120,13 @@ public class MainActivity extends BaseActivity {
 
                     case Constants.Identifier.TEACHER_REJECT:
                         nameText += "(审核不通过,点击重新审核)";
+                        mNameTextView.setTextColor(getResources().getColor(R.color.info_color));
                         break;
                 }
 
                 mNameTextView.setText(nameText);
             }
+
             ImageUtils.displayImage(App.getUser().getAvatar(), mAvatarImageView);
         } else {
             mNameTextView.setText("登录/注册");
@@ -527,7 +530,6 @@ public class MainActivity extends BaseActivity {
                 Variables.localData.getMine().setCheckType(event.getData().getMine().getCheckType());
                 App.getUser().getTeacherMessage().setCheckType((int) event.getData().getMine().getCheckType());
                 initAvatarAndName();
-                mNameTextView.setTextColor(getResources().getColor(event.getData().getMine().getCheckType() == Constants.Identifier.TEACHER_REJECT ? R.color.info_color : R.color.white));
             }
         }
 

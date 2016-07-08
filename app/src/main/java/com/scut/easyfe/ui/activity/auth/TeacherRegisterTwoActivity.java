@@ -44,9 +44,9 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
     private ToggleButton mWorkOrNotToggle;          //是否授课选择按钮
 
     private int mMinCourseTime = 120;               //最短课时(分钟)
-    private int mTrafficTime = 120;                 //可接受交通时间(分钟)
-    private int mMaxTrafficTime = 180;              //可接受最长交通时间(分钟)
-    private int mSubsidy = 500;                       //交通补贴
+    private int mTrafficTime = 60;                 //可接受交通时间(分钟)
+    private int mMaxTrafficTime = 80;              //可接受最长交通时间(分钟)
+    private int mSubsidy = 1000;                       //交通补贴
 
     private MyTimePicker mTimePicker;
 
@@ -133,9 +133,9 @@ public class TeacherRegisterTwoActivity extends BaseActivity {
         }
 
         mMinTeachTimeTextView.setText(TimeUtils.getTimeFromMinute(mUser.getTeacherMessage().getMinCourseTime()));
-        mTrafficTextView.setText(TimeUtils.getTimeFromMinute(mUser.getTeacherMessage().getFreeTrafficTime()));
-        mMaxTrafficTextView.setText(TimeUtils.getTimeFromMinute(mUser.getTeacherMessage().getMaxTrafficTime()));
-        mSubsidyTextView.setText(String.format(Locale.CHINA, "%d元", mUser.getTeacherMessage().getSubsidy() / 100));
+        mTrafficTextView.setText(TimeUtils.getTimeFromMinute(mTrafficTime));
+        mMaxTrafficTextView.setText(TimeUtils.getTimeFromMinute(mMaxTrafficTime));
+        mSubsidyTextView.setText(String.format(Locale.CHINA, "%d元", mSubsidy / 100));
 
     }
 
