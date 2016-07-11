@@ -50,7 +50,7 @@ public class PayUtil {
         this.listener = listener;
         this.isCashPayShow = isCashPayShow;
 
-        if(Constants.Config.ISDEBUG) {
+        if (Constants.Config.ISDEBUG) {
             this.price = 1;
         }
     }
@@ -60,10 +60,11 @@ public class PayUtil {
             return;
         }
 
-        String [] payWays;
-        if(isCashPayShow){
-            payWays = new String[]{"支付宝", "微信","账户余额"};
-        }else {
+        String[] payWays;
+        if (isCashPayShow) {
+            payWays = new String[]{"支付宝", "微信", "账户余额"};
+
+        } else {
             payWays = new String[]{"支付宝", "微信"};
         }
 
@@ -89,9 +90,19 @@ public class PayUtil {
                     request = new RAlipayPay(buyType, orderId, vipEventId, price);
                 }
 
+                if(price == 0) {
+                    request = new RCashPay(buyType, orderId, vipEventId, price);
+                }
+
                 RequestManager.get().execute(request, new RequestListener<JSONObject>() {
                     @Override
                     public void onSuccess(RequestBase request, JSONObject result) {
+                        if(price == 0) {
+                            Toast.makeText(App.get().getApplicationContext(), "支付成功", Toast.LENGTH_SHORT).show();
+                            listener.onCashPayReturn(true);
+                            return;
+                        }
+
                         if (position == 0) {
                             String payId = result.optString("prePayDataId");
                             doAlipay(payId);
@@ -107,6 +118,12 @@ public class PayUtil {
 
                     @Override
                     public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                        Toast.makeText(App.get().getApplicationContext(), errorMsg, Toast.LENGTH_SHORT).show();
+                        if(price == 0){
+                            listener.onCashPayReturn(false);
+                            return;
+                        }
+
                         if (position == 0) {
                             listener.onAlipayReturn(false);
 
@@ -116,12 +133,9 @@ public class PayUtil {
                         } else if (position == 2) {
                             listener.onCashPayReturn(false);
                         }
-
-                        Toast.makeText(App.get().getApplicationContext(), errorMsg, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
-
         }).setButtonTextColor(R.color.theme_color);
         mPayWayAlertView.show();
     }
@@ -182,18 +196,21 @@ public class PayUtil {
     public interface PayListener {
         /**
          * 支付宝支付回调该接口
+         *
          * @param success 是否支付成功
          */
         void onAlipayReturn(boolean success);
 
         /**
          * 微信支付回调该接口
+         *
          * @param success 是否发送支付请求成功
          */
         void onWechatPaySend(boolean success);
 
         /**
          * 现金支付回调该接口
+         *
          * @param success 是否支付成功
          */
         void onCashPayReturn(boolean success);

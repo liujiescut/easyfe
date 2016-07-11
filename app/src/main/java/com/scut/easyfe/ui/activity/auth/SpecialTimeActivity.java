@@ -180,7 +180,7 @@ public class SpecialTimeActivity extends BaseActivity {
             }
 
             singleBookTime.setIsOk(true);
-            singleBookTime.setDate(TimeUtils.getTime(mSelectedDate, "yyyy-MM-dd"));
+            singleBookTime.setDateDate(mSelectedDate);
             singleBookTime.setMorning(mMorningSelectorButton.isSelected());
             singleBookTime.setAfternoon(mAfternoonSelectorButton.isSelected());
             singleBookTime.setEvening(mEveningSelectorButton.isSelected());
@@ -310,7 +310,7 @@ public class SpecialTimeActivity extends BaseActivity {
                 mAfternoonSelectorButton.setIsSelected(true);
                 mEveningSelectorButton.setIsSelected(true);
                 singleBookTime = new SingleBookTime();
-                singleBookTime.setDate(TimeUtils.getTime(mSelectedDate, "yyyy-MM-dd"));
+                singleBookTime.setDateDate(mSelectedDate);
                 singleBookTime.setIsOk(true);
                 singleBookTime.setMorning(true);
                 singleBookTime.setAfternoon(true);

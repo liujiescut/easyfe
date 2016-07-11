@@ -16,6 +16,7 @@
             style="@style/text_normal_style"
             android:layout_width="wrap_content"
             android:padding="@dimen/layout_padding_small"
+            android:clickable="false"
             tools:text="系统消息"
             />
 
@@ -24,6 +25,7 @@
             style="@style/text_normal_style"
             android:layout_weight="1"
             android:gravity="left|center_vertical"
+            android:clickable="false"
             tools:text="2016-3-8  5：20"/>
     </LinearLayout>
     <TextView
@@ -33,6 +35,7 @@
         android:minHeight="46dp"
         android:gravity="left"
         android:padding="@dimen/layout_padding_small"
+        android:clickable="false"
         android:textSize="@dimen/text_size_normal"
         tools:text="您的订单号为 xxxx xxxx 的订单报酬 512 元已到账，请注意查收！"
         android:id="@+id/item_message_tv_content" />

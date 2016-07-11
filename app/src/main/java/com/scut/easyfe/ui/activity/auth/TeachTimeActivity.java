@@ -207,6 +207,7 @@ public class TeachTimeActivity extends BaseActivity {
             return;
         }
 
+        mHasModify = false;
         Bundle bundle = new Bundle();
         bundle.putInt(Constants.Key.TO_SPECIAL_TIME_ACTIVITY_TYPE, mFromType);
         redirectToActivity(mContext, SpecialTimeActivity.class, bundle);

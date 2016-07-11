@@ -6,7 +6,6 @@ import com.scut.easyfe.entity.BaseEntity;
 import com.scut.easyfe.entity.TeachableCourse;
 import com.scut.easyfe.entity.book.MultiBookTime;
 import com.scut.easyfe.entity.book.SingleBookTime;
-import com.scut.easyfe.utils.TimeUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,6 +13,7 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -100,7 +100,7 @@ public class Teacher extends BaseEntity {
     //天使计划
     private AngelPlan angelPlan = new AngelPlan();
 
-    public String getScoreInfo(){
+    public String getScoreInfo() {
         String scoreInfo = "";
         scoreInfo += String.format(Locale.CHINA, "综合评分：%.2f分\n", score);
         scoreInfo += String.format(Locale.CHINA, "孩子喜欢程度：%.2f分\n", childAccept);
@@ -113,7 +113,7 @@ public class Teacher extends BaseEntity {
     /**
      * 同步单次与多次预约时间
      */
-    public void synchronizeTeachTime(){
+    public void synchronizeTeachTime() {
         List<SingleBookTime> singleTimes = new ArrayList<>();
         DateTime dateTime;
         int index;
@@ -124,9 +124,9 @@ public class Teacher extends BaseEntity {
             index = 1;
             for (int i = 0; i <= 60; i += index) {
                 dateTime = dateTime.plusDays(index);
-                if(dateTime.getWeekDay() - 1 == multiTime.getWeekDay()){
+                if (dateTime.getWeekDay() - 1 == multiTime.getWeekDay()) {
                     index = 7;
-                    SingleBookTime singleTime = new SingleBookTime(TimeUtils.getTime(CalendarHelper.convertDateTimeToDate(dateTime), "yyyy-MM-dd"),
+                    SingleBookTime singleTime = new SingleBookTime(CalendarHelper.convertDateTimeToDate(dateTime),
                             multiTime.isMorning(), multiTime.isAfternoon(), multiTime.isEvening(), true);
                     singleTimes.add(singleTime);
                 }
@@ -136,7 +136,7 @@ public class Teacher extends BaseEntity {
         setSingleBookTime(singleTimes);
     }
 
-    public boolean isChecked(){
+    public boolean isChecked() {
         return checkType == Constants.Identifier.TEACHER_CHECKED;
     }
 
@@ -376,7 +376,7 @@ public class Teacher extends BaseEntity {
             this.official = official;
         }
 
-        public JSONObject getImageJson(){
+        public JSONObject getImageJson() {
             JSONObject imageJson = new JSONObject();
             try {
                 imageJson.put("idCard", idCard);
@@ -427,7 +427,7 @@ public class Teacher extends BaseEntity {
             this.price = price;
         }
 
-        public JSONObject getAngelPlanJson(){
+        public JSONObject getAngelPlanJson() {
             JSONObject json = new JSONObject();
             try {
                 json.put("join", join);
@@ -460,7 +460,7 @@ public class Teacher extends BaseEntity {
         return teachCourseArray;
     }
 
-    public JSONObject getTeacherJson(){
+    public JSONObject getTeacherJson() {
         JSONObject teacherJson = new JSONObject();
         try {
             teacherJson.put("idCard", idCard);
@@ -485,17 +485,22 @@ public class Teacher extends BaseEntity {
         return teacherJson;
     }
 
-    public JSONArray getSingleBookTimeArray(){
+    public JSONArray getSingleBookTimeArray() {
         JSONArray jsonArray = new JSONArray();
-        for (SingleBookTime time :
-                singleBookTime) {
-            jsonArray.put(time.getSingleBookTimeJson());
+
+        Collections.sort(singleBookTime);
+        try {
+            for (int index = 0; index < singleBookTime.size(); index++) {
+                jsonArray.put(index, singleBookTime.get(index).getSingleBookTimeJson());
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         return jsonArray;
     }
 
 
-    public JSONArray getMultiBookTimeArray(){
+    public JSONArray getMultiBookTimeArray() {
         JSONArray jsonArray = new JSONArray();
         for (MultiBookTime time :
                 multiBookTime) {

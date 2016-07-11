@@ -260,6 +260,8 @@ public class PublishSpreadActivity extends BaseActivity {
     public void onDateClick(View view) {
         OtherUtils.hideSoftInputWindow(view.getWindowToken());
         mDateString = "";
+        mPeriod = "";
+        mTeachDate = null;
         mDateTextView.setText(mDateString);
         mDatePicker.show();
     }
@@ -309,8 +311,10 @@ public class PublishSpreadActivity extends BaseActivity {
         order.setGrade(mGradeTextView.getText().toString());
         order.setTime(mTeachTime);
         order.setPrice(mPrice);
-        order.getTeachTime().setDate(TimeUtils.getTime(mTeachDate, "yyyy-MM-dd"));
-        order.getTeachTime().setTime(mPeriod);
+        if (null != mTeachDate) {
+            order.getTeachTime().setDate(TimeUtils.getTime(mTeachDate, "yyyy-MM-dd"));
+            order.getTeachTime().setTime(mPeriod);
+        }
 
         if(!validate(order)){
             return;
@@ -319,15 +323,15 @@ public class PublishSpreadActivity extends BaseActivity {
         RequestManager.get().execute(new RPublishSpread(App.getUser().getToken(), order), new RequestListener<JSONObject>() {
             @Override
             public void onSuccess(RequestBase request, JSONObject result) {
-                String orderId = result.optString("orderId");
-                PollingData.PollingOrderData data = new PollingData.PollingOrderData();
-                data.setOrderId(orderId);
-                if(!Variables.localData.getMine().getOrder().contains(data)){
-                    Variables.localData.getMine().getOrder().add(data);
-                    Variables.localData.save2Cache(App.getUser().getPhone());
-                }
-
-                App.get().getEventBus().post(new DataChangeEvent(PDHandler.get().getLatestData()));
+//                String orderId = result.optString("orderId");
+//                PollingData.PollingOrderData data = new PollingData.PollingOrderData();
+//                data.setOrderId(orderId);
+//                if(!Variables.localData.getMine().getOrder().contains(data)){
+//                    Variables.localData.getMine().getOrder().add(data);
+//                    Variables.localData.save2Cache(App.getUser().getPhone());
+//                }
+//
+//                App.get().getEventBus().post(new DataChangeEvent(PDHandler.get().getLatestData()));
 
                 DialogUtils.makeConfirmDialog(PublishSpreadActivity.this, "提示", "特价订单发布成功\n待工作人员审核通过后即可在特价订单页可见", new OnItemClickListener() {
                     @Override

@@ -131,13 +131,13 @@ public class BookActivity extends BaseActivity {
         mScoreItems.add(new ToSelectItem("9 分以上", false, "9"));
 
         try {
-            mPriceItems.add(new ToSelectItem("40元以下", false, new JSONArray("[0,40]")));
-            mPriceItems.add(new ToSelectItem("40-50(包括50)", false, new JSONArray("[40,50]")));
-            mPriceItems.add(new ToSelectItem("50-60(包括60)", false, new JSONArray("[50,60]")));
-            mPriceItems.add(new ToSelectItem("60-70(包括70)", false, new JSONArray("[60,70]")));
-            mPriceItems.add(new ToSelectItem("70-80(包括80)", false, new JSONArray("[70,80]")));
-            mPriceItems.add(new ToSelectItem("80-90(包括90)", false, new JSONArray("[80,90]")));
-            mPriceItems.add(new ToSelectItem("90以上", false, new JSONArray("[90," + Integer.MAX_VALUE + "]")));
+            mPriceItems.add(new ToSelectItem("40元以下", false, new JSONArray("[0,4000]")));
+            mPriceItems.add(new ToSelectItem("40-50(包括50)", false, new JSONArray("[4000,5000]")));
+            mPriceItems.add(new ToSelectItem("50-60(包括60)", false, new JSONArray("[5000,6000]")));
+            mPriceItems.add(new ToSelectItem("60-70(包括70)", false, new JSONArray("[6000,7000]")));
+            mPriceItems.add(new ToSelectItem("70-80(包括80)", false, new JSONArray("[7000,8000]")));
+            mPriceItems.add(new ToSelectItem("80-90(包括90)", false, new JSONArray("[8000,9000]")));
+            mPriceItems.add(new ToSelectItem("90以上", false, new JSONArray("[9000," + Integer.MAX_VALUE + "]")));
         } catch (JSONException e) {
             e.printStackTrace();
         }
