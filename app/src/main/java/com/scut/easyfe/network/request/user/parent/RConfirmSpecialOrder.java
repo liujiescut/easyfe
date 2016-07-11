@@ -19,7 +19,7 @@ import java.io.IOException;
 public class RConfirmSpecialOrder extends RequestBase<JSONObject>{
     private String mToken = "";
     private int mTrafficTime = 0;
-    private int mProfessionalTutor = 0;
+    private int mProfessionalTutor = Constants.DefaultValue.DEFAULT_TUTOR_PRICE;
     private String mOrderId = "";
 
     public RConfirmSpecialOrder(@NonNull String token, @NonNull int trafficTime,
@@ -41,7 +41,7 @@ public class RConfirmSpecialOrder extends RequestBase<JSONObject>{
         params.put("token", mToken);
         params.put("orderId", mOrderId);
         params.put("trafficTime", mTrafficTime);
-        if(-1 != mProfessionalTutor) {
+        if(Constants.DefaultValue.DEFAULT_TUTOR_PRICE != mProfessionalTutor) {
             params.put("professionalTutorPrice", mProfessionalTutor);
         }
         return params;

@@ -169,11 +169,9 @@ public class ToDoOrderActivity extends BaseActivity {
         }
 
         if (!mOrder.hasProfessionTutor()) {
-            mCouponContainer.setVisibility(View.GONE);
             mTutorPriceTextView.setText("未预定此服务");
             mThisTutorIncompleteInfoTextView.setText("未预定此服务");
         } else {
-            mCouponTextView.setText(String.format(Locale.CHINA, "减 %.2f 元", mOrder.getCoupon().getMoney() / 100));
             mTutorPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元/小时", mOrder.getProfessionalTutorPrice() / 100));
             if (mOrder.getThisTeachDetail().hadFillIn()) {
                 mThisTutorIncompleteLinearLayout.setVisibility(View.GONE);
@@ -189,6 +187,7 @@ public class ToDoOrderActivity extends BaseActivity {
                 }
             }
         }
+        mCouponTextView.setText(String.format(Locale.CHINA, "减 %.2f 元", mOrder.getCoupon().getMoney() / 100));
     }
 
     public void onCompleteTutorClick(View view) {

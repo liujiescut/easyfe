@@ -220,12 +220,12 @@ public class ReservedOrCompletedOrderActivity extends BaseActivity {
         }
 
         if(!mOrder.hasProfessionTutor()){
-            mCouponContainer.setVisibility(View.GONE);
             mTutorPriceTextView.setText("未预定此服务");
         }else{
-            mCouponTextView.setText(String.format(Locale.CHINA, "减 %.2f 元", mOrder.getCoupon().getMoney() / 100));
             mTutorPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元/小时", mOrder.getProfessionalTutorPrice() / 100));
         }
+        mCouponTextView.setText(String.format(Locale.CHINA, "减 %.2f 元", mOrder.getCoupon().getMoney() / 100));
+
     }
 
     public void onInsuranceClick(View view) {

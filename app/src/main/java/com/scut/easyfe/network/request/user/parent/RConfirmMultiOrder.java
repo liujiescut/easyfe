@@ -62,7 +62,7 @@ public class RConfirmMultiOrder extends RequestBase<JSONObject>{
 
         params.put("teachTimes", getTeachTimes(mWeek, mTimes, mOrder.getTeachTime().getTime()));
 
-        if(-1 != mOrder.getProfessionalTutorPrice()){
+        if(Constants.DefaultValue.DEFAULT_TUTOR_PRICE != mOrder.getProfessionalTutorPrice()){
             params.put("professionalTutorPrice", mOrder.getProfessionalTutorPrice());
         }
 

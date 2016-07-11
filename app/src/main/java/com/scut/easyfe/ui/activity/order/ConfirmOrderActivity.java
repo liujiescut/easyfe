@@ -44,6 +44,7 @@ import hirondelle.date4j.DateTime;
 
 /**
  * 确认订单页面(包括特价推广订单,单次预约订单,多次预约订单)
+ *
  * @author jay
  */
 public class ConfirmOrderActivity extends BaseActivity {
@@ -83,9 +84,9 @@ public class ConfirmOrderActivity extends BaseActivity {
     @Override
     protected void initData() {
         Intent intent = getIntent();
-        if(null != intent){
+        if (null != intent) {
             Bundle extra = intent.getExtras();
-            if(null != extra){
+            if (null != extra) {
                 mConfirmOrderType = extra.getInt(Constants.Key.CONFIRM_ORDER_TYPE);
                 mOrder = (Order) extra.getSerializable(Constants.Key.ORDER);
 
@@ -93,11 +94,11 @@ public class ConfirmOrderActivity extends BaseActivity {
                     mOrder = new Order();
                 }
 
-                if(mOrder.isProfessionTutorShow()) {
+                if (mOrder.isProfessionTutorShow()) {
                     mOrder.setProfessionalTutorPrice(Variables.TUTOR_PRICE);
                 }
 
-                if(mConfirmOrderType == Constants.Identifier.CONFIRM_ORDER_MULTI_RESERVE){
+                if (mConfirmOrderType == Constants.Identifier.CONFIRM_ORDER_MULTI_RESERVE) {
                     mTeachWeek = extra.getInt(Constants.Key.TEACH_WEEK);
                 }
             }
@@ -139,9 +140,8 @@ public class ConfirmOrderActivity extends BaseActivity {
         mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice() / 100));
         mProfessionGuidePriceTextView.setText(String.format(Locale.CHINA, "%d 元/小时", Variables.TUTOR_PRICE / 100));
 
-        if(!mOrder.isProfessionTutorShow()){
+        if (!mOrder.isProfessionTutorShow()) {
             mTutorLinearLayout.setVisibility(View.GONE);
-            mTicketLinearLayout.setVisibility(View.GONE);
         }
 
         initOtherViews();
@@ -149,13 +149,13 @@ public class ConfirmOrderActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
-        if(mOrder.isProfessionTutorShow()) {
+        if (mOrder.isProfessionTutorShow()) {
             mProfessionGuideCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     mTicketLinearLayout.setVisibility(isChecked ? View.VISIBLE : View.GONE);
                     mOrder.getCoupon().setMoney(isChecked ? mTicketMoney : 0);
-                    mOrder.setProfessionalTutorPrice(isChecked ? Variables.TUTOR_PRICE : 0);
+                    mOrder.setProfessionalTutorPrice(isChecked ? Variables.TUTOR_PRICE : Constants.DefaultValue.DEFAULT_TUTOR_PRICE);
                     mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice() / 100));
                 }
             });
@@ -164,69 +164,68 @@ public class ConfirmOrderActivity extends BaseActivity {
 
     @Override
     protected void fetchData() {
-        if(mOrder.isProfessionTutorShow()) {
-            startLoading("加载数据中", new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    if (mIsLoadingCloseByUser) {
-                        finish();
-                    }
+        startLoading("加载数据中", new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if (mIsLoadingCloseByUser) {
+                    finish();
                 }
-            });
-
-            String date = mOrder.getTeachTime().getDate();
-
-            //多次预约订单获取最近的一个订单日期
-            if(mConfirmOrderType == Constants.Identifier.CONFIRM_ORDER_MULTI_RESERVE){
-                DateTime dateTime = DateTime.today(TimeZone.getDefault());
-                while(dateTime.getWeekDay() - 1 != TimeUtils.getWeekIntFromString(mOrder.getTeachTime().getDate())){
-                    dateTime = dateTime.plusDays(1);
-                }
-                date = TimeUtils.getTime(CalendarHelper.convertDateTimeToDate(dateTime), "yyyy-MM-dd");
             }
+        });
 
-            RequestManager.get().execute(new RGetMatchTicket(date,
-                            mOrder.getTime(), mOrder.getGrade()),
-                    new RequestListener<JSONObject>() {
-                        @Override
-                        public void onSuccess(RequestBase request, JSONObject result) {
-                            int money = result.optInt("money", -1);
-                            if (-1 == money) {
-                                mTicketMoney = 0;
-                                toast(result.optString("message"));
+        String date = mOrder.getTeachTime().getDate();
 
-                            } else {
-                                mTicketMoney = money;
-                            }
-
-                            mOrder.getCoupon().setMoney(mTicketMoney);
-                            mTicketTextView.setText(String.format(Locale.CHINA, "减 %d 元", mTicketMoney / 100));
-                            mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice() / 100));
-
-
-                            mIsLoadingCloseByUser = false;
-                            stopLoading();
-                        }
-
-                        @Override
-                        public void onFailed(RequestBase request, int errorCode, String errorMsg) {
-                            toast("获取优惠券数据失败");
-                            mIsLoadingCloseByUser = false;
-                            mTicketMoney = 0;
-                            mOrder.getCoupon().setMoney(mTicketMoney);
-                            mTicketTextView.setText(String.format(Locale.CHINA, "减 %d 元", mTicketMoney / 100));
-                            mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice() / 100));
-
-                            stopLoading();
-                        }
-                    });
+        //多次预约订单获取最近的一个订单日期
+        if (mConfirmOrderType == Constants.Identifier.CONFIRM_ORDER_MULTI_RESERVE) {
+            DateTime dateTime = DateTime.today(TimeZone.getDefault());
+            while (dateTime.getWeekDay() - 1 != TimeUtils.getWeekIntFromString(mOrder.getTeachTime().getDate())) {
+                dateTime = dateTime.plusDays(1);
+            }
+            date = TimeUtils.getTime(CalendarHelper.convertDateTimeToDate(dateTime), "yyyy-MM-dd");
         }
+
+        RequestManager.get().execute(new RGetMatchTicket(date,
+                        mOrder.getTime(), mOrder.getGrade()),
+                new RequestListener<JSONObject>() {
+                    @Override
+                    public void onSuccess(RequestBase request, JSONObject result) {
+                        int money = result.optInt("money", -1);
+                        if (-1 == money) {
+                            mTicketMoney = 0;
+                            toast(result.optString("message"));
+
+                        } else {
+                            mTicketMoney = money;
+                        }
+
+                        mOrder.getCoupon().setMoney(mTicketMoney);
+                        mTicketTextView.setText(String.format(Locale.CHINA, "减 %d 元", mTicketMoney / 100));
+                        mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice() / 100));
+
+
+                        mIsLoadingCloseByUser = false;
+                        stopLoading();
+                    }
+
+                    @Override
+                    public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                        toast("获取优惠券数据失败");
+                        mIsLoadingCloseByUser = false;
+                        mTicketMoney = 0;
+                        mOrder.getCoupon().setMoney(mTicketMoney);
+                        mTicketTextView.setText(String.format(Locale.CHINA, "减 %d 元", mTicketMoney / 100));
+                        mTeachTotalPriceTextView.setText(String.format(Locale.CHINA, "%.2f 元", mOrder.getTotalPrice() / 100));
+
+                        stopLoading();
+                    }
+                });
+
     }
 
-    private void initOtherViews(){
+    private void initOtherViews() {
 
         String title = "";
-        switch (mConfirmOrderType){
+        switch (mConfirmOrderType) {
             case Constants.Identifier.CONFIRM_ORDER_SPECIAL:
                 mWeekLinearLayout.setVisibility(View.GONE);
                 mTeacherTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.mipmap.icon_right_arrow_padding, 0);
@@ -263,11 +262,11 @@ public class ConfirmOrderActivity extends BaseActivity {
                 break;
         }
 
-        ((TextView)OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText(title);
+        ((TextView) OtherUtils.findViewById(this, R.id.titlebar_tv_title)).setText(title);
     }
 
-    public void onTeacherNameClick(View view){
-        if(mConfirmOrderType == Constants.Identifier.CONFIRM_ORDER_SPECIAL){
+    public void onTeacherNameClick(View view) {
+        if (mConfirmOrderType == Constants.Identifier.CONFIRM_ORDER_SPECIAL) {
             RequestManager.get().execute(new RGetTeacherInfo(App.getUser().getToken(), mOrder.getTeacher().get_id()), new RequestListener<Order>() {
                 @Override
                 public void onSuccess(RequestBase request, Order result) {
@@ -285,24 +284,24 @@ public class ConfirmOrderActivity extends BaseActivity {
         }
     }
 
-    public void onConfirmClick(View view){
-        switch (mConfirmOrderType){
+    public void onConfirmClick(View view) {
+        switch (mConfirmOrderType) {
             case Constants.Identifier.CONFIRM_ORDER_SPECIAL:
                 RequestManager.get().execute(new RConfirmSpecialOrder(App.getUser().getToken(),
-                        mOrder.getTrafficTime(), mOrder.get_id(), (int)mOrder.getProfessionalTutorPrice()),
+                                mOrder.getTrafficTime(), mOrder.get_id(), (int) mOrder.getProfessionalTutorPrice()),
                         new RequestListener<JSONObject>() {
-                    @Override
-                    public void onSuccess(RequestBase request, JSONObject result) {
-                        List<String> orderId = new ArrayList<>();
-                        orderId.add(result.optString("orderId"));
-                        updateAndDialog(orderId, mOrder.getTeacher().getName());
-                    }
+                            @Override
+                            public void onSuccess(RequestBase request, JSONObject result) {
+                                List<String> orderId = new ArrayList<>();
+                                orderId.add(result.optString("orderId"));
+                                updateAndDialog(orderId, mOrder.getTeacher().getName());
+                            }
 
-                    @Override
-                    public void onFailed(RequestBase request, int errorCode, String errorMsg) {
-                        toast(errorMsg);
-                    }
-                });
+                            @Override
+                            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                                toast(errorMsg);
+                            }
+                        });
                 break;
 
             case Constants.Identifier.CONFIRM_ORDER_SINGLE_RESERVE:
@@ -323,27 +322,27 @@ public class ConfirmOrderActivity extends BaseActivity {
 
             case Constants.Identifier.CONFIRM_ORDER_MULTI_RESERVE:
                 RequestManager.get().execute(new RConfirmMultiOrder(App.getUser().getToken(),
-                        mOrder, mTeachWeek),
+                                mOrder, mTeachWeek),
                         new RequestListener<JSONObject>() {
-                    @Override
-                    public void onSuccess(RequestBase request, JSONObject result) {
-                        List<String> orderId = new ArrayList<>();
-                        JSONArray orders = result.optJSONArray("orders");
-                        for (int i = 0; i < orders.length(); i++) {
-                            try {
-                                orderId.add(orders.get(i).toString());
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                            @Override
+                            public void onSuccess(RequestBase request, JSONObject result) {
+                                List<String> orderId = new ArrayList<>();
+                                JSONArray orders = result.optJSONArray("orders");
+                                for (int i = 0; i < orders.length(); i++) {
+                                    try {
+                                        orderId.add(orders.get(i).toString());
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                updateAndDialog(orderId, mOrder.getTeacher().getName());
                             }
-                        }
-                        updateAndDialog(orderId, mOrder.getTeacher().getName());
-                    }
 
-                    @Override
-                    public void onFailed(RequestBase request, int errorCode, String errorMsg) {
-                        toast(errorMsg);
-                    }
-                });
+                            @Override
+                            public void onFailed(RequestBase request, int errorCode, String errorMsg) {
+                                toast(errorMsg);
+                            }
+                        });
                 break;
 
             default:
@@ -351,7 +350,7 @@ public class ConfirmOrderActivity extends BaseActivity {
         }
     }
 
-    private void updateAndDialog(List<String> orderId, String teacherName){
+    private void updateAndDialog(List<String> orderId, String teacherName) {
         for (int i = 0; i < orderId.size(); i++) {
             PollingData.PollingOrderData data = new PollingData.PollingOrderData();
             data.setOrderId(orderId.get(i));
@@ -371,14 +370,14 @@ public class ConfirmOrderActivity extends BaseActivity {
                 });
     }
 
-    public void onProfessionGuideClick(View view){
+    public void onProfessionGuideClick(View view) {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_TITLE, "专业辅导");
         bundle.putString(Constants.Key.SHOW_TEXT_ACTIVITY_CONTENT, mResources.getString(R.string.tutor_reserve_explain_content));
         redirectToActivity(mContext, ShowTextActivity.class, bundle);
     }
 
-    public void onBackClick(View view){
+    public void onBackClick(View view) {
         finish();
     }
 

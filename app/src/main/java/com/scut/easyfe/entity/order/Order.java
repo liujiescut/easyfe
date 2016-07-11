@@ -50,7 +50,7 @@ public class Order extends BaseEntity {
     private float addPrice = 0;                       //家教完成课时单价增加的增加单价
     private List<Comment> comments =
             new ArrayList<>();                        //授课老师的前三条评论
-    private float professionalTutorPrice = 0f;        //专业辅导单位价格
+    private float professionalTutorPrice = -1;        //专业辅导单位价格
     private TutorDetail thisTeachDetail =
             new TutorDetail();                        //本次专业辅导信息
     private TutorDetail nextTeachDetail =
